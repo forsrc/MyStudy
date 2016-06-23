@@ -1,0 +1,24 @@
+*.class
+
+# Package Files #
+*.war
+*.ear
+.DS_Store
+/WebRoot/WEB-INF/classes
+/bin
+out
+.idea
+/.idea
+/.idea/workspace.xml
+.myeclipse
+/.myeclipse
+/out
+/web
+*.log
+/index
+tools/cobertura-2.1.1/examples
+tools/cobertura-2.1.1/examples/*
+reports
+reports/*
+target
+target/*
