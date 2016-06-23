@@ -22,3 +22,5 @@ reports
 reports/*
 target
 target/*
+*.ser
+.idea/*
