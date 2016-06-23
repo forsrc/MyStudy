@@ -1,0 +1,189 @@
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans-4.2.xsd">
+
+    <!--<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+
+        <property name="driverClassName" value="${driverClassName}"/>
+        <property name="url" value="${url}"/>
+        <property name="username" value="${username}"/>
+        <property name="password" value="${password}"></property>
+    </bean>-->
+
+    <!--<bean id="dataSourceAtomikosDataSourceBean" class="com.atomikos.jdbc.AtomikosDataSourceBean" init-method="init"
+          destroy-method="close">
+        <description>Xa datasource</description>
+        <property name="uniqueResourceName">
+            <value>my_ds</value>
+        </property>
+        <property name="xaDataSourceClassName">
+            <value>${xaDataSourceClassName}</value>
+        </property>
+        <property name="xaProperties">
+            <props>
+                <prop key="user">${username}</prop>
+                <prop key="password">${password}</prop>
+                <prop key="URL">${url}</prop>
+            </props>
+        </property>
+        <property name="minPoolSize" value="5"/>
+        <property name="maxPoolSize" value="100"/>
+        <property name="borrowConnectionTimeout" value="30"/>
+        <property name="testQuery" value="select 1 from dual "/>
+        <property name="maintenanceInterval" value="60"/>
+    </bean>-->
+
+    <bean id="dataSourceAtomikosNonXADataSourceBeanRestful"
+          class="com.atomikos.jdbc.nonxa.AtomikosNonXADataSourceBean"
+          init-method="init"
+          destroy-method="close" scope="singleton">
+        <property name="uniqueResourceName">
+            <value>dataSourceAtomikosNonXADataSourceBeanRestful</value>
+        </property>
+        <property name="url">
+            <value>${url}</value>
+        </property>
+        <property name="driverClassName">
+            <value>${driverClassName}</value>
+        </property>
+        <property name="user">
+            <value>${username}</value>
+        </property>
+        <property name="password">
+            <value>${password}</value>
+        </property>
+        <property name="minPoolSize" value="10"/>
+        <property name="maxPoolSize" value="50"/>
+        <property name="borrowConnectionTimeout" value="120"/>
+    </bean>
+
+    <!--<bean id="dataSourceAtomikosAdmin" class="com.atomikos.jdbc.AtomikosDataSourceBean" init-method="init"
+          destroy-method="close">
+        <description>Xa datasource</description>
+        <property name="uniqueResourceName">
+            <value>my_admin_ds</value>
+        </property>
+        <property name="xaDataSourceClassName">
+            <value>${xaDataSourceClassName}</value>
+        </property>
+        <property name="xaProperties">
+            <props>
+                <prop key="user">${username}</prop>
+                <prop key="password">${password}</prop>
+                <prop key="URL">${url}</prop>
+            </props>
+        </property>
+        <property name="minPoolSize" value="5"/>
+        <property name="maxPoolSize" value="100"/>
+        <property name="borrowConnectionTimeout" value="30"/>
+        <property name="testQuery" value="select 1 from dual "/>
+        <property name="maintenanceInterval" value="60"/>
+    </bean>-->
+
+    <!-- sessionFactory -->
+    <bean id="sessionFactory" class="com.forsrc.utils.EncryptionLocalSessionFactoryBean" scope="singleton">
+        <property name="dataSource" ref="dataSourceAtomikosNonXADataSourceBeanRestful"/>
+        <!--         <property name="configLocation" value="classpath:hibernate.cfg.xml">  -->
+        <property name="mappingLocations">
+            <list>
+                <value>classpath*:/com/forsrc/pojo/*.hbm.xml</value>
+            </list>
+        </property>
+
+
+
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">${dialect}</prop>
+                <prop key="hibernate.show_sql">true</prop>
+                <prop key="hibernate.hbm2ddl.auto">update</prop>
+                <prop key="hibernate.format_sql">true</prop>
+                <!-- second_level_cache -->
+                <!--<prop key="hibernate.cache.use_second_level_cache">true</prop>
+                <prop key="hibernate.cache.use_query_cache">true</prop>-->
+                <!--<prop key="hibernate.cache.provider_class">org.hibernate.cache.EhCacheProvider</prop>-->
+                <!--<prop key="hibernate.cache.region_prefix">test</prop>-->
+                <!--<prop key="hibernate.cache.region.factory_class">org.hibernate.cache.ehcache.EhCacheRegionFactory</prop>-->
+                <!--<prop key="hibernate.cache.provider_configuration_file_resource_path">/ehcache.xml</prop>
+                <prop key="hibernate.cache.use_structured_entries">true</prop>
+                <prop key="hibernate.generate_statistics">true</prop>-->
+                <!--<prop key="hibernate.current_session_context_class">thread</prop>
+                <prop key="hibernate.transaction.factory_class">org.hibernate.engine.transaction.internal.jdbc.JdbcTransactionFactory</prop>-->
+                <!--<prop key="hibernate.current_session_context_class">jta</prop>
+                <prop key="hibernate.transaction.factory_class">org.hibernate.engine.transaction.internal.jta.JtaTransactionFactory</prop>-->
+                <prop key="hibernate.search.default.directory_provider">org.hibernate.search.store.impl.FSDirectoryProvider</prop>
+                <prop key="hibernate.search.default.indexBase">jredmine.index.hibernate.search</prop>
+            </props>
+        </property>
+
+        <!--<property name="eventListeners">
+            <map>
+                <entry key="post-update"><ref bean="fullTextIndexEventListener"/></entry>
+                <entry key="post-insert"><ref bean="fullTextIndexEventListener"/></entry>
+                <entry key="post-delete"><ref bean="fullTextIndexEventListener"/></entry>
+            </map>
+        </property>-->
+    </bean>
+
+    <bean id="fullTextIndexEventListener" class="org.hibernate.search.event.impl.FullTextIndexEventListener"/>
+
+
+    <bean id="hibernateTemplate" name="hibernateTemplate" class="org.springframework.orm.hibernate5.HibernateTemplate"
+          scope="singleton">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+
+    <!--===================================================-->
+
+    <!--<bean id="hibernateTemplate1" name="otherHibernateTemplates" class="org.springframework.orm.hibernate5.HibernateTemplate" autowire="byName" scope="prototype">
+        <property name="sessionFactory" ref="sessionFactory1"/>
+    </bean>-->
+
+    <!--<bean id="dataSourceAtomikosNonXADataSourceBean1"
+          class="com.atomikos.jdbc.nonxa.AtomikosNonXADataSourceBean"
+          init-method="init"
+          destroy-method="close">
+        <property name="uniqueResourceName">
+            <value>dataSourceAtomikosNonXADataSourceBean1</value>
+        </property>
+        <property name="url">
+            <value>${url}</value>
+        </property>
+        <property name="driverClassName">
+            <value>${driverClassName}</value>
+        </property>
+        <property name="user">
+            <value>${username}</value>
+        </property>
+        <property name="password">
+            <value>${password}</value>
+        </property>
+        <property name="minPoolSize" value="10"/>
+        <property name="maxPoolSize" value="50"/>
+        <property name="borrowConnectionTimeout" value="120"/>
+    </bean>
+
+    <bean id="sessionFactory1" class="com.forsrc.utils.EncryptionLocalSessionFactoryBean">
+        <property name="dataSource" ref="dataSourceAtomikosNonXADataSourceBean1"/>
+        <property name="mappingLocations">
+            <list>
+                <value>classpath*:/com/forsrc/pojo/*.hbm.xml</value>
+                &lt;!&ndash;<value>classpath*:/com/forsrc/quartz/hbm/*.hbm.xml</value>&ndash;&gt;
+            </list>
+        </property>
+
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">${dialect}</prop>
+                <prop key="hibernate.show_sql">true</prop>
+                <prop key="hibernate.hbm2ddl.auto">update</prop>
+                <prop key="hibernate.format_sql">true</prop>
+                <prop key="hibernate.cache.use_structured_entries">true</prop>
+                <prop key="hibernate.generate_statistics">true</prop>
+            </props>
+        </property>
+    </bean>-->
+
+
+</beans>

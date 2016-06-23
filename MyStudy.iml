@@ -15,10 +15,35 @@
         </sourceRoots>
       </configuration>
     </facet>
+    <facet type="Spring" name="Spring">
+      <configuration>
+        <fileset id="fileset" name="Spring Application Context" removed="false">
+          <dependency>web application context</dependency>
+          <file>file://$MODULE_DIR$/src/main/resources/applicationContext.xml</file>
+          <file>file://$MODULE_DIR$/src/main/resources/config/spring/cxf/spring_cxf.xml</file>
+          <file>file://$MODULE_DIR$/src/main/resources/config/spring/cxf/spring_cxf_config.xml</file>
+          <file>file://$MODULE_DIR$/src/main/resources/config/spring/cxf/spring_cxf_service.xml</file>
+          <file>file://$MODULE_DIR$/src/main/resources/config/spring/cxf/spring_cxf_service_restful.xml</file>
+          <file>file://$MODULE_DIR$/src/main/resources/config/spring/ehcache/spring_ehcache.xml</file>
+          <file>file://$MODULE_DIR$/src/main/resources/config/spring/hibernate/spring_hibernate.xml</file>
+          <file>file://$MODULE_DIR$/src/main/resources/config/spring/hibernate/spring_hibernate_transaction.xml</file>
+          <file>file://$MODULE_DIR$/src/main/resources/config/spring/restful/spring_restful.xml</file>
+          <file>file://$MODULE_DIR$/src/main/resources/config/spring/restful/spring_restful_config.xml</file>
+          <file>file://$MODULE_DIR$/src/main/resources/config/spring/hibernate/spring_sessionfactory.xml</file>
+        </fileset>
+      </configuration>
+    </facet>
+    <facet type="hibernate" name="Hibernate">
+      <configuration>
+        <datasource-map>
+          <unit-entry name="sessionFactory" value="dataSourceAtomikosNonXADataSourceBeanRestful" />
+        </datasource-map>
+        <naming-strategy-map />
+        <deploymentDescriptor name="hibernate.cfg.xml" url="file://$MODULE_DIR$/src/test/resources/hibernate.cfg.xml" />
+      </configuration>
+    </facet>
   </component>
-  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_5" inherit-compiler-output="false">
-    <output url="file://$MODULE_DIR$/target/classes" />
-    <output-test url="file://$MODULE_DIR$/target/test-classes" />
+  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_6" inherit-compiler-output="true">
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/src/main/java" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/test/java" isTestSource="true" />

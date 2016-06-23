@@ -1,7 +1,305 @@
-<!DOCTYPE web-app PUBLIC
- "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
- "http://java.sun.com/dtd/web-app_2_3.dtd" >
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://java.sun.com/xml/ns/javaee"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+         id="WebApp_ID" version="3.0">
 
-<web-app>
-  <display-name>Archetype Created Web Application</display-name>
+    <display-name>MyStudy</display-name>
+    <session-config>
+        <session-timeout>60</session-timeout>
+    </session-config>
+
+
+    <mime-mapping>
+        <extension>js</extension>
+        <mime-type>application/javascript</mime-type>
+    </mime-mapping>
+
+    <mime-mapping>
+        <extension>css</extension>
+        <mime-type>text/css</mime-type>
+    </mime-mapping>
+
+    <!-- ServletContext-> context-param ->listener -> filter -> servlet -->
+
+    <!-- context-param START-->
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>
+            classpath:applicationContext.xml
+        </param-value>
+    </context-param>
+    <!-- context-param END-->
+
+    <!-- listener START-->
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+    <listener>
+
+        <listener-class>
+            org.springframework.web.context.request.RequestContextListener
+        </listener-class>
+    </listener>
+
+    <listener>
+        <listener-class>
+            org.springframework.web.util.IntrospectorCleanupListener
+        </listener-class>
+    </listener>
+
+    <listener>
+        <listener-class>org.springframework.security.web.session.HttpSessionEventPublisher</listener-class>
+    </listener>
+
+    <listener>
+        <listener-class>com.forsrc.listener.InitDbListener</listener-class>
+    </listener>
+    <!-- listener END-->
+
+    <!-- filter START-->
+    <filter>
+        <filter-name>encoding</filter-name>
+        <filter-class>com.forsrc.filter.MyCharacterEncodingFilter</filter-class>
+        <init-param>
+            <param-name>encoding</param-name>
+            <param-value>UTF-8</param-value>
+        </init-param>
+        <init-param>
+            <param-name>forceEncoding</param-name>
+            <param-value>true</param-value>
+        </init-param>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>encoding</filter-name>
+        <url-pattern>*.js</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>encoding</filter-name>
+        <url-pattern>*.css</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>encoding</filter-name>
+        <url-pattern>*.html</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>encoding</filter-name>
+        <url-pattern>*.jsp</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>encoding</filter-name>
+        <url-pattern>*.ftl</url-pattern>
+    </filter-mapping>
+
+    <filter>
+        <filter-name>crossDomainFilter</filter-name>
+        <filter-class>com.forsrc.filter.MyCrossDomainFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>crossDomainFilter</filter-name>
+        <url-pattern>*.json</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>crossDomainFilter</filter-name>
+        <url-pattern>*.jsonp</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>crossDomainFilter</filter-name>
+        <url-pattern>*.xml</url-pattern>
+    </filter-mapping>
+
+    <filter>
+        <filter-name>OpenSessionInViewFilter</filter-name>
+        <filter-class>
+            org.springframework.orm.hibernate5.support.OpenSessionInViewFilter
+        </filter-class>
+        <init-param>
+            <param-name>sessionFactoryBeanName</param-name>
+            <param-value>sessionFactory</param-value>
+        </init-param>
+        <init-param>
+            <param-name>singleSession</param-name>
+            <param-value>true</param-value>
+        </init-param>
+        <init-param>
+            <param-name>flushMode</param-name>
+            <param-value>AUTO</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>OpenSessionInViewFilter</filter-name>
+        <url-pattern>*.action</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>OpenSessionInViewFilter</filter-name>
+        <url-pattern>*.do</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>OpenSessionInViewFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <filter>
+        <filter-name>parametersFilter</filter-name>
+        <filter-class>com.forsrc.filter.ParametersFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>parametersFilter</filter-name>
+        <url-pattern>*.do</url-pattern>
+    </filter-mapping>
+
+    <!-- ehcache start-->
+    <filter>
+        <filter-name>ehcache_2s</filter-name>
+        <filter-class>net.sf.ehcache.constructs.web.filter.SimplePageFragmentCachingFilter</filter-class>
+        <init-param>
+            <param-name>suppressStackTrace</param-name>
+            <param-value>false</param-value>
+        </init-param>
+        <init-param>
+            <param-name>cacheName</param-name>
+            <param-value>ehcache_2s</param-value>
+        </init-param>
+        <init-param>
+            <param-name>configurationFileName</param-name>
+            <param-value>/ehcache.xml</param-value>
+        </init-param>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>ehcache_2s</filter-name>
+        <url-pattern>/web/*</url-pattern>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>ehcache_2s</filter-name>
+        <url-pattern>*.do</url-pattern>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>ehcache_2s</filter-name>
+        <url-pattern>*.action</url-pattern>
+    </filter-mapping>
+
+    <filter>
+        <filter-name>ehcache_24h</filter-name>
+        <filter-class>net.sf.ehcache.constructs.web.filter.SimplePageFragmentCachingFilter</filter-class>
+        <init-param>
+            <param-name>suppressStackTrace</param-name>
+            <param-value>false</param-value>
+        </init-param>
+        <init-param>
+            <param-name>cacheName</param-name>
+            <param-value>ehcache_24h</param-value>
+        </init-param>
+        <init-param>
+            <param-name>configurationFileName</param-name>
+            <param-value>/ehcache.xml</param-value>
+        </init-param>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>ehcache_24h</filter-name>
+        <url-pattern>/commons/*</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>ehcache_24h</filter-name>
+        <url-pattern>/web/css/*</url-pattern>
+    </filter-mapping>
+    <!-- ehcache start-->
+
+    <filter>
+        <filter-name>resourceFilter</filter-name>
+        <filter-class>com.forsrc.filter.ResourceFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>resourceFilter</filter-name>
+        <url-pattern>*.jsp</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>resourceFilter</filter-name>
+        <url-pattern>*.html</url-pattern>
+    </filter-mapping>
+
+    <filter>
+        <filter-name>HiddenHttpMethodFilter</filter-name>
+        <filter-class>org.springframework.web.filter.HiddenHttpMethodFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>HiddenHttpMethodFilter</filter-name>
+        <servlet-name>springmvc</servlet-name>
+    </filter-mapping>
+    <!-- filter END-->
+
+    <!-- servlet START-->
+    <servlet>
+        <servlet-name>springmvc</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <init-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>classpath:/config/spring/restful/spring_restful.xml</param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>springmvc</servlet-name>
+        <url-pattern>/springmvc/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <description>Apache CXF</description>
+        <display-name>cxf</display-name>
+        <servlet-name>cxf</servlet-name>
+        <servlet-class>org.apache.cxf.transport.servlet.CXFServlet</servlet-class>
+        <load-on-startup>2</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>cxf</servlet-name>
+        <url-pattern>/cxf/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>freemarker</servlet-name>
+        <servlet-class>com.forsrc.servlet.MyFreemarkerServlet</servlet-class>
+        <init-param>
+            <param-name>TemplatePath</param-name>
+            <param-value>/</param-value>
+        </init-param>
+        <init-param>
+            <param-name>NoCache</param-name>
+            <param-value>true</param-value>
+        </init-param>
+        <init-param>
+            <param-name>classic_compatible</param-name>
+            <param-value>true</param-value>
+        </init-param>
+        <init-param>
+            <param-name>defaultEncoding</param-name>
+            <param-value>UTF-8</param-value>
+        </init-param>
+        <init-param>
+            <param-name>ContentType</param-name>
+            <param-value>text/html;charset=UTF-8</param-value>
+        </init-param>
+        <load-on-startup>3</load-on-startup>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>freemarker</servlet-name>
+        <url-pattern>*.htm</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>freemarker</servlet-name>
+        <url-pattern>*.ftl</url-pattern>
+    </servlet-mapping>
+    <!-- servlet START-->
+
+    <welcome-file-list>
+        <welcome-file>index.html</welcome-file>
+        <welcome-file>index.jsp</welcome-file>
+    </welcome-file-list>
+
+
 </web-app>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.forsrc.pojo">
+    <class name="User" table="my_study_user" dynamic-update="true" dynamic-insert="true">
+        <id name="id" type="java.lang.Long">
+            <column name="id"/>
+            <generator class="native"/>
+        </id>
+
+        <property name="username" type="java.lang.String">
+            <column name="username" not-null="true" unique="true"/>
+        </property>
+
+        <property name="password" type="java.lang.String">
+            <column name="password" not-null="true"/>
+        </property>
+
+        <property name="status" type="java.lang.Integer">
+            <column name="status" default="1"/>
+        </property>
+
+        <property name="isAdmin" type="java.lang.Boolean">
+            <column name="is_admin" default="0"/>
+        </property>
+
+        <property name="token" type="java.lang.String">
+            <column name="token" length="100"/>
+        </property>
+    </class>
+    <sql-query name="user_insert_admin">
+        <![CDATA[
+             INSERT INTO
+                            my_study_user
+                            (id, username, password, status, is_admin)
+             VALUES
+                            (1, 'admin', 'EdbQzHVPKsmmwIOtmJOHJg==', 1, 1)
+             ;
+
+         ]]>
+    </sql-query>
+
+
+    <database-object>
+        <create>
+        </create>
+        <drop></drop>
+    </database-object>
+</hibernate-mapping>

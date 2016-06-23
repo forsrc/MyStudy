@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:jaxws="http://cxf.apache.org/jaxws"
+        xmlns="http://www.springframework.org/schema/beans"
+        xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://cxf.apache.org/jaxws
+    http://cxf.apache.org/schemas/jaxws.xsd">
+
+    <!-- soap webservice -->
+    <jaxws:endpoint id="helloWorld" implementor="com.forsrc.cxf.server.service.impl.HelloWorldImpl"
+                    address="/HelloWorld">
+    </jaxws:endpoint>
+
+    <!-- restful webservice -->
+    <!--<jaxrs:server id="rs1" address="/rs">
+        <jaxrs:serviceBeans>
+            <ref bean="restSample"/>
+        </jaxrs:serviceBeans>
+        <jaxrs:providers>
+            <bean class="org.codehaus.jackson.jaxrs.JacksonJsonProvider"/>
+        </jaxrs:providers>
+    </jaxrs:server>-->
+</beans>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-4.2.xsd">
+
+    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>classpath:config/properties/dbcp.properties</value>
+                <value>classpath:config/properties/hessian.properties</value>
+                <value>classpath:config/properties/engine.properties</value>
+                <value>classpath:config/properties/ui.properties</value>
+            </list>
+        </property>
+    </bean>
+
+    <import resource="config/spring/hibernate/spring_hibernate.xml"/>
+    <import resource="config/spring/hibernate/spring_hibernate_transaction.xml"/>
+    <import resource="config/spring/hibernatesearch/spring_hibernate_search.xml"/>
+    <import resource="config/spring/cxf/spring_cxf.xml"/>
+
+</beans>

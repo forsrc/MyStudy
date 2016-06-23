@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context-4.2.xsd
+    http://www.springframework.org/schema/aop
+    http://www.springframework.org/schema/aop/spring-aop-4.2.xsd
+    http://www.springframework.org/schema/tx
+    http://www.springframework.org/schema/tx/spring-tx-4.2.xsd"
+        >
+    <aop:aspectj-autoproxy proxy-target-class="true"/>
+    <context:component-scan base-package="com.forsrc"/>
+
+    <!--<aop:aspectj-autoproxy proxy-target-class="true"/>-->
+    <bean id="logTracing" class="com.forsrc.aop.LogTracing" autowire="byType"/>
+
+    <aop:config proxy-target-class="true">
+        <aop:pointcut id="logService2"
+                      expression="
+                             execution(* com.forsrc.springmvc..manager..*.*(..))
+                          or execution(* com.forsrc.springmvc..service..*.*(..))
+                          or execution(* com.forsrc.springmvc..controller..*.*(..))
+                          "/>
+        <aop:aspect id="aspect2" ref="logTracing">
+            <aop:before pointcut-ref="logService2" method="doBefore"/>
+            <aop:after pointcut-ref="logService2" method="doAfter"/>
+            <aop:around pointcut-ref="logService2" method="doAround"/>
+            <aop:after-throwing pointcut-ref="logService2" method="doAfterThrowing" throwing="throwable"/>
+        </aop:aspect>
+    </aop:config>
+
+    <!--<bean id="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory"/>
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <tx:advice id="txadvice" transaction-manager="transactionManager">
+        <tx:attributes>
+            <tx:method name="save*" propagation="REQUIRED" no-rollback-for="com.forsrc.exception.NotRollbackException"
+                       rollback-for="com.forsrc.exception.RollbackException"/>
+            <tx:method name="update*" propagation="REQUIRED" no-rollback-for="com.forsrc.exception.NotRollbackException"
+                       rollback-for="com.forsrc.exception.RollbackException"/>
+            <tx:method name="delete*" propagation="REQUIRED" no-rollback-for="com.forsrc.exception.NotRollbackException"
+                       rollback-for="com.forsrc.exception.RollbackException"/>
+            <tx:method name="*" propagation="REQUIRED" read-only="true"/>
+        </tx:attributes>
+    </tx:advice>
+
+    <aop:config>
+        <aop:pointcut expression="execution(* com.forsrc.web.*.service.*.*(..))" id="serviceMethod"/>
+        <aop:advisor advice-ref="txadvice" pointcut-ref="serviceMethod"/>
+    </aop:config>-->
+
+    <bean class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">
+        <property name="proxyTargetClass">
+            <value>true</value>
+        </property>
+    </bean>
+
+    <bean id="userTransactionService" class="com.atomikos.icatch.config.UserTransactionServiceImp" init-method="init"
+          destroy-method="shutdownForce">
+        <constructor-arg>
+            <props>
+                <prop key="com.atomikos.icatch.service">com.atomikos.icatch.standalone.UserTransactionServiceFactory
+                </prop>
+                <!--<prop key="com.atomikos.icatch.console_file_name"></prop>-->
+                <prop key="com.atomikos.icatch.console_log_level">INFO</prop>
+                <prop key="com.atomikos.icatch.log_base_name">atomikos.transaction.manager.log</prop>
+                <prop key="com.atomikos.icatch.tm_unique_name">userTransactionService</prop>
+                <prop key="com.atomikos.icatch.max_timeout">7200000</prop>
+            </props>
+        </constructor-arg>
+    </bean>
+
+    <bean id="atomikosTransactionManager" class="com.atomikos.icatch.jta.UserTransactionManager"
+          init-method="init" destroy-method="close" depends-on="userTransactionService">
+        <description>UserTransactionManager</description>
+        <property name="forceShutdown">
+            <value>true</value>
+        </property>
+        <property name="transactionTimeout" value="7200000"/>
+    </bean>
+
+    <bean id="atomikosUserTransaction" class="com.atomikos.icatch.jta.UserTransactionImp">
+        <property name="transactionTimeout" value="7200000"/>
+    </bean>
+
+    <bean id="txManager" class="org.springframework.transaction.jta.JtaTransactionManager">
+        <property name="transactionManager">
+            <ref bean="atomikosTransactionManager"/>
+        </property>
+        <property name="userTransaction">
+            <ref bean="atomikosUserTransaction"/>
+        </property>
+        <property name="allowCustomIsolationLevels" value="true"/>
+    </bean>
+
+    <!--<bean id="hibernateTransactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>-->
+
+
+
+
+
+
+</beans>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:jaxrs="http://cxf.apache.org/jaxrs"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://cxf.apache.org/jaxrs  
+    http://cxf.apache.org/schemas/jaxrs.xsd">
+
+    <jaxrs:server id="cxfRestful" address="/restful">
+        <jaxrs:serviceBeans>
+            <ref bean="cxfRestfulImpl"/>
+        </jaxrs:serviceBeans>
+        <jaxrs:extensionMappings>
+            <entry key="json" value="application/json"/>
+            <entry key="jsonp" value="application/jsonp"/>
+            <entry key="xml" value="application/xml"/>
+        </jaxrs:extensionMappings>
+        <jaxrs:languageMappings>
+            <entry key="en" value="en-gb"/>
+        </jaxrs:languageMappings>
+        <jaxrs:providers>
+            <ref bean="jaxbProvider"/>
+            <ref bean="jsonProvider"/>
+        </jaxrs:providers>
+    </jaxrs:server>
+
+    <bean id="webClient" class="org.apache.cxf.jaxrs.client.WebClient" factory-method="create">
+        <constructor-arg type="java.lang.String" value="http://localhost:8077/cxf/restful/"/>
+    </bean>
+
+</beans>

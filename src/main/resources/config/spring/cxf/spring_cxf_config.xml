@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context-4.2.xsd">
+
+
+    <context:component-scan base-package="com.forsrc.cxf" use-default-filters="true"/>
+    <context:component-scan base-package="com.forsrc.pojo" use-default-filters="true"/>
+
+    <import resource="classpath:META-INF/cxf/cxf.xml"/>
+    <import resource="classpath:META-INF/cxf/cxf-servlet.xml"/>
+
+
+    <bean id="cxfRestfulImpl" class="com.forsrc.cxf.server.service.impl.CxfRestfulImpl"/>
+
+    <bean id="jaxbProvider"
+          class="org.apache.cxf.jaxrs.provider.JAXBElementProvider"/>
+
+    <bean id="jsonProvider"
+          class="org.apache.cxf.jaxrs.provider.json.JSONProvider">
+        <property name="dropRootElement" value="false"/>
+        <property name="dropCollectionWrapperElement" value="true"/>
+        <property name="serializeAsArray" value="true"/>
+    </bean>
+</beans>
+
+
