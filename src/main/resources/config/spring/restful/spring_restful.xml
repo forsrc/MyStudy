@@ -5,6 +5,7 @@
    http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
 
     <import resource="spring_restful_*.xml"/>
+    <import resource="../beans/spring_beans_aop.xml"/>
 
 </beans>
 

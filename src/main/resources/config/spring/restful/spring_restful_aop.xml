@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context-4.2.xsd
+    http://www.springframework.org/schema/aop
+    http://www.springframework.org/schema/aop/spring-aop-4.2.xsd
+    http://www.springframework.org/schema/tx
+    http://www.springframework.org/schema/tx/spring-tx-4.2.xsd"
+        >
+    <aop:aspectj-autoproxy proxy-target-class="true"/>
+    <context:component-scan base-package="com.forsrc"/>
+
+
+    <tx:advice id="txadvice" transaction-manager="txManager">
+        <tx:attributes>
+            <tx:method name="jqGrid*" propagation="REQUIRED" rollback-for="java.lang.Exception"
+                       no-rollback-for="com.forsrc.exception.NotRollbackException"/>
+            <tx:method name="save*" propagation="REQUIRED" rollback-for="java.lang.Exception"
+                       no-rollback-for="com.forsrc.exception.NotRollbackException"/>
+            <tx:method name="add*" propagation="REQUIRED" rollback-for="java.lang.Exception"
+                       no-rollback-for="com.forsrc.exception.NotRollbackException"/>
+            <tx:method name="edit*" propagation="REQUIRED" rollback-for="java.lang.Exception"
+                       no-rollback-for="com.forsrc.exception.NotRollbackException"/>
+            <tx:method name="delete*" propagation="REQUIRED" rollback-for="java.lang.Exception"
+                       no-rollback-for="com.forsrc.exception.NotRollbackException"/>
+            <tx:method name="del*" propagation="REQUIRED" rollback-for="java.lang.Exception"
+                       no-rollback-for="com.forsrc.exception.NotRollbackException"/>
+            <tx:method name="update*" propagation="REQUIRED" rollback-for="java.lang.Exception"
+                       no-rollback-for="com.forsrc.exception.NotRollbackException"/>
+            <tx:method name="execute*" propagation="REQUIRED" rollback-for="java.lang.Exception"
+                       no-rollback-for="com.forsrc.exception.NotRollbackException"/>
+            <tx:method name="exec*" propagation="REQUIRED" rollback-for="java.lang.Exception"
+                       no-rollback-for="com.forsrc.exception.NotRollbackException"/>
+            <tx:method name="oper*" propagation="REQUIRED" rollback-for="java.lang.Exception"
+                       no-rollback-for="com.forsrc.exception.NotRollbackException"/>
+            <tx:method name="*" read-only="true"/>
+
+        </tx:attributes>
+    </tx:advice>
+
+    <aop:config proxy-target-class="true">
+        <aop:pointcut expression="(
+               execution(* com.forsrc.springmvc..manager.impl.*.*(..))
+            or execution(* com.forsrc.springmvc..service.impl.*.*(..))
+            )
+            and not execution(* com.forsrc.springmvc..manager.impl.*.*Input*(..))
+            and not execution(* com.forsrc.springmvc..service.impl.*.*Input*(..))
+            " id="springmvcServiceMethod"/>
+        <aop:advisor advice-ref="txadvice" pointcut-ref="springmvcServiceMethod"/>
+    </aop:config>
+
+</beans>
