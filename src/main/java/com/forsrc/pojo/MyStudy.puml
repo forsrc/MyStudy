@@ -1,0 +1,14 @@
+@startuml
+
+    class User {
+        - - Long id
+        - - String username
+        - - String password
+        - - int status
+        - - boolean isAdmin
+        - - String token
+    }
+
+
+
+@enduml

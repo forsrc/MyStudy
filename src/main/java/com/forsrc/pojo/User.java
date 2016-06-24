@@ -1,19 +1,38 @@
 package com.forsrc.pojo;
 
+import com.forsrc.lucene.IndexWhenPublishedInterceptor;
+import org.hibernate.search.annotations.*;
+import org.wltea.analyzer.lucene.IKAnalyzer;
+
+import javax.persistence.Id;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Date;
 
+
+@Indexed(index = "MyStudy.User", interceptor = IndexWhenPublishedInterceptor.class)
+@Analyzer(impl = IKAnalyzer.class, definition = "cn")
+//@Analyzer(impl = SmartChineseAnalyzer.class)
 @XmlRootElement(name = "User")
+@org.codehaus.jackson.annotate.JsonIgnoreProperties(value = {"handler", "hibernateLazyInitializer", "fieldHandler"})
+@com.fasterxml.jackson.annotation.JsonIgnoreProperties(value = {"handler", "hibernateLazyInitializer", "fieldHandler"})
+
 public class User implements java.io.Serializable {
 
 
     // Fields    
-
+    @DocumentId
+    @Id
+    //@Field(index = Index.NO, analyze = Analyze.NO, store = Store.YES)
+    @SortableField
     private Long id;
+    @Field(index = Index.YES, analyze = Analyze.YES, store = Store.YES)
     private String username;
     private String password;
+    @Field(index = Index.NO, analyze = Analyze.NO, store = Store.YES)
     private int status; // 0: delete; 1: OK; 2: NG
+    @Field(index = Index.NO, analyze = Analyze.NO, store = Store.YES)
     private boolean isAdmin;
+    @Field(index = Index.NO, analyze = Analyze.NO, store = Store.YES)
     private String token;
 
 

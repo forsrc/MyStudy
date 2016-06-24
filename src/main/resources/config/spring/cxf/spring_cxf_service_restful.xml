@@ -20,8 +20,8 @@
             <entry key="en" value="en-gb"/>
         </jaxrs:languageMappings>
         <jaxrs:providers>
-            <ref bean="jaxbProvider"/>
             <ref bean="jsonProvider"/>
+            <ref bean="jaxbProvider"/>
         </jaxrs:providers>
     </jaxrs:server>
 

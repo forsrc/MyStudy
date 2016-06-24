@@ -5,6 +5,8 @@
 
     <context:component-scan base-package="com.forsrc.lucene"/>
 
+    <import resource="spring_hibernate_search_aop.xml"/>
+
     <bean id="hibernateSearchApplicationListener"
           class="com.forsrc.hibernate.search.HibernateSearchApplicationListener"/>
 
@@ -16,7 +18,7 @@
     <bean id="mySimpleFSDirectory" class="com.forsrc.lucene.MySimpleFSDirectory">
         <constructor-arg>
             <bean class="java.lang.String">
-                <constructor-arg value="jredmine.index/search"/>
+                <constructor-arg value="mystudy.index/search"/>
             </bean>
         </constructor-arg>
     </bean>

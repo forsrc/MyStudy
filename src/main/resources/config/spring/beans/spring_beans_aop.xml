@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.springframework.org/schema/beans"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <bean id="quartzLog" class="com.forsrc.aop.LogTracing"/>
+
+    <aop:config proxy-target-class="true">
+        <aop:aspect id="aspect1" ref="quartzLog">
+            <aop:pointcut id="quartzLogService" expression="execution(* com.forsrc.quartz.*.*(..))"/>
+            <aop:before pointcut-ref="quartzLogService" method="doBefore"/>
+            <aop:after pointcut-ref="quartzLogService" method="doAfter"/>
+            <aop:around pointcut-ref="quartzLogService" method="doAround"/>
+        </aop:aspect>
+    </aop:config>
+
+    <bean id="log" class="com.forsrc.aop.LogTracing"/>
+    <aop:config proxy-target-class="true">
+        <aop:aspect id="aspect3" ref="log">
+            <aop:pointcut id="logService" expression="execution(* com.forsrc.springmvc..*.*(..))"/>
+            <aop:before pointcut-ref="logService" method="doBefore"/>
+            <aop:after pointcut-ref="logService" method="doAfter"/>
+            <aop:around pointcut-ref="logService" method="doAround"/>
+        </aop:aspect>
+    </aop:config>
+
+    <!--<bean id="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory"/>
+        <property name="dataSource" ref="dataSourceAtomikosNonXADataSourceBean"/>
+    </bean>
+
+
+    <tx:advice id="txadviceStruts" transaction-manager="transactionManager">
+        <tx:attributes>
+            <tx:method name="save*" propagation="REQUIRED" no-rollback-for="com.forsrc.exception.NotRollbackException"
+                       rollback-for="com.forsrc.exception.RollbackException"/>
+            <tx:method name="update*" propagation="REQUIRED" no-rollback-for="com.forsrc.exception.NotRollbackException"
+                       rollback-for="com.forsrc.exception.RollbackException"/>
+            <tx:method name="delete*" propagation="REQUIRED" no-rollback-for="com.forsrc.exception.NotRollbackException"
+                       rollback-for="com.forsrc.exception.RollbackException"/>
+            <tx:method name="*" propagation="REQUIRED" read-only="true"/>
+        </tx:attributes>
+    </tx:advice>
+
+    <aop:config>
+        <aop:pointcut expression="execution(* com.forsrc.web.*.service.*.*(..))" id="serviceMethod"/>
+        <aop:advisor advice-ref="txadviceStruts" pointcut-ref="serviceMethod"/>
+    </aop:config>-->
+
+</beans>

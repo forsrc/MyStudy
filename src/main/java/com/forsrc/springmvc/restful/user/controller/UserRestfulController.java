@@ -26,8 +26,7 @@ public class UserRestfulController {
     @Resource(name = "userRestfulService")
     private UserRestfulService userRestfulService;
 
-    @RequestMapping(value = {"/user"},
-            method = RequestMethod.GET
+    @RequestMapping(value = {"/user"}, method = RequestMethod.GET
             //, headers = "Accept=application/json"
     )
     @ResponseBody
@@ -43,8 +42,7 @@ public class UserRestfulController {
         return modelAndView;
     }
 
-    @RequestMapping(value = {"/user/{id}"},
-            method = RequestMethod.GET)
+    @RequestMapping(value = {"/user/{id}"}, method = RequestMethod.GET)
     @ResponseBody
     public User get(@PathVariable Long id,
                     HttpServletRequest request,
@@ -55,8 +53,7 @@ public class UserRestfulController {
 
     }
 
-    @RequestMapping(value = {"/user/{id}"},
-            method = RequestMethod.PUT)
+    @RequestMapping(value = {"/user/{id}"}, method = RequestMethod.PUT)
     @ResponseBody
     public User update(@PathVariable Long id,
                        HttpServletRequest request,
@@ -69,8 +66,7 @@ public class UserRestfulController {
 
     }
 
-    @RequestMapping(value = {"/user/{id}"},
-            method = RequestMethod.DELETE)
+    @RequestMapping(value = {"/user/{id}"}, method = RequestMethod.DELETE)
     @ResponseBody
     public User delete(@PathVariable Long id,
                        HttpServletRequest request,

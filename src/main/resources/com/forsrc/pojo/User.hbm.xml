@@ -13,8 +13,8 @@
             <column name="username" not-null="true" unique="true"/>
         </property>
 
-        <property name="password" type="java.lang.String">
-            <column name="password" not-null="true"/>
+        <property name="password" type="java.lang.String" update="false">
+            <column name="password" not-null="true" default="000000"/>
         </property>
 
         <property name="status" type="java.lang.Integer">
@@ -26,7 +26,7 @@
         </property>
 
         <property name="token" type="java.lang.String">
-            <column name="token" length="100"/>
+            <column name="token" length="100" default="-"/>
         </property>
     </class>
     <sql-query name="user_insert_admin">

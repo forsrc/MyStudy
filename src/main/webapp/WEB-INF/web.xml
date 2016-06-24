@@ -12,7 +12,7 @@
 
     <mime-mapping>
         <extension>js</extension>
-        <mime-type>application/javascript</mime-type>
+        <mime-type>text/javascript</mime-type>
     </mime-mapping>
 
     <mime-mapping>

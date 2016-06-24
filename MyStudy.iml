@@ -592,6 +592,7 @@
           <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/HTTPClient-0.3-3.jar!/" />
           <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/args4j-2.32.jar!/" />
           <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/org.osgi.core-4.1.0.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/jstl-1.2.jar!/" />
         </CLASSES>
         <JAVADOC>
           <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/ode-tools.jar!/" />
