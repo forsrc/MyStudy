@@ -39,21 +39,23 @@
     <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: 'unsafe-inline' https://ssl.gstatic.com; style-src 'self' 'unsafe-inline'; media-src *" /> -->
 
     <link rel="stylesheet" type="text/css" href="css/index.css" />
-    <title>Hello World</title>
+    <title>MyWeb</title>
 </head>
 
 <body>
     <div class="app">
-        <h1>PhoneGap</h1>
         <div id="deviceready" class="blink">
-            <p class="event listening">Connecting to Device</p>
-            <p class="event received">Device is Ready</p>
+            <p class="event listening"></p>
+            <p class="event received"></p>
         </div>
     </div>
     <script type="text/javascript" src="cordova.js"></script>
-    <script type="text/javascript" src="js/index.js"></script>
+    <script src="/js/lib/jquery-2.1.4.min.js"></script>
     <script type="text/javascript">
-        app.initialize();
+        (function(){
+            window.location.href = "web/login.html";
+        })();
+
     </script>
 </body>
 
