@@ -24,3 +24,8 @@ target
 target/*
 *.ser
 .idea/*
+
+src/main/webapp/MyStudy/.cordova/*
+src/main/webapp/MyStudy/hooks/*
+src/main/webapp/MyStudy/platforms/*
+src/main/webapp/MyStudy/plugins/*
