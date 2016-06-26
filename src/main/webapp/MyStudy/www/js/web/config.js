@@ -1,11 +1,14 @@
-var SERVER = "http://localhost:8077";
+//var SERVER = "http://localhost:8077/";
+var SERVER = "";
+var WEB_NAME = "";
+var PATH = "../";
 var MY_WEB_URL = {
-    "loginJson" : SERVER + "/MyStudy/www/json/login.json",
-    "listViewJson" : SERVER + "/MyStudy/www/json/appListView.json",
-    "detailJson" : SERVER + "/MyStudy/www/json/detail.json",
-    "login" : "../web/login.html",
-    "activity" : "../web/activity.html",
-    "search" : "../web/search.html",
-    "detail" : "../web/detail.html",
-    "index": "./web/login.html"
+    "loginJson" : SERVER + WEB_NAME + PATH + "json/login.json",
+    "listViewJson" : SERVER + WEB_NAME + PATH + "json/appListView.json",
+    "detailJson" : SERVER + WEB_NAME + PATH + "json/detail.json",
+    "login" : SERVER + WEB_NAME + PATH +"web/login.html",
+    "activity" : SERVER + WEB_NAME + PATH +"web/activity.html",
+    "search" : SERVER + WEB_NAME + PATH +"web/search.html",
+    "detail" : SERVER + WEB_NAME + PATH +"web/detail.html",
+    "index": SERVER + WEB_NAME +"/web/login.html"
 };
