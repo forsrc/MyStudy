@@ -4,14 +4,8 @@ $(document).ready(function () {
         return;
     }
 
-    app.initialize();
-    $.material.init();
-    $.material.ripples();
-    $(".logout").click(function () {
-
-        sessionStorage.clear();
-        window.location.href = MY_WEB_URL.login;
-    });
+    myStudyToolbar();
+    
     $("select").dropdown({
         autoinit: "select"
     });
@@ -264,21 +258,5 @@ $(document).ready(function () {
 
         });
 
-    });
-    $(window).scroll(function () {
-        var height = $(".toolbar").outerHeight();
-
-        if ($(this).scrollTop() > height) {
-            //$('.toolbar').slideUp("fast");
-            $('.toolbar').css({
-                "position": "fixed",
-                "top": "0",
-                "z-index": "999"
-            });
-        } else {
-            $('.toolbar').css({
-                "position": "static"
-            });
-        }
     });
 });

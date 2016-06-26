@@ -3,15 +3,11 @@ $(document).ready(function () {
         window.location.href = MY_WEB_URL.login;
         return;
     }
-    app.initialize();
-    $.material.init();
-    $.material.ripples();
+    myStudyToolbar();
+    
     sessionStorage.removeItem('activeTab');
     sessionStorage.removeItem('leadId');
-    $(".logout").click(function () {
-        sessionStorage.clear();
-        window.location.href = MY_WEB_URL.login;
-    });
+
     $("select").dropdown({
         "optionClass": "withripple"
     });
@@ -149,20 +145,4 @@ $(document).ready(function () {
             }
         });
 
-    $(window).scroll(function () {
-        var height = $(".toolbar").outerHeight();
-
-        if ($(this).scrollTop() > height) {
-            //$('.toolbar').slideUp("fast");
-            $('.toolbar').css({
-                "position": "fixed",
-                "top": "0",
-                "z-index": "999"
-            });
-        } else {
-            $('.toolbar').css({
-                "position": "static"
-            });
-        }
-    });
 });

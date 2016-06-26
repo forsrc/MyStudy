@@ -40,6 +40,7 @@
     <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: 'unsafe-inline' https://ssl.gstatic.com; style-src 'self' 'unsafe-inline'; media-src *" /> -->
 
 
+
     <!-- Material Design fonts -->
     <link rel="stylesheet" type="text/css" href="../css/roboto.css">
     <link rel="stylesheet" type="text/css" href="../css/material-icons.css">
@@ -55,15 +56,15 @@
 </head>
 
 <body style="background-image:url(../img/pattern.jpg);background-repeat:repeat;">
+
+<!-- container START -->
 <div class="container">
-    <span id="fail" data-toggle="snackbar" data-html-allowed="true"
-          data-content="<i class='material-icons times'>error_outline</i>&nbsp;&nbsp;Cannot connect to server. Please Try again!!"></span>
+
     <div class="row text-center">
         <div class="col-xs-12 logo">
             <img src="../img/logo.png"/>
         </div>
         <div class="col-xs-12 appname">
-
             <h3>MyStudy APP</h3>
         </div>
         <div class="col-xs-12">
@@ -89,7 +90,8 @@
                         </div>
                         <div class="form-group">
                             <div class="col-md-12">
-                                <span class="error" style="color:#eb4141;font-weight: bold;display: none;">Invalid Username / password !!</span>
+                                <span id="loginError" class="error"
+                                      style="color:#eb4141;font-weight: bold;display: none;">Invalid Username / password !!</span>
                             </div>
                         </div>
                     </fieldset>
@@ -97,20 +99,30 @@
             </div>
         </div>
     </div>
+
+     <span id="fail" data-toggle="snackbar" data-html-allowed="true"
+           data-content="<i class='material-icons times'>error_outline</i>&nbsp;&nbsp;Cannot connect to server. Please Try again!!"></span>
+
 </div>
+<!-- container END -->
+
+
+
 <div id="deviceready" class="blink">
     <p class="event listening"></p>
     <p class="event received"></p>
 </div>
+
 <script type="text/javascript" src="../cordova.js"></script>
 
 <script type="text/javascript" src="../js/lib/jquery-2.1.4.min.js"></script>
-<script type="text/javascript" src="../js/web/appConfig.js"></script>
-<script type="text/javascript" src="../js/web/config.js"></script>
 <script type="text/javascript" src="../js/lib/bootstrap.min.js"></script>
 <script type="text/javascript" src="../js/lib/material.min.js"></script>
 <script type="text/javascript" src="../js/lib/ripples.min.js"></script>
 <script type="text/javascript" src="../js/lib/snackbar.min.js"></script>
+
+<script type="text/javascript" src="../js/web/appConfig.js"></script>
+<script type="text/javascript" src="../js/web/config.js"></script>
 <script type="text/javascript" src="../js/web/login.js"></script>
 </body>
 

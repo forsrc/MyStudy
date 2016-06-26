@@ -56,6 +56,8 @@
 </head>
 
 <body>
+
+<!-- container START -->
 <div class="container" style="padding:0px;">
 
     <i class="fa fa-spinner fa-spin fa-3x fa-fw margin-bottom loader"></i>
@@ -67,7 +69,9 @@
     <div id="error" data-toggle="snackbar" data-html-allowed="true" data-content=""></div>
     <span id="fail" data-toggle="snackbar" data-html-allowed="true"
           data-content="<i class='material-icons times'>error_outline</i>&nbsp;&nbsp;Cannot load data. Please Try again!!"></span>
-    <div class="col-xs-12 toolbar">
+
+
+    <div id="toolbar" class="col-xs-12 toolbar">
         <ul class="nav nav-tabs pull-left">
             <li>
                 <a href="activity.html" class="back-arrow"><i class="material-icons">arrow_back</i></a>
@@ -229,33 +233,39 @@
             </div>
         </div>
     </div>
-</div>
 
-<!--<nav class="navbar navbar-default navbar-fixed-bottom">
-  <div class="container text-center">
-    <ul class="nav nav-tabs nav-justified bottomBar">
-        <li><a href="activity.html">Home</a></li>
-        <li><a href="search.html">Search</a></li>
-    </ul>
-  </div>
-</nav>-->
+    <!--<nav class="navbar navbar-default navbar-fixed-bottom">
+      <div class="container text-center">
+        <ul class="nav nav-tabs nav-justified bottomBar">
+            <li><a href="activity.html">Home</a></li>
+            <li><a href="search.html">Search</a></li>
+        </ul>
+      </div>
+    </nav>-->
 
 </div>
-<div id="deviceready" class="blink">
+<!-- container END -->
+
+
+<div id="deviceready">
     <p class="event listening"></p>
     <p class="event received"></p>
 </div>
+
+
 <script type="text/javascript" src="../cordova.js"></script>
 
 <script type="text/javascript" src="../js/lib/jquery-2.1.4.min.js"></script>
-<script type="text/javascript" src="../js/web/appConfig.js"></script>
-<script type="text/javascript" src="../js/web/config.js"></script>
 <script type="text/javascript" src="../js/lib/bootstrap.min.js"></script>
 <script type="text/javascript" src="../js/lib/material.min.js"></script>
 <script type="text/javascript" src="../js/lib/ripples.min.js"></script>
 <script type="text/javascript" src="../js/lib/jquery.dropdown.js"></script>
 <script type="text/javascript" src="../js/lib/snackbar.min.js"></script>
 <script type="text/javascript" src="../js/lib/anypicker.min.js"></script>
+
+<script type="text/javascript" src="../js/web/appConfig.js"></script>
+<script type="text/javascript" src="../js/web/config.js"></script>
+<script type="text/javascript" src="../js/web/common.js"></script>
 <script type="text/javascript" src="../js/web/detail.js"></script>
 </body>
 
