@@ -441,7 +441,7 @@
 
 		// Deprecated in 1.4 remove in 1.5
 		// Class used for "focus" form element state, from CSS framework
-		focusClass: "ui-focus",
+		focusClass: "ui-focus-",
 
 		// Automatically handle clicks and form submissions through Ajax, when same-domain
 		ajaxEnabled: true,
@@ -4291,6 +4291,35 @@ $.fn.grid = function( options ) {
 })( jQuery );
 
 
+(function( $, undefined ) {
+
+$.mobile.links = function( target ) {
+
+	//links within content areas, tests included with page
+	$( target )
+		.find( "a" )
+		.jqmEnhanceable()
+		.filter( ":jqmData(rel='popup')[href][href!='']" )
+		.each( function() {
+			// Accessibility info for popups
+			var element = this,
+				idref = element.getAttribute( "href" ).substring( 1 );
+
+			if ( idref ) {
+				element.setAttribute( "aria-haspopup", true );
+				element.setAttribute( "aria-owns", idref );
+				element.setAttribute( "aria-expanded", false );
+			}
+		})
+		.end()
+		.not( ".ui-btn, :jqmData(role='none'), :jqmData(role='nojs')" )
+		.addClass( "ui-link" );
+
+};
+
+})( jQuery );
+
+
 
 (function( $, undefined ) {
 	$.mobile.History = function( stack, index ) {
@@ -6637,336 +6666,6 @@ $.fn.grid = function( options ) {
 
 	$.when( domreadyDeferred, $.mobile.navreadyDeferred ).done( function() { $.mobile._registerInternalEvents(); } );
 })( jQuery );
-
-
-(function( $ ) {
-	// TODO move loader class down into the widget settings
-	var loaderClass = "ui-loader", $html = $( "html" );
-
-	$.widget( "mobile.loader", {
-		// NOTE if the global config settings are defined they will override these
-		//      options
-		options: {
-			// the theme for the loading message
-			theme: "a",
-
-			// whether the text in the loading message is shown
-			textVisible: false,
-
-			// custom html for the inner content of the loading message
-			html: "",
-
-			// the text to be displayed when the popup is shown
-			text: "loading"
-		},
-
-		defaultHtml: "<div class='" + loaderClass + "'>" +
-			"<span class='ui-icon-loading'></span>" +
-			"<h1></h1>" +
-			"</div>",
-
-		// For non-fixed supportin browsers. Position at y center (if scrollTop supported), above the activeBtn (if defined), or just 100px from top
-		fakeFixLoader: function() {
-			var activeBtn = $( "." + $.mobile.activeBtnClass ).first();
-
-			this.element
-				.css({
-					top: $.support.scrollTop && this.window.scrollTop() + this.window.height() / 2 ||
-						activeBtn.length && activeBtn.offset().top || 100
-				});
-		},
-
-		// check position of loader to see if it appears to be "fixed" to center
-		// if not, use abs positioning
-		checkLoaderPosition: function() {
-			var offset = this.element.offset(),
-				scrollTop = this.window.scrollTop(),
-				screenHeight = $.mobile.getScreenHeight();
-
-			if ( offset.top < scrollTop || ( offset.top - scrollTop ) > screenHeight ) {
-				this.element.addClass( "ui-loader-fakefix" );
-				this.fakeFixLoader();
-				this.window
-					.unbind( "scroll", this.checkLoaderPosition )
-					.bind( "scroll", $.proxy( this.fakeFixLoader, this ) );
-			}
-		},
-
-		resetHtml: function() {
-			this.element.html( $( this.defaultHtml ).html() );
-		},
-
-		// Turn on/off page loading message. Theme doubles as an object argument
-		// with the following shape: { theme: '', text: '', html: '', textVisible: '' }
-		// NOTE that the $.mobile.loading* settings and params past the first are deprecated
-		// TODO sweet jesus we need to break some of this out
-		show: function( theme, msgText, textonly ) {
-			var textVisible, message, loadSettings;
-
-			this.resetHtml();
-
-			// use the prototype options so that people can set them globally at
-			// mobile init. Consistency, it's what's for dinner
-			if ( $.type( theme ) === "object" ) {
-				loadSettings = $.extend( {}, this.options, theme );
-
-				theme = loadSettings.theme;
-			} else {
-				loadSettings = this.options;
-
-				// here we prefer the theme value passed as a string argument, then
-				// we prefer the global option because we can't use undefined default
-				// prototype options, then the prototype option
-				theme = theme || loadSettings.theme;
-			}
-
-			// set the message text, prefer the param, then the settings object
-			// then loading message
-			message = msgText || ( loadSettings.text === false ? "" : loadSettings.text );
-
-			// prepare the dom
-			$html.addClass( "ui-loading" );
-
-			textVisible = loadSettings.textVisible;
-
-			// add the proper css given the options (theme, text, etc)
-			// Force text visibility if the second argument was supplied, or
-			// if the text was explicitly set in the object args
-			this.element.attr("class", loaderClass +
-				" ui-corner-all ui-body-" + theme +
-				" ui-loader-" + ( textVisible || msgText || theme.text ? "verbose" : "default" ) +
-				( loadSettings.textonly || textonly ? " ui-loader-textonly" : "" ) );
-
-			// TODO verify that jquery.fn.html is ok to use in both cases here
-			//      this might be overly defensive in preventing unknowing xss
-			// if the html attribute is defined on the loading settings, use that
-			// otherwise use the fallbacks from above
-			if ( loadSettings.html ) {
-				this.element.html( loadSettings.html );
-			} else {
-				this.element.find( "h1" ).text( message );
-			}
-
-			// If the pagecontainer widget has been defined we may use the :mobile-pagecontainer
-			// and attach to the element on which the pagecontainer widget has been defined. If not,
-			// we attach to the body.
-			this.element.appendTo( $.mobile.pagecontainer ?
-				$( ":mobile-pagecontainer" ) : $( "body" ) );
-
-			// check that the loader is visible
-			this.checkLoaderPosition();
-
-			// on scroll check the loader position
-			this.window.bind( "scroll", $.proxy( this.checkLoaderPosition, this ) );
-		},
-
-		hide: function() {
-			$html.removeClass( "ui-loading" );
-
-			if ( this.options.text ) {
-				this.element.removeClass( "ui-loader-fakefix" );
-			}
-
-			this.window.unbind( "scroll", this.fakeFixLoader );
-			this.window.unbind( "scroll", this.checkLoaderPosition );
-		}
-	});
-
-})(jQuery, this);
-
-
-(function( $, window, undefined ) {
-	var	$html = $( "html" ),
-		$window = $.mobile.window;
-
-	//remove initial build class (only present on first pageshow)
-	function hideRenderingClass() {
-		$html.removeClass( "ui-mobile-rendering" );
-	}
-
-	// trigger mobileinit event - useful hook for configuring $.mobile settings before they're used
-	$( window.document ).trigger( "mobileinit" );
-
-	// support conditions
-	// if device support condition(s) aren't met, leave things as they are -> a basic, usable experience,
-	// otherwise, proceed with the enhancements
-	if ( !$.mobile.gradeA() ) {
-		return;
-	}
-
-	// override ajaxEnabled on platforms that have known conflicts with hash history updates
-	// or generally work better browsing in regular http for full page refreshes (BB5, Opera Mini)
-	if ( $.mobile.ajaxBlacklist ) {
-		$.mobile.ajaxEnabled = false;
-	}
-
-	// Add mobile, initial load "rendering" classes to docEl
-	$html.addClass( "ui-mobile ui-mobile-rendering" );
-
-	// This is a fallback. If anything goes wrong (JS errors, etc), or events don't fire,
-	// this ensures the rendering class is removed after 5 seconds, so content is visible and accessible
-	setTimeout( hideRenderingClass, 5000 );
-
-	$.extend( $.mobile, {
-		// find and enhance the pages in the dom and transition to the first page.
-		initializePage: function() {
-			// find present pages
-			var path = $.mobile.path,
-				$pages = $( ":jqmData(role='page'), :jqmData(role='dialog')" ),
-				hash = path.stripHash( path.stripQueryParams(path.parseLocation().hash) ),
-				theLocation = $.mobile.path.parseLocation(),
-				hashPage = hash ? document.getElementById( hash ) : undefined;
-
-			// if no pages are found, create one with body's inner html
-			if ( !$pages.length ) {
-				$pages = $( "body" ).wrapInner( "<div data-" + $.mobile.ns + "role='page'></div>" ).children( 0 );
-			}
-
-			// add dialogs, set data-url attrs
-			$pages.each(function() {
-				var $this = $( this );
-
-				// unless the data url is already set set it to the pathname
-				if ( !$this[ 0 ].getAttribute( "data-" + $.mobile.ns + "url" ) ) {
-					$this.attr( "data-" + $.mobile.ns + "url", $this.attr( "id" ) ||
-						path.convertUrlToDataUrl( theLocation.pathname + theLocation.search ) );
-				}
-			});
-
-			// define first page in dom case one backs out to the directory root (not always the first page visited, but defined as fallback)
-			$.mobile.firstPage = $pages.first();
-
-			// define page container
-			$.mobile.pageContainer = $.mobile.firstPage
-				.parent()
-				.addClass( "ui-mobile-viewport" )
-				.pagecontainer();
-
-			// initialize navigation events now, after mobileinit has occurred and the page container
-			// has been created but before the rest of the library is alerted to that fact
-			$.mobile.navreadyDeferred.resolve();
-
-			// alert listeners that the pagecontainer has been determined for binding
-			// to events triggered on it
-			$window.trigger( "pagecontainercreate" );
-
-			// cue page loading message
-			$.mobile.loading( "show" );
-
-			//remove initial build class (only present on first pageshow)
-			hideRenderingClass();
-
-			// if hashchange listening is disabled, there's no hash deeplink,
-			// the hash is not valid (contains more than one # or does not start with #)
-			// or there is no page with that hash, change to the first page in the DOM
-			// Remember, however, that the hash can also be a path!
-			if ( ! ( $.mobile.hashListeningEnabled &&
-				$.mobile.path.isHashValid( location.hash ) &&
-				( $( hashPage ).is( ":jqmData(role='page')" ) ||
-					$.mobile.path.isPath( hash ) ||
-					hash === $.mobile.dialogHashKey ) ) ) {
-
-				// make sure to set initial popstate state if it exists
-				// so that navigation back to the initial page works properly
-				if ( $.event.special.navigate.isPushStateEnabled() ) {
-					$.mobile.navigate.navigator.squash( path.parseLocation().href );
-				}
-
-				$.mobile.changePage( $.mobile.firstPage, {
-					transition: "none",
-					reverse: true,
-					changeHash: false,
-					fromHashChange: true
-				});
-			} else {
-				// trigger hashchange or navigate to squash and record the correct
-				// history entry for an initial hash path
-				if ( !$.event.special.navigate.isPushStateEnabled() ) {
-					$window.trigger( "hashchange", [true] );
-				} else {
-					// TODO figure out how to simplify this interaction with the initial history entry
-					// at the bottom js/navigate/navigate.js
-					$.mobile.navigate.history.stack = [];
-					$.mobile.navigate( $.mobile.path.isPath( location.hash ) ? location.hash : location.href );
-				}
-			}
-		}
-	});
-
-	$(function() {
-		//Run inlineSVG support test
-		$.support.inlineSVG();
-
-		// check which scrollTop value should be used by scrolling to 1 immediately at domready
-		// then check what the scroll top is. Android will report 0... others 1
-		// note that this initial scroll won't hide the address bar. It's just for the check.
-
-		// hide iOS browser chrome on load if hideUrlBar is true this is to try and do it as soon as possible
-		if ( $.mobile.hideUrlBar ) {
-			window.scrollTo( 0, 1 );
-		}
-
-		// if defaultHomeScroll hasn't been set yet, see if scrollTop is 1
-		// it should be 1 in most browsers, but android treats 1 as 0 (for hiding addr bar)
-		// so if it's 1, use 0 from now on
-		$.mobile.defaultHomeScroll = ( !$.support.scrollTop || $.mobile.window.scrollTop() === 1 ) ? 0 : 1;
-
-		//dom-ready inits
-		if ( $.mobile.autoInitializePage ) {
-			$.mobile.initializePage();
-		}
-
-		// window load event
-		// hide iOS browser chrome on load if hideUrlBar is true this is as fall back incase we were too early before
-		if ( $.mobile.hideUrlBar ) {
-			$window.load( $.mobile.silentScroll );
-		}
-
-		if ( !$.support.cssPointerEvents ) {
-			// IE and Opera don't support CSS pointer-events: none that we use to disable link-based buttons
-			// by adding the 'ui-disabled' class to them. Using a JavaScript workaround for those browser.
-			// https://github.com/jquery/jquery-mobile/issues/3558
-
-			// DEPRECATED as of 1.4.0 - remove ui-disabled after 1.4.0 release
-			// only ui-state-disabled should be present thereafter
-			$.mobile.document.delegate( ".ui-state-disabled,.ui-disabled", "vclick",
-				function( e ) {
-					e.preventDefault();
-					e.stopImmediatePropagation();
-				}
-			);
-		}
-	});
-}( jQuery, this ));
-
-(function( $, undefined ) {
-
-$.mobile.links = function( target ) {
-
-	//links within content areas, tests included with page
-	$( target )
-		.find( "a" )
-		.jqmEnhanceable()
-		.filter( ":jqmData(rel='popup')[href][href!='']" )
-		.each( function() {
-			// Accessibility info for popups
-			var element = this,
-				idref = element.getAttribute( "href" ).substring( 1 );
-
-			if ( idref ) {
-				element.setAttribute( "aria-haspopup", true );
-				element.setAttribute( "aria-owns", idref );
-				element.setAttribute( "aria-expanded", false );
-			}
-		})
-		.end()
-		.not( ".ui-btn, :jqmData(role='none'), :jqmData(role='nojs')" )
-		.addClass( "ui-link" );
-
-};
-
-})( jQuery );
-
 
 (function( $, undefined ) {
 
