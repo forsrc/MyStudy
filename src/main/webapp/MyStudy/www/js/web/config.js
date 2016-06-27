@@ -1,3 +1,5 @@
+"use strict";
+
 //var SERVER = "http://localhost:8077/";
 var SERVER = "";
 var WEB_NAME = "";

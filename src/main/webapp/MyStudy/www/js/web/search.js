@@ -1,10 +1,12 @@
+"use strict";
+
 $(document).ready(function () {
     if (!sessionStorage.sessionId) {
         window.location.href = MY_WEB_URL.login;
         return;
     }
     myStudyToolbar();
-    
+
     sessionStorage.removeItem('activeTab');
     sessionStorage.removeItem('leadId');
 
@@ -84,7 +86,7 @@ $(document).ready(function () {
                                         + value.phone
                                         + '"><i class="material-icons">call</i></a>';
                                 }
-                                node = '<tr id="' + value.id
+                                var node = '<tr id="' + value.id
                                     + '"><td class="leadonClick">'
                                     + newPhone + '</td><td class="leadnoClick">'
                                     + value.name

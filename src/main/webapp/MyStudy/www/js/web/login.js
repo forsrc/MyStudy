@@ -1,3 +1,5 @@
+"use strict";
+
 $(document).ready(function () {
     if (sessionStorage.sessionId) {
         window.location.href = MY_WEB_URL.activity;

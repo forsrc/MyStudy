@@ -1,3 +1,5 @@
+"use strict";
+
 $(document).ready(function () {
     if (!sessionStorage.sessionId) {
         window.location.href = MY_WEB_URL.login;
@@ -5,7 +7,7 @@ $(document).ready(function () {
     }
 
     myStudyToolbar();
-    
+
     $("select").dropdown({
         autoinit: "select"
     });
@@ -87,14 +89,14 @@ $(document).ready(function () {
                     $('#rating').val(response['0'].rating).trigger("change");
 
                 var date = new Date();
-                currentDate = date.getDate(); // Get current date
-                month = date.getMonth(); // current month
-                year = date.getFullYear();
+                var currentDate = date.getDate(); // Get current date
+                var month = date.getMonth(); // current month
+                var year = date.getFullYear();
                 var currentTime = new Date();
-                hour = currentTime.getHours();
+                var hour = currentTime.getHours();
                 min = currentTime.getMinutes();
-                sec = 00;
-                dStartD = new Date(year, month, currentDate, hour, min, sec);
+                sec = "00";
+                var dStartD = new Date(year, month, currentDate, hour, min, sec);
                 if (response['0'].follow_up_date != null) {
 
                     var date = response['0'].follow_up_date;
@@ -104,6 +106,7 @@ $(document).ready(function () {
                     var h = date.substr(11, 2);
                     var m = date.substr(14, 2);
                     var s = date.substr(17, 2);
+                    var oAP1 = {};
 
                     var newDate = new Date(yy, mm, dd, h, m, s);
                     $("#fupdate").AnyPicker({
@@ -169,7 +172,7 @@ $(document).ready(function () {
                 $("#sdetail").val(response['0'].lead_source_detail);
                 $.each(response.activity_log, function (key, value) {
                     var excerpt = value.description.substr(0, 59);
-                    node =
+                    var node =
                         '<div class="list-group-item">\
                                 <div class="row-action-primary">\
                                     <i class="material-icons">track_changes</i>\
