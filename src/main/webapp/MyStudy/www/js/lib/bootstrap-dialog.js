@@ -405,7 +405,9 @@
             return this;
         },
         createModalDialog: function () {
-            return $('<div class="modal-dialog"></div>');
+            var h = Math.ceil(window.screen.height / 6.18);
+            return $('<div class="modal-dialog" style="top:' + h
+                + 'px;"></div>');
         },
         getModalDialog: function () {
             return this.$modalDialog;
