@@ -84,8 +84,7 @@ body
    width: 100%;
     border-bottom: 0;
     display: table;
-    table: fixed;
-    layout:fixed;
+    table-layout:fixed;
 }
 .nav.activityTabs>li>a,.nav.detailTabs>li>a {
     position: relative;
