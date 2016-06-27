@@ -57,7 +57,7 @@
 <!-- container START -->
 <div class="container" style="padding:0px;">
 
-    <i class="fa fa-spinner fa-spin fa-3x fa-fw margin-bottom loader"></i>
+    <i id="loader" class="fa fa-spinner fa-spin fa-3x fa-fw margin-bottom loader"></i>
 
     <div class="col-xs-12 toolbar">
         <ul class="nav nav-tabs pull-left">
@@ -66,7 +66,8 @@
             </li>-->
             <li>
                 <!--<span class="page-title">MyStudy</span>-->
-                <a><i class="material-icons">account_circle</i><span id="username" style="color:green;font-size: 12px;"></span></a>
+                <a><i class="material-icons">account_circle</i><span id="username"
+                                                                     style="color:green;font-size: 12px;"></span></a>
             </li>
         </ul>
         <ul class="nav nav-tabs pull-right">
@@ -97,26 +98,25 @@
     </div>
 
 
+    <nav class="navbar navbar-default navbar-fixed-bottom">
+        <div class="container text-center">
+            <ul class="nav nav-tabs nav-justified bottomBar">
+                <li><a href="#"><i class="material-icons">home</i></a></li>
+                <li><a href="#"><i class="material-icons">message</i></a></li>
+                <li><a href="#"><i class="material-icons">search</i></a></li>
+                <li><a href="#"><i class="material-icons">settings</i></a></li>
+            </ul>
+        </div>
+    </nav>
 
-<nav class="navbar navbar-default navbar-fixed-bottom">
-    <div class="container text-center">
-        <ul class="nav nav-tabs nav-justified bottomBar">
-            <li><a href="#"><i class="material-icons">home</i></a></li>
-            <li><a href="#"><i class="material-icons">message</i></a></li>
-            <li><a href="#"><i class="material-icons">search</i></a></li>
-            <li><a href="#"><i class="material-icons">settings</i></a></li>
-        </ul>
+    <div id="deviceready">
+        <p class="event listening"></p>
+        <p class="event received"></p>
     </div>
-</nav>
 
 </div>
 <!-- container END -->
 
-
-<div id="deviceready">
-    <p class="event listening"></p>
-    <p class="event received"></p>
-</div>
 
 <script type="text/javascript" src="../cordova.js"></script>
 

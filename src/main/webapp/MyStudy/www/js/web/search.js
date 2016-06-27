@@ -51,7 +51,7 @@ $(document).ready(function () {
             beforeSend: function () {
                 $(".search-form").fadeOut(
                     "fast");
-                $(".loader").fadeIn("fast");
+                $("#loader").fadeIn("fast");
 
 
             },
@@ -60,7 +60,7 @@ $(document).ready(function () {
                     result));
                 //alert(result.length);
                 console.log(JSON.stringify(result));
-                $(".loader").fadeOut("slow",
+                $("#loader").fadeOut("slow",
                     function () {
                         $(".search-results").fadeIn();
                         if (result.length) {

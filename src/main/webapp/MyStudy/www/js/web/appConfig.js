@@ -18,9 +18,15 @@
  */
 "use strict";
 var app = {
+    initialized: false,
     // Application Constructor
     initialize: function() {
+        if(this.initialized){
+            console.log(new Date() + " -> Initialized.");
+            return;
+        }
         this.bindEvents();
+        this.initialized = true;
     },
     // Bind Event Listeners
     //
@@ -47,6 +53,6 @@ var app = {
         //receivedElement.setAttribute('style', 'display:block;');
         receivedElement.setAttribute('style', 'display:none;');
 
-        console.log('Received Event: ' + id);
+        console.log(new Date() + ' -> Received Event: ' + id);
     }
 };

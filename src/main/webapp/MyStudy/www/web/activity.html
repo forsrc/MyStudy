@@ -58,7 +58,7 @@
 <!-- container START -->
 <div class="container" style="padding:0px;">
 
-    <i class="fa fa-spinner fa-spin fa-3x fa-fw margin-bottom loader"></i>
+    <i id="loader" class="fa fa-spinner fa-spin fa-3x fa-fw margin-bottom loader"></i>
 
     <!-- toolbar START -->
     <div id="toolbar" class="col-xs-12 toolbar">
@@ -94,7 +94,7 @@
     <!-- toolbar END -->
 
     <!--  -->
-    <div class="col-xs-12" style="padding:0px;">
+    <div class="col-xs-12" style="padding:0px; background-color:white;">
 
         <ul class="nav nav-tabs nav-justified activityTabs one-edge-shadow" style="margin-bottom: 15px;">
             <li class="active"><a href="#newLeads" data-toggle="tab">NEW LEADS</a></li>
@@ -156,14 +156,16 @@
 
     <a class="btn btn-default btn-fab reload"><i class="material-icons">refresh</i></a>
 
+    <div id="deviceready">
+        <p class="event listening"></p>
+        <p class="event received"></p>
+    </div>
+
+
 </div>
 <!-- container END -->
 
 
-<div id="deviceready">
-    <p class="event listening"></p>
-    <p class="event received"></p>
-</div>
 
 
 <script type="text/javascript" src="../cordova.js"></script>

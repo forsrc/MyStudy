@@ -58,7 +58,7 @@
 <!-- container START -->
 <div class="container" style="padding:0px;">
 
-    <i class="fa fa-spinner fa-spin fa-3x fa-fw margin-bottom loader"></i>
+    <i id="loader" class="fa fa-spinner fa-spin fa-3x fa-fw margin-bottom loader"></i>
 
     <div id="toolbar" class="col-xs-12 toolbar">
         <ul class="nav nav-tabs pull-left">
@@ -124,13 +124,14 @@
         </div>
     </nav>
 
+    <div id="deviceready">
+        <p class="event listening"></p>
+        <p class="event received"></p>
+    </div>
+
 </div>
 <!-- container END -->
 
-<div id="deviceready">
-    <p class="event listening"></p>
-    <p class="event received"></p>
-</div>
 <script type="text/javascript" src="../cordova.js"></script>
 
 <script type="text/javascript" src="../js/lib/jquery-2.1.4.min.js"></script>
@@ -142,10 +143,14 @@
 
 <script type="text/javascript" src="../js/web/appConfig.js"></script>
 <script type="text/javascript" src="../js/web/config.js"></script>
+<script type="text/javascript" src="../js/web/common.js"></script>
 
 <script type="text/javascript">
     $(document).ready(function () {
+        $("#loader").fadeOut("slow", function () {
 
+
+        });
     });
 
 

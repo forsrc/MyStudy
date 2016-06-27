@@ -29,13 +29,13 @@ $(document).ready(function () {
         url: MY_WEB_URL.detailJson + "?" + sessionStorage.sessionId + '&id=' + id + '&user_name=' + sessionStorage.username,
         dataType: 'json',
         beforeSend: function () {
-            $(".loader").fadeIn("fast");
+            $("#loader").fadeIn("fast");
         },
         success: function (response) {
             //var response = $.parseJSON(JSON.stringify(response));
             //console.log(JSON.stringify(response));
 
-            $(".loader").fadeOut("slow", function () {
+            $("#loader").fadeOut("slow", function () {
 
                 $(".detailTable tbody").css("display", "table-row-group");
                 pid = response['0'].project_id;
