@@ -44,12 +44,16 @@
     <link rel="stylesheet" type="text/css" href="../css/font-awesome.css">
     <!-- Bootstrap -->
     <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../css/jquery.mobile.icons-1.4.5.min.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/jquery.mobile.inline-svg-1.4.5.min.css"/>
 
     <!-- Bootstrap Material Design -->
     <link rel="stylesheet" type="text/css" href="../css/bootstrap-material-design.min.css">
     <link rel="stylesheet" type="text/css" href="../css/ripples.min.css">
     <link rel="stylesheet" type="text/css" href="../css/snackbar.min.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/bootstrap-dialog.min.css"/>
     <link rel="stylesheet" type="text/css" href="../css/index.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/custom.css"/>
     <title>MyStudy Index</title>
 </head>
 
@@ -98,6 +102,9 @@
     <div class="col-xs-12" style="padding:0px;">
         <!-- ####################### -->
 
+
+
+
         <div class="form-group label-floating">
             <label class="control-label" for="date">Date</label>
             <input type="date" class="form-control" id="date">
@@ -107,6 +114,28 @@
             <label class="control-label" for="datetime">DateTime</label>
             <input type="datetime" class="form-control" id="datetime">
         </div>
+
+        <div class="form-group label-floating">
+            <label class="control-label" for="datepicker">Datepicker</label>
+            <input id="datepicker" readonly="readonly" type="text" class="form-control date-input-css"
+                   data-inline="true" data-role="date">
+        </div>
+
+        <div class="form-group label-floating">
+            <label class="control-label" for="select">select</label>
+            <select id="select" class="form-control">
+                <option value="0">select</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+            </select>
+        </div>
+
+        <div class="form-group label-floating">
+            <label class="control-label" for="dialog">Dialog</label>
+            <a id="dialog" href="activity.html" data-rel="dialog" class="form-control">Open dialog</a>
+        </div>
+        <br>
+        <br>
 
         <!--m####################### -->
     </div>
@@ -132,6 +161,8 @@
 </div>
 <!-- container END -->
 
+
+
 <script type="text/javascript" src="../cordova.js"></script>
 
 <script type="text/javascript" src="../js/lib/jquery-2.1.4.min.js"></script>
@@ -139,7 +170,7 @@
 <script type="text/javascript" src="../js/lib/material.min.js"></script>
 <script type="text/javascript" src="../js/lib/ripples.min.js"></script>
 <script type="text/javascript" src="../js/lib/snackbar.min.js"></script>
-
+<script type="text/javascript" src="../js/lib/bootstrap-dialog.js"></script>
 
 <script type="text/javascript" src="../js/web/appConfig.js"></script>
 <script type="text/javascript" src="../js/web/config.js"></script>
@@ -147,12 +178,38 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
+       // $(".ui-input-text").removeClass();
+        //$(".ui-btn").removeClass();
+        //$("select").parents("div").find(".ui-btn").removeClass();
+
         $("#loader").fadeOut("slow", function () {
 
+            // $( ".date-input-css" ).datepicker();
+        });
 
+        BootstrapDialog.confirm({
+            title: 'WARNING',
+            message: 'Warning! Drop your banana?',
+            type: BootstrapDialog.TYPE_WARNING, // <-- Default value is BootstrapDialog.TYPE_PRIMARY
+            closable: true, // <-- Default value is false
+            draggable: true, // <-- Default value is false
+            btnCancelLabel: 'Do not drop it!', // <-- Default value is 'Cancel',
+            btnOKLabel: 'Drop it!', // <-- Default value is 'OK',
+            btnOKClass: 'btn-warning', // <-- If you didn't specify it, dialog type will be used,
+            callback: function(result) {
+                // result will be true if button was click, while it will be false if users close the dialog directly.
+                if(result) {
+                    alert('Yup.');
+                }else {
+                    alert('Nope.');
+                }
+            }
         });
     });
 
+    function print() {
+        alert("OK");
+    }
 
 </script>
 
