@@ -57,10 +57,10 @@
     <title>MyStudy Index</title>
 </head>
 
-<body>
+<body id="root">
 
 <!-- container START -->
-<div class="container" style="padding:0px;">
+<div id="container" class="container" style="padding:0px;">
 
     <i id="loader" class="fa fa-spinner fa-spin fa-3x fa-fw margin-bottom loader"></i>
 
@@ -99,10 +99,8 @@
     </div>
 
     <!-- START -->
-    <div class="col-xs-12" style="padding:0px;">
+    <div id="start" class="col-xs-12" style="padding:15px;">
         <!-- ####################### -->
-
-
 
 
         <div class="form-group label-floating">
@@ -111,8 +109,13 @@
         </div>
 
         <div class="form-group label-floating">
-            <label class="control-label" for="datetime">DateTime</label>
-            <input type="datetime" class="form-control" id="datetime">
+            <label class="control-label" for="Text1">Text1</label>
+            <input type="text" class="form-control" id="Text1">
+        </div>
+
+        <div class="form-group label-floating">
+            <label for="Text2">Text2</label>
+            <input type="text" class="form-control" id="Text2">
         </div>
 
         <div class="form-group label-floating">
@@ -130,12 +133,34 @@
             </select>
         </div>
 
+        <div class="form-group">
+            <label for="rating">Rating</label>
+            <select id="rating" class="form-control">
+                <option value="1">1</option>
+                <option value="2">2</option>
+            </select>
+        </div>
+
         <div class="form-group label-floating">
             <label class="control-label" for="dialog">Dialog</label>
             <a id="dialog" href="activity.html" data-rel="dialog" class="form-control">Open dialog</a>
         </div>
+
         <br>
         <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <div class="form-group label-floating">
+            <a href="javascript:void(0)" onclick="dialog1();" class="btn btn-raised btn-primary save">Dialog</a>
+            <a href="javascript:void(0)" onclick="modal.open();" class="btn btn-raised btn-primary save">Dialog</a>
+        </div>
+        <div class="form-group label-floating">
+            <a href="#start" class="btn btn-raised btn-primary save">To Top</a>
+        </div>
+
+        <a href="#root" class="btn btn-default btn-fab reload"><i class="material-icons">vertical_align_top</i></a>
 
         <!--m####################### -->
     </div>
@@ -158,10 +183,34 @@
         <p class="event received"></p>
     </div>
 
+
 </div>
 <!-- container END -->
 
 
+<div id="modal" class="modal col-xs-12" style="padding:15px; top:100px;">
+    <div class="modal-dialog animated">
+        <div class="modal-content">
+            <form class="form-horizontal" method="get">
+                <div class="modal-header">
+                    <strong>Yep, I'm a dialog...</strong>
+                </div>
+
+                <div class="modal-body">
+                    <div class="form-group label-floating">
+                        <label class="control-label" for="dummyText">Name</label>
+                        <input type="text" name="dummyText" id="dummyText" class="form-control"/>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button class="btn btn-default" type="button" onclick="modal.close();">Cancel</button>
+                    <button class="btn btn-primary" type="submit" onclick="modal.close();">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 
 <script type="text/javascript" src="../cordova.js"></script>
 
@@ -171,6 +220,7 @@
 <script type="text/javascript" src="../js/lib/ripples.min.js"></script>
 <script type="text/javascript" src="../js/lib/snackbar.min.js"></script>
 <script type="text/javascript" src="../js/lib/bootstrap-dialog.js"></script>
+<script type="text/javascript" src="../js/lib/rmodal.min.js"></script>
 
 <script type="text/javascript" src="../js/web/appConfig.js"></script>
 <script type="text/javascript" src="../js/web/config.js"></script>
@@ -187,6 +237,14 @@
             // $( ".date-input-css" ).datepicker();
         });
 
+        dialog2();
+    });
+
+    function print() {
+        alert("OK");
+    }
+
+    function dialog1() {
         BootstrapDialog.confirm({
             title: 'WARNING',
             message: 'Warning! Drop your banana?',
@@ -196,19 +254,47 @@
             btnCancelLabel: 'Do not drop it!', // <-- Default value is 'Cancel',
             btnOKLabel: 'Drop it!', // <-- Default value is 'OK',
             btnOKClass: 'btn-warning', // <-- If you didn't specify it, dialog type will be used,
-            callback: function(result) {
+            callback: function (result) {
                 // result will be true if button was click, while it will be false if users close the dialog directly.
-                if(result) {
+                if (result) {
                     alert('Yup.');
-                }else {
+                } else {
                     alert('Nope.');
                 }
             }
         });
-    });
+    }
 
-    function print() {
-        alert("OK");
+    function dialog2() {
+        var modal = new RModal(document.getElementById('modal'), {
+            //content: 'Abracadabra'
+            beforeOpen: function (next) {
+                console.log('beforeOpen');
+                next();
+            }
+            , afterOpen: function () {
+                console.log('opened');
+            }
+
+            , beforeClose: function (next) {
+                console.log('beforeClose');
+                next();
+            }
+            , afterClose: function () {
+                console.log('closed');
+            }
+            // , bodyClass: 'modal-open'
+            // , dialogClass: 'modal-dialog modal-dialog-lg'
+            // , dialogOpenClass: 'animated fadeIn'
+            // , dialogCloseClass: 'animated fadeOut'
+
+            // , focus: true
+            // , focusElements: ['input.form-control', 'textarea', 'button.btn-primary']
+
+            // , escapeClose: true
+        });
+        window.modal = modal;
+
     }
 
 </script>
