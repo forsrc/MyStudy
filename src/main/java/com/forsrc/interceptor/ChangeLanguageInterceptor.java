@@ -17,20 +17,22 @@
 package com.forsrc.interceptor;
 
 import com.forsrc.utils.WebUtils;
-import com.opensymphony.xwork2.ActionInvocation;
+/*import com.opensymphony.xwork2.ActionInvocation;
 import com.opensymphony.xwork2.interceptor.AbstractInterceptor;
-import org.apache.struts2.ServletActionContext;
+import org.apache.struts2.ServletActionContext;*/
 
 import javax.servlet.http.HttpServletRequest;
 
-public class ChangeLanguageInterceptor extends AbstractInterceptor {
+public class ChangeLanguageInterceptor
+        //extends AbstractInterceptor
+{
 
     /**
      * @Fields serialVersionUID :
      */
     private static final long serialVersionUID = -8692011752175474388L;
 
-    @Override
+    /*@Override
     public String intercept(ActionInvocation invocation) throws Exception {
 
         HttpServletRequest request = (HttpServletRequest) invocation
@@ -39,6 +41,6 @@ public class ChangeLanguageInterceptor extends AbstractInterceptor {
         WebUtils.setLanguage(request);
 
         return invocation.invoke();
-    }
+    }*/
 
 }

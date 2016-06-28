@@ -2,7 +2,7 @@ package com.forsrc.utils;
 
 
 import com.forsrc.constant.KeyConstants;
-import com.opensymphony.xwork2.ActionContext;
+//import com.opensymphony.xwork2.ActionContext;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
 import javax.servlet.http.HttpServletRequest;
@@ -82,10 +82,10 @@ public class WebUtils {
         Locale locale = getLocale(language);
         language = locale.getLanguage() + "_" + locale.getCountry();
         //struts2
-        ActionContext actionContext = ActionContext.getContext();
+        /*ActionContext actionContext = ActionContext.getContext();
         if (actionContext != null) { //struts2
             actionContext.setLocale(locale);
-        }
+        }*/
         request.setAttribute(KeyConstants.LANGUAGE.getKey(), language);
         request.getSession().setAttribute(KeyConstants.LANGUAGE.getKey(), language);
         request.getSession().setAttribute(SessionLocaleResolver.LOCALE_SESSION_ATTRIBUTE_NAME, locale);

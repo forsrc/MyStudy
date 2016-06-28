@@ -18,23 +18,24 @@ package com.forsrc.interceptor;
 
 import com.forsrc.filter.ResourceFilter;
 import com.forsrc.utils.WebUtils;
-import com.opensymphony.xwork2.ActionInvocation;
-import com.opensymphony.xwork2.interceptor.AbstractInterceptor;
-import org.apache.struts2.ServletActionContext;
+//import com.opensymphony.xwork2.ActionInvocation;
+//import com.opensymphony.xwork2.interceptor.AbstractInterceptor;
+//import org.apache.struts2.ServletActionContext;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class ResourceInterceptor extends AbstractInterceptor implements HandlerInterceptor {
+public class ResourceInterceptor //extends AbstractInterceptor
+        implements HandlerInterceptor {
 
     /**
      * @Fields serialVersionUID :
      */
     private static final long serialVersionUID = -8692011752175474388L;
 
-    @Override
+    /*@Override
     public String intercept(ActionInvocation invocation) throws Exception {
         //struts2
         HttpServletRequest request = (HttpServletRequest) invocation
@@ -44,7 +45,7 @@ public class ResourceInterceptor extends AbstractInterceptor implements HandlerI
 
         ResourceFilter.setResource(request, response);
         return invocation.invoke();
-    }
+    }*/
 
     @Override
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) throws Exception {

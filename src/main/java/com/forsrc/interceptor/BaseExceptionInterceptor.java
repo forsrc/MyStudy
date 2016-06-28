@@ -19,11 +19,11 @@ package com.forsrc.interceptor;
 import com.forsrc.exception.ActionException;
 import com.forsrc.exception.RollbackException;
 import com.forsrc.exception.ServiceException;
-import com.opensymphony.xwork2.ActionContext;
-import com.opensymphony.xwork2.ActionInvocation;
-import com.opensymphony.xwork2.interceptor.AbstractInterceptor;
+//import com.opensymphony.xwork2.ActionContext;
+//import com.opensymphony.xwork2.ActionInvocation;
+//import com.opensymphony.xwork2.interceptor.AbstractInterceptor;
 import org.apache.log4j.Logger;
-import org.apache.struts2.ServletActionContext;
+//import org.apache.struts2.ServletActionContext;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -33,7 +33,9 @@ import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.Map;
 
-public class BaseExceptionInterceptor extends AbstractInterceptor implements HandlerExceptionResolver {
+public class BaseExceptionInterceptor
+        //extends AbstractInterceptor
+        implements HandlerExceptionResolver {
 
     private static final Logger LOGGER = Logger
             .getLogger(BaseExceptionInterceptor.class);
@@ -43,7 +45,7 @@ public class BaseExceptionInterceptor extends AbstractInterceptor implements Han
      */
     private static final long serialVersionUID = -896488463833135298L;
 
-    @Override
+    /*@Override
     public String intercept(ActionInvocation invocation) throws Exception {
         //struts2
         HttpServletRequest request = ServletActionContext.getRequest();
@@ -69,7 +71,7 @@ public class BaseExceptionInterceptor extends AbstractInterceptor implements Han
             return "exception";
         }
 
-    }
+    }*/
 
     @Override
     public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response, Object handler, Exception e) {

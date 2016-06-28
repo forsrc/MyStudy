@@ -19,9 +19,9 @@ package com.forsrc.interceptor;
 import com.forsrc.constant.KeyConstants;
 import com.forsrc.pojo.User;
 import com.forsrc.utils.WebUtils;
-import com.opensymphony.xwork2.ActionInvocation;
-import com.opensymphony.xwork2.interceptor.AbstractInterceptor;
-import org.apache.struts2.ServletActionContext;
+//import com.opensymphony.xwork2.ActionInvocation;
+//import com.opensymphony.xwork2.interceptor.AbstractInterceptor;
+//import org.apache.struts2.ServletActionContext;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -31,14 +31,15 @@ import javax.servlet.http.HttpSession;
 import java.math.BigDecimal;
 import java.util.Date;
 
-public class LoginValidateInterceptor extends AbstractInterceptor implements HandlerInterceptor {
+public class LoginValidateInterceptor //extends AbstractInterceptor
+        implements HandlerInterceptor {
 
     /**
      * @Fields serialVersionUID :
      */
     private static final long serialVersionUID = 1288902924303655764L;
 
-    @Override
+    /*@Override
     public String intercept(ActionInvocation invocation) throws Exception {
         //struts2
         HttpServletRequest request = ServletActionContext.getRequest();
@@ -46,7 +47,7 @@ public class LoginValidateInterceptor extends AbstractInterceptor implements Han
         WebUtils.setContentType(request, response);
         return isLogin(request, response) ? invocation.invoke() : "toLogin";
 
-    }
+    }*/
 
     private boolean isLogin(HttpServletRequest request, HttpServletResponse response) {
         //HttpServletRequest request = ServletActionContext.getRequest();

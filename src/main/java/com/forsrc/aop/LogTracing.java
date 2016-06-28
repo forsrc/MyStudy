@@ -19,9 +19,9 @@ package com.forsrc.aop;
 
 import com.forsrc.constant.KeyConstants;
 import com.forsrc.utils.WebUtils;
-import com.opensymphony.xwork2.ActionContext;
+//import com.opensymphony.xwork2.ActionContext;
 import org.apache.log4j.Logger;
-import org.apache.struts2.ServletActionContext;
+//import org.apache.struts2.ServletActionContext;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -84,12 +84,15 @@ public final class LogTracing {
 
     private void appendMessage(StringBuilder msg) {
 
-        if (ActionContext.getContext() == null && RequestContextHolder.getRequestAttributes() == null) {
+        if (//ActionContext.getContext() == null &&
+                RequestContextHolder.getRequestAttributes() == null) {
             return;
         }
-        HttpServletRequest request = ActionContext.getContext() != null
-                ? (HttpServletRequest) ActionContext.getContext().get(ServletActionContext.HTTP_REQUEST)
-                : ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        HttpServletRequest request =
+                //ActionContext.getContext() != null
+                //? (HttpServletRequest) ActionContext.getContext().get(ServletActionContext.HTTP_REQUEST)
+                //:
+                ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         if (request == null) {
             return;
         }

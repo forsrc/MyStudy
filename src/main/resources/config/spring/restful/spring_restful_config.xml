@@ -37,8 +37,8 @@
                 <bean class="org.springframework.http.converter.StringHttpMessageConverter">
                     <property name="supportedMediaTypes">
                         <list>
-                            <value>text/json;charset=UTF-8</value>
-                            <value>application/json;charset=UTF-8</value>
+                            <value>text/json</value>
+                            <value>application/json</value>
                         </list>
                     </property>
                 </bean>
@@ -113,11 +113,26 @@
 
 
     <bean id="contentNegotiationManager" class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">
-
+        <property name="ignoreUnknownPathExtensions" value="true"/>
+        <property name="useJaf" value="true"/>
         <property name="favorPathExtension" value="true"/>
         <property name="favorParameter" value="true"/>
+        <property name="parameterName" value="format"/>
+        <property name="ignoreAcceptHeader" value="true"/>
+
         <property name="mediaTypes">
-            <value>
+            <map>
+                <entry key="json" value="application/json"/>
+                <entry key="xml" value="application/xml"/>
+                <entry key="pdf" value="application/pdf"/>
+                <entry key="html" value="text/html"/>
+                <entry key="xsl" value="application/vnd.ms-excel"/>
+                <entry key="ppt" value="application/vnd.ms-powerpoint"/>
+                <entry key="doc" value="application/msword"/>
+                <entry key="zip" value="application/zip"/>
+                <entry key="png" value="image/png"/>
+            </map>
+            <!--<value>
                 json=application/json
                 xml=application/xml
                 pdf=application/pdf
@@ -128,10 +143,9 @@
                 zip=application/zip
                 png=image/png
                 *=*/*
-            </value>
+            </value>-->
         </property>
-        <property name="parameterName" value="format"/>
-        <property name="ignoreAcceptHeader" value="true"/>
+
         <property name="defaultContentType" value="application/json"/>
     </bean>
 </beans>
