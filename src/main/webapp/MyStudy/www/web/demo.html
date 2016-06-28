@@ -41,19 +41,17 @@
     <!-- Material Design fonts -->
     <link rel="stylesheet" type="text/css" href="../css/roboto.css">
     <link rel="stylesheet" type="text/css" href="../css/material-icons.css">
-    <link rel="stylesheet" type="text/css" href="../css/font-awesome.css">
     <!-- Bootstrap -->
     <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="../css/jquery.mobile.icons-1.4.5.min.css"/>
-    <link rel="stylesheet" type="text/css" href="../css/jquery.mobile.inline-svg-1.4.5.min.css"/>
 
     <!-- Bootstrap Material Design -->
     <link rel="stylesheet" type="text/css" href="../css/bootstrap-material-design.min.css">
+    <link rel="stylesheet" type="text/css" href="../css/bootstrap-dialog.min.css">
     <link rel="stylesheet" type="text/css" href="../css/ripples.min.css">
+    <link rel="stylesheet" type="text/css" href="../css/jquery.dropdown.css">
+    <link rel="stylesheet" type="text/css" href="../css/anypicker-all.min.css"/>
     <link rel="stylesheet" type="text/css" href="../css/snackbar.min.css"/>
-    <link rel="stylesheet" type="text/css" href="../css/bootstrap-dialog.min.css"/>
     <link rel="stylesheet" type="text/css" href="../css/index.css"/>
-    <link rel="stylesheet" type="text/css" href="../css/custom.css"/>
     <title>MyStudy Index</title>
 </head>
 
@@ -101,7 +99,23 @@
     <!-- START -->
     <div id="start" class="col-xs-12" style="padding:15px;">
         <!-- ####################### -->
+        <div class="form-group">
+            <label for="project">Project</label>
+            <select id="project" class="form-control">
+                <option value="1">1</option>
+                <option value="2">2</option>
+            </select>
+        </div>
 
+        <div class="form-group label-floating">
+            <a href="demo2.html" class="btn btn-raised btn-primary save">Demo1</a>
+        </div>
+
+        <div class="form-group label-floating is-empty">
+            <label for="i5" class="control-label">label-floating</label>
+            <input type="email" class="form-control" id="i5">
+            <span class="help-block">This is a hint as a <code>span.help-block.hint</code></span>
+        </div>
 
         <div class="form-group label-floating">
             <label class="control-label" for="date">Date</label>
@@ -124,6 +138,7 @@
                    data-inline="true" data-role="date">
         </div>
 
+
         <div class="form-group label-floating">
             <label class="control-label" for="select">select</label>
             <select id="select" class="form-control">
@@ -134,8 +149,8 @@
         </div>
 
         <div class="form-group">
-            <label for="rating">Rating</label>
-            <select id="rating" class="form-control">
+            <label for="rating1">Rating</label>
+            <select id="rating1" class="form-control">
                 <option value="1">1</option>
                 <option value="2">2</option>
             </select>
@@ -170,8 +185,67 @@
                     </div>
                 </div>
             </div>
+        </div>
+
+        <div class="form-group">
+
+            <a href="javascript:void(0);" onclick=" $(this).popover('show');" id="popover" class="btn btn-large btn-danger" data-toggle="popover" title=""
+               data-placement="top" data-content="And here's some amazing content. It's very engaging. right?" data-original-title="A Title">Click
+                to toggle popover</a>
+        </div>
 
 
+        <div class="accordion" id="accordion2">
+            <div class="accordion-group">
+                <div class="accordion-heading">
+                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
+                        Collapsible Group Item #1
+                    </a>
+                </div>
+                <div id="collapseOne" class="accordion-body collapse" style="height: 0px;">
+                    <div class="accordion-inner">
+                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-group">
+                <div class="accordion-heading">
+                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo">
+                        Collapsible Group Item #2
+                    </a>
+                </div>
+                <div id="collapseTwo" class="accordion-body collapse" style="height: 0px;">
+                    <div class="accordion-inner">
+                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-group">
+                <div class="accordion-heading">
+                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseThree">
+                        Collapsible Group Item #3
+                    </a>
+                </div>
+                <div id="collapseThree" class="accordion-body collapse" style="height: 0px;">
+                    <div class="accordion-inner">
+                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="alert alert-warning">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <h4 class="alert-heading">Oh snap! You got an error!</h4>
+            <p>Change this and that and try again. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Cras mattis consectetur purus sit amet fermentum.</p>
+            <p>
+                <a class="btn btn-danger" href="#">Take this action</a> <a class="btn" href="#">Or do this</a>
+            </p>
+        </div>
+
+        <div class="form-group label-floating">
+            <a href="javascript:void(0);" onclick="$('.alert').alert();" class="btn btn-raised btn-primary save">alert</a>
         </div>
 
         <br>
@@ -193,6 +267,10 @@
         </div>
 
         <a href="#root" class="btn btn-default btn-fab reload"><i class="material-icons">vertical_align_top</i></a>
+
+
+        <br>
+        <br>
 
         <!--m####################### -->
     </div>
@@ -244,15 +322,20 @@
     </div>
 </div>
 
+
+
 <script type="text/javascript" src="../cordova.js"></script>
+
 
 <script type="text/javascript" src="../js/lib/jquery-2.1.4.min.js"></script>
 <script type="text/javascript" src="../js/lib/bootstrap.min.js"></script>
 <script type="text/javascript" src="../js/lib/material.min.js"></script>
 <script type="text/javascript" src="../js/lib/ripples.min.js"></script>
+<script type="text/javascript" src="../js/lib/jquery.dropdown.js"></script>
 <script type="text/javascript" src="../js/lib/snackbar.min.js"></script>
-<script type="text/javascript" src="../js/lib/bootstrap-dialog.js"></script>
 <script type="text/javascript" src="../js/lib/rmodal.min.js"></script>
+
+<script type="text/javascript" src="../js/lib/bootstrap-dialog.js"></script>
 
 <script type="text/javascript" src="../js/web/appConfig.js"></script>
 <script type="text/javascript" src="../js/web/config.js"></script>
@@ -260,8 +343,12 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
+        $("select").dropdown({
+            autoinit: "select"
+        });
 
         $("[data-toggle='tooltip']").tooltip();
+
 
         // $(".ui-input-text").removeClass();
         //$(".ui-btn").removeClass();
