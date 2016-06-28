@@ -147,18 +147,19 @@
         </div>
 
         <div class="form-group">
-            <a href="javascript:void(0)"
-               onclick="$('#progressValue').text(sessionStorage.progress = sessionStorage.progress || 0); $('#progress').css('width', (sessionStorage.progress = Number(sessionStorage.progress) + 10) + '%');"><i
+            <a href="javascript:void(0);"
+               onclick="$('#progressValue').text(sessionStorage.progress = Number(sessionStorage.progress || 0) + 10); $('#progress').css('width', (sessionStorage.progress) + '%');"><i
                     class="material-icons">add</i></a>
-            <a href="javascript:void(0)"
-               onclick="$('#progressValue').text(sessionStorage.progress = sessionStorage.progress || 0); $('#progress').css('width', (sessionStorage.progress = Number(sessionStorage.progress) - 10) + '%');"><i
+            <a href="javascript:void(0);"
+               onclick="$('#progressValue').text(sessionStorage.progress = Number(sessionStorage.progress || 0) - 10); $('#progress').css('width', (sessionStorage.progress) + '%');"><i
                     class="material-icons">remove</i></a>
 
 
             <div>
                 <div style="float:left;">
                     <div style="float:top;font-size:5px;">
-                        <a id="progressValue">0</a><span>%</span>
+                        <a id="progressValue" href="javascript:void(0);" onclick="$(this).attr('title', $(this).text() + '%');$(this).attr('data-original-title', $(this).text() + '%');" data-toggle="tooltip" data-placement="top"
+                           title="0">0</a><span>%</span>
                     </div>
                 </div>
                 <div class="progress">
@@ -185,6 +186,10 @@
         </div>
         <div class="form-group label-floating">
             <a href="#start" class="btn btn-raised btn-primary save">To Top</a>
+        </div>
+        <div class="form-group label-floating">
+            <a href="" class="btn btn-raised btn-primary save" data-toggle="tooltip" data-placement="top"
+               title="Tooltip --> ):">Tooltip</a>
         </div>
 
         <a href="#root" class="btn btn-default btn-fab reload"><i class="material-icons">vertical_align_top</i></a>
@@ -255,6 +260,9 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
+
+        $("[data-toggle='tooltip']").tooltip();
+
         // $(".ui-input-text").removeClass();
         //$(".ui-btn").removeClass();
         //$("select").parents("div").find(".ui-btn").removeClass();
