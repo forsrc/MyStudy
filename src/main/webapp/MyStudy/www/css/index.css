@@ -448,3 +448,7 @@ a:focus, a:hover {
     pointer-events: none;
     color: #482229;
 }
+
+.togglebutton label input[type=checkbox]:checked+.toggle {
+    background-color: #ffd740;
+}
