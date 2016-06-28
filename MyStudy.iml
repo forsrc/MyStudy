@@ -527,12 +527,6 @@
           <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/stax-ex-1.4.jar!/" />
           <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/stax2-api-3.1.4.jar!/" />
           <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/streambuffer-1.2.jar!/" />
-          <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/struts2-config-browser-plugin-2.3.24.jar!/" />
-          <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/struts2-convention-plugin-2.3.24.jar!/" />
-          <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/struts2-core-2.3.24.jar!/" />
-          <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/struts2-json-plugin-2.3.24.jar!/" />
-          <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/struts2-rest-plugin-2.3.28.jar!/" />
-          <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/struts2-spring-plugin-2.3.24.jar!/" />
           <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/tika-core-1.4.jar!/" />
           <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/tika-parsers-1.4.jar!/" />
           <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/tranql-connector-1.1.jar!/" />
@@ -576,7 +570,6 @@
           <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/xmltooling-1.3.2-1.jar!/" />
           <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/xmpbox-2.0.0-RC3.jar!/" />
           <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/xstream-1.4.9.jar!/" />
-          <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/xwork-core-2.3.24.jar!/" />
           <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/yuicompressor-2.4.2.jar!/" />
           <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/HTTPClient-0.3-3.jar!/" />
           <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/args4j-2.32.jar!/" />
