@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-@RestController
+//@RestController
 @Controller
 @RequestMapping(value = "/v1.0")
 public class UserRestfulController {
@@ -35,50 +35,63 @@ public class UserRestfulController {
         List<User> list = this.userRestfulService.list();
         map.put("list", list);
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("list", list);
+        //modelAndView.addObject("list", list);
         modelAndView.addObject(map);
         return modelAndView;
     }
 
     @RequestMapping(value = {"/user/{id}"}, method = RequestMethod.GET)
     @ResponseBody
-    public User get(@PathVariable Long id,
+    public ModelAndView get(@PathVariable Long id,
                     HttpServletRequest request,
                     HttpServletResponse response) throws Exception {
-        User bean = new User();
-        bean.setId(id);
-        return this.userRestfulService.get(id);
+        User user = this.userRestfulService.get(id);
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.getModelMap().put("user", user);
+        return modelAndView;
 
     }
 
     @RequestMapping(value = {"/user/{id}"}, method = RequestMethod.PUT)
     @ResponseBody
     public User update(@PathVariable Long id,
+                       @RequestBody User user,
                        HttpServletRequest request,
                        HttpServletResponse response) throws Exception {
         //User bean = userManager.findUser(id);
-        User bean = new User();
-        bean.setToken(UUID.randomUUID().toString());
-        this.userRestfulService.update(bean);
-        return bean;
+        user.setToken(UUID.randomUUID().toString());
+        this.userRestfulService.update(user);
+        return user;
 
     }
 
     @RequestMapping(value = {"/user/{id}"}, method = RequestMethod.DELETE)
     @ResponseBody
-    public User delete(@PathVariable Long id,
+    public ModelAndView delete(@PathVariable Long id,
                        HttpServletRequest request,
                        HttpServletResponse response) throws Exception {
         this.userRestfulService.delete(id);
-        User bean = new User();
-        bean.setId(id);
-        return bean;
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.getModelMap().put("id", id);
+        modelAndView.getModelMap().put("status", 200);
+        return modelAndView;
 
     }
 
     @RequestMapping(value = {"/user"}, method = RequestMethod.POST)
     @ResponseBody
     public User save(@PathVariable User bean,
+                     HttpServletRequest request,
+                     HttpServletResponse response) throws Exception {
+        bean.setToken(UUID.randomUUID().toString());
+        bean.setId(this.userRestfulService.save(bean));
+        return bean;
+
+    }
+
+    @RequestMapping(value = {"/user/login"}, method = RequestMethod.POST)
+    @ResponseBody
+    public User login(@PathVariable User bean,
                      HttpServletRequest request,
                      HttpServletResponse response) throws Exception {
         bean.setToken(UUID.randomUUID().toString());

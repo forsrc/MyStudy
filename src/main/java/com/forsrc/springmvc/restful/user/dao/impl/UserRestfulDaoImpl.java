@@ -7,6 +7,9 @@ import com.forsrc.pojo.User;
 import com.forsrc.springmvc.base.dao.BaseHibernateDao;
 import com.forsrc.springmvc.base.dao.impl.BaseHibernateDaoImpl;
 import com.forsrc.springmvc.restful.user.dao.UserRestfulDao;
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Repository;
 
@@ -44,7 +47,18 @@ public class UserRestfulDaoImpl extends BaseHibernateDaoImpl<User> implements Us
     }
 
     @Override
-    public void login(User user) throws UsernameNotFoundException, PasswordNotMatchException {
+    public User findByUsername(String username) throws UsernameNotFoundException {
 
+        Session session = super.getSession();
+        Query query = session.getNamedQuery("hql_user_findByUsername");
+        query.setParameter("username", username);
+        query.setMaxResults(1);
+        List<User> list = query.list();
+        if(list.isEmpty()){
+            throw new UsernameNotFoundException(username);
+        }
+        return list.get(0);
     }
+
+
 }

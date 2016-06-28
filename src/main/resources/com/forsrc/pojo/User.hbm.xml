@@ -41,6 +41,28 @@
          ]]>
     </sql-query>
 
+    <sql-query name="sql_user_findByUsername" read-only="true">
+        <![CDATA[
+             SELECT
+                    u.username, u.password, u.status, u.is_admin
+             FROM
+                    my_study_user u
+             WHERE
+                    u.username = :username
+             ;
+
+         ]]>
+        <query-param name="username" type="java.lang.String"/>
+        <return alias="u" class="com.forsrc.pojo.User"/>
+    </sql-query>
+
+    <query name="hql_user_findByUsername" read-only="true">
+
+        FROM com.forsrc.pojo.User u WHERE u.username = :username
+
+        <query-param name="username" type="java.lang.String"/>
+    </query>
+
 
     <database-object>
         <create>

@@ -21,5 +21,5 @@ public interface UserRestfulDao extends BaseHibernateDao<User> {
 
     public void delete(Long id) throws DaoException;
 
-    public void login(User user) throws UsernameNotFoundException, PasswordNotMatchException;
+    public User findByUsername(String username) throws UsernameNotFoundException;
 }
