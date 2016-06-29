@@ -13,10 +13,11 @@
     <context:component-scan base-package="com.forsrc.springmvc"/>
     <context:component-scan base-package="com.forsrc.lucene"/>
 
-    <mvc:annotation-driven
+    <!--<mvc:annotation-driven
             content-negotiation-manager="contentNegotiationManager"
             >
-    </mvc:annotation-driven>
+    </mvc:annotation-driven>-->
+    <mvc:annotation-driven />
 
     <tx:annotation-driven transaction-manager="txManager"/>
 
@@ -29,9 +30,11 @@
 
     <bean class="com.forsrc.interceptor.BaseExceptionInterceptor"></bean>
 
-    <bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping"/>
+    <!--<bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping"/>-->
 
-    <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+    <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping"/>
+
+    <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
         <property name="messageConverters">
             <list>
                 <bean class="org.springframework.http.converter.StringHttpMessageConverter">
@@ -60,7 +63,7 @@
 
 
     <bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
-        <property name="order" value="1"/>
+        <property name="order" value="0"/>
         <!--<property name="ignoreAcceptHeader" value="true" />
         <property name="defaultContentType" value="text/html" />
         <property name="mediaTypes">
@@ -106,6 +109,19 @@
                 </bean>
                 <bean class="com.forsrc.springmvc.restful.user.view.WordView">
 
+                </bean>
+            </list>
+        </property>
+
+        <property name="viewResolvers">
+            <list>
+                <bean class="org.springframework.web.servlet.view.BeanNameViewResolver"/>
+                <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+                    <!--
+                            <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
+                    -->
+                    <property name="prefix" value=""/>
+                    <property name="suffix" value=".html"/>
                 </bean>
             </list>
         </property>
