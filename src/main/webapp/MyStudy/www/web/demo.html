@@ -51,6 +51,7 @@
     <link rel="stylesheet" type="text/css" href="../css/jquery.dropdown.css">
     <link rel="stylesheet" type="text/css" href="../css/anypicker-all.min.css"/>
     <link rel="stylesheet" type="text/css" href="../css/snackbar.min.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/bootstrap-datetimepicker.min.css"/>
     <link rel="stylesheet" type="text/css" href="../css/index.css"/>
     <title>MyStudy Index</title>
 </head>
@@ -99,13 +100,42 @@
     <!-- START -->
     <div id="start" class="col-xs-12" style="padding:15px;">
         <!-- ####################### -->
+
         <div class="form-group">
-            <label for="project">Project</label>
-            <select id="project" class="form-control">
-                <option value="1">1</option>
-                <option value="2">2</option>
-            </select>
+            <div class="container">
+                <div class="row">
+                    <div class='col-sm-6'>
+                        <div class="form-group">
+                            <label for="project">Project</label>
+                            <select id="project" class="form-control">
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
+
+        <div class="form-group">
+            <div class="container">
+                <div class="row">
+                    <div class='col-sm-6'>
+                        <div class="form-group">
+                            <div class='input-group date' id='datetimepicker1'>
+                                <label for="datetimepicker1">Datetimepicker</label>
+                                <input type='text' readonly="readonly" class="form-control"/>
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
 
         <div class="form-group label-floating">
             <a href="demo2.html" class="btn btn-raised btn-primary save">Demo1</a>
@@ -173,7 +203,9 @@
             <div>
                 <div style="float:left;">
                     <div style="float:top;font-size:5px;">
-                        <a id="progressValue" href="javascript:void(0);" onclick="$(this).attr('title', $(this).text() + '%');$(this).attr('data-original-title', $(this).text() + '%');" data-toggle="tooltip" data-placement="top"
+                        <a id="progressValue" href="javascript:void(0);"
+                           onclick="$(this).attr('title', $(this).text() + '%');$(this).attr('data-original-title', $(this).text() + '%');"
+                           data-toggle="tooltip" data-placement="top"
                            title="0">0</a><span>%</span>
                     </div>
                 </div>
@@ -189,8 +221,10 @@
 
         <div class="form-group">
 
-            <a href="javascript:void(0);" onclick=" $(this).popover('show');" id="popover" class="btn btn-large btn-danger" data-toggle="popover" title=""
-               data-placement="top" data-content="And here's some amazing content. It's very engaging. right?" data-original-title="A Title">Click
+            <a href="javascript:void(0);" onclick=" $(this).popover('show');" id="popover"
+               class="btn btn-large btn-danger" data-toggle="popover" title=""
+               data-placement="top" data-content="And here's some amazing content. It's very engaging. right?"
+               data-original-title="A Title">Click
                 to toggle popover</a>
         </div>
 
@@ -250,19 +284,19 @@
         </div>
 
 
-
-
         <div class="alert alert-warning">
             <button type="button" class="close" data-dismiss="alert">×</button>
             <h4 class="alert-heading">Oh snap! You got an error!</h4>
-            <p>Change this and that and try again. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Cras mattis consectetur purus sit amet fermentum.</p>
+            <p>Change this and that and try again. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget
+                lacinia odio sem nec elit. Cras mattis consectetur purus sit amet fermentum.</p>
             <p>
                 <a class="btn btn-danger" href="#">Take this action</a> <a class="btn" href="#">Or do this</a>
             </p>
         </div>
 
         <div class="form-group label-floating">
-            <a href="javascript:void(0);" onclick="$('.alert').alert();" class="btn btn-raised btn-primary save">alert</a>
+            <a href="javascript:void(0);" onclick="$('.alert').alert();"
+               class="btn btn-raised btn-primary save">alert</a>
         </div>
 
         <br>
@@ -274,7 +308,9 @@
         <div class="form-group label-floating">
             <a href="javascript:void(0)" onclick="dialog1();" class="btn btn-raised btn-primary save">Dialog</a>
             <a href="javascript:void(0)" onclick="modal.open();" class="btn btn-raised btn-primary save">Dialog</a>
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#complete-dialog">Open dialog</button>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#complete-dialog">Open
+                dialog
+            </button>
         </div>
         <div class="form-group label-floating">
             <a href="#start" class="btn btn-raised btn-primary save">To Top</a>
@@ -364,7 +400,6 @@
 </div>
 
 
-
 <script type="text/javascript" src="../cordova.js"></script>
 
 
@@ -377,6 +412,8 @@
 <script type="text/javascript" src="../js/lib/rmodal.min.js"></script>
 
 <script type="text/javascript" src="../js/lib/bootstrap-dialog.js"></script>
+<script type="text/javascript" src="../js/lib/moment-with-locales.min.js"></script>
+<script type="text/javascript" src="../js/lib/bootstrap-datetimepicker.min.js"></script>
 
 <script type="text/javascript" src="../js/web/appConfig.js"></script>
 <script type="text/javascript" src="../js/web/config.js"></script>
@@ -384,6 +421,9 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
+        $(function () {
+            $('#datetimepicker1').datetimepicker();
+        });
         $("select").dropdown({
             autoinit: "select"
         });
