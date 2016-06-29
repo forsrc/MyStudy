@@ -1,56 +1,6 @@
 cordova.define('cordova/plugin_list', function(require, exports, module) {
 module.exports = [
     {
-        "file": "plugins/com.unarin.cordova.beacon/www/lib/underscore-min-1.6.js",
-        "id": "com.unarin.cordova.beacon.underscorejs",
-        "pluginId": "com.unarin.cordova.beacon",
-        "runs": true
-    },
-    {
-        "file": "plugins/com.unarin.cordova.beacon/www/lib/q.min.js",
-        "id": "com.unarin.cordova.beacon.Q",
-        "pluginId": "com.unarin.cordova.beacon",
-        "runs": true
-    },
-    {
-        "file": "plugins/com.unarin.cordova.beacon/www/LocationManager.js",
-        "id": "com.unarin.cordova.beacon.LocationManager",
-        "pluginId": "com.unarin.cordova.beacon",
-        "merges": [
-            "cordova.plugins"
-        ]
-    },
-    {
-        "file": "plugins/com.unarin.cordova.beacon/www/Delegate.js",
-        "id": "com.unarin.cordova.beacon.Delegate",
-        "pluginId": "com.unarin.cordova.beacon",
-        "runs": true
-    },
-    {
-        "file": "plugins/com.unarin.cordova.beacon/www/model/Region.js",
-        "id": "com.unarin.cordova.beacon.Region",
-        "pluginId": "com.unarin.cordova.beacon",
-        "runs": true
-    },
-    {
-        "file": "plugins/com.unarin.cordova.beacon/www/Regions.js",
-        "id": "com.unarin.cordova.beacon.Regions",
-        "pluginId": "com.unarin.cordova.beacon",
-        "runs": true
-    },
-    {
-        "file": "plugins/com.unarin.cordova.beacon/www/model/CircularRegion.js",
-        "id": "com.unarin.cordova.beacon.CircularRegion",
-        "pluginId": "com.unarin.cordova.beacon",
-        "runs": true
-    },
-    {
-        "file": "plugins/com.unarin.cordova.beacon/www/model/BeaconRegion.js",
-        "id": "com.unarin.cordova.beacon.BeaconRegion",
-        "pluginId": "com.unarin.cordova.beacon",
-        "runs": true
-    },
-    {
         "file": "plugins/cordova-sqlite-storage/www/SQLitePlugin.js",
         "id": "cordova-sqlite-storage.SQLitePlugin",
         "pluginId": "cordova-sqlite-storage",
@@ -648,6 +598,56 @@ module.exports = [
         ]
     },
     {
+        "file": "plugins/com.unarin.cordova.beacon/www/lib/underscore-min-1.6.js",
+        "id": "com.unarin.cordova.beacon.underscorejs",
+        "pluginId": "com.unarin.cordova.beacon",
+        "runs": true
+    },
+    {
+        "file": "plugins/com.unarin.cordova.beacon/www/lib/q.min.js",
+        "id": "com.unarin.cordova.beacon.Q",
+        "pluginId": "com.unarin.cordova.beacon",
+        "runs": true
+    },
+    {
+        "file": "plugins/com.unarin.cordova.beacon/www/LocationManager.js",
+        "id": "com.unarin.cordova.beacon.LocationManager",
+        "pluginId": "com.unarin.cordova.beacon",
+        "merges": [
+            "cordova.plugins"
+        ]
+    },
+    {
+        "file": "plugins/com.unarin.cordova.beacon/www/Delegate.js",
+        "id": "com.unarin.cordova.beacon.Delegate",
+        "pluginId": "com.unarin.cordova.beacon",
+        "runs": true
+    },
+    {
+        "file": "plugins/com.unarin.cordova.beacon/www/model/Region.js",
+        "id": "com.unarin.cordova.beacon.Region",
+        "pluginId": "com.unarin.cordova.beacon",
+        "runs": true
+    },
+    {
+        "file": "plugins/com.unarin.cordova.beacon/www/Regions.js",
+        "id": "com.unarin.cordova.beacon.Regions",
+        "pluginId": "com.unarin.cordova.beacon",
+        "runs": true
+    },
+    {
+        "file": "plugins/com.unarin.cordova.beacon/www/model/CircularRegion.js",
+        "id": "com.unarin.cordova.beacon.CircularRegion",
+        "pluginId": "com.unarin.cordova.beacon",
+        "runs": true
+    },
+    {
+        "file": "plugins/com.unarin.cordova.beacon/www/model/BeaconRegion.js",
+        "id": "com.unarin.cordova.beacon.BeaconRegion",
+        "pluginId": "com.unarin.cordova.beacon",
+        "runs": true
+    },
+    {
         "file": "plugins/de.appplant.cordova.plugin.local-notification/www/local-notification.js",
         "id": "de.appplant.cordova.plugin.local-notification.LocalNotification",
         "pluginId": "de.appplant.cordova.plugin.local-notification",
@@ -731,7 +731,6 @@ module.exports = [
 module.exports.metadata = 
 // TOP OF METADATA
 {
-    "com.unarin.cordova.beacon": "3.4.1",
     "cordova-sqlite-storage": "1.4.3",
     "cordova-plugin-dialogs": "1.2.1",
     "cordova-plugin-statusbar": "2.1.3",
@@ -752,13 +751,14 @@ module.exports.metadata =
     "cordova-plugin-splashscreen": "3.2.2",
     "cordova-plugin-vibration": "2.1.1",
     "cordova-plugin-whitelist": "1.2.2",
-    "cordova-plugin-app-event": "1.2.0",
+    "com.unarin.cordova.beacon": "3.4.1",
     "de.appplant.cordova.plugin.local-notification": "0.8.4",
     "cordova-plugin-email-composer": "0.8.3",
     "cordova-plugin-datepicker": "0.9.2",
     "cordova-plugin-zip": "3.1.0",
     "cordova-plugin-background-mode": "0.6.5",
-    "cordova-plugin-background-download": "0.0.2"
+    "cordova-plugin-background-download": "0.0.2",
+    "cordova-plugin-app-event": "1.2.0"
 }
 // BOTTOM OF METADATA
 });

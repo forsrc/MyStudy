@@ -726,13 +726,13 @@ module.exports.metadata =
     "cordova-plugin-whitelist": "1.2.2",
     "cordova-sqlite-storage": "1.4.3",
     "com.unarin.cordova.beacon": "3.4.1",
-    "cordova-plugin-app-event": "1.2.0",
     "de.appplant.cordova.plugin.local-notification": "0.8.4",
     "cordova-plugin-email-composer": "0.8.3",
     "cordova-plugin-datepicker": "0.9.2",
     "cordova-plugin-zip": "3.1.0",
     "cordova-plugin-background-mode": "0.6.5",
-    "cordova-plugin-background-download": "0.0.2"
+    "cordova-plugin-background-download": "0.0.2",
+    "cordova-plugin-app-event": "1.2.0"
 }
 // BOTTOM OF METADATA
 });

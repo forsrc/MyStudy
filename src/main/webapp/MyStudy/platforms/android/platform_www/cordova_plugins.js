@@ -454,6 +454,13 @@ module.exports = [
         ]
     },
     {
+        "file": "plugins/cordova-sqlite-storage/www/SQLitePlugin.js",
+        "id": "cordova-sqlite-storage.SQLitePlugin",
+        "clobbers": [
+            "SQLitePlugin"
+        ]
+    },
+    {
         "file": "plugins/com.unarin.cordova.beacon/www/lib/underscore-min-1.6.js",
         "id": "com.unarin.cordova.beacon.underscorejs",
         "runs": true
@@ -494,13 +501,6 @@ module.exports = [
         "file": "plugins/com.unarin.cordova.beacon/www/model/BeaconRegion.js",
         "id": "com.unarin.cordova.beacon.BeaconRegion",
         "runs": true
-    },
-    {
-        "file": "plugins/cordova-sqlite-storage/www/SQLitePlugin.js",
-        "id": "cordova-sqlite-storage.SQLitePlugin",
-        "clobbers": [
-            "SQLitePlugin"
-        ]
     },
     {
         "file": "plugins/de.appplant.cordova.plugin.local-notification/www/local-notification.js",
@@ -598,15 +598,15 @@ module.exports.metadata =
     "cordova-plugin-statusbar": "2.1.3",
     "cordova-plugin-vibration": "2.1.1",
     "cordova-plugin-whitelist": "1.2.2",
-    "com.unarin.cordova.beacon": "3.4.1",
     "cordova-sqlite-storage": "1.4.3",
-    "cordova-plugin-app-event": "1.2.0",
+    "com.unarin.cordova.beacon": "3.4.1",
     "de.appplant.cordova.plugin.local-notification": "0.8.4",
     "cordova-plugin-email-composer": "0.8.3",
     "cordova-plugin-datepicker": "0.9.2",
     "cordova-plugin-zip": "3.1.0",
     "cordova-plugin-background-mode": "0.6.5",
-    "cordova-plugin-background-download": "0.0.2"
+    "cordova-plugin-background-download": "0.0.2",
+    "cordova-plugin-app-event": "1.2.0"
 };
 // BOTTOM OF METADATA
 });

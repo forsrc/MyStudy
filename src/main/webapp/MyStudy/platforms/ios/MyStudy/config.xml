@@ -142,6 +142,7 @@
     <allow-intent href="itms-apps:*" />
     <preference name="AllowInlineMediaPlayback" value="false" />
     <preference name="BackupWebStorage" value="cloud" />
+    <preference name="DisallowOverscroll" value="true" />
     <preference name="EnableViewportScale" value="false" />
     <preference name="KeyboardDisplayRequiresUserAction" value="true" />
     <preference name="MediaPlaybackRequiresUserAction" value="false" />
@@ -152,17 +153,9 @@
     <preference name="PageLength" value="0" />
     <preference name="PaginationBreakingMode" value="page" />
     <preference name="PaginationMode" value="unpaginated" />
+    <preference name="CameraUsesGeolocation" value="true" />
     <preference name="StatusBarOverlaysWebView" value="true" />
     <preference name="StatusBarStyle" value="lightcontent" />
-    <preference name="SplashScreenDelay" value="0" />
-    <preference name="AutoHideSplashScreen" value="true" />
-    <preference name="FadeSplashScreen" value="false" />
-    <preference name="FadeSplashScreenDuration" value="0" />
-    <preference name="ShowSplashScreenSpinner" value="false" />
-    <preference name="SplashMaintainAspectRatio" value="false" />
-    <preference name="SplashShowOnlyFirstTime" value="false" />
-    <preference name="CameraUsesGeolocation" value="true" />
-    <preference name="DisallowOverscroll" value="true" />
     <preference name="android-minSdkVersion" value="14" />
     <preference name="AndroidPersistentFileLocation" value="Compatibility" />
 </widget>

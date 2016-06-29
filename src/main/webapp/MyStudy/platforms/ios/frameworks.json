@@ -1,6 +1,6 @@
 {
     "ImageIO.framework": 1,
-    "CoreLocation.framework": 4,
+    "CoreLocation.framework": 2,
     "AVFoundation.framework": 1,
     "AddressBook.framework": 1,
     "AddressBookUI.framework": 1,
@@ -8,7 +8,7 @@
     "AudioToolbox.framework": 2,
     "SystemConfiguration.framework": 1,
     "CoreTelephony.framework": 1,
-    "CoreBluetooth.framework": 1,
-    "MessageUI.framework": 1,
-    "libz.dylib": 1
+    "CoreBluetooth.framework": 2,
+    "MessageUI.framework": 2,
+    "libz.dylib": 2
 }
