@@ -7,6 +7,8 @@
        http://www.springframework.org/schema/aop
        http://www.springframework.org/schema/aop/spring-aop.xsd">
 
+    <aop:aspectj-autoproxy proxy-target-class="true"/>
+
     <bean id="quartzLog" class="com.forsrc.aop.LogTracing"/>
 
     <aop:config proxy-target-class="true">
