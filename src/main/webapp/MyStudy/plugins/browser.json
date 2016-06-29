@@ -9,6 +9,63 @@
     "installed_plugins": {
         "cordova-sqlite-storage": {
             "PACKAGE_NAME": "com.forsrc.mystudy"
+        },
+        "cordova-plugin-dialogs": {
+            "PACKAGE_NAME": "com.forsrc.mystudy"
+        },
+        "cordova-plugin-statusbar": {
+            "PACKAGE_NAME": "com.forsrc.mystudy"
+        },
+        "cordova-plugin-camera": {
+            "PACKAGE_NAME": "com.forsrc.mystudy"
+        },
+        "cordova-plugin-console": {
+            "PACKAGE_NAME": "com.forsrc.mystudy"
+        },
+        "cordova-plugin-contacts": {
+            "PACKAGE_NAME": "com.forsrc.mystudy"
+        },
+        "cordova-plugin-device": {
+            "PACKAGE_NAME": "com.forsrc.mystudy"
+        },
+        "cordova-plugin-device-motion": {
+            "PACKAGE_NAME": "com.forsrc.mystudy"
+        },
+        "cordova-plugin-device-orientation": {
+            "PACKAGE_NAME": "com.forsrc.mystudy"
+        },
+        "cordova-plugin-file": {
+            "PACKAGE_NAME": "com.forsrc.mystudy"
+        },
+        "cordova-plugin-file-transfer": {
+            "PACKAGE_NAME": "com.forsrc.mystudy"
+        },
+        "cordova-plugin-geolocation": {
+            "PACKAGE_NAME": "com.forsrc.mystudy"
+        },
+        "cordova-plugin-globalization": {
+            "PACKAGE_NAME": "com.forsrc.mystudy"
+        },
+        "cordova-plugin-inappbrowser": {
+            "PACKAGE_NAME": "com.forsrc.mystudy"
+        },
+        "cordova-plugin-media": {
+            "PACKAGE_NAME": "com.forsrc.mystudy"
+        },
+        "cordova-plugin-media-capture": {
+            "PACKAGE_NAME": "com.forsrc.mystudy"
+        },
+        "cordova-plugin-network-information": {
+            "PACKAGE_NAME": "com.forsrc.mystudy"
+        },
+        "cordova-plugin-splashscreen": {
+            "PACKAGE_NAME": "com.forsrc.mystudy"
+        },
+        "cordova-plugin-vibration": {
+            "PACKAGE_NAME": "com.forsrc.mystudy"
+        },
+        "cordova-plugin-whitelist": {
+            "PACKAGE_NAME": "com.forsrc.mystudy"
         }
     },
     "dependent_plugins": {}
