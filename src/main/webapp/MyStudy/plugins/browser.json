@@ -66,7 +66,32 @@
         },
         "cordova-plugin-whitelist": {
             "PACKAGE_NAME": "com.forsrc.mystudy"
+        },
+        "com.unarin.cordova.beacon": {
+            "PACKAGE_NAME": "com.forsrc.mystudy"
+        },
+        "de.appplant.cordova.plugin.local-notification": {
+            "PACKAGE_NAME": "com.forsrc.mystudy"
+        },
+        "cordova-plugin-email-composer": {
+            "PACKAGE_NAME": "com.forsrc.mystudy"
+        },
+        "cordova-plugin-datepicker": {
+            "PACKAGE_NAME": "com.forsrc.mystudy"
+        },
+        "cordova-plugin-zip": {
+            "PACKAGE_NAME": "com.forsrc.mystudy"
+        },
+        "cordova-plugin-background-mode": {
+            "PACKAGE_NAME": "com.forsrc.mystudy"
+        },
+        "cordova-plugin-background-download": {
+            "PACKAGE_NAME": "com.forsrc.mystudy"
         }
     },
-    "dependent_plugins": {}
+    "dependent_plugins": {
+        "cordova-plugin-app-event": {
+            "PACKAGE_NAME": "com.forsrc.mystudy"
+        }
+    }
 }

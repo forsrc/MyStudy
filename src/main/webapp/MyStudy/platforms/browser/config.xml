@@ -21,4 +21,5 @@
     <preference name="DisallowOverscroll" value="true" />
     <preference name="android-minSdkVersion" value="14" />
     <preference name="AndroidPersistentFileLocation" value="Compatibility" />
+    <preference name="CameraUsesGeolocation" value="true" />
 </widget>
