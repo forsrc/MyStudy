@@ -32,3 +32,6 @@ src/main/webapp/MyStudy/hooks/*
 
 src/main/webapp/MyStudy/platforms/android/assets/*
 src/main/webapp/MyStudy/platforms/browser/www/*
+src/main/webapp/MyStudy/platforms/browser/ios/*
+src/main/webapp/MyStudy/platforms/*/www/*
+
