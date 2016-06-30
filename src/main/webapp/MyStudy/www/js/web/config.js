@@ -14,3 +14,5 @@ var MY_WEB_URL = {
     "detail" : PATH +"/web/detail.html",
     "index" : "/web/login.html"
 };
+
+var logEnable = true;

@@ -34,6 +34,15 @@ var app = {
     // 'load', 'deviceready', 'offline', and 'online'.
     bindEvents: function() {
         document.addEventListener('deviceready', this.onDeviceReady, false);
+        document.addEventListener("pause", this.onPause, false);
+        document.addEventListener("resume", this.onResume, false);
+        document.addEventListener("backbutton", this.onBackKeyDown, false);
+        document.addEventListener("menubutton", this.onMenuKeyDown, false);
+        document.addEventListener("searchbutton", this.onSearchKeyDown, false);
+        document.addEventListener("startcallbutton", this.onStartCallKeyDown, false);
+        document.addEventListener("endcallbutton", this.onEndCallKeyDown, false);
+        document.addEventListener("volumedownbutton", this.onVolumeDownKeyDown, false);
+        document.addEventListener("volumeupbutton", this.onVolumeUpKeyDown, false);
     },
     // deviceready Event Handler
     //
@@ -41,6 +50,44 @@ var app = {
     // function, we must explicitly call 'app.receivedEvent(...);'
     onDeviceReady: function() {
         app.receivedEvent('deviceready');
+    },
+    onPause: function () {
+        console.log(new Date() + " -> onPause()");
+        // Handle the pause event
+    },
+    onResume: function () {
+        console.log(new Date() + " -> onResume()");
+        setTimeout(function () {
+            // TODO: do your thing!
+        }, 0);
+    },
+    onBackKeyDown: function () {
+        console.log(new Date() + " -> onBackKeyDown()");
+        // Handle the back button
+    },
+    onMenuKeyDown: function () {
+        console.log(new Date() + " -> onMenuKeyDown()");
+        // Handle the back button
+    },
+    onSearchKeyDown: function () {
+        console.log(new Date() + " -> onSearchKeyDown()");
+        // Handle the search button
+    },
+    onStartCallKeyDown: function () {
+        console.log(new Date() + " -> onStartCallKeyDown()");
+        // Handle the start call button
+    },
+    onEndCallKeyDown: function () {
+        console.log(new Date() + " -> onEndCallKeyDown()");
+        // Handle the end call button
+    },
+    onVolumeDownKeyDown: function () {
+        console.log(new Date() + " -> onVolumeDownKeyDown()");
+        // Handle the volume down button
+    },
+    onVolumeUpKeyDown: function () {
+        console.log(new Date() + " -> onVolumeUpKeyDown()");
+        // Handle the volume up button
     },
     // Update DOM on a Received Event
     receivedEvent: function(id) {

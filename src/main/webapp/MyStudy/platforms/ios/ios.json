@@ -126,7 +126,7 @@
                         },
                         {
                             "xml": "<feature name=\"BarcodeScanner\"><param name=\"ios-package\" value=\"CDVBarcodeScanner\" /></feature>",
-                            "count": 2
+                            "count": 1
                         }
                     ],
                     "/widget": [

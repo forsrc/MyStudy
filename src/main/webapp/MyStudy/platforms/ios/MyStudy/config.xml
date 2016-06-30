@@ -91,6 +91,9 @@
     <feature name="DatePicker">
         <param name="ios-package" value="DatePicker" />
     </feature>
+    <feature name="Zip">
+        <param name="ios-package" value="ZipPlugin" />
+    </feature>
     <feature name="BackgroundMode">
         <param name="ios-package" value="APPBackgroundMode" />
     </feature>
@@ -99,9 +102,6 @@
     </feature>
     <feature name="BarcodeScanner">
         <param name="ios-package" value="CDVBarcodeScanner" />
-    </feature>
-    <feature name="Zip">
-        <param name="ios-package" value="ZipPlugin" />
     </feature>
     <name>MyStudy</name>
     <description>Hello World sample application that responds to the deviceready event.</description>
