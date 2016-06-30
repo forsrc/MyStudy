@@ -115,6 +115,9 @@
         },
         "cordova-plugin-app-event": {
             "PACKAGE_NAME": "com.forsrc.mystudy"
+        },
+        "cordova-plugin-barcodescanner": {
+            "PACKAGE_NAME": "com.forsrc.mystudy"
         }
     },
     "dependent_plugins": {},
@@ -845,6 +848,14 @@
             "clobbers": [
                 "DownloadOperation"
             ]
+        },
+        {
+            "file": "plugins/cordova-plugin-barcodescanner/www/barcodescanner.js",
+            "id": "cordova-plugin-barcodescanner.BarcodeScanner",
+            "pluginId": "cordova-plugin-barcodescanner",
+            "clobbers": [
+                "cordova.plugins.barcodeScanner"
+            ]
         }
     ],
     "plugin_metadata": {
@@ -875,6 +886,7 @@
         "cordova-plugin-zip": "3.1.0",
         "cordova-plugin-background-mode": "0.6.5",
         "cordova-plugin-background-download": "0.0.2",
-        "cordova-plugin-app-event": "1.2.0"
+        "cordova-plugin-app-event": "1.2.0",
+        "cordova-plugin-barcodescanner": "0.7.0"
     }
 }

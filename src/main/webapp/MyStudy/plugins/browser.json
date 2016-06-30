@@ -87,6 +87,9 @@
         },
         "cordova-plugin-background-download": {
             "PACKAGE_NAME": "com.forsrc.mystudy"
+        },
+        "cordova-plugin-barcodescanner": {
+            "PACKAGE_NAME": "com.forsrc.mystudy"
         }
     },
     "dependent_plugins": {
