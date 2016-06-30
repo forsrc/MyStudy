@@ -12,10 +12,10 @@ import java.util.Date;
 @Indexed(index = "MyStudy.User", interceptor = IndexWhenPublishedInterceptor.class)
 @Analyzer(impl = IKAnalyzer.class, definition = "cn")
 //@Analyzer(impl = SmartChineseAnalyzer.class)
-@XmlRootElement(name = "User")
+
 @org.codehaus.jackson.annotate.JsonIgnoreProperties(value = {"handler", "hibernateLazyInitializer", "fieldHandler"})
 @com.fasterxml.jackson.annotation.JsonIgnoreProperties(value = {"handler", "hibernateLazyInitializer", "fieldHandler"})
-
+@XmlRootElement(name = "User")
 public class User implements java.io.Serializable {
 
 

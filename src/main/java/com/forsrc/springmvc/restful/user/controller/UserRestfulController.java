@@ -40,7 +40,7 @@ public class UserRestfulController {
         return modelAndView;
     }
 
-    @RequestMapping(value = {"/user/{id}"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"/user/{id}"}, method = RequestMethod.GET, produces = {})
     @ResponseBody
     public ModelAndView get(@PathVariable Long id,
                     HttpServletRequest request,
