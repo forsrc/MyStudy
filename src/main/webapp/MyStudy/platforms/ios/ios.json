@@ -126,7 +126,7 @@
                         },
                         {
                             "xml": "<feature name=\"BarcodeScanner\"><param name=\"ios-package\" value=\"CDVBarcodeScanner\" /></feature>",
-                            "count": 1
+                            "count": 2
                         }
                     ],
                     "/widget": [
@@ -263,6 +263,9 @@
             "PACKAGE_NAME": "com.forsrc.mystudy"
         },
         "cordova-plugin-compat": {
+            "PACKAGE_NAME": "com.forsrc.mystudy"
+        },
+        "phonegap-plugin-barcodescanner": {
             "PACKAGE_NAME": "com.forsrc.mystudy"
         }
     },
@@ -975,6 +978,14 @@
             "clobbers": [
                 "cordova.plugins.barcodeScanner"
             ]
+        },
+        {
+            "file": "plugins/phonegap-plugin-barcodescanner/www/barcodescanner.js",
+            "id": "phonegap-plugin-barcodescanner.BarcodeScanner",
+            "pluginId": "phonegap-plugin-barcodescanner",
+            "clobbers": [
+                "cordova.plugins.barcodeScanner"
+            ]
         }
     ],
     "plugin_metadata": {
@@ -1008,6 +1019,7 @@
         "cordova-plugin-background-download": "0.0.2",
         "cordova-plugin-app-event": "1.2.0",
         "cordova-plugin-barcodescanner": "0.7.0",
-        "cordova-plugin-compat": "1.0.0"
+        "cordova-plugin-compat": "1.0.0",
+        "phonegap-plugin-barcodescanner": "5.0.1"
     }
 }

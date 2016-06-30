@@ -96,6 +96,9 @@
         },
         "cordova-plugin-compat": {
             "PACKAGE_NAME": "com.forsrc.mystudy"
+        },
+        "phonegap-plugin-barcodescanner": {
+            "PACKAGE_NAME": "com.forsrc.mystudy"
         }
     },
     "dependent_plugins": {
