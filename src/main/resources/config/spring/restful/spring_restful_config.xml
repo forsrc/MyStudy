@@ -15,9 +15,9 @@
 
     <!--<mvc:annotation-driven
             content-negotiation-manager="contentNegotiationManager"
-            >
-    </mvc:annotation-driven>-->
-    <mvc:annotation-driven />
+    >
+    </mvc:annotation-driven>
+    <mvc:annotation-driven />-->
 
     <tx:annotation-driven transaction-manager="txManager"/>
 
@@ -164,6 +164,8 @@
 
         <property name="defaultContentType" value="application/json"/>
     </bean>
+
+
 </beans>
 
 

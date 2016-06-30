@@ -42,11 +42,6 @@
         </listener-class>
     </listener>
 
-    <listener>
-        <listener-class>
-            org.springframework.web.util.IntrospectorCleanupListener
-        </listener-class>
-    </listener>
 
     <listener>
         <listener-class>org.springframework.security.web.session.HttpSessionEventPublisher</listener-class>
@@ -54,6 +49,12 @@
 
     <listener>
         <listener-class>com.forsrc.listener.InitDbListener</listener-class>
+    </listener>
+
+    <listener>
+        <listener-class>
+            org.springframework.web.util.IntrospectorCleanupListener
+        </listener-class>
     </listener>
     <!-- listener END-->
 
@@ -240,7 +241,7 @@
             <param-name>contextConfigLocation</param-name>
             <param-value>classpath:/config/spring/restful/spring_restful.xml</param-value>
         </init-param>
-        <load-on-startup>1</load-on-startup>
+        <load-on-startup>0</load-on-startup>
     </servlet>
 
     <servlet-mapping>
