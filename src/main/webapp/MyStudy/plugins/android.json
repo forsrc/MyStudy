@@ -93,6 +93,9 @@
         },
         "cordova-plugin-barcodescanner": {
             "PACKAGE_NAME": "com.forsrc.mystudy"
+        },
+        "cordova-plugin-compat": {
+            "PACKAGE_NAME": "com.forsrc.mystudy"
         }
     },
     "dependent_plugins": {

@@ -91,9 +91,6 @@
     <feature name="DatePicker">
         <param name="ios-package" value="DatePicker" />
     </feature>
-    <feature name="Zip">
-        <param name="ios-package" value="ZipPlugin" />
-    </feature>
     <feature name="BackgroundMode">
         <param name="ios-package" value="APPBackgroundMode" />
     </feature>
@@ -102,6 +99,9 @@
     </feature>
     <feature name="BarcodeScanner">
         <param name="ios-package" value="CDVBarcodeScanner" />
+    </feature>
+    <feature name="Zip">
+        <param name="ios-package" value="ZipPlugin" />
     </feature>
     <name>MyStudy</name>
     <description>Hello World sample application that responds to the deviceready event.</description>
@@ -145,6 +145,7 @@
     <allow-intent href="itms-apps:*" />
     <preference name="AllowInlineMediaPlayback" value="false" />
     <preference name="BackupWebStorage" value="cloud" />
+    <preference name="DisallowOverscroll" value="true" />
     <preference name="EnableViewportScale" value="false" />
     <preference name="KeyboardDisplayRequiresUserAction" value="true" />
     <preference name="MediaPlaybackRequiresUserAction" value="false" />
@@ -155,10 +156,9 @@
     <preference name="PageLength" value="0" />
     <preference name="PaginationBreakingMode" value="page" />
     <preference name="PaginationMode" value="unpaginated" />
+    <preference name="CameraUsesGeolocation" value="true" />
     <preference name="StatusBarOverlaysWebView" value="true" />
     <preference name="StatusBarStyle" value="lightcontent" />
-    <preference name="CameraUsesGeolocation" value="true" />
-    <preference name="DisallowOverscroll" value="true" />
     <preference name="android-minSdkVersion" value="14" />
     <preference name="AndroidPersistentFileLocation" value="Compatibility" />
 </widget>

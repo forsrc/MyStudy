@@ -741,7 +741,8 @@ module.exports.metadata =
     "cordova-plugin-background-mode": "0.6.5",
     "cordova-plugin-background-download": "0.0.2",
     "cordova-plugin-app-event": "1.2.0",
-    "cordova-plugin-barcodescanner": "0.7.0"
+    "cordova-plugin-barcodescanner": "0.7.0",
+    "cordova-plugin-compat": "1.0.0"
 }
 // BOTTOM OF METADATA
 });

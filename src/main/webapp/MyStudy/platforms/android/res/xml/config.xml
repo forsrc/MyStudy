@@ -77,9 +77,6 @@
     <feature name="DatePickerPlugin">
         <param name="android-package" value="com.plugin.datepicker.DatePickerPlugin" />
     </feature>
-    <feature name="Zip">
-        <param name="android-package" value="org.apache.cordova.Zip" />
-    </feature>
     <feature name="BackgroundMode">
         <param name="android-package" value="de.appplant.cordova.plugin.background.BackgroundMode" />
     </feature>
@@ -89,6 +86,9 @@
     </feature>
     <feature name="BarcodeScanner">
         <param name="android-package" value="com.phonegap.plugins.barcodescanner.BarcodeScanner" />
+    </feature>
+    <feature name="Zip">
+        <param name="android-package" value="org.apache.cordova.Zip" />
     </feature>
     <icon density="ldpi" src="www/res/icon/android/drawable-ldpi-icon.png" />
     <icon density="mdpi" src="www/res/icon/android/drawable-mdpi-icon.png" />
