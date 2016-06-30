@@ -106,107 +106,54 @@ var app = {
     }
 };
 
+
+$(document).ready(function () {
+    app.initialize();
+});
+
+var myScroll;
+
 function main() {
-    if (sessionStorage.sessionId) {
-        window.location.href = MY_WEB_URL.activity;
-        return;
-    }
-
     init();
-
-    sessionStorage.clear();
-
-    binding();
-
-    scroll();
-}
-
-function binding() {
-
-    $('input').keypress(function (e) {
-        var code = (e.keyCode ? e.keyCode : e.which);
-        if ((code == 13) || (code == 10)) {
-            $("#login").click();
-        }
-    });
-
-    $("#login").click(function () {
-        var username = $("#username").val();
-        var password = $("#password").val();
-
-        toLogin(username, password);
-    });
-}
-
-function toLogin(username, password) {
-    if (username == '' || password == '') {
-        $("#loginError").fadeIn();
-        return;
-    }
-    var formData = {
-        "username": username,
-        "password": password
-    };
-    $.ajax({
-        //type: 'POST',
-        type: 'GET',
-        url: MY_WEB_URL.loginJson,
-        ContentType: 'multipart/form-data',
-        data: formData,
-        beforeSend: function () {
-
-        },
-        success: function (response) {
-            console.log(response);
-            if (response.username != username) { //TODO
-                showLoginException();
-                return;
-            }
-            //var response = JSON.parse(response);
-            if (response.id != 0 && response.code == 200) {
-                sessionStorage.sessionId = response.id;
-                sessionStorage.username = username;
-                console.log(sessionStorage.sessionId);
-                toNextPage();
-                return;
-            }
-            showLoginException();
-        },
-        error: function (jqXHR, textStatus, errorThrown) {
-            console.log(textStatus, errorThrown);
-            showAjaxFail();
-        }
-    });
-
-}
-
-function toNextPage(){
-    window.location.href = MY_WEB_URL.activity;
-}
-
-function showLoginException(){
-    $("#loginError").fadeIn();
-}
-
-function showAjaxFail(){
-    $("#fail").snackbar("show");
+    list();
 }
 
 function init() {
-    $.material.init();
-    $.material.ripples();
 
+
+    myScroll = new iScroll('wrapper', {
+        scrollbarClass: 'myScrollbar'
+    });
+
+
+    document.addEventListener('touchmove', function (e) {
+        e.preventDefault();
+    }, false);
 }
 
-function scroll() {
-    var lastScrollTop = 0;
-    $(window).scroll(function (event) {
-        var st = $(this).scrollTop();
-        if (st > lastScrollTop) {
-            //alert('downscroll code');
-        } else {
-            //alert('upscroll code');
+var url = "http://192.168.11.8:8077/springmvc/v1.0/user";
+function list() {
+
+    $.ajax({
+        type: 'GET',
+        url: url,
+        dataType: 'json',
+        data: {
+            sessionId: sessionStorage.sessionId,
+            username: sessionStorage.username
+        },
+        beforeSend: function () {
+            $("#loader").fadeIn("fast");
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            console.log(jqXHR + " --> " + textStatus, errorThrown);
+            $("#fail").snackbar("show");
+        },
+        success: function (response) {
+            $("#loader").fadeOut("slow", function () {
+                console.log(response);
+            });
         }
-        lastScrollTop = st;
     });
+
 }

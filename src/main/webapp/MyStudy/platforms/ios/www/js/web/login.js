@@ -102,20 +102,24 @@ var app = {
 
         console.log(new Date() + ' -> Received Event: ' + id);
 
-        if (sessionStorage.sessionId) {
-            window.location.href = MY_WEB_URL.activity;
-            return;
-        }
-
-        init();
-
-        sessionStorage.clear();
-
-        binding();
-
-        scroll();
+        main();
     }
 };
+
+function main() {
+    if (sessionStorage.sessionId) {
+        window.location.href = MY_WEB_URL.activity;
+        return;
+    }
+
+    init();
+
+    sessionStorage.clear();
+
+    binding();
+
+    scroll();
+}
 
 function binding() {
 

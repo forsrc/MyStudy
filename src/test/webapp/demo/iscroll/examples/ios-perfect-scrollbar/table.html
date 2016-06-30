@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<title>iScroll demo: iOS Perfect Scrollbar</title>
+
+<link rel="stylesheet" type="text/css" href="scrollbar.css">
+
+<script type="application/javascript" src="../../src/iscroll.js"></script>
+
+<script type="text/javascript">
+
+var myScroll;
+function loaded() {
+	myScroll = new iScroll('wrapper', { scrollbarClass: 'myScrollbar' });
+}
+
+document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
+
+document.addEventListener('DOMContentLoaded', loaded, false);
+
+</script>
+
+
+</head>
+<body>
+<div id="header"><a href="http://cubiq.org/iscroll">iScroll</a></div>
+<div id="wrapper">
+	<div id="scroller">
+		<table id="thelist">
+			<thead>
+			</thead>
+			<tr><td>Pretty row 1</td></tr>
+			<tr id="aaa"><td>Pretty row 2</td></tr>
+			<tr><td>Pretty row 3</td></tr>
+			<tr><td>Pretty row 4</td></tr>
+			<tr><td>Pretty row 5</td></tr>
+			<tr><td>Pretty row 6</td></tr>
+			<tr><td>Pretty row 7</td></tr>
+			<tr><td>Pretty row 8</td></tr>
+			<tr><td>Pretty row 9</td></tr>
+			<tr><td>Pretty row 10</td></tr>
+			<tr><td>Pretty row 11</td></tr>
+			<tr><td>Pretty row 12</td></tr>
+			<tr><td>Pretty row 13</td></tr>
+			<tr><td>Pretty row 14</td></tr>
+			<tr><td>Pretty row 15</td></tr>
+			<tr><td>Pretty row 16</td></tr>
+			<tr><td>Pretty row 17</td></tr>
+			<tr><td>Pretty row 18</td></tr>
+			<tr><td>Pretty row 19</td></tr>
+			<tr><td>Pretty row 20</td></tr>
+			<tr><td>Pretty row 21</td></tr>
+			<tr><td>Pretty row 22</td></tr>
+			<tr><td>Pretty row 23</td></tr>
+			<tr><td>Pretty row 24</td></tr>
+			<tr><td>Pretty row 25</td></tr>
+			<tr><td>Pretty row 26</td></tr>
+			<tr><td>Pretty row 27</td></tr>
+			<tr><td>Pretty row 28</td></tr>
+			<tr><td>Pretty row 29</td></tr>
+			<tr><td>Pretty row 30</td></tr>
+			<tr><td>Pretty row 31</td></tr>
+			<tr><td>Pretty row 32</td></tr>
+			<tr><td>Pretty row 33</td></tr>
+			<tr><td>Pretty row 34</td></tr>
+			<tr><td>Pretty row 35</td></tr>
+			<tr><td>Pretty row 36</td></tr>
+			<tr><td>Pretty row 37</td></tr>
+			<tr><td>Pretty row 38</td></tr>
+			<tr><td>Pretty row 39</td></tr>
+			<tr><td>Pretty row 40</td></tr>
+		</table>
+	</div>
+</div>
+
+<div id="footer"></div>
+
+</body>
+</html>
