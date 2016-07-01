@@ -2,6 +2,7 @@ package com.forsrc.springmvc.restful.user.service;
 
 
 import com.forsrc.exception.DaoException;
+import com.forsrc.exception.NoSuchUserException;
 import com.forsrc.exception.PasswordNotMatchException;
 import com.forsrc.exception.ServiceException;
 import com.forsrc.pojo.User;
@@ -31,6 +32,6 @@ public interface UserRestfulService {
     public void delete(Long id) throws ServiceException;
 
     @Transactional(propagation = Propagation.NOT_SUPPORTED, readOnly = true)
-    public void login(User user) throws UsernameNotFoundException, PasswordNotMatchException;
+    public void login(User user) throws NoSuchUserException, PasswordNotMatchException;
 
 }

@@ -1,6 +1,7 @@
 package com.forsrc.springmvc.restful.user.dao;
 
 import com.forsrc.exception.DaoException;
+import com.forsrc.exception.NoSuchUserException;
 import com.forsrc.exception.PasswordNotMatchException;
 import com.forsrc.pojo.User;
 import com.forsrc.springmvc.base.dao.BaseHibernateDao;
@@ -21,5 +22,5 @@ public interface UserRestfulDao extends BaseHibernateDao<User> {
 
     public void delete(Long id) throws DaoException;
 
-    public User findByUsername(String username) throws UsernameNotFoundException;
+    public User findByUsername(String username) throws NoSuchUserException;
 }

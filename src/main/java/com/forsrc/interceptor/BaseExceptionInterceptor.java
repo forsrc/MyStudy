@@ -77,6 +77,7 @@ public class BaseExceptionInterceptor
     public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response, Object handler, Exception e) {
         //springmvc
         request.setAttribute("message", e.getMessage());
+        request.setAttribute("status", 400);
         request.setAttribute("exception", e);
         request.setAttribute("exceptionClass", e.getClass());
         request.setAttribute("at", e.getStackTrace()[0].toString());
@@ -87,6 +88,7 @@ public class BaseExceptionInterceptor
         }
         e.printStackTrace();
         request.getSession().setAttribute("hasError", true);
+        request.getSession().setAttribute("status", 400);
         request.getSession().setAttribute("message", e.getMessage());
         request.getSession().setAttribute("error", e);
         if (e instanceof RollbackException) {
@@ -127,6 +129,7 @@ public class BaseExceptionInterceptor
         map.put("message", e.getMessage());
         map.put("exceptionClass", e.getClass());
         map.put("hasException", true);
+        map.put("status", 400);
         map.put("at", e.getStackTrace()[0].toString());
         //map.put("error", e);
         if (e instanceof NullPointerException) {

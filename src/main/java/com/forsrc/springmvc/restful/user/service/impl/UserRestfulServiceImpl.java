@@ -1,6 +1,7 @@
 package com.forsrc.springmvc.restful.user.service.impl;
 
 import com.forsrc.exception.DaoException;
+import com.forsrc.exception.NoSuchUserException;
 import com.forsrc.exception.PasswordNotMatchException;
 import com.forsrc.exception.ServiceException;
 import com.forsrc.pojo.User;
@@ -55,17 +56,16 @@ public class UserRestfulServiceImpl implements UserRestfulService {
     }
 
     @Override
-    public void login(User user) throws UsernameNotFoundException, PasswordNotMatchException {
+    public void login(User user) throws NoSuchUserException, PasswordNotMatchException {
         User u = this.userRestfulDao.findByUsername(user.getUsername());
+
         String password = null;
-        String p = null;
         try {
-            password = AesUtils.getInstance().decrypt(user.getPassword());
-            p = AesUtils.getInstance().decrypt(u.getPassword());
+            password = AesUtils.getInstance().decrypt(u.getPassword());
         } catch (AesUtils.AesException e) {
             throw new PasswordNotMatchException(e);
         }
-        if(!password.equals(p)){
+        if(!password.equals(user.getPassword())){
             throw new PasswordNotMatchException(user.getUsername());
         }
     }

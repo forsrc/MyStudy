@@ -17,7 +17,7 @@
 package com.forsrc.constant;
 
 public enum KeyConstants {
-    USER("user"),
+    USER("User"),
     CODE("code"),
     KEY_PAIR("KeyPair"),
     LOGIN_TIME("loginTime"),
@@ -27,7 +27,7 @@ public enum KeyConstants {
     USERNAME("username"),
     LANGUAGE("language"),
     READY("ready"),
-    OP_TOKEN("opToken");
+    TOKEN("Token");
 
     private String key;
 

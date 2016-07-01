@@ -1,13 +1,13 @@
 package com.forsrc.utils;
 
 import com.forsrc.constant.KeyConstants;
+import com.forsrc.constant.MyToken;
 import com.forsrc.pojo.User;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.UUID;
 
 
 public class SessionUtils {
@@ -46,12 +46,15 @@ public class SessionUtils {
         return (T) obj;
     }
 
-    public static void saveOpToken(HttpSession session) {
-        session.setAttribute(KeyConstants.OP_TOKEN.getKey(), UUID.randomUUID().toString());
+    public static void setToken(HttpSession session) {
+        MyToken token = (MyToken) session.getAttribute(KeyConstants.TOKEN.getKey());
+        token.generate();
+        session.setAttribute(KeyConstants.TOKEN.getKey(), token);
     }
 
-    public static boolean checkOpToken(HttpSession session, String token) {
-        String opToken = (String) session.getAttribute(KeyConstants.OP_TOKEN.getKey());
-        return token != null && token.equals(opToken);
+    public static boolean checkToken(HttpSession session, MyToken myToken) {
+        MyToken token = (MyToken) session.getAttribute(KeyConstants.TOKEN.getKey());
+        return token.getLoginToken().equals(myToken.getLoginToken());
     }
+
 }
