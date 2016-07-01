@@ -108,7 +108,7 @@ var app = {
 
 function main() {
     if (sessionStorage.sessionId) {
-        window.location.href = MY_WEB_URL.activity;
+        toNextPage();
         return;
     }
 
@@ -181,7 +181,7 @@ function toLogin(username, password) {
 }
 
 function toNextPage(){
-    window.location.href = MY_WEB_URL.activity;
+    window.location.href = MY_WEB_URL.home;
 }
 
 function showLoginException(){
@@ -195,7 +195,6 @@ function showAjaxFail(){
 function init() {
     $.material.init();
     $.material.ripples();
-
 }
 
 function scroll() {

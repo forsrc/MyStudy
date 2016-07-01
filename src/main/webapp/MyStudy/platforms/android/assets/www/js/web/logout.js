@@ -104,17 +104,18 @@ var app = {
 
         console.log(new Date() + ' -> Received Event: ' + id);
 
-        sessionStorage.removeItem('activeTab');
-        sessionStorage.removeItem('leadId');
-
-        sessionStorage.clear();
-        window.location.href = MY_WEB_URL.login;
+        main();
     }
 };
 
+function main(){
+    sessionStorage.removeItem('activeTab');
+    sessionStorage.removeItem('leadId');
 
-$(document).ready(function () {
+    sessionStorage.clear();
+    window.location.href = MY_WEB_URL.login;
+}
 
-    app.initialize();
-
+$(document).ready(function() {
+     app.initialize();
 });

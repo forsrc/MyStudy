@@ -69,9 +69,8 @@
                     </a>
                     <ul class="dropdown-menu">
                         <i class="material-icons caret-up">arrow_drop_up</i>
-                        <li><a href="../web/activity.html"><i class="material-icons">home</i>Home</a></li>
+                        <li><a href="../web/home.html"><i class="material-icons">home</i>Home</a></li>
                         <li><a href="../web/search.html"><i class="material-icons">search</i>Search</a></li>
-                        <li><a href="../web/demo.html"><i class="material-icons">thumb_up</i>Demo</a></li>
                         <li><a href="../web/logout.html"><i class="material-icons">exit_to_app</i>Logout</a></li>
                     </ul>
                 </div>
@@ -97,6 +96,9 @@
             <div class="tab-pane fade active in" id="tab1-list">
                 <div id="wrapper" class="scroller-pane">
                     <div class="scroller">
+                        <div id="pullDown" class="">
+                            <span class="pullDownIcon"></span><span class="pullDownLabel">Pull down to refresh...</span>
+                        </div>
                         <!-- #1 -->
                         <table id="tab1-table" class="table table-striped table-hover table-def" style="height: 100%;">
                             <thead>
@@ -139,7 +141,7 @@
                                 <td></td>
                                 <td></td>
                             </tr>
-                            <tr>
+                            <!-- <tr>
                                 <td></td>
                                 <td></td>
                                 <td></td>
@@ -169,10 +171,21 @@
                                 <td></td>
                                 <td></td>
                             </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr> -->
                             </tbody>
                         </table>
+
+                        <div id="pullUp">
+                            <span class="pullUpIcon"></span><span class="pullUpLabel">Pull up to refresh...</span>
+                        </div>
                     </div>
                 </div>
+            </div>
 
 
                 <!-- #2 -->
