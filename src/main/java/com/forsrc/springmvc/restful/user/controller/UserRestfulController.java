@@ -46,12 +46,13 @@ public class UserRestfulController {
     public ModelAndView list(HttpServletRequest request,
                              HttpServletResponse response) throws ActionException {
 
-        Map<String, List<User>> map = new HashMap<String, List<User>>();
+
         List<User> list = this.userRestfulService.list();
-        map.put("list", list);
+
         ModelAndView modelAndView = new ModelAndView();
         //modelAndView.addObject("list", list);
-        modelAndView.addObject(map);
+        modelAndView.addObject("return", list);
+        modelAndView.addObject("status", 200);
         return modelAndView;
     }
 
@@ -62,21 +63,27 @@ public class UserRestfulController {
                             HttpServletResponse response) throws ActionException {
         User user = this.userRestfulService.get(id);
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.getModelMap().put("user", user);
+        modelAndView.addObject("return", user);
+        modelAndView.addObject("status", 200);
         return modelAndView;
 
     }
 
     @RequestMapping(value = {"/user/{id}"}, method = RequestMethod.PUT)
     @ResponseBody
-    public User update(@PathVariable Long id,
-                       User user,
-                       HttpServletRequest request,
-                       HttpServletResponse response) throws ActionException {
+    public ModelAndView update(@PathVariable Long id,
+                               User user,
+                               HttpServletRequest request,
+                               HttpServletResponse response) throws ActionException {
         //User bean = userManager.findUser(id);
         user.setToken(UUID.randomUUID().toString());
         this.userRestfulService.update(user);
-        return user;
+        ModelAndView modelAndView = new ModelAndView();
+        Map<String, Object> message = new HashMap<String, Object>();
+        message.put("id", id);
+        modelAndView.addObject("return", message);
+        modelAndView.addObject("status", 200);
+        return modelAndView;
 
     }
 
@@ -87,20 +94,27 @@ public class UserRestfulController {
                                HttpServletResponse response) throws ActionException {
         this.userRestfulService.delete(id);
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.getModelMap().put("id", id);
-        modelAndView.getModelMap().put("status", 200);
+        Map<String, Object> message = new HashMap<String, Object>();
+        message.put("id", id);
+        modelAndView.addObject("return", message);
+        modelAndView.addObject("status", 200);
         return modelAndView;
 
     }
 
     @RequestMapping(value = {"/user"}, method = RequestMethod.POST)
     @ResponseBody
-    public User save(@RequestParam User bean,
-                     HttpServletRequest request,
-                     HttpServletResponse response) throws ActionException {
+    public ModelAndView save(@RequestParam User bean,
+                             HttpServletRequest request,
+                             HttpServletResponse response) throws ActionException {
         bean.setToken(UUID.randomUUID().toString());
         bean.setId(this.userRestfulService.save(bean));
-        return bean;
+        ModelAndView modelAndView = new ModelAndView();
+        Map<String, Object> message = new HashMap<String, Object>();
+        message.put("id", bean.getId());
+        modelAndView.addObject("return", message);
+        modelAndView.addObject("status", 200);
+        return modelAndView;
 
     }
 
@@ -111,45 +125,52 @@ public class UserRestfulController {
                               HttpServletResponse response) {
 
 
+
         ModelAndView modelAndView = new ModelAndView();
         LoginValidator loginValidator = new LoginValidator(user, loginToken, request, modelAndView, messageSource);
         if (!loginValidator.validate()) {
+            modelAndView.addObject("status", 400);
+            modelAndView.getModelMap().remove("user");
+            request.removeAttribute("user");
             return modelAndView;
         }
 
-        Map<String, String> map = new HashMap<String, String>();
+        Map<String, Object> message = new HashMap<String, Object>();
+
+        modelAndView.getModelMap().put("return", message);
+
 
         HttpSession session = request.getSession();
         MyToken myToken = (MyToken) session.getAttribute(KeyConstants.TOKEN.getKey());
         try {
             user.setUsername(MyDesUtils.decrypt(myToken.getDesKey(), user.getUsername()));
         } catch (MyDesUtils.DesException e) {
-            map.put("message", MessageUtils.getText(messageSource, "msg.username.or.password.format.is.incorrect"));
-            map.put("error", e.getMessage());
+            message.put("message", MessageUtils.getText(messageSource, "msg.username.or.password.format.is.incorrect"));
+            message.put("error", e.getMessage());
             return modelAndView;
         }
         try {
             user.setPassword(MyDesUtils.decrypt(myToken.getDesKey(), user.getPassword()));
         } catch (MyDesUtils.DesException e) {
-            map.put("message", MessageUtils.getText(messageSource, "msg.username.or.password.format.is.incorrect"));
-            map.put("error", e.getMessage());
+            message.put("message", MessageUtils.getText(messageSource, "msg.username.or.password.format.is.incorrect"));
+            message.put("error", e.getMessage());
             return modelAndView;
         }
         try {
             this.userRestfulService.login(user);
         } catch (PasswordNotMatchException e) {
-            map.put("message", MessageUtils.getText(messageSource, "msg.password.not.match.exception"));
-            map.put("error", e.getMessage());
+            message.put("message", MessageUtils.getText(messageSource, "msg.password.not.match.exception"));
+            message.put("error", e.getMessage());
             return modelAndView;
         } catch (NoSuchUserException e) {
-            map.put("message", MessageUtils.getText(messageSource, "msg.password.not.match.exception"));
-            map.put("error", e.getMessage());
+            message.put("message", MessageUtils.getText(messageSource, "msg.password.not.match.exception"));
+            message.put("error", e.getMessage());
             return modelAndView;
         }
 
         myToken.generate();
         session.setAttribute(KeyConstants.TOKEN.getKey(), myToken);
-
+        modelAndView.addObject("status", 200);
         return modelAndView;
 
     }

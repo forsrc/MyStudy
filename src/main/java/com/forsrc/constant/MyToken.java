@@ -18,8 +18,7 @@ public class MyToken {
     private MyRsaUtils.RsaKey rsaKey;
 
     public MyToken(){
-        this.loginToken = UUID.randomUUID().toString();
-        this.loginTokenTime = new Date().getTime();
+        generate();
     }
 
     public void generate(){
@@ -28,16 +27,6 @@ public class MyToken {
         this.aesKey = new MyAesUtils.AesKey();
         this.desKey = new MyDesUtils.DesKey();
         this.rsaKey = new MyRsaUtils.RsaKey();
-        this.loginToken = UUID.randomUUID().toString();
-        this.loginTokenTime = new Date().getTime();
-    }
-
-    public void clean(){
-        this.token = null;
-        this.tokenTime = -1;
-        this.aesKey = null;
-        this.desKey = null;
-        this.rsaKey = null;
         this.loginToken = UUID.randomUUID().toString();
         this.loginTokenTime = new Date().getTime();
     }

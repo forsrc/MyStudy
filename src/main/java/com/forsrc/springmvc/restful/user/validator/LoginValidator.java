@@ -49,43 +49,43 @@ public class LoginValidator extends Validator {
     public boolean validate() {
         String msg = "";
 
-        map.put("status", "400");
+        this.message.put("status", "400");
         if (user == null) {
-            map.put("message", "No login info.");
+            this.message.put("message", "No login info.");
             return false;
         }
 
         if (MyStringUtils.isBlank(user.getUsername())) {
-            map.put("message", getText("msg.username.or.password.is.blank"));
+            this.message.put("message", getText("msg.username.or.password.is.blank"));
             return false;
         }
 
         if (MyStringUtils.isBlank(user.getPassword())) {
             msg = getText("msg.no.such.user.exception", new String[]{user.getPassword()});
-            setMessage(request, "usernameInfo", msg);
+            this.message.put("message", msg);
             return false;
         }
 
         if (MyStringUtils.isBlank(loginToken)) {
-            map.put("message", getText("msg.no.login.token"));
+            this.message.put("message", getText("msg.no.login.token"));
             return false;
         }
 
         HttpSession session = request.getSession();
         MyToken myToken = (MyToken) session.getAttribute(KeyConstants.TOKEN.getKey());
         if (myToken == null) {
-            map.put("message", getText("msg.no.login.token"));
-            map.put("status", "400");
+            this.message.put("message", getText("msg.no.login.token"));
+            this.message.put("status", "400");
             return false;
         }
 
-        if (loginToken.equals(myToken.getLoginToken())) {
-            map.put("message", getText("msg.login.token.not.match"));
-            map.put("status", "400");
+        if (!loginToken.equals(myToken.getLoginToken())) {
+            this.message.put("message", getText("msg.login.token.not.match"));
+            this.message.put("status", "400");
             return false;
         }
 
-        map.put("status", "200");
+        this.message.put("status", "200");
         return true;
     }
 

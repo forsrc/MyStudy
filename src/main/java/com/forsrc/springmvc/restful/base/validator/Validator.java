@@ -20,13 +20,10 @@ package com.forsrc.springmvc.restful.base.validator;
 
 
 import com.forsrc.utils.MessageUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Locale;
@@ -38,15 +35,15 @@ public abstract class Validator {
 
     protected ModelAndView modelAndView;
 
-    protected Map<String, String> map;
+    protected Map<String, Object> message;
 
     protected MessageSource messageSource;
 
     public Validator(HttpServletRequest request, ModelAndView modelAndView, MessageSource messageSource) {
         this.request = request;
         this.modelAndView = modelAndView;
-        this.map = new HashMap<String, String>();
-        this.modelAndView.addAllObjects(this.map);
+        this.message = new HashMap<String, Object>();
+        this.modelAndView.getModelMap().put("return", this.message);
         this.messageSource = messageSource;
     }
 
@@ -90,5 +87,13 @@ public abstract class Validator {
 
     public void setModelAndView(ModelAndView modelAndView) {
         this.modelAndView = modelAndView;
+    }
+
+    public Map<String, Object> getMessage() {
+        return message;
+    }
+
+    public void setMessage(Map<String, Object> message) {
+        this.message = message;
     }
 }
