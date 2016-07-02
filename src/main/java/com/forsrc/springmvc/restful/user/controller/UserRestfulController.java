@@ -120,12 +120,17 @@ public class UserRestfulController {
 
     @RequestMapping(value = {"/user/login"}, method = RequestMethod.GET)
     @ResponseBody
-    public ModelAndView login(User user, @RequestParam String loginToken,
+    public ModelAndView login(//User user,
+                              @RequestParam String username,
+                              @RequestParam String password,
+                              @RequestParam String loginToken,
                               HttpServletRequest request,
                               HttpServletResponse response) {
 
 
-
+        User user = new User();
+        user.setUsername(username);
+        user.setPassword(password);
         ModelAndView modelAndView = new ModelAndView();
         LoginValidator loginValidator = new LoginValidator(user, loginToken, request, modelAndView, messageSource);
         if (!loginValidator.validate()) {
