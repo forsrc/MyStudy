@@ -112,7 +112,7 @@ public class UserRestfulController {
 
 
         ModelAndView modelAndView = new ModelAndView();
-        LoginValidator loginValidator = new LoginValidator(user, loginToken, request, modelAndView);
+        LoginValidator loginValidator = new LoginValidator(user, loginToken, request, modelAndView, messageSource);
         if (!loginValidator.validate()) {
             return modelAndView;
         }

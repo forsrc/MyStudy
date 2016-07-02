@@ -24,6 +24,7 @@ import com.forsrc.constant.MyToken;
 import com.forsrc.pojo.User;
 import com.forsrc.springmvc.restful.base.validator.Validator;
 import com.forsrc.utils.MyStringUtils;
+import org.springframework.context.MessageSource;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -34,13 +35,13 @@ public class LoginValidator extends Validator {
     private User user;
     private String loginToken;
 
-    public LoginValidator(HttpServletRequest request, ModelAndView modelAndView) {
-        super(request, modelAndView);
+    public LoginValidator(HttpServletRequest request, ModelAndView modelAndView, MessageSource messageSource) {
+        super(request, modelAndView, messageSource);
     }
 
     public LoginValidator(User user, String loginToken,
-                          HttpServletRequest request, ModelAndView modelAndView) {
-        super(request, modelAndView);
+                          HttpServletRequest request, ModelAndView modelAndView, MessageSource messageSource) {
+        super(request, modelAndView, messageSource);
         this.user = user;
         this.loginToken = loginToken;
     }
