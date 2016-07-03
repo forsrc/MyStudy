@@ -82,129 +82,117 @@
 
     <!--  -->
     <div class="col-xs-12" style="padding:0px; background-color:white;">
+
+        <ul id="nav-tabs-ul" class="nav nav-tabs nav-justified activityTabs one-edge-shadow"
+            style="margin-bottom: 15px;">
+            <li class="active">
+                <a href="#timeline1" data-toggle="tab">Timeline #1</a>
+            </li>
+            <li>
+                <a href="#timeline2" data-toggle="tab">Timeline #2</a>
+            </li>
+        </ul>
+
         <!-- #1 -->
-        <div class="" id="list">
-            <section>
-                <div class="timeline-filter-wrapper">
-                    <header class="timeline-filter">
-                        <p>
-                            Feature
-                        </p>
-                    </header>
-                </div>
-                <article class="timeline">
-                    <!-- 1# -->
-                    <div class="timeline-entry first even" data-category="['staff-change', 'lila']">
-                        <div class="timeline-icon green">
-                            <i class="fa fa-plus"></i>
-                        </div>
-                        <div class="timeline-description">
-                            <span class="timestamp"><time datetime="2016-07-01">2016-07-01</time></span>
-                            <h2>
-                                <a id="tretikov-joins" href="#tretikov-joins">
-                                    <i class="fa fa-link"></i>
-                                </a>
-                                <i class="material-icons">people</i>
-                                User Management
-                            </h2>
-                            <div class="captioned-image image-right">
-                                <a href="#">
-                                    <img src="../img/logo.png" alt="User">
-                                </a>
+
+        <div id="timeline" class="tab-content">
+            <div class="tab-pane fade active in" id="timeline1">
+                <section>
+                    <div class="timeline-filter-wrapper">
+                        <header class="timeline-filter">
+                            <p>
+                                Feature
+                            </p>
+                        </header>
+                    </div>
+                    <article class="timeline">
+                        <!-- 1# -->
+                        <div class="timeline-entry first even" data-category="['staff-change', 'lila']">
+                            <div class="timeline-icon green">
+                                <i class="fa fa-plus"></i>
+                            </div>
+                            <div class="timeline-description">
+                                <span class="timestamp"><time datetime="2016-07-01">2016-07-01</time></span>
+                                <h2>
+                                    <a id="tretikov-joins" href="#tretikov-joins">
+                                        <i class="fa fa-link"></i>
+                                    </a>
+                                    <i class="material-icons">people</i>
+                                    User Management
+                                </h2>
+                                <div class="captioned-image image-right">
+                                    <a href="#">
+                                        <img src="../img/logo.png" alt="User">
+                                    </a>
                             <span class="caption">User Management
                                 <span class="attribution-link">
                                     <a href="#">(MyStudy Sub System)</a>
                                 </span>
                             </span>
+                                </div>
+                                <p>See <a href="user.html">User Management</a>.</p>
+                                <ul>
+                                    <li>
+                                        <a href="user.html">list</a>
+                                    </li>
+                                    <li>
+                                        <a href="user.html">add</a>
+                                    </li>
+                                    <li>
+                                        <a href="user.html">update</a>
+                                    </li>
+                                    <li>
+                                        <a href="user.html">delete</a>
+                                    </li>
+                                </ul>
                             </div>
-                            <p>See <a href="user.html">User Management</a>.</p>
-                            <ul>
-                                <li>
-                                    <a href="user.html">User list</a>
-                                </li>
-                                <li>
-                                    <a href="user.html">User add</a>
-                                </li>
-                                <li>
-                                    <a href="user.html">User update</a>
-                                </li>
-                                <li>
-                                    <a href="user.html">User delete</a>
-                                </li>
-                            </ul>
                         </div>
-                    </div>
 
-                    <!-- 2# -->
-                    <div class="timeline-entry odd" data-category="['unrest']">
-                        <div class="timeline-icon red">
-                            <i class="fa fa-frown-o"></i>
-                        </div>
-                        <div class="timeline-description">
+                        <!-- 2# -->
+                        <div class="timeline-entry odd" data-category="['unrest']">
+                            <div class="timeline-icon red">
+                                <i class="material-icons more-v">mood</i>
+                            </div>
+                            <div class="timeline-description">
                             <span class="timestamp">
                                 <time datetime="2016-06-01">2016-06-01</time>
                             </span>
-                            <h2>
-                                <a id="superprotect-conflict" href="#superprotect-conflict">
-                                    <i class="fa fa-link"></i>
-                                </a>
-                                Demo
-                            </h2>
-                            <p>Demo
-                                <a href="demo.html">click here</a>
-                            </p>
-                            <ul>
-                                <li>
-                                    <a href="demo.html">
-                                        <i>Signpost</i>: demo</a>
-                                </li>
-                                <li>
-                                    <a href="demo.html">
-                                        <i>Media Viewer</i>: demo</a>
-                                </li>
-                            </ul>
+                                <h2>
+                                    <a id="superprotect-conflict" href="#superprotect-conflict">
+                                        <i class="fa fa-link"></i>
+                                    </a>
+                                    Demo
+                                </h2>
+                                <p>Demo
+                                    <a href="demo.html">click here</a>
+                                </p>
+                                <ul>
+                                    <li>
+                                        <a href="demo.html">
+                                            <i>Signpost</i>: demo</a>
+                                    </li>
+                                    <li>
+                                        <a href="demo.html">
+                                            <i>Media Viewer</i>: demo</a>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
-                    </div>
 
-                </article>
-                <footer class="page-footer">
-                    <p>
-                        Feature <a rel="license" href="home.html">see here</a>.
-                    </p>
-                </footer>
-            </section>
+                    </article>
+                    <footer class="page-footer">
+                        <p>
+                            Feature <a rel="license" href="home.html">see here</a>.
+                        </p>
+                    </footer>
+                </section>
+            </div>
 
+            <div class="tab-pane fade" id="timeline2">
 
-            <!--<table class="table table-striped table-hover ">
-                <thead>
-                <tr>
-                    <th>No.</th>
-                    <th>Name</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td>
-                        <i class="material-icons">people</i>1
-                    </td>
-                    <td>
-                        <a href="user.html">User Management</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <i class="material-icons">sentiment_very_satisfied</i>2
-                    </td>
-                    <td>
-                        <a href="demo.html">Demo</a>
-                    </td>
-                </tr>
-
-                </tbody>
-            </table>
+            </div>
         </div>
-    </div>-->
-    <!--  -->
+    </div>
 
     <span id="fail" data-toggle="snackbar" data-html-allowed="true"
           data-content="<i class='material-icons times'>error_outline</i>&nbsp;&nbsp;Cannot load data. Please Try again!!"></span>

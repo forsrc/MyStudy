@@ -115,6 +115,8 @@ function main(){
 
     init();
 
+    toolbar();
+
     $("#loader").fadeOut("slow", function () {
 
     });
@@ -126,3 +128,32 @@ function init(){
     username.innerText = sessionStorage.username;
 
 }
+
+function toolbar() {
+
+    $(document).on('click', '#timeline', function () {
+
+    });
+
+
+    $(window).scroll(function () {
+        var $toolbar = $("#toolbar");
+        if (!$toolbar) {
+            return;
+        }
+        var height = $toolbar.outerHeight();
+        if ($(this).scrollTop() > height) {
+            $('#nav-tabs-ul').css({
+                "position": "fixed",
+                "top": "0",
+                "z-index": "999"
+            });
+            return;
+        }
+        $('#nav-tabs-ul').css({
+            "position": "static"
+        });
+    });
+
+}
+
