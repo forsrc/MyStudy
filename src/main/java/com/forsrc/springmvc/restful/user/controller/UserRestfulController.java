@@ -38,6 +38,8 @@ public class UserRestfulController {
     @Resource(name = "messageSource")
     protected MessageSource messageSource;
 
+    private final String VERSION_V_1_0 = "v1.0";
+
 
     @RequestMapping(value = {"/user"}, method = RequestMethod.GET
             //, headers = "Accept=application/json"
@@ -53,6 +55,7 @@ public class UserRestfulController {
         //modelAndView.addObject("list", list);
         modelAndView.addObject("return", list);
         modelAndView.addObject("status", 200);
+        modelAndView.addObject("version", VERSION_V_1_0);
         return modelAndView;
     }
 
@@ -65,6 +68,7 @@ public class UserRestfulController {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("return", user);
         modelAndView.addObject("status", 200);
+        modelAndView.addObject("version", VERSION_V_1_0);
         return modelAndView;
 
     }
@@ -83,6 +87,7 @@ public class UserRestfulController {
         message.put("id", id);
         modelAndView.addObject("return", message);
         modelAndView.addObject("status", 200);
+        modelAndView.addObject("version", VERSION_V_1_0);
         return modelAndView;
 
     }
@@ -98,6 +103,7 @@ public class UserRestfulController {
         message.put("id", id);
         modelAndView.addObject("return", message);
         modelAndView.addObject("status", 200);
+        modelAndView.addObject("version", VERSION_V_1_0);
         return modelAndView;
 
     }
@@ -114,6 +120,7 @@ public class UserRestfulController {
         message.put("id", bean.getId());
         modelAndView.addObject("return", message);
         modelAndView.addObject("status", 200);
+        modelAndView.addObject("version", VERSION_V_1_0);
         return modelAndView;
 
     }
@@ -132,6 +139,7 @@ public class UserRestfulController {
         user.setUsername(username);
         user.setPassword(password);
         ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("version", VERSION_V_1_0);
         LoginValidator loginValidator = new LoginValidator(user, loginToken, request, modelAndView, messageSource);
         if (!loginValidator.validate()) {
             modelAndView.addObject("status", 400);

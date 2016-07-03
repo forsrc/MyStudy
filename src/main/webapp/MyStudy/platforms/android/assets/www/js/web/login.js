@@ -116,9 +116,49 @@ function main() {
 
     sessionStorage.clear();
 
+    getLoginToken();
+
     binding();
 
     scroll();
+}
+
+function getLoginToken() {
+    $.ajax({
+        //type: 'POST',
+        type: 'GET',
+        url: MY_WEB_URL.getLoginToken,
+        ContentType: 'multipart/form-data',
+        data: {},
+        beforeSend: function () {
+
+        },
+        success: function (response) {
+            console.log(response);
+
+            sessionStorage.token = response.return;
+
+            if (response.status != 200) {
+                showFail("Get login token failed, please try later.");
+                return;
+            }
+
+            var myAes = new MyAes(sessionStorage.token.ak, sessionStorage.token.ai);
+            sessionStorage.myAes = myAes;
+            sessionStorage.token.loginToken = myAes.decrypt(sessionStorage.token.loginToken);
+            console.log("token.loginToken --> " + sessionStorage.token.loginToken);
+
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            console.log(textStatus, errorThrown);
+            showFail("Can not connect the service.");
+        }
+    });
+}
+
+function showFail(msg) {
+    $("#failMessage").attr("data-content", "<i class='material-icons times'>error_outline</i>&nbsp;&nbsp;" + msg);
+    $("#failMessage").snackbar("show");
 }
 
 function binding() {
@@ -143,6 +183,15 @@ function toLogin(username, password) {
         $("#loginError").fadeIn();
         return;
     }
+
+    if (LOGIN_TOKEN == null) {
+        showFail("Get login token failed, please try later.");
+
+        setTimeout(function () {
+            getLoginToken();
+        }, 200);
+    }
+    
     var formData = {
         "username": username,
         "password": password

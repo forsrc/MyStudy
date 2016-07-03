@@ -14,8 +14,9 @@ var MY_WEB_URL = {
     "listViewJson"     : SERVER_TEST + "/json/appListView.json",
     "detailJson"       : SERVER_TEST + "/json/detail.json",
 
-    "toLgin"           : SERVER_REST + "/v1.0/toLogin",
+    "toLgin"           : SERVER_REST + "/v1.0/user/login",
     "user-list"        : SERVER_REST + "/v1.0/user",
+    "getLoginToken"    : SERVER_REST + "/v1.0/getLoginToken",
 
     "login"            : PATH + "web/login.html",
     "logout"           : PATH + "web/logout.html",
@@ -31,9 +32,3 @@ var MY_WEB_URL = {
 };
 
 var logEnable = true;
-
-
-var TOKEN = {
-    "login" : "",
-    "token" : ""
-};

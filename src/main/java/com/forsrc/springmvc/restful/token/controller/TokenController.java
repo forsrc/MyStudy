@@ -3,6 +3,7 @@ package com.forsrc.springmvc.restful.token.controller;
 
 import com.forsrc.constant.KeyConstants;
 import com.forsrc.constant.MyToken;
+import com.forsrc.utils.MyAesUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -19,6 +20,7 @@ import java.util.Map;
 @RequestMapping(value = "/v1.0")
 public class TokenController {
 
+    private final String VERSION_V_1_0 = "v1.0";
 
     @RequestMapping(value = {"/getLoginToken"}, method = RequestMethod.GET)
     @ResponseBody
@@ -26,15 +28,18 @@ public class TokenController {
                              HttpServletResponse response) throws Exception {
 
         MyToken token = new MyToken();
-        Map<String, String> map = new HashMap<String, String>();
-        map.put("loginToken", token.getLoginToken());
-        map.put("loginTokenTime", String.valueOf(token.getLoginTokenTime()));
-        map.put("status", "200");
+        Map<String, String> message = new HashMap<String, String>();
+        message.put("loginToken", MyAesUtils.encrypt(token.getAesKey(), token.getLoginToken()));
+        message.put("loginTokenTime", String.valueOf(token.getLoginTokenTime()));
+
         HttpSession session = request.getSession();
         session.setAttribute(KeyConstants.TOKEN.toString(), token);
-
+        message.put("ai", token.getAesKey().getIv());
+        message.put("ak", token.getAesKey().getKey());
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject(map);
+        modelAndView.addObject("return", message);
+        modelAndView.addObject("status", 200);
+        modelAndView.addObject("version", VERSION_V_1_0);
         return modelAndView;
     }
 }
