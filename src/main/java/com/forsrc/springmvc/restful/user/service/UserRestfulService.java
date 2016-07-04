@@ -32,6 +32,6 @@ public interface UserRestfulService {
     public void delete(Long id) throws ServiceException;
 
     @Transactional(propagation = Propagation.NOT_SUPPORTED, readOnly = true)
-    public void login(User user) throws NoSuchUserException, PasswordNotMatchException;
+    public User login(User user) throws NoSuchUserException, PasswordNotMatchException;
 
 }

@@ -9,17 +9,20 @@
  * @constructor
  */
 function MyAes(key, iv, isNewInstance) {
+    if (!key || !iv) {
+        throw new Error("Error --> key: " + key + "; iv: " + iv);
+    }
     if (!isNewInstance && MyAes.instance) {
         return MyAes.instance;
     }
-    this.key = key;
+    this.key = CryptoJS.enc.Utf8.parse(key);
     this.config = {
-        iv: iv,
-        mode: CryptoJS.mode.ECB,
+        iv: CryptoJS.enc.Utf8.parse(iv),
+        mode: CryptoJS.mode.CBC,
         padding: CryptoJS.pad.Pkcs7
     };
     if (MyAes._initialized) {
-        return MyAes.instance;
+        //return MyAes.instance;
     }
     /**
      * encrypt(string)
@@ -39,6 +42,7 @@ function MyAes(key, iv, isNewInstance) {
      * @returns {String} decrypted string;
      */
     MyAes.prototype.decrypt = function (encryptedString) {
+
         var __this = this;
         var decryptedString = CryptoJS.AES.decrypt(encryptedString, __this.key,
             __this.config);

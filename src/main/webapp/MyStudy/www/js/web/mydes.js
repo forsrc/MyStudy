@@ -8,6 +8,9 @@
  * @constructor
  */
 function MyDes(key, isNewInstance) {
+    if (!key) {
+        throw new Error("Error --> key: " + key + ";");
+    }
     if (!isNewInstance && MyDes.instance) {
         return MyDes.instance;
     }
@@ -17,7 +20,7 @@ function MyDes(key, isNewInstance) {
         "padding": CryptoJS.pad.Pkcs7
     };
     if (MyDes._initialized) {
-        return MyDes.instance;
+        //return MyDes.instance;
     }
 
     /**

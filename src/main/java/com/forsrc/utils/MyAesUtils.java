@@ -228,14 +228,14 @@ public final class MyAesUtils {
             try {
                 Security.addProvider(new BouncyCastleProvider());
 
-                cipher = Cipher.getInstance(CIPHER_KEY, PROVIDER);
+                cipher = Cipher.getInstance(CIPHER_KEY);
             } catch (NoSuchAlgorithmException e) {
                 throw new AesException(e);
             } catch (NoSuchPaddingException e) {
                 throw new AesException(e);
-            } catch (NoSuchProviderException e) {
+            } /*catch (NoSuchProviderException e) {
                 throw new AesException(e);
-            }
+            }*/
             return cipher;
         }
     }

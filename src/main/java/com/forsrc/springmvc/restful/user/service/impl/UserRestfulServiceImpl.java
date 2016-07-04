@@ -56,7 +56,7 @@ public class UserRestfulServiceImpl implements UserRestfulService {
     }
 
     @Override
-    public void login(User user) throws NoSuchUserException, PasswordNotMatchException {
+    public User login(User user) throws NoSuchUserException, PasswordNotMatchException {
         User u = this.userRestfulDao.findByUsername(user.getUsername());
 
         String password = null;
@@ -68,6 +68,7 @@ public class UserRestfulServiceImpl implements UserRestfulService {
         if(!password.equals(user.getPassword())){
             throw new PasswordNotMatchException(user.getUsername());
         }
+        return u;
     }
 
     public UserRestfulDao getUserRestfulDao() {

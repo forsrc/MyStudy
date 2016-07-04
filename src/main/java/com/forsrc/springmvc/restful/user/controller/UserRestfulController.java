@@ -9,7 +9,7 @@ import com.forsrc.pojo.User;
 import com.forsrc.springmvc.restful.user.service.UserRestfulService;
 import com.forsrc.springmvc.restful.user.validator.LoginValidator;
 import com.forsrc.utils.MessageUtils;
-import com.forsrc.utils.MyDesUtils;
+import com.forsrc.utils.MyAesUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
@@ -125,7 +125,7 @@ public class UserRestfulController {
 
     }
 
-    @RequestMapping(value = {"/user/login"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"/user/login"}, method = RequestMethod.POST)
     @ResponseBody
     public ModelAndView login(//User user,
                               @RequestParam String username,
@@ -156,21 +156,22 @@ public class UserRestfulController {
         HttpSession session = request.getSession();
         MyToken myToken = (MyToken) session.getAttribute(KeyConstants.TOKEN.getKey());
         try {
-            user.setUsername(MyDesUtils.decrypt(myToken.getDesKey(), user.getUsername()));
-        } catch (MyDesUtils.DesException e) {
+            user.setUsername(MyAesUtils.decrypt(myToken.getAesKey(), user.getUsername()));
+        } catch (MyAesUtils.AesException e) {
             message.put("message", MessageUtils.getText(messageSource, "msg.username.or.password.format.is.incorrect"));
             message.put("error", e.getMessage());
             return modelAndView;
         }
         try {
-            user.setPassword(MyDesUtils.decrypt(myToken.getDesKey(), user.getPassword()));
-        } catch (MyDesUtils.DesException e) {
+            user.setPassword(MyAesUtils.decrypt(myToken.getAesKey(), user.getPassword()));
+        } catch (MyAesUtils.AesException e) {
             message.put("message", MessageUtils.getText(messageSource, "msg.username.or.password.format.is.incorrect"));
             message.put("error", e.getMessage());
             return modelAndView;
         }
+        User u = null;
         try {
-            this.userRestfulService.login(user);
+            u = this.userRestfulService.login(user);
         } catch (PasswordNotMatchException e) {
             message.put("message", MessageUtils.getText(messageSource, "msg.password.not.match.exception"));
             message.put("error", e.getMessage());
@@ -183,7 +184,20 @@ public class UserRestfulController {
 
         myToken.generate();
         session.setAttribute(KeyConstants.TOKEN.getKey(), myToken);
+        try {
+            message.put("loginToken", MyAesUtils.encrypt(myToken.getAesKey(), myToken.getLoginToken()));
+            message.put("id", MyAesUtils.encrypt(myToken.getAesKey(), String.valueOf(u.getId())));
+            message.put("isAdmin", MyAesUtils.encrypt(myToken.getAesKey(), "1"));
+        } catch (MyAesUtils.AesException e) {
+            throw new ArithmeticException(e.getMessage());
+        }
+        message.put("loginTokenTime", String.valueOf(myToken.getLoginTokenTime()));
+        message.put("ai", myToken.getAesKey().getIv());
+        message.put("ak", myToken.getAesKey().getKey());
+
+
         modelAndView.addObject("status", 200);
+        modelAndView.addObject("version", VERSION_V_1_0);
         return modelAndView;
 
     }

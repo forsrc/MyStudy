@@ -10,6 +10,9 @@
  * @constructor
  */
 function MyRsa(n, e, d, isNewInstance) {
+    if (!n || !e || !d) {
+        throw new Error("Error --> n: " + n + "; e: " + e + "; d: " + d);
+    }
     if (!isNewInstance && MyRsa.instance) {
         return MyRsa.instance;
     }
@@ -20,7 +23,7 @@ function MyRsa(n, e, d, isNewInstance) {
     this.bie = new BigInteger(e);
     this.bid = new BigInteger(d);
     if (MyRsa._initialized) {
-        return MyRsa.instance;
+        //return MyRsa.instance;
     }
 
     /**

@@ -123,10 +123,12 @@ function main() {
     scroll();
 }
 
+var MY_AES = null;
+var TOKEN = null;
+
 function getLoginToken() {
     $.ajax({
-        //type: 'POST',
-        type: 'GET',
+        type: 'POST',
         url: MY_WEB_URL.getLoginToken,
         ContentType: 'multipart/form-data',
         data: {},
@@ -136,17 +138,18 @@ function getLoginToken() {
         success: function (response) {
             console.log(response);
 
-            sessionStorage.token = response.return;
-
             if (response.status != 200) {
                 showFail("Get login token failed, please try later.");
                 return;
             }
-
-            var myAes = new MyAes(sessionStorage.token.ak, sessionStorage.token.ai);
-            sessionStorage.myAes = myAes;
-            sessionStorage.token.loginToken = myAes.decrypt(sessionStorage.token.loginToken);
-            console.log("token.loginToken --> " + sessionStorage.token.loginToken);
+            MY_AES = new MyAes(response.return.ak, response.return.ai, true);
+            TOKEN = {
+                ak: response.return.ak,
+                ai: response.return.ai,
+                loginToken: MY_AES.decrypt(response.return.loginToken),
+                loginTokenTime: response.return.loginTokenTime
+            };
+            console.log("token.loginToken --> " + TOKEN.loginToken);
 
         },
         error: function (jqXHR, textStatus, errorThrown) {
@@ -184,22 +187,22 @@ function toLogin(username, password) {
         return;
     }
 
-    if (LOGIN_TOKEN == null) {
+    if (TOKEN == null) {
         showFail("Get login token failed, please try later.");
 
         setTimeout(function () {
             getLoginToken();
         }, 200);
     }
-    
+
     var formData = {
-        "username": username,
-        "password": password
+        "username": MY_AES.encrypt(username),
+        "password": MY_AES.encrypt(password),
+        "loginToken": TOKEN.loginToken
     };
     $.ajax({
-        //type: 'POST',
-        type: 'GET',
-        url: MY_WEB_URL.loginJson,
+        type: 'POST',
+        url: MY_WEB_URL.toLogin,
         ContentType: 'multipart/form-data',
         data: formData,
         beforeSend: function () {
@@ -207,19 +210,32 @@ function toLogin(username, password) {
         },
         success: function (response) {
             console.log(response);
-            if (response.username != username) { //TODO
+
+            if (response.status != 200) {
                 showLoginException();
                 return;
             }
-            //var response = JSON.parse(response);
-            if (response.id != 0 && response.code == 200) {
-                sessionStorage.sessionId = response.id;
-                sessionStorage.username = username;
-                console.log(sessionStorage.sessionId);
-                toNextPage();
-                return;
-            }
-            showLoginException();
+
+            MY_AES = new MyAes(response.return.ak, response.return.ai, true);
+            
+            TOKEN = {
+                ak: response.return.ak,
+                ai: response.return.ai,
+                loginTokenTime: response.return.loginTokenTime,
+                loginToken: MY_AES.decrypt(response.return.loginToken),
+                id: MY_AES.decrypt(response.return.id),
+                isAdmin: MY_AES.decrypt(response.return.isAdmin)
+            };
+
+
+            console.log("token.id --> " + MY_AES.decrypt(response.return.id));
+            sessionStorage.sessionId = TOKEN.id;
+            sessionStorage.username = username;
+            sessionStorage.isAdmin = TOKEN.isAdmin;
+            console.log(username + " --> " + sessionStorage.sessionId);
+
+            toNextPage();
+
         },
         error: function (jqXHR, textStatus, errorThrown) {
             console.log(textStatus, errorThrown);
@@ -229,15 +245,15 @@ function toLogin(username, password) {
 
 }
 
-function toNextPage(){
+function toNextPage() {
     window.location.href = MY_WEB_URL.home;
 }
 
-function showLoginException(){
+function showLoginException() {
     $("#loginError").fadeIn();
 }
 
-function showAjaxFail(){
+function showAjaxFail() {
     $("#fail").snackbar("show");
 }
 
