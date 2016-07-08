@@ -2,33 +2,75 @@
 
 actor Admin
 
-Admin -> Browser : open login URL ❶
+    Admin -> Browser : open login URL ❶
 
-Browser -> LoginSystem : to get token ❷
+boundary LoginSystemBoundary
 
-boundary LoginSystem
+
+    Browser -> LoginSystemBoundary : get login token ❷
+
 control LoginControl
-entity User
-database MyStudyDB
+    activate HttpSession
 
 
-Admin -> LoginSystem :
+    LoginSystemBoundary -> LoginControl : getLoginToken()
+    activate LoginControl
+        create MyToken
+        LoginControl -> MyToken : <<create>> myToken
 
-Admin -> LoginSystem : login
-
-User -> LoginSystem
-
-LoginControl -> LoginService
-
-LoginService -> LoginDao
-
-LoginDao -> User
+        activate MyToken
+        MyToken --> LoginControl
+        deactivate MyToken
 
 
-legend
-❶ http://mystudy/www/web/login.html
-❷ POST]</b> http://mystudy/springmvc/v1.0/getToken
-1. <b>[POST]</b> http://mystudy/springmvc/v1.0/login?username=admin&password=123456
+        LoginControl -> HttpSession : setAttribute("Token", myToken)
+        activate HttpSession
+        deactivate HttpSession
+    LoginControl --> LoginSystemBoundary
+    deactivate LoginControl
+    LoginSystemBoundary --> Browser
+
+
+    Admin -> Browser : input username/password
+
+    Admin -> Browser : login ❸
+    activate Browser
+        Browser -> Browser : AES username and password
+    Browser -> LoginSystemBoundary
+    deactivate Browser
+
+    LoginSystemBoundary -> LoginControl : login()
+
+    LoginControl -> LoginService : login()
+    activate LoginService
+
+        LoginService -> UserDao : findByUsername()
+        activate UserDao
+            database MyStudyDB
+            UserDao -> MyStudyDB
+            activate MyStudyDB
+                create entity User
+                MyStudyDB -> User : <<create>>
+                activate User
+                User --> MyStudyDB
+                deactivate User
+            MyStudyDB --> UserDao
+            deactivate MyStudyDB
+        UserDao --> LoginService
+        deactivate UserDao
+
+    LoginService --> LoginControl
+    deactivate LoginService
+
+    LoginControl --> LoginSystemBoundary : new AES; AES token
+
+    LoginSystemBoundary --> Browser
+
+
+legend left
+❶: http://mystudy/www/web/login.html
+❷: <b>[POST]</b> http://mystudy/springmvc/v1.0/login/getToken
+❸: <b>[POST]</b> http://mystudy/springmvc/v1.0/login?username=admin&password=123456&loginToken=xxx
 endlegend
 
 
