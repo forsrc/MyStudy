@@ -214,12 +214,20 @@ public final class MyRsa2Utils {
             this.keyPair = keyPair;
         }
 
-        public RSAPublicKeySpec getRSAPublicKeySpec() throws InvalidKeySpecException {
-            return keyFactory.getKeySpec(this.getKeyPair().getPublic(), RSAPublicKeySpec.class);
+        public RSAPublicKeySpec getRSAPublicKeySpec() throws RsaException {
+            try {
+                return keyFactory.getKeySpec(this.getKeyPair().getPublic(), RSAPublicKeySpec.class);
+            } catch (InvalidKeySpecException e) {
+                throw new RsaException(e);
+            }
         }
 
-        public RSAPrivateKeySpec getRSAPrivateKeySpec() throws InvalidKeySpecException {
-            return keyFactory.getKeySpec(this.getKeyPair().getPrivate(), RSAPrivateKeySpec.class);
+        public RSAPrivateKeySpec getRSAPrivateKeySpec() throws RsaException {
+            try {
+                return keyFactory.getKeySpec(this.getKeyPair().getPrivate(), RSAPrivateKeySpec.class);
+            } catch (InvalidKeySpecException e) {
+                throw new RsaException(e);
+            }
         }
     }
 
