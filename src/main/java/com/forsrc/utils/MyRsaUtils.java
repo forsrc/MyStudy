@@ -46,9 +46,8 @@ public final class MyRsaUtils {
     }
 
     public static String encrypt(RsaKey rsaKey, String message) {
-        BigInteger mensagemNumero = string2number(message);
-        BigInteger encrypt = mensagemNumero.modPow(rsaKey.getPublicKey(),
-                rsaKey.getN());
+        BigInteger messageNumer = string2number(message);
+        BigInteger encrypt = messageNumer.modPow(rsaKey.getPublicKey(), rsaKey.getN());
         return new BASE64Encoder().encode(encrypt.toByteArray())
                 .replace("\r\n", "").replace("\n", "");
     }
@@ -59,13 +58,13 @@ public final class MyRsaUtils {
     }
 
     public static BigInteger getEncrypt(RsaKey rsaKey, String message) {
-        BigInteger mensagemNumero = string2number(message);
-        return mensagemNumero.modPow(rsaKey.getPublicKey(), rsaKey.getN());
+        BigInteger messageNumber = string2number(message);
+        return messageNumber.modPow(rsaKey.getPublicKey(), rsaKey.getN());
     }
 
     public static String encrypt4Client(RsaKey rsaKey, String message) {
-        BigInteger mensagemNumero = string2number(message);
-        BigInteger encrypt = mensagemNumero.modPow(rsaKey.getPublicKey(),
+        BigInteger messageNumer = string2number(message);
+        BigInteger encrypt = messageNumer.modPow(rsaKey.getPublicKey(),
                 rsaKey.getN());
         return encrypt.toString();
     }
