@@ -42,7 +42,7 @@ public class LoginController {
 
     @RequestMapping(value = {"/login/getLoginToken"}, method = RequestMethod.POST)
     @ResponseBody
-    public ModelAndView list(HttpServletRequest request,
+    public ModelAndView getLoginToken(HttpServletRequest request,
                              HttpServletResponse response) {
 
         MyToken token = new MyToken();
