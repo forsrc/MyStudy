@@ -23,30 +23,36 @@ import javax.crypto.*;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.security.*;
-import java.security.spec.InvalidKeySpecException;
-import java.security.spec.RSAPrivateKeySpec;
-import java.security.spec.RSAPublicKeySpec;
+import java.security.spec.*;
 
 public final class MyRsa2Utils {
 
     private static final String CHAR_SET = "UTF-8";
 
+    public static String decrypt(RsaKey rsaKey, String cipherText) throws RsaException {
+        return decrypt(rsaKey.getKeyPair().getPrivate(), cipherText);
+    }
 
-    public static String decrypt(RsaKey rsaKey, String encrypted) throws IOException {
+    public static String decrypt(PrivateKey privateKey, String cipherText) throws RsaException {
         Cipher cipher = null;
         try {
             cipher = Cipher.getInstance(RsaKey.ALGORITHM, new org.bouncycastle.jce.provider.BouncyCastleProvider());
         } catch (NoSuchAlgorithmException e) {
-            throw new IOException(e);
+            throw new RsaException(e);
         } catch (NoSuchPaddingException e) {
-            throw new IOException(e);
+            throw new RsaException(e);
         }
         try {
-            cipher.init(Cipher.DECRYPT_MODE, rsaKey.getKeyPair().getPrivate());
+            cipher.init(Cipher.DECRYPT_MODE, privateKey);
         } catch (InvalidKeyException e) {
-            throw new IOException(e);
+            throw new RsaException(e);
         }
-        byte[] input = new BASE64Decoder().decodeBuffer(encrypted);
+        byte[] input = new byte[0];
+        try {
+            input = new BASE64Decoder().decodeBuffer(cipherText);
+        } catch (IOException e) {
+            throw new RsaException(e);
+        }
         ByteArrayOutputStream baos = new ByteArrayOutputStream(1024);
         try {
             int blockSize = cipher.getBlockSize();
@@ -60,29 +66,34 @@ public final class MyRsa2Utils {
             } while (input.length - start - blockSize > 0);
 
         } catch (IllegalBlockSizeException e) {
-            throw new IOException(e);
+            throw new RsaException(e);
         } catch (BadPaddingException e) {
-            throw new IOException(e);
+            throw new RsaException(e);
+        } catch (IOException e) {
+            throw new RsaException(e);
         }
         return new String(baos.toByteArray());
     }
 
+    public static String encrypt(RsaKey rsaKey, String plaintext) throws RsaException {
+        return encrypt(rsaKey.getKeyPair().getPublic(), plaintext);
+    }
 
-    public static String encrypt(RsaKey rsaKey, String message) throws IOException {
+    public static String encrypt(PublicKey publicKey, String plaintext) throws RsaException {
         Cipher cipher = null;
         try {
             cipher = Cipher.getInstance(RsaKey.ALGORITHM, new org.bouncycastle.jce.provider.BouncyCastleProvider());
         } catch (NoSuchAlgorithmException e) {
-            throw new IOException(e);
+            throw new RsaException(e);
         } catch (NoSuchPaddingException e) {
-            throw new IOException(e);
+            throw new RsaException(e);
         }
         try {
-            cipher.init(Cipher.ENCRYPT_MODE, rsaKey.getKeyPair().getPublic());
+            cipher.init(Cipher.ENCRYPT_MODE, publicKey);
         } catch (InvalidKeyException e) {
-            throw new IOException(e);
+            throw new RsaException(e);
         }
-        byte[] data = message.getBytes();
+        byte[] data = plaintext.getBytes();
         int blockSize = cipher.getBlockSize();
         blockSize = blockSize == 0 ? 117 : blockSize;
         int outputSize = cipher.getOutputSize(data.length);
@@ -107,13 +118,61 @@ public final class MyRsa2Utils {
 
 
         } catch (IllegalBlockSizeException e) {
-            throw new IOException(e);
+            throw new RsaException(e);
         } catch (BadPaddingException e) {
-            throw new IOException(e);
+            throw new RsaException(e);
         } catch (ShortBufferException e) {
-            throw new IOException(e);
+            throw new RsaException(e);
         }
         return new String(new BASE64Encoder().encode(output));
+    }
+
+
+    public static PublicKey getPublicKey(String key) throws RsaException {
+        byte[] keyBytes;
+        try {
+            keyBytes = (new BASE64Decoder()).decodeBuffer(key);
+        } catch (IOException e) {
+            throw new RsaException(e);
+        }
+        X509EncodedKeySpec keySpec = new X509EncodedKeySpec(keyBytes);
+        KeyFactory keyFactory = null;
+        try {
+            keyFactory = KeyFactory.getInstance(RsaKey.ALGORITHM);
+        } catch (NoSuchAlgorithmException e) {
+            throw new RsaException(e);
+        }
+        PublicKey publicKey = null;
+        try {
+            publicKey = keyFactory.generatePublic(keySpec);
+        } catch (InvalidKeySpecException e) {
+            throw new RsaException(e);
+        }
+        return publicKey;
+    }
+
+
+    public static PrivateKey getPrivateKey(String key) throws RsaException {
+        byte[] keyBytes;
+        try {
+            keyBytes = (new BASE64Decoder()).decodeBuffer(key);
+        } catch (IOException e) {
+            throw new RsaException(e);
+        }
+        PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(keyBytes);
+        KeyFactory keyFactory = null;
+        try {
+            keyFactory = KeyFactory.getInstance(RsaKey.ALGORITHM);
+        } catch (NoSuchAlgorithmException e) {
+            throw new RsaException(e);
+        }
+        PrivateKey privateKey = null;
+        try {
+            privateKey = keyFactory.generatePrivate(keySpec);
+        } catch (InvalidKeySpecException e) {
+            throw new RsaException(e);
+        }
+        return privateKey;
     }
 
 
@@ -161,6 +220,16 @@ public final class MyRsa2Utils {
 
         public RSAPrivateKeySpec getRSAPrivateKeySpec() throws InvalidKeySpecException {
             return keyFactory.getKeySpec(this.getKeyPair().getPrivate(), RSAPrivateKeySpec.class);
+        }
+    }
+
+    public static class RsaException extends IOException {
+        public RsaException(Exception e) {
+            super(e);
+        }
+
+        public RsaException(String e) {
+            super(e);
         }
     }
 }
