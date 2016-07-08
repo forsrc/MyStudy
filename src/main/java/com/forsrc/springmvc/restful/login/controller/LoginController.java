@@ -1,19 +1,22 @@
-package com.forsrc.springmvc.restful.user.controller;
+package com.forsrc.springmvc.restful.login.controller;
+
 
 import com.forsrc.constant.KeyConstants;
 import com.forsrc.constant.MyToken;
-import com.forsrc.exception.ActionException;
 import com.forsrc.exception.NoSuchUserException;
 import com.forsrc.exception.PasswordNotMatchException;
 import com.forsrc.pojo.User;
-import com.forsrc.springmvc.restful.user.service.UserRestfulService;
-import com.forsrc.springmvc.restful.user.validator.LoginValidator;
+import com.forsrc.springmvc.restful.login.service.LoginService;
+import com.forsrc.springmvc.restful.login.validator.LoginValidator;
 import com.forsrc.utils.MessageUtils;
 import com.forsrc.utils.MyAesUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
@@ -21,18 +24,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
-//@RestController
 @Controller
 @RequestMapping(value = "/v1.0")
-public class UserRestfulController {
+public class LoginController {
 
     @Autowired
-    @Resource(name = "userRestfulService")
-    private UserRestfulService userRestfulService;
+    @Resource(name = "loginService")
+    private LoginService loginService;
 
     @Autowired
     @Resource(name = "messageSource")
@@ -40,92 +40,34 @@ public class UserRestfulController {
 
     private final String VERSION_V_1_0 = "v1.0";
 
-
-    @RequestMapping(value = {"/user"}, method = RequestMethod.GET
-            //, headers = "Accept=application/json"
-    )
+    @RequestMapping(value = {"/login/getLoginToken"}, method = RequestMethod.POST)
     @ResponseBody
     public ModelAndView list(HttpServletRequest request,
-                             HttpServletResponse response) throws ActionException {
+                             HttpServletResponse response) {
 
+        MyToken token = new MyToken();
+        Map<String, String> message = new HashMap<String, String>();
 
-        List<User> list = this.userRestfulService.list();
+        try {
+            message.put("loginToken", MyAesUtils.encrypt(token.getAesKey(), token.getLoginToken()));
+        } catch (MyAesUtils.AesException e) {
+            throw new ArithmeticException(e.getMessage());
+        }
+        message.put("loginTokenTime", String.valueOf(token.getLoginTokenTime()));
+        message.put("ai", token.getAesKey().getIv());
+        message.put("ak", token.getAesKey().getKey());
+
+        HttpSession session = request.getSession();
+        session.setAttribute(KeyConstants.TOKEN.getKey(), token);
 
         ModelAndView modelAndView = new ModelAndView();
-        //modelAndView.addObject("list", list);
-        modelAndView.addObject("return", list);
-        modelAndView.addObject("status", 200);
-        modelAndView.addObject("version", VERSION_V_1_0);
-        return modelAndView;
-    }
-
-    @RequestMapping(value = {"/user/{id}"}, method = RequestMethod.GET, produces = {})
-    @ResponseBody
-    public ModelAndView get(@PathVariable Long id,
-                            HttpServletRequest request,
-                            HttpServletResponse response) throws ActionException {
-        User user = this.userRestfulService.get(id);
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("return", user);
-        modelAndView.addObject("status", 200);
-        modelAndView.addObject("version", VERSION_V_1_0);
-        return modelAndView;
-
-    }
-
-    @RequestMapping(value = {"/user/{id}"}, method = RequestMethod.PUT)
-    @ResponseBody
-    public ModelAndView update(@PathVariable Long id,
-                               User user,
-                               HttpServletRequest request,
-                               HttpServletResponse response) throws ActionException {
-        //User bean = userManager.findUser(id);
-        user.setToken(UUID.randomUUID().toString());
-        this.userRestfulService.update(user);
-        ModelAndView modelAndView = new ModelAndView();
-        Map<String, Object> message = new HashMap<String, Object>();
-        message.put("id", id);
         modelAndView.addObject("return", message);
         modelAndView.addObject("status", 200);
         modelAndView.addObject("version", VERSION_V_1_0);
         return modelAndView;
-
     }
 
-    @RequestMapping(value = {"/user/{id}"}, method = RequestMethod.DELETE)
-    @ResponseBody
-    public ModelAndView delete(@PathVariable Long id,
-                               HttpServletRequest request,
-                               HttpServletResponse response) throws ActionException {
-        this.userRestfulService.delete(id);
-        ModelAndView modelAndView = new ModelAndView();
-        Map<String, Object> message = new HashMap<String, Object>();
-        message.put("id", id);
-        modelAndView.addObject("return", message);
-        modelAndView.addObject("status", 200);
-        modelAndView.addObject("version", VERSION_V_1_0);
-        return modelAndView;
-
-    }
-
-    @RequestMapping(value = {"/user"}, method = RequestMethod.POST)
-    @ResponseBody
-    public ModelAndView save(@RequestParam User bean,
-                             HttpServletRequest request,
-                             HttpServletResponse response) throws ActionException {
-        bean.setToken(UUID.randomUUID().toString());
-        bean.setId(this.userRestfulService.save(bean));
-        ModelAndView modelAndView = new ModelAndView();
-        Map<String, Object> message = new HashMap<String, Object>();
-        message.put("id", bean.getId());
-        modelAndView.addObject("return", message);
-        modelAndView.addObject("status", 200);
-        modelAndView.addObject("version", VERSION_V_1_0);
-        return modelAndView;
-
-    }
-
-    @RequestMapping(value = {"/user/login"}, method = RequestMethod.POST)
+    @RequestMapping(value = {"/login"}, method = RequestMethod.POST)
     @ResponseBody
     public ModelAndView login(//User user,
                               @RequestParam String username,
@@ -171,7 +113,7 @@ public class UserRestfulController {
         }
         User u = null;
         try {
-            u = this.userRestfulService.login(user);
+            u = this.loginService.login(user);
         } catch (PasswordNotMatchException e) {
             message.put("message", MessageUtils.getText(messageSource, "msg.password.not.match.exception"));
             message.put("error", e.getMessage());
@@ -202,11 +144,20 @@ public class UserRestfulController {
 
     }
 
-    public UserRestfulService getUserRestfulService() {
-        return userRestfulService;
+    public LoginService getLoginService() {
+        return loginService;
     }
 
-    public void setUserRestfulService(UserRestfulService userRestfulService) {
-        this.userRestfulService = userRestfulService;
+    public void setLoginService(LoginService loginService) {
+        this.loginService = loginService;
+    }
+
+    public MessageSource getMessageSource() {
+        return messageSource;
+    }
+
+    public void setMessageSource(MessageSource messageSource) {
+        this.messageSource = messageSource;
     }
 }
+

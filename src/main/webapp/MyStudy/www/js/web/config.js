@@ -14,9 +14,9 @@ var MY_WEB_URL = {
     "listViewJson"     : SERVER_TEST + "/json/appListView.json",
     "detailJson"       : SERVER_TEST + "/json/detail.json",
 
-    "toLogin"           : SERVER_REST + "/v1.0/user/login",
+    "toLogin"           : SERVER_REST + "/v1.0/login",
     "user-list"        : SERVER_REST + "/v1.0/user",
-    "getLoginToken"    : SERVER_REST + "/v1.0/getLoginToken",
+    "getLoginToken"    : SERVER_REST + "/v1.0/login/getLoginToken",
 
     "login"            : PATH + "web/login.html",
     "logout"           : PATH + "web/logout.html",

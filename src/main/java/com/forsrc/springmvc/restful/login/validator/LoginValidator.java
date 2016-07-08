@@ -16,7 +16,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package com.forsrc.springmvc.restful.user.validator;
+package com.forsrc.springmvc.restful.login.validator;
 
 
 import com.forsrc.constant.KeyConstants;

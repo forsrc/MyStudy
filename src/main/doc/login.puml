@@ -1,0 +1,37 @@
+@startuml
+
+actor Admin
+
+Admin -> Browser : open login URL ❶
+
+Browser -> LoginSystem : to get token ❷
+
+boundary LoginSystem
+control LoginControl
+entity User
+database MyStudyDB
+
+
+Admin -> LoginSystem :
+
+Admin -> LoginSystem : login
+
+User -> LoginSystem
+
+LoginControl -> LoginService
+
+LoginService -> LoginDao
+
+LoginDao -> User
+
+
+legend
+❶ http://mystudy/www/web/login.html
+❷ POST]</b> http://mystudy/springmvc/v1.0/getToken
+1. <b>[POST]</b> http://mystudy/springmvc/v1.0/login?username=admin&password=123456
+endlegend
+
+
+
+
+@enduml

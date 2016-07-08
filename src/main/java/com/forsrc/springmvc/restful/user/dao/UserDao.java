@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface UserRestfulDao extends BaseHibernateDao<User> {
+public interface UserDao extends BaseHibernateDao<User> {
     public List<User> list() throws DaoException;
 
     public User get(Long id) throws DaoException;

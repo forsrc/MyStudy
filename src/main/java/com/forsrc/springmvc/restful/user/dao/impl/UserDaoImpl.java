@@ -3,21 +3,18 @@ package com.forsrc.springmvc.restful.user.dao.impl;
 
 import com.forsrc.exception.DaoException;
 import com.forsrc.exception.NoSuchUserException;
-import com.forsrc.exception.PasswordNotMatchException;
 import com.forsrc.pojo.User;
 import com.forsrc.springmvc.base.dao.BaseHibernateDao;
 import com.forsrc.springmvc.base.dao.impl.BaseHibernateDaoImpl;
-import com.forsrc.springmvc.restful.user.dao.UserRestfulDao;
+import com.forsrc.springmvc.restful.user.dao.UserDao;
 import org.hibernate.Query;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Repository(value = "userRestfulDao")
-public class UserRestfulDaoImpl extends BaseHibernateDaoImpl<User> implements UserRestfulDao, BaseHibernateDao<User> {
+@Repository(value = "userDao")
+public class UserDaoImpl extends BaseHibernateDaoImpl<User> implements UserDao, BaseHibernateDao<User> {
 
 
     @Override
