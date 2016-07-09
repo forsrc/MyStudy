@@ -30,7 +30,7 @@ public final class MyRsaUtils {
 
     public static BigInteger decrypt(RsaKey rsaKey, BigInteger encrypted) {
         // C = (encrypted^privateKey) * mod m
-        return encrypted.modPow(rsaKey.getPrivateKey(), rsaKey.getN());
+        return encrypted.modPow(rsaKey.getPrivateKey()/* d */, rsaKey.getN());
     }
 
     public static String decrypt(RsaKey rsaKey, String encrypted)
@@ -40,16 +40,17 @@ public final class MyRsaUtils {
         return number2string(decrypt(rsaKey, encrypt));
     }
 
-    public static BigInteger encrypt(RsaKey rsaKey, BigInteger message) {
-        // C = (message^publicKey) * mod n
-        return message.modPow(rsaKey.getPublicKey(), rsaKey.getN());
+    public static BigInteger encrypt(RsaKey rsaKey, BigInteger plaintext) {
+        // C = (plaintext^publicKey) * mod n
+        return plaintext.modPow(rsaKey.getPublicKey()/* e */, rsaKey.getN());
     }
 
-    public static String encrypt(RsaKey rsaKey, String message) {
-        BigInteger messageNumer = string2number(message);
-        BigInteger encrypt = messageNumer.modPow(rsaKey.getPublicKey(), rsaKey.getN());
+    public static String encrypt(RsaKey rsaKey, String plaintext) {
+        BigInteger plaintextNumber = string2number(plaintext);
+        BigInteger encrypt = encrypt(rsaKey, plaintextNumber);
         return new BASE64Encoder().encode(encrypt.toByteArray())
-                .replace("\r\n", "").replace("\n", "");
+                //.replace("\r\n", "").replace("\n", "")
+                ;
     }
 
     public static String getDecrypt(RsaKey rsaKey, BigInteger encrypted)
@@ -57,14 +58,14 @@ public final class MyRsaUtils {
         return number2string(decrypt(rsaKey, encrypted));
     }
 
-    public static BigInteger getEncrypt(RsaKey rsaKey, String message) {
-        BigInteger messageNumber = string2number(message);
-        return messageNumber.modPow(rsaKey.getPublicKey(), rsaKey.getN());
+    public static BigInteger getEncrypt(RsaKey rsaKey, String plaintext) {
+        BigInteger plaintextNumber = string2number(plaintext);
+        return plaintextNumber.modPow(rsaKey.getPublicKey()/* e */, rsaKey.getN());
     }
 
-    public static String encrypt4Client(RsaKey rsaKey, String message) {
-        BigInteger messageNumer = string2number(message);
-        BigInteger encrypt = messageNumer.modPow(rsaKey.getPublicKey(),
+    public static String encrypt4Client(RsaKey rsaKey, String plaintext) {
+        BigInteger plaintextNumber = string2number(plaintext);
+        BigInteger encrypt = plaintextNumber.modPow(rsaKey.getPublicKey()/* e */,
                 rsaKey.getN());
         return encrypt.toString();
     }
@@ -75,30 +76,34 @@ public final class MyRsaUtils {
 
     public static String number2string(BigInteger number) throws IOException {
 
-        StringBuilder message = new StringBuilder();
+        StringBuilder plaintext = new StringBuilder(128);
 
-        String messageNumber = number.toString();
+        String plaintextNumber = number.toString();
 
-        messageNumber = messageNumber.substring(1, messageNumber.length());
+        plaintextNumber = plaintextNumber.substring(1, plaintextNumber.length());
 
-        for (int i = 0; i < messageNumber.length(); i += 3) {
-            String blockString = messageNumber.substring(i, i + 3);
+        for (int i = 0; i < plaintextNumber.length(); i += 3) {
+            String blockString = plaintextNumber.substring(i, i + 3);
             int block = Integer.parseInt(blockString);
-            message.append((char) block);
+            plaintext.append((char) block);
         }
 
-        return new String(new BASE64Decoder().decodeBuffer(message.toString()));
+        return new String(new BASE64Decoder().decodeBuffer(plaintext.toString()));
     }
 
-    public static BigInteger string2number(String message) {
-
-        String msg = null;
+    private static String base64Encode(String plaintext) {
         try {
-            msg = new BASE64Encoder().encode(message.getBytes(CHAR_SET));
+            return new BASE64Encoder().encode(plaintext.getBytes(CHAR_SET));
         } catch (UnsupportedEncodingException e) {
-            msg = new BASE64Encoder().encode(message.getBytes());
+            return new BASE64Encoder().encode(plaintext.getBytes());
         }
-        StringBuilder numberString = new StringBuilder("1");
+    }
+
+    public static BigInteger string2number(String plaintext) {
+
+        String msg = base64Encode(plaintext);
+        StringBuilder numberString = new StringBuilder(128);
+        numberString.append("1");
 
         for (int i = 0; i < msg.length(); ++i) {
             char c = msg.charAt(i);
@@ -139,9 +144,9 @@ public final class MyRsaUtils {
         private BigInteger dmq1;
 
         /**
-         * @Fields e : public exponent; e = common prime = 2^16 + 1
+         * @Fields e : public exponent; e = common prime = 2^16 + 1 = 65537
          */
-        private BigInteger e;
+        private BigInteger e; //65537
 
         /**
          * @Fields iqmp : q^-1 mod p
@@ -186,6 +191,14 @@ public final class MyRsaUtils {
         public RsaKey(BigInteger p, BigInteger q) {
 
             init(p, q);
+        }
+
+        public RsaKey(BigInteger n, BigInteger e, BigInteger d) {
+            this.n = n;
+            this.e = e;
+            this.privateKey = e;
+            this.d = d;
+            this.privateKey = d;
         }
 
         public void init(BigInteger p, BigInteger q) {
@@ -261,6 +274,7 @@ public final class MyRsaUtils {
 
         public void setE(BigInteger e) {
             this.e = e;
+            this.privateKey = e;
         }
 
         public BigInteger getIqmp() {
@@ -301,6 +315,7 @@ public final class MyRsaUtils {
 
         public void setPrivateKey(BigInteger privateKey) {
             this.privateKey = privateKey;
+            this.d = privateKey;
         }
 
         public BigInteger getPublicKey() {
@@ -309,6 +324,7 @@ public final class MyRsaUtils {
 
         public void setPublicKey(BigInteger publicKey) {
             this.publicKey = publicKey;
+            this.e = publicKey;
         }
 
         public BigInteger getQ() {
@@ -328,8 +344,9 @@ public final class MyRsaUtils {
         }
 
         public SecureRandom getSecureRandom() {
-            return new SecureRandom();
+            return new SecureRandom("forsrc@163.com".getBytes());
         }
+
 
     }
 }
