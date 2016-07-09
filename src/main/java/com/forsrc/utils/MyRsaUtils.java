@@ -49,7 +49,7 @@ public final class MyRsaUtils {
         BigInteger plaintextNumber = string2number(plaintext);
         BigInteger encrypt = encrypt(rsaKey, plaintextNumber);
         return new BASE64Encoder().encode(encrypt.toString().getBytes())
-                .replace("\r\n", "").replace("\n", "")
+                //.replace("\r\n", "").replace("\n", "")
                 ;
     }
 
@@ -120,6 +120,8 @@ public final class MyRsaUtils {
     }
 
     public static class RsaKey {
+
+        public static final BigInteger DEF_E =  new BigInteger("65537");
 
         private int bits = 1024;
 
@@ -196,7 +198,7 @@ public final class MyRsaUtils {
         public RsaKey(BigInteger n, BigInteger e, BigInteger d) {
             this.n = n;
             this.e = e;
-            this.privateKey = e;
+            this.publicKey = e;
             this.d = d;
             this.privateKey = d;
         }
@@ -211,7 +213,7 @@ public final class MyRsaUtils {
             // n = p*q
             this.n = p.multiply(q);
             // e = common prime = 2^16 + 1
-            this.publicKey = new BigInteger("65537");
+            this.publicKey = DEF_E;
             // d = (publicKey^-1) * mod(phi)
             this.privateKey = this.publicKey.modInverse(this.phi);
             // e = common prime = 2^16 + 1
