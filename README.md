@@ -1,4 +1,6 @@
 #MyStudy
+see https://github.com/forsrc/MyStudy
+see http://git.oschina.net/forsrc/MyStudy
 
 * Server: Springmvc(REST) + Spring4 + Hibernate5 + cxf(REST) + Activiti5 + ActiveMQ5 + ...
 * Clinet: cordova(Android/Blackberry 10/iOS/OS X/Ubuntu/Windows/WP8)
