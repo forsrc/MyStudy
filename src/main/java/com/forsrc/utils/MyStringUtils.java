@@ -126,7 +126,7 @@ public class MyStringUtils {
                     continue;
                 }
                 i = i + number.length() + 1;
-                n = Integer.valueOf(number);
+                n = Integer.parseInt(number);
                 formatted.append(n >= args.length || n < 0 ? "{" + n + "}" : args[n]);
                 continue;
             }
