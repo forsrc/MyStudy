@@ -4,6 +4,22 @@
 * Clinet: cordova(Android/Blackberry 10/iOS/OS X/Ubuntu/Windows/WP8)
           HTML + CSS + JavaScript + JQuery + cordova + bootstrap + bootstrap-material-design + ...
 
+
+MyStudy
+....|-- src
+....|.....|-- main
+....|.....|.....|-- doc ........................ ( markdown doc, plantuml file )
+....|.....|.....|-- java ....................... ( java )
+....|.....|.....|-- resources ............... ( XML, properties file )
+....|.....|.....|-- webapp
+....|.....|.....|.......|-- MyStudy ........ ( Apache Cordova project )
+....|.....|.....|.......|.......|-- www ...... ( HTML/CSS/JavaScript, image/fonts file )
+....|.....|.....|.......|-- WEB-INF
+....|.....|.....|.......|.......|-- lib .......... ( jar )
+....|.....|-- test
+....|-- tools
+....|.....|-- cobertura-2.1.1
+
 ----
 
 ##  setup
@@ -27,6 +43,15 @@ Apache Cordova is an open-source mobile development framework. It allows you to 
   ``` $ cordova run browser ``` or ``` $ cordova run android ``` or ``` $ cordova run ios ```
 
 #### see http://cordova.apache.org/
+
+### 3. cobertura
+Cobertura is a free Java tool that calculates the percentage of code accessed by tests. It can be used to identify which parts of your Java program are lacking test coverage. It is based on jcoverage.
+
+* ``` $ cd MyStudy ```
+  ``` $ ant coverage ```
+
+#### see https://sourceforge.net/projects/cobertura/
+
 
 ----
 
