@@ -118,7 +118,7 @@ public class LoginController {
         HttpSession session = request.getSession();
         MyToken myToken = (MyToken) session.getAttribute(KeyConstants.TOKEN.getKey());
 
-        try {
+        /*try {
             user.setUsername(MyAesUtils.decrypt(myToken.getAesKey(), user.getUsername()));
         } catch (MyAesUtils.AesException e) {
             message.put("message", MessageUtils.getText(messageSource, "msg.username.or.password.format.is.incorrect"));
@@ -131,7 +131,23 @@ public class LoginController {
             message.put("message", MessageUtils.getText(messageSource, "msg.username.or.password.format.is.incorrect"));
             message.put("error", e.getMessage());
             return modelAndView;
+        }*/
+
+        try {
+            user.setUsername(MyRsaUtils.decrypt(myToken.getRsaKey4Server(), user.getUsername()));
+        } catch (IOException e) {
+            message.put("message", MessageUtils.getText(messageSource, "msg.username.or.password.format.is.incorrect"));
+            message.put("error", e.getMessage());
+            return modelAndView;
         }
+        try {
+            user.setPassword(MyRsaUtils.decrypt(myToken.getRsaKey4Server(), user.getPassword()));
+        } catch (IOException e) {
+            message.put("message", MessageUtils.getText(messageSource, "msg.username.or.password.format.is.incorrect"));
+            message.put("error", e.getMessage());
+            return modelAndView;
+        }
+
         User u = null;
         try {
             u = this.loginService.login(user);

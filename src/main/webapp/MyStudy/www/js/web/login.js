@@ -216,8 +216,10 @@ function toLogin(username, password) {
     }
 
     var formData = {
-        "username": MY_AES.encrypt(username),
-        "password": MY_AES.encrypt(password),
+        //"username": MY_AES.encrypt(username),
+        //"password": MY_AES.encrypt(password),
+        "username": My_RSA_4_SERVER.encrypt(username),
+        "password": My_RSA_4_SERVER.encrypt(password),
         "loginToken": TOKEN.loginToken
     };
     $.ajax({
