@@ -54,7 +54,26 @@ Cobertura is a free Java tool that calculates the percentage of code accessed by
 
 #### see https://sourceforge.net/projects/cobertura/
 
+### 4. Plantuml
+PlantUML is a component that allows to quickly write :
 
+* Sequence diagram,
+* Usecase diagram,
+* Class diagram,
+* Activity diagram, (here is the new syntax),
+* Component diagram,
+* State diagram,
+* Deployment diagram,
+* Object diagram.
+* wireframe graphical interface
+
+Diagrams are defined using a simple and intuitive language. ( [see PlantUML Language Reference Guide](http://plantuml.com/PlantUML_Language_Reference_Guide.pdf) ).
+
+You must have Java installed on your machine, and optionally [Graphviz](http://www.graphviz.org/) software which are used for all diagrams but sequence diagrams and activity beta diagrams.
+
+
+#### see http://plantuml.com/
+#### see http://www.graphviz.org/
 ----
 
 ### Springmvc4
