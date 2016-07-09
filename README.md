@@ -5,20 +5,20 @@
           HTML + CSS + JavaScript + JQuery + cordova + bootstrap + bootstrap-material-design + ...
 
 
-MyStudy
-....|-- src
-....|.....|-- main
-....|.....|.....|-- doc ........................ ( markdown doc, plantuml file )
-....|.....|.....|-- java ....................... ( java )
-....|.....|.....|-- resources ............... ( XML, properties file )
-....|.....|.....|-- webapp
-....|.....|.....|.......|-- MyStudy ........ ( Apache Cordova project )
-....|.....|.....|.......|.......|-- www ...... ( HTML/CSS/JavaScript, image/fonts file )
-....|.....|.....|.......|-- WEB-INF
-....|.....|.....|.......|.......|-- lib .......... ( jar )
-....|.....|-- test
-....|-- tools
-....|.....|-- cobertura-2.1.1
+* MyStudy
+    - ....|-- src
+    - ....|.....|-- main
+    - ....|.....|.....|-- doc ........................ ( markdown doc, plantuml file )
+    - ....|.....|.....|-- java ....................... ( java )
+    - ....|.....|.....|-- resources ............... ( XML, properties file )
+    - ....|.....|.....|-- webapp
+    - ....|.....|.....|.......|-- MyStudy ........ ( Apache Cordova project )
+    - ....|.....|.....|.......|.......|-- www ...... ( HTML/CSS/JavaScript, image/fonts file )
+    - ....|.....|.....|.......|-- WEB-INF
+    - ....|.....|.....|.......|.......|-- lib .......... ( jar )
+    - ....|.....|-- test
+    - ....|-- tools
+    - ....|.....|-- cobertura-2.1.1
 
 ----
 
