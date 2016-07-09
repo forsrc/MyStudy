@@ -10,8 +10,8 @@
  * @constructor
  */
 function MyRsa(n, e, d, isNewInstance) {
-    if (!n || !e || !d) {
-        throw new Error("Error --> n: " + n + "; e: " + e + "; d: " + d);
+    if (!n) {
+        throw new Error("Error --> n: is null; e: " + e + "; d: " + d);
     }
     if (!isNewInstance && MyRsa.instance) {
         return MyRsa.instance;
@@ -19,9 +19,9 @@ function MyRsa(n, e, d, isNewInstance) {
     //this.n = n;
     //this.e = e;
     //this.d = d;
-    this.bin = new BigInteger(n);
-    this.bie = new BigInteger(e);
-    this.bid = new BigInteger(d);
+    this.bin = typeof(n) === "string" ? new BigInteger(n) : n;
+    this.bie = typeof(e) === "string" ? new BigInteger(e) : e;
+    this.bid = typeof(d) === "string" ? new BigInteger(d) : d;
     if (MyRsa._initialized) {
         //return MyRsa.instance;
     }

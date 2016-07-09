@@ -10,6 +10,7 @@ import com.forsrc.springmvc.restful.login.service.LoginService;
 import com.forsrc.springmvc.restful.login.validator.LoginValidator;
 import com.forsrc.utils.MessageUtils;
 import com.forsrc.utils.MyAesUtils;
+import com.forsrc.utils.MyRsaUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
@@ -18,11 +19,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+import sun.misc.BASE64Decoder;
+import sun.misc.BASE64Encoder;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -38,15 +43,30 @@ public class LoginController {
     @Resource(name = "messageSource")
     protected MessageSource messageSource;
 
-    private final String VERSION_V_1_0 = "v1.0";
+    private static final String VERSION_V_1_0 = "v1.0";
 
     @RequestMapping(value = {"/login/getLoginToken"}, method = RequestMethod.POST)
     @ResponseBody
-    public ModelAndView getLoginToken(HttpServletRequest request,
-                             HttpServletResponse response) {
+    public ModelAndView getLoginToken(@RequestParam String rsa4Client,
+                                      HttpServletRequest request,
+                                      HttpServletResponse response) {
+
+        ModelAndView modelAndView = new ModelAndView();
+        Map<String, String> message = new HashMap<String, String>();
+        BigInteger rsa4ClientN;
+        try {
+            rsa4ClientN = new BigInteger(new String(new BASE64Decoder().decodeBuffer(rsa4Client)));
+        } catch (IOException e) {
+            message.put("message", MessageUtils.getText(messageSource, "msg.base64.decode.error"));
+            message.put("error", e.getMessage());
+            return modelAndView;
+        }
+
+        MyRsaUtils.RsaKey rsaKey4Client = new MyRsaUtils.RsaKey(rsa4ClientN, MyRsaUtils.RsaKey.DEF_E, null);
 
         MyToken token = new MyToken();
-        Map<String, String> message = new HashMap<String, String>();
+
+        token.setRsaKey4Client(rsaKey4Client);
 
         try {
             message.put("loginToken", MyAesUtils.encrypt(token.getAesKey(), token.getLoginToken()));
@@ -54,13 +74,14 @@ public class LoginController {
             throw new ArithmeticException(e.getMessage());
         }
         message.put("loginTokenTime", String.valueOf(token.getLoginTokenTime()));
-        message.put("ai", token.getAesKey().getIv());
-        message.put("ak", token.getAesKey().getKey());
+        message.put("ai", MyRsaUtils.encrypt(rsaKey4Client, token.getAesKey().getIv()));
+        message.put("ak", MyRsaUtils.encrypt(rsaKey4Client, token.getAesKey().getKey()));
+        String rsaServerN = new BASE64Encoder().encode(token.getRsaKey4Server().getN().toString().getBytes());
+        message.put("rsa4Server", rsaServerN);
 
         HttpSession session = request.getSession();
         session.setAttribute(KeyConstants.TOKEN.getKey(), token);
 
-        ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("return", message);
         modelAndView.addObject("status", 200);
         modelAndView.addObject("version", VERSION_V_1_0);
@@ -94,9 +115,9 @@ public class LoginController {
 
         modelAndView.getModelMap().put("return", message);
 
-
         HttpSession session = request.getSession();
         MyToken myToken = (MyToken) session.getAttribute(KeyConstants.TOKEN.getKey());
+
         try {
             user.setUsername(MyAesUtils.decrypt(myToken.getAesKey(), user.getUsername()));
         } catch (MyAesUtils.AesException e) {
@@ -125,18 +146,23 @@ public class LoginController {
         }
 
         myToken.generate();
+
         session.setAttribute(KeyConstants.TOKEN.getKey(), myToken);
         try {
             message.put("loginToken", MyAesUtils.encrypt(myToken.getAesKey(), myToken.getLoginToken()));
             message.put("id", MyAesUtils.encrypt(myToken.getAesKey(), String.valueOf(u.getId())));
             message.put("isAdmin", MyAesUtils.encrypt(myToken.getAesKey(), "1"));
         } catch (MyAesUtils.AesException e) {
-            throw new ArithmeticException(e.getMessage());
+            throw new IllegalArgumentException(e.getMessage());
         }
-        message.put("loginTokenTime", String.valueOf(myToken.getLoginTokenTime()));
-        message.put("ai", myToken.getAesKey().getIv());
-        message.put("ak", myToken.getAesKey().getKey());
 
+        message.put("loginTokenTime", String.valueOf(myToken.getLoginTokenTime()));
+
+        message.put("ai", MyRsaUtils.encrypt(myToken.getRsaKey4Client(), myToken.getAesKey().getIv()));
+        message.put("ak", MyRsaUtils.encrypt(myToken.getRsaKey4Client(), myToken.getAesKey().getKey()));
+
+        String rsaServerN = new BASE64Encoder().encode(myToken.getRsaKey4Server().getN().toString().getBytes());
+        message.put("rsa4Server", rsaServerN);
 
         modelAndView.addObject("status", 200);
         modelAndView.addObject("version", VERSION_V_1_0);

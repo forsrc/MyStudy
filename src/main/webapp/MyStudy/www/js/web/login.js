@@ -116,22 +116,33 @@ function main() {
 
     sessionStorage.clear();
 
-    getLoginToken();
-
     binding();
 
     scroll();
+
+    getLoginToken();
 }
 
 var MY_AES = null;
+var MY_RSA_4_CLIENT = null;
+var My_RSA_4_SERVER = null;
 var TOKEN = null;
 
 function getLoginToken() {
+
+    var rsaKey = new RSAKey();
+    rsaKey.generate(1024, "10001");
+    MY_RSA_4_CLIENT = new MyRsa(rsaKey.n, "65537", rsaKey.d, true);
+
+    var rsa4Client = Base64.encode(rsaKey.n.toString());
+
     $.ajax({
         type: 'POST',
         url: MY_WEB_URL.getLoginToken,
         ContentType: 'multipart/form-data',
-        data: {},
+        data: {
+            rsa4Client: rsa4Client
+        },
         beforeSend: function () {
 
         },
@@ -142,15 +153,24 @@ function getLoginToken() {
                 showFail("Get login token failed, please try later.");
                 return;
             }
-            MY_AES = new MyAes(response.return.ak, response.return.ai, true);
+
+
+            console.log("rn --> " + Base64.decode(response.return.rsa4Server));
+            var rsa4Server = Base64.decode(response.return.rsa4Server);
+            console.log("ak --> " + Base64.decode(response.return.ak));
+            var ak = MY_RSA_4_CLIENT.decrypt(response.return.ak);
+            var ai = MY_RSA_4_CLIENT.decrypt(response.return.ai);
+            console.log("ak --> " + ak);
+            console.log("ai --> " + ai);
+            MY_AES = new MyAes(ak, ai, true);
+            My_RSA_4_SERVER = new MyRsa(rsa4Server, "65537", null, true);
             TOKEN = {
-                ak: response.return.ak,
-                ai: response.return.ai,
+                ak: ak,
+                ai: ai,
+                rsa4Server: rsa4Server,
                 loginToken: MY_AES.decrypt(response.return.loginToken),
                 loginTokenTime: response.return.loginTokenTime
             };
-            console.log("token.loginToken --> " + TOKEN.loginToken);
-
         },
         error: function (jqXHR, textStatus, errorThrown) {
             console.log(textStatus, errorThrown);
@@ -216,11 +236,21 @@ function toLogin(username, password) {
                 return;
             }
 
-            MY_AES = new MyAes(response.return.ak, response.return.ai, true);
-            
+
+            var rsa4Server = Base64.decode(response.return.rsa4Server);
+            console.log("ak --> " + Base64.decode(response.return.ak));
+            var ak = MY_RSA_4_CLIENT.decrypt(response.return.ak);
+            var ai = MY_RSA_4_CLIENT.decrypt(response.return.ai);
+            console.log("ak --> " + ak);
+            console.log("ai --> " + ai);
+
+            MY_AES = new MyAes(ak, ai, true);
+
+
             TOKEN = {
-                ak: response.return.ak,
-                ai: response.return.ai,
+                ak: ak,
+                ai: ai,
+                rsa4Server: rsa4Server,
                 loginTokenTime: response.return.loginTokenTime,
                 loginToken: MY_AES.decrypt(response.return.loginToken),
                 id: MY_AES.decrypt(response.return.id),
@@ -260,6 +290,31 @@ function showAjaxFail() {
 function init() {
     $.material.init();
     $.material.ripples();
+
+    var passPhrase = "forsrc@163.com";
+
+// The length of the RSA key, in bits.
+    var bits = 1024;
+
+    var privateKey = cryptico.generateRSAKey(passPhrase, bits);
+    console.log("privateKey --> " + privateKey);
+    var publicKey = cryptico.publicKeyString(privateKey);
+    console.log("publicKey --> " + publicKey);
+
+    var plainText = "hello world";
+
+    var encryptionResult = cryptico.encrypt(plainText, publicKey);
+    console.log(encryptionResult);
+    var decryptionResult = cryptico.decrypt(encryptionResult.cipher, privateKey);
+    console.log(decryptionResult);
+
+    var rsa = new RSAKey();
+    rsa.generate(1024, "10001");
+    console.log(rsa);
+    //console.log(rsa.n);
+    //console.log(rsa.e);
+    //console.log(rsa.d);
+
 }
 
 function scroll() {

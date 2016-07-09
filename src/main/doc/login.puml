@@ -26,7 +26,7 @@ control LoginControl
         LoginControl -> HttpSession : setAttribute("Token", myToken)
         activate HttpSession
         deactivate HttpSession
-    LoginControl --> LoginSystemBoundary
+    LoginControl --> LoginSystemBoundary : rsa4Server->n
     deactivate LoginControl
     LoginSystemBoundary --> Browser
 
@@ -35,7 +35,7 @@ control LoginControl
 
     Admin -> Browser : login ❸
     activate Browser
-        Browser -> Browser : AES username and password
+        Browser -> Browser : rsa4Server encode username and password
     Browser -> LoginSystemBoundary
     deactivate Browser
 
@@ -62,7 +62,7 @@ control LoginControl
     LoginService --> LoginControl
     deactivate LoginService
 
-    LoginControl --> LoginSystemBoundary : new AES; AES token
+    LoginControl --> LoginSystemBoundary : new rsa4Server; rsa4Client encode AES->iv, AES->key
 
     LoginSystemBoundary --> Browser
 
@@ -70,7 +70,7 @@ control LoginControl
 legend left
 ❶: http://mystudy/www/web/login.html
 ❷: <b>[POST]</b> http://mystudy/springmvc/v1.0/login/getToken
-❸: <b>[POST]</b> http://mystudy/springmvc/v1.0/login?username=admin&password=123456&loginToken=xxx
+❸: <b>[POST]</b> http://mystudy/springmvc/v1.0/login?username=admin&password=123456&loginToken=xxx&rsa4Client
 endlegend
 
 

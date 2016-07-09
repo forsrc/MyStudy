@@ -15,7 +15,8 @@ public class MyToken {
     private long tokenTime = -1;
     private MyAesUtils.AesKey aesKey;
     private MyDesUtils.DesKey desKey;
-    private MyRsaUtils.RsaKey rsaKey;
+    private MyRsaUtils.RsaKey rsaKey4Client;
+    private MyRsaUtils.RsaKey rsaKey4Server;
 
     public MyToken(){
         generate();
@@ -26,7 +27,8 @@ public class MyToken {
         this.tokenTime = new Date().getTime();
         this.aesKey = new MyAesUtils.AesKey();
         this.desKey = new MyDesUtils.DesKey();
-        this.rsaKey = new MyRsaUtils.RsaKey();
+        //this.rsaKey4Client = new MyRsaUtils.RsaKey();
+        this.rsaKey4Server = new MyRsaUtils.RsaKey();
         this.loginToken = UUID.randomUUID().toString();
         this.loginTokenTime = new Date().getTime();
     }
@@ -55,7 +57,19 @@ public class MyToken {
         return desKey;
     }
 
-    public MyRsaUtils.RsaKey getRsaKey() {
-        return rsaKey;
+    public MyRsaUtils.RsaKey getRsaKey4Server() {
+        return rsaKey4Server;
+    }
+
+    public void setRsaKey4Server(MyRsaUtils.RsaKey rsaKey4Server) {
+        this.rsaKey4Server = rsaKey4Server;
+    }
+
+    public MyRsaUtils.RsaKey getRsaKey4Client() {
+        return rsaKey4Client;
+    }
+
+    public void setRsaKey4Client(MyRsaUtils.RsaKey rsaKey4Client) {
+        this.rsaKey4Client = rsaKey4Client;
     }
 }
