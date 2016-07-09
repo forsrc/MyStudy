@@ -36,7 +36,7 @@ public final class MyRsaUtils {
     public static String decrypt(RsaKey rsaKey, String encrypted)
             throws IOException {
         BigInteger encrypt = new BigInteger(
-                new BASE64Decoder().decodeBuffer(encrypted));
+                new String(new BASE64Decoder().decodeBuffer(encrypted)));
         return number2string(decrypt(rsaKey, encrypt));
     }
 
@@ -48,8 +48,8 @@ public final class MyRsaUtils {
     public static String encrypt(RsaKey rsaKey, String plaintext) {
         BigInteger plaintextNumber = string2number(plaintext);
         BigInteger encrypt = encrypt(rsaKey, plaintextNumber);
-        return new BASE64Encoder().encode(encrypt.toByteArray())
-                //.replace("\r\n", "").replace("\n", "")
+        return new BASE64Encoder().encode(encrypt.toString().getBytes())
+                .replace("\r\n", "").replace("\n", "")
                 ;
     }
 
