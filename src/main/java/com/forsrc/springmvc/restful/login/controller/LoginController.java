@@ -172,6 +172,8 @@ public class LoginController {
             throw new IllegalArgumentException(e.getMessage());
         }*/
 
+        message.put("token", MyRsaUtils.encrypt(myToken.getRsaKey4Client(), myToken.getToken()));
+        message.put("tokenTime", String.valueOf(myToken.getTokenTime()));
         message.put("loginToken", MyRsaUtils.encrypt(myToken.getRsaKey4Client(), myToken.getLoginToken()));
         message.put("id", MyRsaUtils.encrypt(myToken.getRsaKey4Client(), String.valueOf(u.getId())));
         message.put("isAdmin", MyRsaUtils.encrypt(myToken.getRsaKey4Client(), u.getIsAdmin() ? "1" : "0"));

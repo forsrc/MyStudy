@@ -153,7 +153,7 @@ function getLoginToken() {
                 showFail("Get login token failed, please try later.");
                 return;
             }
-
+            $("#login").removeAttr("disabled");
 
             console.log("rn --> " + Base64.decode(response.return.rsa4Server));
             var rsa4Server = Base64.decode(response.return.rsa4Server);
@@ -228,13 +228,14 @@ function toLogin(username, password) {
         ContentType: 'multipart/form-data',
         data: formData,
         beforeSend: function () {
-
+            $("#login").attr("disabled", "disabled");
         },
         success: function (response) {
             console.log(response);
 
             if (response.status != 200) {
                 showLoginException();
+                $("#login").removeAttr("disabled");
                 return;
             }
 
@@ -262,6 +263,9 @@ function toLogin(username, password) {
                 isAdmin: MY_AES.decrypt(response.return.isAdmin)
                 */
                 loginToken: MY_RSA_4_CLIENT.decrypt(response.return.loginToken),
+                loginTokenTime: response.return.loginTokenTime,
+                token: MY_RSA_4_CLIENT.decrypt(response.return.token),
+                tokenTime: response.return.tokenTime,
                 id: MY_RSA_4_CLIENT.decrypt(response.return.id),
                 isAdmin: MY_RSA_4_CLIENT.decrypt(response.return.isAdmin)
             };
@@ -279,6 +283,7 @@ function toLogin(username, password) {
         error: function (jqXHR, textStatus, errorThrown) {
             console.log(textStatus, errorThrown);
             showAjaxFail();
+            $("#login").removeAttr("disabled");
         }
     });
 
@@ -300,9 +305,9 @@ function init() {
     $.material.init();
     $.material.ripples();
 
+    /*
     var passPhrase = "forsrc@163.com";
 
-// The length of the RSA key, in bits.
     var bits = 1024;
 
     var privateKey = cryptico.generateRSAKey(passPhrase, bits);
@@ -320,6 +325,7 @@ function init() {
     var rsa = new RSAKey();
     rsa.generate(1024, "10001");
     console.log(rsa);
+    */
     //console.log(rsa.n);
     //console.log(rsa.e);
     //console.log(rsa.d);
