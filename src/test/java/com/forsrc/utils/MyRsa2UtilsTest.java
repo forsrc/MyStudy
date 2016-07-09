@@ -1,7 +1,6 @@
 package com.forsrc.utils;
 
 import org.junit.*;
-import sun.misc.BASE64Encoder;
 
 import java.security.PublicKey;
 
@@ -35,10 +34,8 @@ public class MyRsa2UtilsTest {
             String encrypt = MyRsa2Utils.encrypt(rsaKey, plaintext);
             assertEquals(plaintext, MyRsa2Utils.decrypt(rsaKey, encrypt));
         } catch (MyRsa2Utils.RsaException e) {
-            e.printStackTrace();
             fail();
         }
-
 
 
     }
