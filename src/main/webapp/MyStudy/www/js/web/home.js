@@ -113,6 +113,8 @@ function main(){
         return;
     }
 
+    console.log(sessionStorage.token);
+
     init();
 
     toolbar();

@@ -164,13 +164,17 @@ public class LoginController {
         myToken.generate();
 
         session.setAttribute(KeyConstants.TOKEN.getKey(), myToken);
-        try {
+        /*try {
             message.put("loginToken", MyAesUtils.encrypt(myToken.getAesKey(), myToken.getLoginToken()));
             message.put("id", MyAesUtils.encrypt(myToken.getAesKey(), String.valueOf(u.getId())));
             message.put("isAdmin", MyAesUtils.encrypt(myToken.getAesKey(), "1"));
         } catch (MyAesUtils.AesException e) {
             throw new IllegalArgumentException(e.getMessage());
-        }
+        }*/
+
+        message.put("loginToken", MyRsaUtils.encrypt(myToken.getRsaKey4Client(), myToken.getLoginToken()));
+        message.put("id", MyRsaUtils.encrypt(myToken.getRsaKey4Client(), String.valueOf(u.getId())));
+        message.put("isAdmin", MyRsaUtils.encrypt(myToken.getRsaKey4Client(), u.getIsAdmin() ? "1" : "0"));
 
         message.put("loginTokenTime", String.valueOf(myToken.getLoginTokenTime()));
 

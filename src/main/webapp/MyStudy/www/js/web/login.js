@@ -253,18 +253,25 @@ function toLogin(username, password) {
                 ak: ak,
                 ai: ai,
                 rsa4Server: rsa4Server,
+                rsa4ClinetN: MY_RSA_4_CLIENT.bin.toString(),
+                rsa4ClinetD: MY_RSA_4_CLIENT.bid.toString(),
+                /*
                 loginTokenTime: response.return.loginTokenTime,
                 loginToken: MY_AES.decrypt(response.return.loginToken),
                 id: MY_AES.decrypt(response.return.id),
                 isAdmin: MY_AES.decrypt(response.return.isAdmin)
+                */
+                loginToken: MY_RSA_4_CLIENT.decrypt(response.return.loginToken),
+                id: MY_RSA_4_CLIENT.decrypt(response.return.id),
+                isAdmin: MY_RSA_4_CLIENT.decrypt(response.return.isAdmin)
             };
 
-
-            console.log("token.id --> " + MY_AES.decrypt(response.return.id));
             sessionStorage.sessionId = TOKEN.id;
             sessionStorage.username = username;
             sessionStorage.isAdmin = TOKEN.isAdmin;
             console.log(username + " --> " + sessionStorage.sessionId);
+            sessionStorage.token = JSON.stringify(TOKEN);
+
 
             toNextPage();
 
