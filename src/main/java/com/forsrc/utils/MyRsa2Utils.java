@@ -47,7 +47,7 @@ public final class MyRsa2Utils {
         } catch (InvalidKeyException e) {
             throw new RsaException(e);
         }
-        byte[] input = new byte[0];
+        byte[] input = null;
         try {
             input = new BASE64Decoder().decodeBuffer(cipherText);
         } catch (IOException e) {
@@ -124,7 +124,7 @@ public final class MyRsa2Utils {
         } catch (ShortBufferException e) {
             throw new RsaException(e);
         }
-        return new String(new BASE64Encoder().encode(output));
+        return new BASE64Encoder().encode(output);
     }
 
 
