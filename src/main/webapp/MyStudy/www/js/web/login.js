@@ -107,10 +107,12 @@ var app = {
 };
 
 function main() {
+
     if (sessionStorage.sessionId) {
         toNextPage();
         return;
     }
+
 
     init();
 
@@ -121,6 +123,7 @@ function main() {
     scroll();
 
     getLoginToken();
+
 }
 
 var MY_AES = null;
@@ -138,45 +141,56 @@ function getLoginToken() {
 
     $.ajax({
         type: 'POST',
+        async: true,
         url: MY_WEB_URL.getLoginToken,
         ContentType: 'multipart/form-data',
         data: {
             rsa4Client: rsa4Client
         },
         beforeSend: function () {
-
+            $("#loader").fadeIn("fast");
         },
         success: function (response) {
             console.log(response);
 
-            if (response.status != 200) {
-                showFail("Get login token failed, please try later.");
-                return;
-            }
-            $("#login").removeAttr("disabled");
+            $("#loader").fadeOut("slow", function () {
+                getLoginTokenSuccess(response);
+            });
 
-            console.log("rn --> " + Base64.decode(response.return.rsa4Server));
-            var rsa4Server = Base64.decode(response.return.rsa4Server);
-            console.log("ak --> " + Base64.decode(response.return.ak));
-            var ak = MY_RSA_4_CLIENT.decrypt(response.return.ak);
-            var ai = MY_RSA_4_CLIENT.decrypt(response.return.ai);
-            console.log("ak --> " + ak);
-            console.log("ai --> " + ai);
-            MY_AES = new MyAes(ak, ai, true);
-            My_RSA_4_SERVER = new MyRsa(rsa4Server, "65537", null, true);
-            TOKEN = {
-                ak: ak,
-                ai: ai,
-                rsa4Server: rsa4Server,
-                loginToken: MY_AES.decrypt(response.return.loginToken),
-                loginTokenTime: response.return.loginTokenTime
-            };
         },
         error: function (jqXHR, textStatus, errorThrown) {
             console.log(textStatus, errorThrown);
-            showFail("Can not connect the service.");
+            $("#loader").fadeOut("slow", function () {
+                showFail("Can not connect the service.");
+            });
+            
         }
     });
+}
+
+function getLoginTokenSuccess(response) {
+    if (response.status != 200) {
+        showFail("Get login token failed, please try later.");
+        return;
+    }
+    $("#login").removeAttr("disabled");
+
+    //console.log("rn --> " + Base64.decode(response.return.rsa4Server));
+    var rsa4Server = Base64.decode(response.return.rsa4Server);
+    //console.log("ak --> " + Base64.decode(response.return.ak));
+    var ak = MY_RSA_4_CLIENT.decrypt(response.return.ak);
+    var ai = MY_RSA_4_CLIENT.decrypt(response.return.ai);
+    //console.log("ak --> " + ak);
+    //console.log("ai --> " + ai);
+    MY_AES = new MyAes(ak, ai, true);
+    My_RSA_4_SERVER = new MyRsa(rsa4Server, "65537", null, true);
+    TOKEN = {
+        ak: ak,
+        ai: ai,
+        rsa4Server: rsa4Server,
+        loginToken: MY_AES.decrypt(response.return.loginToken),
+        loginTokenTime: response.return.loginTokenTime
+    };
 }
 
 function showFail(msg) {
@@ -211,7 +225,7 @@ function toLogin(username, password) {
         showFail("Get login token failed, please try later.");
 
         setTimeout(function () {
-            getLoginToken();
+            //getLoginToken();
         }, 200);
     }
 
@@ -224,68 +238,78 @@ function toLogin(username, password) {
     };
     $.ajax({
         type: 'POST',
+        async: false,
         url: MY_WEB_URL.toLogin,
         ContentType: 'multipart/form-data',
         data: formData,
         beforeSend: function () {
+            $("#loader").fadeIn("fast");
             $("#login").attr("disabled", "disabled");
         },
         success: function (response) {
             console.log(response);
-
-            if (response.status != 200) {
-                showLoginException();
-                $("#login").removeAttr("disabled");
-                return;
-            }
-
-
-            var rsa4Server = Base64.decode(response.return.rsa4Server);
-            console.log("ak --> " + Base64.decode(response.return.ak));
-            var ak = MY_RSA_4_CLIENT.decrypt(response.return.ak);
-            var ai = MY_RSA_4_CLIENT.decrypt(response.return.ai);
-            console.log("ak --> " + ak);
-            console.log("ai --> " + ai);
-
-            MY_AES = new MyAes(ak, ai, true);
-
-
-            TOKEN = {
-                ak: ak,
-                ai: ai,
-                rsa4Server: rsa4Server,
-                rsa4ClinetN: MY_RSA_4_CLIENT.bin.toString(),
-                rsa4ClinetD: MY_RSA_4_CLIENT.bid.toString(),
-                /*
-                loginTokenTime: response.return.loginTokenTime,
-                loginToken: MY_AES.decrypt(response.return.loginToken),
-                id: MY_AES.decrypt(response.return.id),
-                isAdmin: MY_AES.decrypt(response.return.isAdmin)
-                */
-                loginToken: MY_RSA_4_CLIENT.decrypt(response.return.loginToken),
-                loginTokenTime: response.return.loginTokenTime,
-                token: MY_RSA_4_CLIENT.decrypt(response.return.token),
-                tokenTime: response.return.tokenTime,
-                id: MY_RSA_4_CLIENT.decrypt(response.return.id),
-                isAdmin: MY_RSA_4_CLIENT.decrypt(response.return.isAdmin)
-            };
-
-            sessionStorage.sessionId = TOKEN.id;
-            sessionStorage.username = username;
-            sessionStorage.isAdmin = TOKEN.isAdmin;
-            console.log(username + " --> " + sessionStorage.sessionId);
-            sessionStorage.token = JSON.stringify(TOKEN);
-
-
-            toNextPage();
+            $("#loader").fadeOut("slow", function () {
+                loginSuccess(response);
+            });
 
         },
         error: function (jqXHR, textStatus, errorThrown) {
             console.log(textStatus, errorThrown);
-            showAjaxFail();
-            $("#login").removeAttr("disabled");
+            $("#loader").fadeOut("slow", function () {
+                showAjaxFail();
+                $("#login").removeAttr("disabled");
+            });
         }
     });
+
+}
+
+function loginSuccess(response) {
+    if (response.status != 200) {
+        showLoginException();
+        $("#login").removeAttr("disabled");
+        return;
+    }
+
+
+    var rsa4Server = Base64.decode(response.return.rsa4Server);
+    console.log("ak --> " + Base64.decode(response.return.ak));
+    var ak = MY_RSA_4_CLIENT.decrypt(response.return.ak);
+    var ai = MY_RSA_4_CLIENT.decrypt(response.return.ai);
+    console.log("ak --> " + ak);
+    console.log("ai --> " + ai);
+
+    MY_AES = new MyAes(ak, ai, true);
+
+
+    TOKEN = {
+        ak: ak,
+        ai: ai,
+        rsa4Server: rsa4Server,
+        rsa4ClinetN: MY_RSA_4_CLIENT.bin.toString(),
+        rsa4ClinetD: MY_RSA_4_CLIENT.bid.toString(),
+        /*
+         loginTokenTime: response.return.loginTokenTime,
+         loginToken: MY_AES.decrypt(response.return.loginToken),
+         id: MY_AES.decrypt(response.return.id),
+         isAdmin: MY_AES.decrypt(response.return.isAdmin)
+         */
+        loginToken: MY_RSA_4_CLIENT.decrypt(response.return.loginToken),
+        loginTokenTime: response.return.loginTokenTime,
+        token: MY_RSA_4_CLIENT.decrypt(response.return.token),
+        tokenTime: response.return.tokenTime,
+        id: MY_RSA_4_CLIENT.decrypt(response.return.id),
+        isAdmin: MY_RSA_4_CLIENT.decrypt(response.return.isAdmin)
+    };
+
+    sessionStorage.sessionId = TOKEN.id;
+    sessionStorage.username = username;
+    sessionStorage.isAdmin = TOKEN.isAdmin;
+    console.log(username + " --> " + sessionStorage.sessionId);
+    sessionStorage.token = JSON.stringify(TOKEN);
+
+
+    toNextPage();
 
 }
 

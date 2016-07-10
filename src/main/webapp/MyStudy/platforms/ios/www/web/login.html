@@ -66,11 +66,11 @@ style="background-image:url(../img/pattern.jpg);background-repeat:repeat;">
             <img src="../img/logo.png"/>
         </div>
         <div class="col-xs-12 appname">
-            <h3>MyStudy APP</h3>
+            <h3>MyStudy APP<img id="loader" src="../img/load.gif"/></h3>
         </div>
         <div class="col-xs-12">
             <div class="well bs-component">
-                <form class="form-horizontal">
+                 <form class="form-horizontal">
                     <fieldset>
                         <div class="form-group label-floating is-empty">
                             <div class="col-md-12">
@@ -88,7 +88,8 @@ style="background-image:url(../img/pattern.jpg);background-repeat:repeat;">
                         </div>
                         <div class="form-group">
                             <div class="col-md-12">
-                                <a id="login" class="btn btn-raised btn-primary login">LOGIN</a>
+                                <!--<a id="login" class="btn btn-raised btn-primary login">LOGIN</a>-->
+                                <input type="button" id="login" class="btn btn-raised btn-primary login" disabled="disabled" value="LOGIN">
                             </div>
                         </div>
                         <div class="form-group">
@@ -115,6 +116,9 @@ style="background-image:url(../img/pattern.jpg);background-repeat:repeat;">
         <p class="event received"></p>
     </div>
 
+
+
+
 </div>
 <!-- container END -->
 
@@ -131,21 +135,27 @@ style="background-image:url(../img/pattern.jpg);background-repeat:repeat;">
 
 
 <script type="text/javascript" src="../js/lib/base64.min.js"></script>
-<script type="text/javascript" src="../js/lib/jsbn/jsbn.js"></script>
+<!--<script type="text/javascript" src="../js/lib/jsbn/jsbn.js"></script>
 <script type="text/javascript" src="../js/lib/jsbn/jsbn2.js"></script>
 <script type="text/javascript" src="../js/lib/jsbn/prng4.js"></script>
 <script type="text/javascript" src="../js/lib/jsbn/rng.js"></script>
 <script type="text/javascript" src="../js/lib/jsbn/rsa.js"></script>
-<script type="text/javascript" src="../js/lib/jsbn/rsa2.js"></script>
+<script type="text/javascript" src="../js/lib/jsbn/rsa2.js"></script>-->
 <script type="text/javascript" src="../js/lib/crypto-js/rollups/tripledes.js"></script>
 <script type="text/javascript" src="../js/lib/crypto-js/rollups/aes.js"></script>
 <script type="text/javascript" src="../js/lib/crypto-js/components/mode-ecb-min.js"></script>
 <script type="text/javascript" src="../js/lib/crypto-js/components/pad-zeropadding-min.js"></script>
 <script type="text/javascript" src="../js/lib/crypto-js/components/pad-iso10126-min.js"></script>
+<script type="text/javascript" src="../js/lib/crypto-js/random.js"></script>
+<script type="text/javascript" src="../js/lib/crypto-js/jsbn.js"></script>
+<script type="text/javascript" src="../js/lib/crypto-js/hash.js"></script>
+<script type="text/javascript" src="../js/lib/crypto-js/rsa.js"></script>
+<script type="text/javascript" src="../js/lib/crypto-js/cryptico.js"></script>
 
 <script type="text/javascript" src="../js/web/config.js"></script>
 <script type="text/javascript" src="../js/web/utils.js"></script>
 <script type="text/javascript" src="../js/web/myaes.js"></script>
+<script type="text/javascript" src="../js/web/myrsa.js"></script>
 <script type="text/javascript" src="../js/web/login.js"></script>
 
 </body>

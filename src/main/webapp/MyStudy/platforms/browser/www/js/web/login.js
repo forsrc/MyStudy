@@ -107,56 +107,90 @@ var app = {
 };
 
 function main() {
+
     if (sessionStorage.sessionId) {
         toNextPage();
         return;
     }
 
+
     init();
 
     sessionStorage.clear();
 
-    getLoginToken();
-
     binding();
 
     scroll();
+
+    getLoginToken();
+
 }
 
 var MY_AES = null;
+var MY_RSA_4_CLIENT = null;
+var My_RSA_4_SERVER = null;
 var TOKEN = null;
 
 function getLoginToken() {
+
+    var rsaKey = new RSAKey();
+    rsaKey.generate(1024, "10001");
+    MY_RSA_4_CLIENT = new MyRsa(rsaKey.n, "65537", rsaKey.d, true);
+
+    var rsa4Client = Base64.encode(rsaKey.n.toString());
+
     $.ajax({
         type: 'POST',
+        async: true,
         url: MY_WEB_URL.getLoginToken,
         ContentType: 'multipart/form-data',
-        data: {},
+        data: {
+            rsa4Client: rsa4Client
+        },
         beforeSend: function () {
-
+            $("#loader").fadeIn("fast");
         },
         success: function (response) {
             console.log(response);
 
-            if (response.status != 200) {
-                showFail("Get login token failed, please try later.");
-                return;
-            }
-            MY_AES = new MyAes(response.return.ak, response.return.ai, true);
-            TOKEN = {
-                ak: response.return.ak,
-                ai: response.return.ai,
-                loginToken: MY_AES.decrypt(response.return.loginToken),
-                loginTokenTime: response.return.loginTokenTime
-            };
-            console.log("token.loginToken --> " + TOKEN.loginToken);
+            $("#loader").fadeOut("slow", function () {
+                getLoginTokenSuccess(response);
+            });
 
         },
         error: function (jqXHR, textStatus, errorThrown) {
             console.log(textStatus, errorThrown);
-            showFail("Can not connect the service.");
+            $("#loader").fadeOut("slow", function () {
+                showFail("Can not connect the service.");
+            });
+            
         }
     });
+}
+
+function getLoginTokenSuccess(response) {
+    if (response.status != 200) {
+        showFail("Get login token failed, please try later.");
+        return;
+    }
+    $("#login").removeAttr("disabled");
+
+    //console.log("rn --> " + Base64.decode(response.return.rsa4Server));
+    var rsa4Server = Base64.decode(response.return.rsa4Server);
+    //console.log("ak --> " + Base64.decode(response.return.ak));
+    var ak = MY_RSA_4_CLIENT.decrypt(response.return.ak);
+    var ai = MY_RSA_4_CLIENT.decrypt(response.return.ai);
+    //console.log("ak --> " + ak);
+    //console.log("ai --> " + ai);
+    MY_AES = new MyAes(ak, ai, true);
+    My_RSA_4_SERVER = new MyRsa(rsa4Server, "65537", null, true);
+    TOKEN = {
+        ak: ak,
+        ai: ai,
+        rsa4Server: rsa4Server,
+        loginToken: MY_AES.decrypt(response.return.loginToken),
+        loginTokenTime: response.return.loginTokenTime
+    };
 }
 
 function showFail(msg) {
@@ -191,57 +225,91 @@ function toLogin(username, password) {
         showFail("Get login token failed, please try later.");
 
         setTimeout(function () {
-            getLoginToken();
+            //getLoginToken();
         }, 200);
     }
 
     var formData = {
-        "username": MY_AES.encrypt(username),
-        "password": MY_AES.encrypt(password),
+        //"username": MY_AES.encrypt(username),
+        //"password": MY_AES.encrypt(password),
+        "username": My_RSA_4_SERVER.encrypt(username),
+        "password": My_RSA_4_SERVER.encrypt(password),
         "loginToken": TOKEN.loginToken
     };
     $.ajax({
         type: 'POST',
+        async: false,
         url: MY_WEB_URL.toLogin,
         ContentType: 'multipart/form-data',
         data: formData,
         beforeSend: function () {
-
+            $("#loader").fadeIn("fast");
+            $("#login").attr("disabled", "disabled");
         },
         success: function (response) {
             console.log(response);
-
-            if (response.status != 200) {
-                showLoginException();
-                return;
-            }
-
-            MY_AES = new MyAes(response.return.ak, response.return.ai, true);
-            
-            TOKEN = {
-                ak: response.return.ak,
-                ai: response.return.ai,
-                loginTokenTime: response.return.loginTokenTime,
-                loginToken: MY_AES.decrypt(response.return.loginToken),
-                id: MY_AES.decrypt(response.return.id),
-                isAdmin: MY_AES.decrypt(response.return.isAdmin)
-            };
-
-
-            console.log("token.id --> " + MY_AES.decrypt(response.return.id));
-            sessionStorage.sessionId = TOKEN.id;
-            sessionStorage.username = username;
-            sessionStorage.isAdmin = TOKEN.isAdmin;
-            console.log(username + " --> " + sessionStorage.sessionId);
-
-            toNextPage();
+            $("#loader").fadeOut("slow", function () {
+                loginSuccess(response);
+            });
 
         },
         error: function (jqXHR, textStatus, errorThrown) {
             console.log(textStatus, errorThrown);
-            showAjaxFail();
+            $("#loader").fadeOut("slow", function () {
+                showAjaxFail();
+                $("#login").removeAttr("disabled");
+            });
         }
     });
+
+}
+
+function loginSuccess(response) {
+    if (response.status != 200) {
+        showLoginException();
+        $("#login").removeAttr("disabled");
+        return;
+    }
+
+
+    var rsa4Server = Base64.decode(response.return.rsa4Server);
+    console.log("ak --> " + Base64.decode(response.return.ak));
+    var ak = MY_RSA_4_CLIENT.decrypt(response.return.ak);
+    var ai = MY_RSA_4_CLIENT.decrypt(response.return.ai);
+    console.log("ak --> " + ak);
+    console.log("ai --> " + ai);
+
+    MY_AES = new MyAes(ak, ai, true);
+
+
+    TOKEN = {
+        ak: ak,
+        ai: ai,
+        rsa4Server: rsa4Server,
+        rsa4ClinetN: MY_RSA_4_CLIENT.bin.toString(),
+        rsa4ClinetD: MY_RSA_4_CLIENT.bid.toString(),
+        /*
+         loginTokenTime: response.return.loginTokenTime,
+         loginToken: MY_AES.decrypt(response.return.loginToken),
+         id: MY_AES.decrypt(response.return.id),
+         isAdmin: MY_AES.decrypt(response.return.isAdmin)
+         */
+        loginToken: MY_RSA_4_CLIENT.decrypt(response.return.loginToken),
+        loginTokenTime: response.return.loginTokenTime,
+        token: MY_RSA_4_CLIENT.decrypt(response.return.token),
+        tokenTime: response.return.tokenTime,
+        id: MY_RSA_4_CLIENT.decrypt(response.return.id),
+        isAdmin: MY_RSA_4_CLIENT.decrypt(response.return.isAdmin)
+    };
+
+    sessionStorage.sessionId = TOKEN.id;
+    sessionStorage.username = username;
+    sessionStorage.isAdmin = TOKEN.isAdmin;
+    console.log(username + " --> " + sessionStorage.sessionId);
+    sessionStorage.token = JSON.stringify(TOKEN);
+
+
+    toNextPage();
 
 }
 
@@ -260,6 +328,32 @@ function showAjaxFail() {
 function init() {
     $.material.init();
     $.material.ripples();
+
+    /*
+    var passPhrase = "forsrc@163.com";
+
+    var bits = 1024;
+
+    var privateKey = cryptico.generateRSAKey(passPhrase, bits);
+    console.log("privateKey --> " + privateKey);
+    var publicKey = cryptico.publicKeyString(privateKey);
+    console.log("publicKey --> " + publicKey);
+
+    var plainText = "hello world";
+
+    var encryptionResult = cryptico.encrypt(plainText, publicKey);
+    console.log(encryptionResult);
+    var decryptionResult = cryptico.decrypt(encryptionResult.cipher, privateKey);
+    console.log(decryptionResult);
+
+    var rsa = new RSAKey();
+    rsa.generate(1024, "10001");
+    console.log(rsa);
+    */
+    //console.log(rsa.n);
+    //console.log(rsa.e);
+    //console.log(rsa.d);
+
 }
 
 function scroll() {
