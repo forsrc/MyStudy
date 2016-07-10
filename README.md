@@ -21,6 +21,9 @@ see http://git.oschina.net/forsrc/MyStudy
     - ....|.....|-- test
     - ....|-- tools
     - ....|.....|-- cobertura-2.1.1
+   
+##### Demo
+* Demo user's username/password: ``` admin/123456 ```
 
 ----
 
