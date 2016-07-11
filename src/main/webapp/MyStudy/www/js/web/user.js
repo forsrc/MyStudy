@@ -117,29 +117,27 @@ function main() {
 
 
     init();
-    list();
 }
 
+var TOKEN = null;
 function init() {
 
     var username = document.getElementById("username");
     username.innerText = sessionStorage.username;
-
-    document.addEventListener('touchmove', function (e) {
-        e.preventDefault();
-    }, false);
+    TOKEN = getToken();
 }
 
-var url = "http://192.168.11.8:8077/springmvc/v1.0/user";
-function list() {
+var url = MY_WEB_URL.user_list;
+function list(callback, start, size) {
 
     $.ajax({
         type: 'GET',
         url: url,
         dataType: 'json',
         data: {
-            sessionId: sessionStorage.sessionId,
-            username: sessionStorage.username
+            start: start,
+            size: size,
+            token: TOKEN.token
         },
         beforeSend: function () {
             $("#loader").fadeIn("fast");
@@ -151,6 +149,10 @@ function list() {
         success: function (response) {
             $("#loader").fadeOut("slow", function () {
                 console.log(response);
+                if (typeof(callback) === "function") {
+                    callback(response);
+                }
+
             });
         }
     });
@@ -172,11 +174,26 @@ function pullDownAction() {
         var el, li, i;
         el = document.getElementById('tab1-table');
 
-        for (i = 0; i < 3; i++) {
-            li = document.createElement('tr');
-            //li.innerText = 'Generated row ' + (++generatedCount);
-            //el.insertBefore(li, el.childNodes[0]);
-        }
+        var trs = $("#tab1-table").find("tbody").find("tr");
+        list(function (response) {
+            var list = response.return;
+            var length = list.length;
+            for (var i = 0; i < list.length; i++) {
+                //li = document.createElement('tr');
+                //li.innerText = 'Generated row ' + (++generatedCount);
+                //el.insertBefore(li, el.childNodes[0]);
+                if (i <= 5) {
+                    $(trs[i]).html("<td></td><td>{0}</td><td>{1}</td><td>{2}</td>"
+                        .formatStr([list[i].username, (list[i].isAdmin ? "Y" : "N"), list[i].createOn]));
+
+                } else {
+                    $(trs[i - 1]).append("<tr><td></td><td>{0}</td><td>{1}</td><td>{2}</td></tr>"
+                        .formatStr([list[i].username, (list[i].isAdmin ? "Y" : "N"), list[i].createOn]));
+
+                }
+            }
+
+        }, 0, 10);
 
         myScroll.refresh();		// Remember to refresh when contents are loaded (ie: on ajax completion)
     }, 1000);	// <-- Simulate network congestion, remove setTimeout from production!
@@ -251,6 +268,7 @@ function loaded() {
         document.getElementById('wrapper').style.left = '0';
     }, 800);
 }
+
 
 document.addEventListener('touchmove', function (e) {
     e.preventDefault();
