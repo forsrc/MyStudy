@@ -6,12 +6,17 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 public class DateTimeUtils {
 
 
     public static final String FORMAT = "yyyy-MM-dd HH:mm:ss";
+    public static final String FORMAT_DATE_TIME = "yyyy-MM-dd HH:mm:ss";
+    public static final String FORMAT_DATE = "yyyy-MM-dd";
+    public static final String FORMAT_TIME = "HH:mm:ss";
 
     /**
      * @param @return
@@ -235,26 +240,54 @@ public class DateTimeUtils {
         return sdf.format(new Date(currentTimeMillis));
     }
 
-    public static Date parse(String format, String date) {
+
+    public static Date format(String format, String date) throws ParseException {
         SimpleDateFormat sdf = new SimpleDateFormat(format);
         try {
             return sdf.parse(date);
         } catch (ParseException e) {
-            e.printStackTrace();
+            throw e;
         }
-        return null;
     }
 
-    public static Date parse(String date) {
+    public static Date parse(String format, String date) throws ParseException {
         if (date == null) {
             return null;
         }
-        SimpleDateFormat sdf = new SimpleDateFormat(FORMAT);
-        try {
-            return sdf.parse(date);
-        } catch (ParseException e) {
-            e.printStackTrace();
+        Pattern pattern = Pattern.compile("^\\d{4}\\-\\d{2}\\-\\d{2} \\d{2}\\:\\d{2}\\:\\d{2}$");
+        Matcher matcher = pattern.matcher(date);
+
+        if (matcher.matches()) {
+            return DateTimeUtils.format(FORMAT_DATE_TIME, date);
         }
-        return null;
+
+        pattern = Pattern.compile("^\\d{4}\\-\\d{2}\\-\\d{2}$");
+        matcher = pattern.matcher(date);
+
+        if (matcher.matches()) {
+            return DateTimeUtils.format(FORMAT_DATE, date);
+        }
+
+        pattern = Pattern.compile("^\\d{2}\\:\\d{2}\\:\\d{2}$");
+        matcher = pattern.matcher(date);
+
+        if (matcher.matches()) {
+            return DateTimeUtils.format(FORMAT_TIME, date);
+        }
+
+        pattern = Pattern.compile("^\\d+$");
+        matcher = pattern.matcher(date);
+
+        Date d = null;
+        if (matcher.matches()) {
+            long time = Long.parseLong(date);
+            d = new Date(time);
+            return d;
+        }
+        throw new ParseException(date, 0);
+    }
+
+    public static Date parse(String date) throws ParseException {
+        return parse(FORMAT, date);
     }
 }

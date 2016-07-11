@@ -1,10 +1,14 @@
 package com.forsrc.pojo;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.forsrc.lucene.IndexWhenPublishedInterceptor;
+import com.forsrc.utils.JsonSerializerTimestamp;
 import org.hibernate.search.annotations.*;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.wltea.analyzer.lucene.IKAnalyzer;
 
 import javax.persistence.Id;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Date;
 
@@ -13,8 +17,8 @@ import java.util.Date;
 @Analyzer(impl = IKAnalyzer.class, definition = "cn")
 //@Analyzer(impl = SmartChineseAnalyzer.class)
 
-@org.codehaus.jackson.annotate.JsonIgnoreProperties(value = {"handler", "hibernateLazyInitializer", "fieldHandler"})
-@com.fasterxml.jackson.annotation.JsonIgnoreProperties(value = {"handler", "hibernateLazyInitializer", "fieldHandler"})
+@org.codehaus.jackson.annotate.JsonIgnoreProperties(value = {"handler", "hibernateLazyInitializer", "fieldHandler", "password"})
+@com.fasterxml.jackson.annotation.JsonIgnoreProperties(value = {"handler", "hibernateLazyInitializer", "fieldHandler", "password"})
 @XmlRootElement(name = "User")
 public class User implements java.io.Serializable {
 
@@ -26,9 +30,13 @@ public class User implements java.io.Serializable {
     @SortableField
     private Long id;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonSerialize(using = JsonSerializerTimestamp.class)
     @Field(index = Index.NO, analyze = Analyze.NO, store = Store.YES)
     private Date updateOn;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonSerialize(using = JsonSerializerTimestamp.class)
     @Field(index = Index.NO, analyze = Analyze.NO, store = Store.YES)
     private Date createOn;
 
@@ -38,6 +46,7 @@ public class User implements java.io.Serializable {
     @Field(index = Index.YES, analyze = Analyze.YES, store = Store.YES)
     private String email;
 
+    @XmlElement(nillable = true)
     @Field(index = Index.NO, analyze = Analyze.NO, store = Store.NO)
     private String password;
 
