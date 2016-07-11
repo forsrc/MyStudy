@@ -271,7 +271,7 @@ function loginSuccess(response) {
         return;
     }
 
-
+    $("#login").attr("disabled", "disabled");
     var rsa4Server = Base64.decode(response.return.rsa4Server);
     console.log("ak --> " + Base64.decode(response.return.ak));
     var ak = MY_RSA_4_CLIENT.decrypt(response.return.ak);
@@ -303,11 +303,9 @@ function loginSuccess(response) {
     };
 
     sessionStorage.sessionId = TOKEN.id;
-    sessionStorage.username = username;
+    sessionStorage.username = $("#username").val();
     sessionStorage.isAdmin = TOKEN.isAdmin;
-    console.log(username + " --> " + sessionStorage.sessionId);
     sessionStorage.token = JSON.stringify(TOKEN);
-
 
     toNextPage();
 
