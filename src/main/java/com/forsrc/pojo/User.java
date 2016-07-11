@@ -25,16 +25,30 @@ public class User implements java.io.Serializable {
     //@Field(index = Index.NO, analyze = Analyze.NO, store = Store.YES)
     @SortableField
     private Long id;
+
+    @Field(index = Index.NO, analyze = Analyze.NO, store = Store.YES)
+    private Date updateOn;
+
+    @Field(index = Index.NO, analyze = Analyze.NO, store = Store.YES)
+    private Date createOn;
+
     @Field(index = Index.YES, analyze = Analyze.YES, store = Store.YES)
     private String username;
+
+    @Field(index = Index.YES, analyze = Analyze.YES, store = Store.YES)
+    private String email;
+
+    @Field(index = Index.NO, analyze = Analyze.NO, store = Store.NO)
     private String password;
+
     @Field(index = Index.NO, analyze = Analyze.NO, store = Store.YES)
     private int status; // 0: delete; 1: OK; 2: NG
+
     @Field(index = Index.NO, analyze = Analyze.NO, store = Store.YES)
     private boolean isAdmin;
-    @Field(index = Index.NO, analyze = Analyze.NO, store = Store.YES)
-    private String token;
 
+    @Field(index = Index.NO, analyze = Analyze.NO, store = Store.YES)
+    private String image;
 
     // Constructors
 
@@ -52,15 +66,6 @@ public class User implements java.io.Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-
-    public void setToken(String token) {
-        this.token = token;
-    }
-
-    public String getToken() {
-        return this.token;
     }
 
     public String getUsername() {
@@ -91,6 +96,14 @@ public class User implements java.io.Serializable {
         return isAdmin;
     }
 
+    public Date getUpdateOn() {
+        return updateOn;
+    }
+
+    public void setUpdateOn(Date updateOn) {
+        this.updateOn = updateOn;
+    }
+
     public void setAdmin(boolean admin) {
         this.isAdmin = admin;
     }
@@ -101,5 +114,29 @@ public class User implements java.io.Serializable {
 
     public void setIsAdmin(boolean admin) {
         this.isAdmin = admin;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public Date getCreateOn() {
+        return createOn;
+    }
+
+    public void setCreateOn(Date createOn) {
+        this.createOn = createOn;
     }
 }

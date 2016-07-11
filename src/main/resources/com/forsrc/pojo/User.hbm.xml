@@ -8,34 +8,52 @@
             <column name="id"/>
             <generator class="native"/>
         </id>
+        <!--<version name="version" column="version" type="int"></version>-->
+        <timestamp name="updateOn" column="update_on"></timestamp>
 
         <property name="username" type="java.lang.String">
-            <column name="username" not-null="true" unique="true"/>
+            <column name="username" not-null="true" unique="true" length="30"/>
         </property>
 
         <property name="password" type="java.lang.String" update="false">
-            <column name="password" not-null="true" default="000000"/>
+            <column name="password" not-null="true" default="'EdbQzHVPKsmmwIOtmJOHJg=='" length="30"/>
         </property>
 
-        <property name="status" type="java.lang.Integer">
-            <column name="status" default="1"/>
+        <property name="createOn" type="java.util.Date">
+            <column name="create_on" not-null="true"/>
         </property>
 
-        <property name="isAdmin" type="java.lang.Boolean">
-            <column name="is_admin" default="0"/>
+        <property name="status" type="int">
+            <column name="status" default="1" length="1"/>
         </property>
 
-        <property name="token" type="java.lang.String">
-            <column name="token" length="100" default="-"/>
+        <property name="isAdmin" type="boolean">
+            <column name="is_admin" default="0" length="1"/>
         </property>
+
+        <property name="email" type="java.lang.String" update="false">
+            <column name="email" not-null="true" unique="true" length="200"/>
+        </property>
+
+        <property name="image" type="java.lang.String" update="false">
+            <column name="image" length="300"/>
+        </property>
+
     </class>
     <sql-query name="user_insert_admin">
         <![CDATA[
              INSERT INTO
                             my_study_user
-                            (id, username, password, status, is_admin)
+                            (id, username, password, email, status, is_admin, create_on, update_on)
              VALUES
-                            (1, 'admin', 'EdbQzHVPKsmmwIOtmJOHJg==', 1, 1)
+                            (1, 'admin', 'EdbQzHVPKsmmwIOtmJOHJg==', 'forsrc@163.com', 1, 1, '2016-07-07 12:00:00', '2016-07-07 12:00:00')
+             ;
+
+             INSERT INTO
+                            my_study_user
+                            (id, username, password, email, status, is_admin, create_on, update_on)
+             VALUES
+                            (2, 'forsrc', 'EdbQzHVPKsmmwIOtmJOHJg==', 'forsrc-@163.com', 1, 0, '2016-07-07 12:00:00', '2016-07-07 12:00:00')
              ;
 
          ]]>
@@ -44,7 +62,7 @@
     <sql-query name="sql_user_findByUsername" read-only="true">
         <![CDATA[
              SELECT
-                    u.username, u.password, u.status, u.is_admin
+                    u.username, u.password, u.status, u.is_admin, u.email, u.createOn, u.updateOn
              FROM
                     my_study_user u
              WHERE

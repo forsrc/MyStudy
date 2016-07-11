@@ -8,7 +8,10 @@ import com.forsrc.pojo.User;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.core.Context;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class CxfRestfulImpl implements CxfRestful<User> {
     @Override
@@ -27,7 +30,6 @@ public class CxfRestfulImpl implements CxfRestful<User> {
         for (int i = 0; i < 10; i++) {
             User user = new User();
             user.setId(Long.valueOf(i));
-            user.setToken(UUID.randomUUID().toString());
             map.put("User-" + i, user);
         }
         return map;
@@ -37,7 +39,6 @@ public class CxfRestfulImpl implements CxfRestful<User> {
     public User get(Long id) {
         User user = new User();
         user.setId(id);
-        user.setToken(UUID.randomUUID().toString());
         System.out.println("get --> " + id);
         return user;
     }
@@ -48,8 +49,6 @@ public class CxfRestfulImpl implements CxfRestful<User> {
         List<User> list = new ArrayList<User>();
         for (int i = 0; i < 10; i++) {
             User user = new User();
-            user.setId(Long.valueOf(i));
-            user.setToken(UUID.randomUUID().toString());
             list.add(user);
         }
         System.out.println("list --> " + list);

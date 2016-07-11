@@ -15,7 +15,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 //@RestController
 @Controller
@@ -72,7 +71,6 @@ public class UserController {
                                HttpServletRequest request,
                                HttpServletResponse response) throws ActionException {
         //User bean = userManager.findUser(id);
-        user.setToken(UUID.randomUUID().toString());
         this.userService.update(user);
         ModelAndView modelAndView = new ModelAndView();
         Map<String, Object> message = new HashMap<String, Object>();
@@ -105,7 +103,6 @@ public class UserController {
     public ModelAndView save(@RequestParam User bean,
                              HttpServletRequest request,
                              HttpServletResponse response) throws ActionException {
-        bean.setToken(UUID.randomUUID().toString());
         bean.setId(this.userService.save(bean));
         ModelAndView modelAndView = new ModelAndView();
         Map<String, Object> message = new HashMap<String, Object>();
