@@ -123,6 +123,13 @@ function main() {
 var TOKEN = null;
 function init() {
     //alert(window.screen.height)
+    try{
+        device;
+    }catch (e){
+       var device = null;
+    }
+
+
     $("#wrapper").css("height",
         (window.screen.height - 175 - 50
             - (device ? (device.platform === "Android" ? 12 : 0) :  0)
@@ -191,21 +198,26 @@ function getList() {
     list(function (response) {
         var list = response.return;
         var length = list.length;
+        var tr = null;
         for (var i = 0; i < list.length; i++) {
             //li = document.createElement('tr');
             //li.innerText = 'Generated row ' + (++generatedCount);
             //el.insertBefore(li, el.childNodes[0]);
-            if (i <= 5) {
-                $(trs[i]).html("<td></td><td>{0}</td><td>{1}</td><td>{2}</td>"
-                    .formatStr([list[i].username, (list[i].isAdmin ? "Y" : "N"), list[i].createOn]));
-
-            } else {
-                $(trs[i - 1]).append("<tr><td></td><td>{0}</td><td>{1}</td><td>{2}</td></tr>"
-                    .formatStr([list[i].username, (list[i].isAdmin ? "Y" : "N"), list[i].createOn]));
-
+            tr = trs[i] || null;
+            if(null){
+                $("tbody").append("<tr data-id-'{0}'><td></td><td>{1}</td><td>{2}</td><td>{3}</td></tr>"
+                    .formatStr([list[i].id, list[i].username, (list[i].isAdmin ? "Y" : "N"), list[i].createOn]));
+                continue;
             }
-            $("tbody").append("<tr><td></td><td>{0}</td><td>{1}</td><td>{2}</td></tr>"
-                .formatStr([list[i].username, (list[i].isAdmin ? "Y" : "N"), list[i].createOn]));
+
+            if (!$(tr).attr("data-id")) {
+                $(tr).html("<td></td><td>{0}</td><td>{1}</td><td>{2}</td>"
+                    .formatStr([list[i].username, (list[i].isAdmin ? "Y" : "N"), list[i].createOn]));
+                $(tr).attr("data-id", list[i].id);
+            } else {
+                $(trs[0]).before("<tr data-id-'{0}'><td></td><td>{1}</td><td>{2}</td><td>{3}</td></tr>"
+                    .formatStr([list[i].id, list[i].username, (list[i].isAdmin ? "Y" : "N"), list[i].createOn]));
+            }
 
         }
 
