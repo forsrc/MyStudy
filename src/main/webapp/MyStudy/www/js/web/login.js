@@ -238,7 +238,7 @@ function toLogin(username, password) {
     };
     $.ajax({
         type: 'POST',
-        async: false,
+        async: true,
         url: MY_WEB_URL.toLogin,
         ContentType: 'multipart/form-data',
         data: formData,

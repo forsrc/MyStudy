@@ -50,6 +50,10 @@
       <sourceFolder url="file://$MODULE_DIR$/src/test/resources" type="java-test-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/main/resources" type="java-resource" />
       <excludeFolder url="file://$MODULE_DIR$/.idea" />
+      <excludeFolder url="file://$MODULE_DIR$/src/main/webapp/MyStudy/.cordova" />
+      <excludeFolder url="file://$MODULE_DIR$/src/main/webapp/MyStudy/hooks" />
+      <excludeFolder url="file://$MODULE_DIR$/src/main/webapp/MyStudy/platforms" />
+      <excludeFolder url="file://$MODULE_DIR$/src/main/webapp/MyStudy/plugins" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
     </content>
     <orderEntry type="inheritedJdk" />

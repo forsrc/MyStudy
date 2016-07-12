@@ -117,10 +117,16 @@ function main() {
 
 
     init();
+    getList();
 }
 
 var TOKEN = null;
 function init() {
+    //alert(window.screen.height)
+    $("#wrapper").css("height",
+        (window.screen.height - 175 - 50
+            - (device ? (device.platform === "Android" ? 12 : 0) :  0)
+        ) + "px");
 
     var username = document.getElementById("username");
     username.innerText = sessionStorage.username;
@@ -132,6 +138,7 @@ function list(callback, start, size) {
 
     $.ajax({
         type: 'GET',
+        async: true,
         url: url,
         dataType: 'json',
         data: {
@@ -171,32 +178,38 @@ var myScroll,
 
 function pullDownAction() {
     setTimeout(function () {	// <-- Simulate network congestion, remove setTimeout from production!
-        var el, li, i;
-        el = document.getElementById('tab1-table');
 
-        var trs = $("#tab1-table").find("tbody").find("tr");
-        list(function (response) {
-            var list = response.return;
-            var length = list.length;
-            for (var i = 0; i < list.length; i++) {
-                //li = document.createElement('tr');
-                //li.innerText = 'Generated row ' + (++generatedCount);
-                //el.insertBefore(li, el.childNodes[0]);
-                if (i <= 5) {
-                    $(trs[i]).html("<td></td><td>{0}</td><td>{1}</td><td>{2}</td>"
-                        .formatStr([list[i].username, (list[i].isAdmin ? "Y" : "N"), list[i].createOn]));
 
-                } else {
-                    $(trs[i - 1]).append("<tr><td></td><td>{0}</td><td>{1}</td><td>{2}</td></tr>"
-                        .formatStr([list[i].username, (list[i].isAdmin ? "Y" : "N"), list[i].createOn]));
-
-                }
-            }
-
-        }, 0, 10);
+        getList();
 
         myScroll.refresh();		// Remember to refresh when contents are loaded (ie: on ajax completion)
     }, 1000);	// <-- Simulate network congestion, remove setTimeout from production!
+}
+
+function getList() {
+    var trs = $("#tab1-table").find("tbody").find("tr");
+    list(function (response) {
+        var list = response.return;
+        var length = list.length;
+        for (var i = 0; i < list.length; i++) {
+            //li = document.createElement('tr');
+            //li.innerText = 'Generated row ' + (++generatedCount);
+            //el.insertBefore(li, el.childNodes[0]);
+            if (i <= 5) {
+                $(trs[i]).html("<td></td><td>{0}</td><td>{1}</td><td>{2}</td>"
+                    .formatStr([list[i].username, (list[i].isAdmin ? "Y" : "N"), list[i].createOn]));
+
+            } else {
+                $(trs[i - 1]).append("<tr><td></td><td>{0}</td><td>{1}</td><td>{2}</td></tr>"
+                    .formatStr([list[i].username, (list[i].isAdmin ? "Y" : "N"), list[i].createOn]));
+
+            }
+            $("tbody").append("<tr><td></td><td>{0}</td><td>{1}</td><td>{2}</td></tr>"
+                .formatStr([list[i].username, (list[i].isAdmin ? "Y" : "N"), list[i].createOn]));
+
+        }
+
+    }, 0, 10);
 }
 
 function pullUpAction() {

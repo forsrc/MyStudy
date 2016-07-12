@@ -124,11 +124,22 @@ function main(){
     });
 }
 
-function init(){
+function init() {
 
     var username = document.getElementById("username");
     username.innerText = sessionStorage.username;
 
+    var element = document.getElementById('deviceProperties');
+
+    try{
+        element.innerHTML = 'Device Name: ' + device.name + '<br />' +
+            'Device Cordova: ' + device.cordova + '<br />' +
+            'Device Platform: ' + device.platform + '<br />' +
+            'Device UUID: ' + device.uuid + '<br />' +
+            'Device Version: ' + device.version + '<br />';
+    } catch (e){
+        
+    }
 }
 
 function toolbar() {
