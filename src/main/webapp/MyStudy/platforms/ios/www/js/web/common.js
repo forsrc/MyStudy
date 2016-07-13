@@ -2,12 +2,22 @@
 
 $(document).ready(function () {
 
-    myStudyInit();
+    
 
 });
 
 
-function myStudyInit(){
-    $.material.init();
-    $.material.ripples();
+function saveToken(token) {
+    sessionStorage.token = JSON.stringify(TOKEN);
 }
+
+function getToken() {
+    var token = sessionStorage.token;
+    if(!token){
+        return {};
+    }
+    
+    return JSON.parse(token);
+}
+
+

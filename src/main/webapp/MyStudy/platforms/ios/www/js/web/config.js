@@ -15,7 +15,7 @@ var MY_WEB_URL = {
     "detailJson"       : SERVER_TEST + "/json/detail.json",
 
     "toLogin"           : SERVER_REST + "/v1.0/login",
-    "user-list"        : SERVER_REST + "/v1.0/user",
+    "user_list"        : SERVER_REST + "/v1.0/user",
     "getLoginToken"    : SERVER_REST + "/v1.0/login/getLoginToken",
 
     "login"            : PATH + "web/login.html",

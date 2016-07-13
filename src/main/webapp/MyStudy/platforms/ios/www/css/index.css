@@ -99,7 +99,7 @@ body
 }
 .tab-content
 {
-    padding:15px;
+    padding:2px;
 }
 .table {
     width: 100%;
@@ -453,4 +453,7 @@ a:focus, a:hover {
     background-color: #ffd740;
 }
 
-
+.table-hover > tbody > tr:hover {
+    background-color: #481119;
+    color:white;
+}
