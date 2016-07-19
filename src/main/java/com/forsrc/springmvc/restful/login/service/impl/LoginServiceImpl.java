@@ -25,6 +25,10 @@ public class LoginServiceImpl implements LoginService {
     public User login(User user) throws NoSuchUserException, PasswordNotMatchException {
         User u = this.userDao.findByUsername(user.getUsername());
 
+        if (u == null) {
+            throw new NoSuchUserException(user.getUsername());
+        }
+
         String password = null;
         try {
             password = AesUtils.getInstance().decrypt(u.getPassword());
