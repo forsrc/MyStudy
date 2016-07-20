@@ -7,11 +7,16 @@ import com.forsrc.pojo.User;
 import com.forsrc.springmvc.restful.login.service.LoginService;
 import com.forsrc.springmvc.restful.user.dao.UserDao;
 import com.forsrc.utils.AesUtils;
+import org.apache.cxf.interceptor.Fault;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.w3c.dom.NodeList;
 
 import javax.annotation.Resource;
+import javax.xml.soap.SOAPException;
+import javax.xml.soap.SOAPHeader;
+import javax.xml.soap.SOAPMessage;
 
 @Service(value = "loginService")
 @Transactional
@@ -39,6 +44,40 @@ public class LoginServiceImpl implements LoginService {
             throw new PasswordNotMatchException(user.getUsername());
         }
         return u;
+    }
+
+
+    public void login(SOAPMessage soapMessage) {
+
+        SOAPHeader head = null;
+        try {
+            head = soapMessage.getSOAPHeader();
+        } catch (SOAPException e) {
+            e.printStackTrace();
+        }
+        if (head == null) {
+            SOAPException soapException = new SOAPException("Head is blank.");
+            throw new Fault(soapException);
+        }
+
+        NodeList usernameNodeList = head.getElementsByTagName("tns:username");
+        NodeList passwordNodeList = head.getElementsByTagName("tns:password");
+
+        String username = usernameNodeList.item(0).getTextContent();
+        String password = passwordNodeList.item(0).getTextContent();
+
+        User user = new User();
+
+        try {
+            login(user);
+        } catch (NoSuchUserException e) {
+            SOAPException soapException = new SOAPException(e.getMessage());
+            throw new Fault(soapException);
+        } catch (PasswordNotMatchException e) {
+            SOAPException soapException = new SOAPException(e.getMessage());
+            throw new Fault(soapException);
+        }
+
     }
 
     public UserDao getUserDao() {

@@ -1,10 +1,10 @@
-package com.forsrc.springmvc.base.service.impl;
+package com.forsrc.base.service.impl;
 
 import com.forsrc.exception.DaoException;
 import com.forsrc.exception.ServiceException;
 import com.forsrc.lucene.MySimpleFSDirectory;
-import com.forsrc.springmvc.base.dao.BaseHibernateSearchDao;
-import com.forsrc.springmvc.base.service.BaseHibernateSearchService;
+import com.forsrc.base.dao.BaseHibernateSearchDao;
+import com.forsrc.base.service.BaseHibernateSearchService;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.cn.smart.SmartChineseAnalyzer;
 import org.apache.lucene.index.IndexWriter;
@@ -31,7 +31,7 @@ public abstract class BaseHibernateSearchServiceImpl<E> implements BaseHibernate
 
     @Autowired
     @Resource(name = "baseHibernateSearchDao")
-    protected BaseHibernateSearchDao baseHibernateSearchDao;
+    protected BaseHibernateSearchDao<E> baseHibernateSearchDao;
     @Autowired
     @Qualifier("mySimpleFSDirectory")
     private MySimpleFSDirectory mySimpleFSDirectory;

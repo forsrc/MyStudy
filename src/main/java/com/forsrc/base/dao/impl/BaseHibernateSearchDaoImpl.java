@@ -1,10 +1,10 @@
-package com.forsrc.springmvc.base.dao.impl;
+package com.forsrc.base.dao.impl;
 
 
 import com.forsrc.exception.DaoException;
 import com.forsrc.lucene.MySimpleFSDirectory;
-import com.forsrc.springmvc.base.dao.BaseHibernateDao;
-import com.forsrc.springmvc.base.dao.BaseHibernateSearchDao;
+import com.forsrc.base.dao.BaseHibernateDao;
+import com.forsrc.base.dao.BaseHibernateSearchDao;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.document.Document;
@@ -33,7 +33,7 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 @Repository(value = "baseHibernateSearchDao")
-public class BaseHibernateSearchDaoImpl<E> extends BaseHibernateDaoImpl<E> implements BaseHibernateSearchDao<E>, BaseHibernateDao<E> {
+public class BaseHibernateSearchDaoImpl<E> extends BaseHibernateDaoImpl<E, Serializable> implements BaseHibernateSearchDao<E>, BaseHibernateDao<E, Serializable> {
 
     public static final int DEF_MAX_SIZE = 10;
     public static final int BATCH_SIZE = 100;

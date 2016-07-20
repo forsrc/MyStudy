@@ -1,8 +1,8 @@
-package com.forsrc.springmvc.base.dao.impl;
+package com.forsrc.base.dao.impl;
 
 
+import com.forsrc.base.dao.BaseHibernateDao;
 import com.forsrc.exception.DaoException;
-import com.forsrc.springmvc.base.dao.BaseHibernateDao;
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -15,12 +15,14 @@ import org.springframework.dao.support.DaoSupport;
 import org.springframework.orm.hibernate5.HibernateTemplate;
 
 import javax.annotation.Resource;
+import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
-public abstract class BaseHibernateDaoImpl<E> extends DaoSupport implements BaseHibernateDao<E> {
+public abstract class BaseHibernateDaoImpl<E, PK extends Serializable> extends DaoSupport implements BaseHibernateDao<E, PK> {
 
     protected Class<E> entityClass;
+
     @Autowired
     @Resource(name = "sessionFactory")
     private SessionFactory sessionFactory;
@@ -29,8 +31,13 @@ public abstract class BaseHibernateDaoImpl<E> extends DaoSupport implements Base
     private HibernateTemplate hibernateTemplate;
 
     public BaseHibernateDaoImpl() {
-        /*this.entityClass = (Class<E>) ((ParameterizedType) getClass()
-                .getGenericSuperclass()).getActualTypeArguments()[0];*/
+        try {
+            getEntityClass();
+        } catch (Exception e) {
+            LOGGER.warn("\n××××××××××\ngetEntityClass() fail!\n××××××××××\n");
+            //e.printStackTrace();
+            LOGGER.debug(e.getMessage(), e);
+        }
 
     }
 
@@ -46,7 +53,7 @@ public abstract class BaseHibernateDaoImpl<E> extends DaoSupport implements Base
 
     public List<E> list(int begin, int size) throws DaoException {
 
-        return list(this.entityClass, begin, size, null);
+        return list(getEntityClass(), begin, size, null);
     }
 
     public <T> List<T> list(Class<T> clazz, int begin, int size)
@@ -132,10 +139,12 @@ public abstract class BaseHibernateDaoImpl<E> extends DaoSupport implements Base
     }
 
     @Override
-    public synchronized Class<E> getEntityClass() {
+    public Class<E> getEntityClass() {
         if (this.entityClass == null) {
-            this.entityClass = (Class<E>) ((ParameterizedType) getClass()
-                    .getGenericSuperclass()).getActualTypeArguments()[0];
+            synchronized (BaseHibernateDaoImpl.class) {
+                this.entityClass = (Class<E>) ((ParameterizedType) getClass()
+                        .getGenericSuperclass()).getActualTypeArguments()[0];
+            }
         }
         return this.entityClass;
     }
@@ -143,4 +152,38 @@ public abstract class BaseHibernateDaoImpl<E> extends DaoSupport implements Base
     public void setEntityClass(Class<E> entityClass) {
         this.entityClass = entityClass;
     }
+
+
+    @Override
+    public E save(E e) throws DaoException {
+        getHibernateTemplate().save(e);
+        return e;
+    }
+
+    @Override
+    public E update(E e) throws DaoException {
+        getHibernateTemplate().update(e);
+        return e;
+    }
+
+    @Override
+    public void delete(E e) throws DaoException {
+        getHibernateTemplate().delete(e);
+    }
+
+    @Override
+    public E get(PK pk) throws DaoException {
+        return getHibernateTemplate().get(getEntityClass(), pk);
+    }
+
+    @Override
+    public E load(PK pk) throws DaoException {
+        return getHibernateTemplate().load(getEntityClass(), pk);
+    }
+
+    @Override
+    public void delete(List<E> list) {
+        getHibernateTemplate().deleteAll(list);
+    }
+
 }

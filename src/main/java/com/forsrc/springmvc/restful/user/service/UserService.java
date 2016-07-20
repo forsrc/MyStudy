@@ -14,7 +14,7 @@ import java.util.List;
 @Transactional
 public interface UserService {
     @Transactional(propagation = Propagation.NOT_SUPPORTED, readOnly = true)
-    public List<User> list() throws ServiceException;
+    public List<User> list(int start, int size) throws ServiceException;
 
     @Transactional(propagation = Propagation.NOT_SUPPORTED, readOnly = true)
     public User get(Long id) throws ServiceException;

@@ -1,8 +1,8 @@
-package com.forsrc.springmvc.base.service;
+package com.forsrc.base.service;
 
 
 import com.forsrc.exception.ServiceException;
-import com.forsrc.springmvc.base.dao.BaseHibernateSearchDao;
+import com.forsrc.base.dao.BaseHibernateSearchDao;
 import org.apache.lucene.search.highlight.Formatter;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;

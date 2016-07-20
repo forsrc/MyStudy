@@ -1,7 +1,7 @@
 package com.forsrc.lucene;
 
 
-import com.forsrc.springmvc.base.dao.BaseDaoEntityClassHandler;
+import com.forsrc.base.dao.BaseDaoEntityClassHandler;
 import org.apache.log4j.Logger;
 import org.aspectj.lang.JoinPoint;
 import org.springframework.beans.factory.annotation.Autowired;

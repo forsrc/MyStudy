@@ -1,4 +1,4 @@
-package com.forsrc.springmvc.base.dao;
+package com.forsrc.base.dao;
 
 
 public interface BaseDaoEntityClassHandler<E> {

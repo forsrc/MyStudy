@@ -36,11 +36,12 @@ public class UserController {
             //, headers = "Accept=application/json"
     )
     @ResponseBody
-    public ModelAndView list(HttpServletRequest request,
+    public ModelAndView list(int start, int size,
+                             HttpServletRequest request,
                              HttpServletResponse response) throws ActionException {
 
 
-        List<User> list = this.userService.list();
+        List<User> list = this.userService.list(start < 0 ? 0 : start, size <= 0 ? 10 : size);
 
         ModelAndView modelAndView = new ModelAndView();
         //modelAndView.addObject("list", list);

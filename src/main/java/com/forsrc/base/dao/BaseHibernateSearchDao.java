@@ -1,4 +1,4 @@
-package com.forsrc.springmvc.base.dao;
+package com.forsrc.base.dao;
 
 import com.forsrc.exception.DaoException;
 import org.apache.lucene.analysis.Analyzer;
@@ -6,7 +6,6 @@ import org.apache.lucene.queryparser.classic.QueryParser;
 import org.apache.lucene.search.highlight.Formatter;
 import org.hibernate.search.FullTextQuery;
 import org.hibernate.search.FullTextSession;
-import org.springframework.stereotype.Repository;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
@@ -16,7 +15,7 @@ import java.util.Map;
 
 
 //@Repository(value = "baseHibernateSearchDao")
-public interface BaseHibernateSearchDao<E> extends BaseHibernateDao<E> {
+public interface BaseHibernateSearchDao<E> extends BaseHibernateDao<E, Serializable> {
 
     public BaseHibernateSearchQueryEntity<E, E> query(String[] fields, String keyword,
                                                       Analyzer analyzer,

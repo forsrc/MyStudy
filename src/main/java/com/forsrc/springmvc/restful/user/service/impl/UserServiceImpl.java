@@ -23,8 +23,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional(propagation = Propagation.NOT_SUPPORTED, readOnly = true)
-    public List<User> list() throws ServiceException {
-        return this.userDao.list();
+    public List<User> list(int start, int size) throws ServiceException {
+        return this.userDao.list(start, size);
     }
 
     @Override
@@ -36,7 +36,7 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = DaoException.class)
     public Long save(User bean) throws ServiceException {
-        return this.userDao.save(bean);
+        return this.userDao.save(bean).getId();
     }
 
     @Override
@@ -48,7 +48,9 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = DaoException.class)
     public void delete(Long id) throws ServiceException {
-        this.userDao.delete(id);
+        User user = new User();
+        user.setId(id);
+        this.userDao.delete(user);
     }
 
     public UserDao getUserDao() {
