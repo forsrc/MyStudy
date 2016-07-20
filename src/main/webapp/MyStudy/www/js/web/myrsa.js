@@ -22,6 +22,7 @@ function MyRsa(n, e, d, isNewInstance) {
     this.bin = typeof(n) === "string" ? new BigInteger(n) : n;
     this.bie = typeof(e) === "string" ? new BigInteger(e) : e;
     this.bid = typeof(d) === "string" ? new BigInteger(d) : d;
+    this.BLOCK_SIZE = 102;
     if (MyRsa._initialized) {
         //return MyRsa.instance;
     }
@@ -47,37 +48,13 @@ function MyRsa(n, e, d, isNewInstance) {
     };
 
     /**
-     * getDecryptBigInteger(bigInteger)
-     * @param bigInteger {BigInteger|BigIntegerString}
-     * @returns {String} decryption bigInteger string;
-     */
-    MyRsa.prototype.getDecryptBigInteger = function (bigInteger) {
-        var __this = this;
-        var __bi = typeof bigInteger === "string" ? new BigInteger(bigInteger) : bigInteger;
-        var __modPowDN = __bi.modPow(__this.bid, __this.bin);
-        return __this.number2string(__modPowDN);
-    };
-
-    /**
-     * decrypt4Server(bigInteger)
-     * @param bigInteger {BigInteger|BigIntegerString}
-     * @returns {String} decryption bigInteger string for server;
-     */
-    MyRsa.prototype.decrypt4Server = function (bigInteger) {
-        var __this = this;
-        var __bi = typeof bigInteger === "string" ? new BigInteger(bigInteger) : bigInteger;
-        var __modPowDN = __bi.modPow(__this.bid, __this.bin);
-        return __this.number2string(__modPowDN);
-    };
-
-    /**
      * encrypt(string)
      * @param string
      * @returns {String} encrypted string;
      */
     MyRsa.prototype.encrypt = function (string) {
         var __this = this;
-        var __msgBigInteger = __this.string2number(string);
+        var __msgBigInteger = __this.string2BigInteger(string);
         var __encrypt = __this.encryptBigInteger(__msgBigInteger).toString();
         return Base64.encode(__encrypt);
     };
@@ -92,16 +69,32 @@ function MyRsa(n, e, d, isNewInstance) {
         var __encryptedBigInteger = new BigInteger(__decode);
         var __this = this;
         var __decrypt = __this.decryptBigInteger(__encryptedBigInteger);
-        return __this.number2string(__decrypt);
+        return __this.bigInteger2String(__decrypt);
     };
 
     /**
-     * string2number(string)
+     * string2BigInteger(string)
      * @param string
      * @returns {BigInteger} base64 encoded bigInteger;
      */
-    MyRsa.prototype.string2number = function (string) {
+    MyRsa.prototype.string2BigInteger = function (string) {
         var __msg = Base64.encode(string);
+
+        return this.toBigInteger(__msg);
+    };
+
+    /**
+     * bigInteger2String(number)
+     * @param number {string}
+     * @returns {String} base64 decoded string;
+     */
+    MyRsa.prototype.bigInteger2String = function (bigInteger) {
+        var __str = this.toStr(bigInteger);
+        return Base64.decode(__str);
+    };
+
+    MyRsa.prototype.toBigInteger = function (string) {
+        var __msg = string;
         var __numberString = "1";
         var __c = '';
         var __asc = "";
@@ -118,25 +111,97 @@ function MyRsa(n, e, d, isNewInstance) {
         return new BigInteger(__numberString);
     };
 
-    /**
-     * number2string(number)
-     * @param number {string}
-     * @returns {String} base64 decoded string;
-     */
-    MyRsa.prototype.number2string = function (number) {
-        var __numberString = number + "";
+
+    MyRsa.prototype.string2BigIntegers = function (string) {
+        var __base64 = Base64.encode(string);
+        var __this = this;
+
+        var __length = Math.ceil(__base64.length * 1.0 / 127);
+
+        var __bigIntegers = [];
+        var __text = "";
+        var __start = 0;
+        for (var i = 0; i < __length - 1; i++) {
+            __start = i * __this.BLOCK_SIZE;
+            __text = __base64.substring(__start, __start + __this.BLOCK_SIZE);
+            __bigIntegers.push(__this.toBigInteger(__text));
+        }
+        if (__length == 1) {
+            __bigIntegers.push(__this.toBigInteger(__base64));
+        }
+        if (__length > 1) {
+            __start = (__length - 1) * __this.BLOCK_SIZE;
+            __text = __base64.substring(__start, __base64.length);
+            __bigIntegers.push(__this.toBigInteger(__text));
+        }
+
+        return __bigIntegers;
+    };
+
+    MyRsa.prototype.toStr = function (bigInteger) {
+        var __numberString = bigInteger.toString();
         __numberString = __numberString.substring(1, __numberString.length);
         var __message = "";
         var __blockString = "";
         var __block = 0;
+        var __length = __numberString.length;
         var i = 0;
-        for (; i < __numberString.length; i += 3) {
+        for (; i < __length; i += 3) {
             __blockString = __numberString.substring(i, i + 3);
             __block = parseInt(__blockString);
             __message += String.fromCharCode(__block);
         }
-        return Base64.decode(__message.toString());
+        return __message.toString();
     };
+
+    MyRsa.prototype.bigIntegers2String = function (bigIntegers) {
+        var __this = this;
+        var __length = bigIntegers.length;
+
+        var __text = "";
+        var i = 0;
+        for (; i < __length; i++) {
+            __text += __this.toStr(bigIntegers[i]);
+        }
+
+        return Base64.decode(__text);
+    };
+
+    MyRsa.prototype.encrypt2 = function (plaintext) {
+        var __this = this;
+
+        var __bigIntegers = __this.string2BigIntegers(plaintext);
+
+        var __text = "";
+        var __length = __bigIntegers.length;
+        var i = 0;
+        for (; i < __length; i++) {
+            console.log("-->" + __bigIntegers[i].toString());
+            __text += "" + __this.encryptBigInteger(__bigIntegers[i]).toString()
+                + "$";
+        }
+
+        return Base64.encode(__text.substring(0, __text.length - 1));
+    };
+
+    MyRsa.prototype.decrypt2 = function (base64EncryptedString) {
+        var __decode = Base64.decode(base64EncryptedString);
+
+        var __this = this;
+        var __texts = __decode.split("$");
+        var __bigIntegers = [];
+        var __length = __texts.length;
+        var __bigInteger = null;
+        for (var i = 0; i < __length; i++) {
+            __bigInteger = new BigInteger(__texts[i]);
+            __bigIntegers.push(__this.decryptBigInteger(__bigInteger));
+
+            console.log("-->" + __this.decryptBigInteger(__bigInteger).toString());
+
+        }
+        return __this.bigIntegers2String(__bigIntegers);
+    };
+
 
     MyRsa._initialized = true;
     MyRsa.instance = this;

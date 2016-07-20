@@ -1,13 +1,12 @@
 package com.forsrc.utils;
 
-import static org.junit.Assert.assertEquals;
-
-import java.io.IOException;
-
+import com.forsrc.utils.MyRsaUtils.RsaKey;
 import org.junit.AfterClass;
 import org.junit.Test;
 
-import com.forsrc.utils.MyRsaUtils.RsaKey;
+import java.io.IOException;
+
+import static org.junit.Assert.assertEquals;
 
 public class MyRsaUtilsTest {
 
@@ -25,6 +24,12 @@ public class MyRsaUtilsTest {
         //msg += "12345678901234567890";
         assertEquals(msg,
                 MyRsaUtils.decrypt(rsaKey, MyRsaUtils.encrypt(rsaKey, msg)));
+
+        msg = msg + msg + msg + msg + msg;
+        String str = MyRsaUtils.encrypt2(rsaKey, msg);
+        System.out.println(str);
+        System.out.println(MyRsaUtils.decrypt2(rsaKey, str));
+        assertEquals(msg, MyRsaUtils.decrypt2(rsaKey, str));
     }
 
 }

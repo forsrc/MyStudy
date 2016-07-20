@@ -96,7 +96,7 @@ public class ResourceFilter implements Filter {
         request.setAttribute("rsaD", rsaKey.getD().toString());
         request.setAttribute("aesKey", aesKey.getKey());
         request.setAttribute("aesKeyIv", aesKey.getIv());
-        request.setAttribute("pwdRsa", MyRsaUtils.encrypt4Client(rsaKey, "abc123$%您好")
+        request.setAttribute("pwdRsa", MyRsaUtils.encrypt(rsaKey, "abc123$%您好")
                 .toString());
         request.setAttribute("desKey", desKey.getKey());
         try {
