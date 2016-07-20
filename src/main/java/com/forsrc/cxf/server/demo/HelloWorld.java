@@ -1,4 +1,4 @@
-package com.forsrc.cxf.server.service;
+package com.forsrc.cxf.server.demo;
 
 import javax.jws.WebMethod;
 import javax.jws.WebParam;

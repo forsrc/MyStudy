@@ -1,7 +1,7 @@
-package com.forsrc.cxf.server.service.impl;
+package com.forsrc.cxf.server.demo.impl;
 
 
-import com.forsrc.cxf.server.service.HelloWorld;
+import com.forsrc.cxf.server.demo.HelloWorld;
 import com.forsrc.utils.CxfUtils;
 import org.springframework.stereotype.Component;
 
@@ -10,7 +10,7 @@ import javax.jws.WebService;
 import javax.xml.ws.WebServiceContext;
 
 @Component
-@WebService(targetNamespace = "http://service.server.cxf.forsrc.com/", endpointInterface = "com.forsrc.cxf.server.service.HelloWorld")
+@WebService(targetNamespace = "http://service.server.cxf.forsrc.com/", endpointInterface = "com.forsrc.cxf.server.demo.HelloWorld")
 public class HelloWorldImpl implements HelloWorld {
 
     //@Resource(name ="org.apache.cxf.jaxws.context.WebServiceContextImpl")

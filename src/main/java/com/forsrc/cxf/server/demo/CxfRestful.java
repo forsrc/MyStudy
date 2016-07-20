@@ -1,4 +1,4 @@
-package com.forsrc.cxf.server.service;
+package com.forsrc.cxf.server.demo;
 
 import com.forsrc.exception.ServiceException;
 

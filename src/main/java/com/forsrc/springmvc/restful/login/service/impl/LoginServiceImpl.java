@@ -46,40 +46,6 @@ public class LoginServiceImpl implements LoginService {
         return u;
     }
 
-
-    public void login(SOAPMessage soapMessage) {
-
-        SOAPHeader head = null;
-        try {
-            head = soapMessage.getSOAPHeader();
-        } catch (SOAPException e) {
-            e.printStackTrace();
-        }
-        if (head == null) {
-            SOAPException soapException = new SOAPException("Head is blank.");
-            throw new Fault(soapException);
-        }
-
-        NodeList usernameNodeList = head.getElementsByTagName("tns:username");
-        NodeList passwordNodeList = head.getElementsByTagName("tns:password");
-
-        String username = usernameNodeList.item(0).getTextContent();
-        String password = passwordNodeList.item(0).getTextContent();
-
-        User user = new User();
-
-        try {
-            login(user);
-        } catch (NoSuchUserException e) {
-            SOAPException soapException = new SOAPException(e.getMessage());
-            throw new Fault(soapException);
-        } catch (PasswordNotMatchException e) {
-            SOAPException soapException = new SOAPException(e.getMessage());
-            throw new Fault(soapException);
-        }
-
-    }
-
     public UserDao getUserDao() {
         return userDao;
     }

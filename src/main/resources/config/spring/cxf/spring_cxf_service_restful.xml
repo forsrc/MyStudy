@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:jaxrs="http://cxf.apache.org/jaxrs"
-       xmlns="http://www.springframework.org/schema/beans"
+       xmlns="http://www.springframework.org/schema/beans" xmlns:cxf="http://cxf.apache.org/core"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
     http://www.springframework.org/schema/beans/spring-beans.xsd
     http://cxf.apache.org/jaxrs  
-    http://cxf.apache.org/schemas/jaxrs.xsd">
+    http://cxf.apache.org/schemas/jaxrs.xsd http://cxf.apache.org/core http://cxf.apache.org/schemas/core.xsd">
 
     <jaxrs:server id="cxfRestful" address="/restful">
         <jaxrs:serviceBeans>
@@ -20,13 +20,51 @@
             <entry key="en" value="en-gb"/>
         </jaxrs:languageMappings>
         <jaxrs:providers>
+            <ref bean="loginProvider"/>
             <ref bean="jsonProvider"/>
             <ref bean="jaxbProvider"/>
         </jaxrs:providers>
+        <jaxrs:inInterceptors>
+            <ref bean="loginRequestInterceptor"/>
+        </jaxrs:inInterceptors>
+
     </jaxrs:server>
+
+    <bean id="loginProvider" class="com.forsrc.cxf.server.provider.LoginProvider"></bean>
+
 
     <bean id="webClient" class="org.apache.cxf.jaxrs.client.WebClient" factory-method="create">
         <constructor-arg type="java.lang.String" value="http://localhost:8077/cxf/restful/"/>
     </bean>
+
+
+    <bean id="loginRequestInterceptor" class="com.forsrc.cxf.server.interceptor.LoginRequestInterceptor"/>
+    <bean id="loginInterceptor" class="com.forsrc.cxf.server.interceptor.LoginInterceptor"/>
+
+    <bean id="cxfInterceptor" class="com.forsrc.cxf.server.interceptor.CxfInterceptor"/>
+
+
+    <bean id="cxfBusFactory" class="org.apache.cxf.bus.spring.SpringBusFactory"></bean>
+
+    <bean id="cxf" factory-bean="cxfBusFactory" factory-method="createBus">
+
+
+    </bean>
+
+    <cxf:bus>
+        <cxf:inInterceptors>
+            <ref bean="cxfInterceptor"/>
+            <ref bean="loginRequestInterceptor"/>
+        </cxf:inInterceptors>
+
+        <!--<cxf:outInterceptors>
+
+                <ref bean=""/>
+        </cxf:outInterceptors>-->
+    </cxf:bus>
+
+
+    <bean id="cxfRestfulImpl" class="com.forsrc.cxf.server.demo.impl.CxfRestfulImpl"/>
+
 
 </beans>

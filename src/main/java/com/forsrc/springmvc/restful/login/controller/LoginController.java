@@ -103,8 +103,9 @@ public class LoginController {
         user.setPassword(password);
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("version", VERSION_V_1_0);
-        LoginValidator loginValidator = new LoginValidator(user, loginToken, request, modelAndView, messageSource);
+        LoginValidator loginValidator = new LoginValidator(user, loginToken, request, messageSource);
         if (!loginValidator.validate()) {
+            modelAndView.addObject(loginValidator.getErrorMessage());
             modelAndView.addObject("status", 400);
             modelAndView.getModelMap().remove("user");
             request.removeAttribute("user");

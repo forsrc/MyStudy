@@ -33,8 +33,8 @@ import javax.servlet.http.HttpSession;
 public class TokenValidator extends Validator {
 
 
-    public TokenValidator(HttpServletRequest request, ModelAndView modelAndView, MessageSource messageSource) {
-        super(request, modelAndView, messageSource);
+    public TokenValidator(HttpServletRequest request, MessageSource messageSource) {
+        super(request, messageSource);
     }
 
     public boolean validate(String token) {

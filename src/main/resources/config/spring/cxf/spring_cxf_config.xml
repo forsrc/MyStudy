@@ -13,10 +13,8 @@
     <context:component-scan base-package="com.forsrc.pojo" use-default-filters="true"/>
 
     <import resource="classpath:META-INF/cxf/cxf.xml"/>
+    <import resource="classpath:META-INF/cxf/cxf-extension-*.xml"/>
     <import resource="classpath:META-INF/cxf/cxf-servlet.xml"/>
-
-
-    <bean id="cxfRestfulImpl" class="com.forsrc.cxf.server.service.impl.CxfRestfulImpl"/>
 
     <bean id="jaxbProvider"
           class="org.apache.cxf.jaxrs.provider.JAXBElementProvider"/>
@@ -27,6 +25,16 @@
         <property name="dropCollectionWrapperElement" value="true"/>
         <property name="serializeAsArray" value="true"/>
     </bean>
+
+    <bean id="jaxWsServiceFactoryBean"
+          class="org.apache.cxf.jaxws.support.JaxWsServiceFactoryBean">
+        <property name="wrapped" value="true" />
+        <property name="dataBinding" ref="aegisDatabinding" />
+    </bean>
+
+    <bean id="aegisDatabinding"
+          class="org.apache.cxf.aegis.databinding.AegisDatabinding" />
+
 </beans>
 
 

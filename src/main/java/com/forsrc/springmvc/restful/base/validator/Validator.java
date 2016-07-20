@@ -20,9 +20,9 @@ package com.forsrc.springmvc.restful.base.validator;
 
 
 import com.forsrc.utils.MessageUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Component;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
@@ -33,18 +33,32 @@ import java.util.Map;
 public abstract class Validator {
     protected HttpServletRequest request;
 
-    protected ModelAndView modelAndView;
+    protected Map<String, Object> errorMessage;
 
     protected Map<String, Object> message;
 
     protected MessageSource messageSource;
 
-    public Validator(HttpServletRequest request, ModelAndView modelAndView, MessageSource messageSource) {
+    public Validator(HttpServletRequest request, Map<String, Object> errorMessage, MessageSource messageSource) {
         this.request = request;
-        this.modelAndView = modelAndView;
         this.message = new HashMap<String, Object>();
-        this.modelAndView.getModelMap().put("return", this.message);
+        this.errorMessage.put("return", this.message);
         this.messageSource = messageSource;
+    }
+
+    public Validator(HttpServletRequest request, MessageSource messageSource) {
+        this.request = request;
+        this.errorMessage = new HashMap<String, Object>();
+        this.message = new HashMap<String, Object>();
+        this.errorMessage.put("return", this.message);
+        this.messageSource = messageSource;
+    }
+
+    public Validator(HttpServletRequest request) {
+        this.request = request;
+        this.errorMessage = new HashMap<String, Object>();
+        this.message = new HashMap<String, Object>();
+        this.errorMessage.put("return", this.message);
     }
 
     protected void setMessage(HttpServletRequest request, String key, String msg) {
@@ -81,12 +95,12 @@ public abstract class Validator {
         this.messageSource = messageSource;
     }
 
-    public ModelAndView getModelAndView() {
-        return modelAndView;
+    public Map<String, Object> getErrorMessage() {
+        return errorMessage;
     }
 
-    public void setModelAndView(ModelAndView modelAndView) {
-        this.modelAndView = modelAndView;
+    public void setErrorMessage(Map<String, Object> errorMessage) {
+        this.errorMessage = errorMessage;
     }
 
     public Map<String, Object> getMessage() {

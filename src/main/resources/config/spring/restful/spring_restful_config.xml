@@ -181,12 +181,6 @@
         </bean>
     </mvc:interceptors>
 
-    <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
-        <property name="basename" value="message"/>
-        <property name="useCodeAsDefaultMessage" value="true" />
-        <property name="defaultEncoding" value="utf-8"/>
-        <!--<property name="cacheSeconds" value="120"/>-->
-    </bean>
 
     <bean id="localeResolver" class="org.springframework.web.servlet.i18n.CookieLocaleResolver">
         <property name="cookieName" value="language"/>

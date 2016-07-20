@@ -9,7 +9,7 @@
     http://cxf.apache.org/schemas/jaxws.xsd">
 
     <!-- soap webservice -->
-    <jaxws:endpoint id="helloWorld" implementor="com.forsrc.cxf.server.service.impl.HelloWorldImpl"
+    <jaxws:endpoint id="helloWorld" implementor="com.forsrc.cxf.server.demo.impl.HelloWorldImpl"
                     address="/HelloWorld">
     </jaxws:endpoint>
 

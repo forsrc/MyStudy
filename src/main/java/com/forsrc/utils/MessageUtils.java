@@ -4,6 +4,8 @@ package com.forsrc.utils;
 import org.springframework.context.MessageSource;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+import org.springframework.web.servlet.LocaleResolver;
+import org.springframework.web.servlet.support.RequestContext;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
 import javax.servlet.http.HttpServletRequest;
@@ -26,8 +28,13 @@ public class MessageUtils {
 
     public static Locale getLocale() {
         HttpServletRequest httpServletRequest = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-        return RequestContextUtils.getLocaleResolver(httpServletRequest).resolveLocale(httpServletRequest);
-        //RequestContext requestContext = new RequestContext(httpServletRequest);
-        //return requestContext.getLocale();
+        LocaleResolver localeResolver = RequestContextUtils.getLocaleResolver(httpServletRequest);
+
+        if (localeResolver != null) {
+            return localeResolver.resolveLocale(httpServletRequest);
+        }
+
+        RequestContext requestContext = new RequestContext(httpServletRequest);
+        return requestContext.getLocale();
     }
 }

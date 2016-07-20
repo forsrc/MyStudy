@@ -25,7 +25,6 @@ import com.forsrc.pojo.User;
 import com.forsrc.springmvc.restful.base.validator.Validator;
 import com.forsrc.utils.MyStringUtils;
 import org.springframework.context.MessageSource;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -35,13 +34,13 @@ public class LoginValidator extends Validator {
     private User user;
     private String loginToken;
 
-    public LoginValidator(HttpServletRequest request, ModelAndView modelAndView, MessageSource messageSource) {
-        super(request, modelAndView, messageSource);
+    public LoginValidator(HttpServletRequest request, MessageSource messageSource) {
+        super(request, messageSource);
     }
 
     public LoginValidator(User user, String loginToken,
-                          HttpServletRequest request, ModelAndView modelAndView, MessageSource messageSource) {
-        super(request, modelAndView, messageSource);
+                          HttpServletRequest request, MessageSource messageSource) {
+        super(request, messageSource);
         this.user = user;
         this.loginToken = loginToken;
     }
@@ -71,22 +70,42 @@ public class LoginValidator extends Validator {
             return false;
         }
 
+        this.message.put("status", "401");
+
         HttpSession session = request.getSession();
         MyToken myToken = (MyToken) session.getAttribute(KeyConstants.TOKEN.getKey());
         if (myToken == null) {
             this.message.put("message", getText("msg.no.login.token"));
-            this.message.put("status", "400");
             return false;
         }
 
         if (!loginToken.equals(myToken.getLoginToken())) {
             this.message.put("message", getText("msg.login.token.not.match"));
-            this.message.put("status", "400");
             return false;
         }
 
         this.message.put("status", "200");
         return true;
+    }
+
+    public boolean validateAlreadyLogin() {
+
+        String token = request.getParameter("token");
+        if (MyStringUtils.isBlank(token)) {
+            this.message.put("message", getText("msg.no.operation.token"));
+            this.message.put("status", "401");
+            return false;
+        }
+
+        HttpSession session = request.getSession();
+        MyToken myToken = (MyToken) session.getAttribute(KeyConstants.TOKEN.getKey());
+        if (myToken == null) {
+            this.message.put("message", getText("msg.no.login.token"));
+            this.message.put("status", "401");
+            return false;
+        }
+
+        return token.equals(myToken.getToken());
     }
 
 

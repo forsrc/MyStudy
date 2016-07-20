@@ -1,7 +1,7 @@
-package com.forsrc.cxf.server.service.impl;
+package com.forsrc.cxf.server.restful.user.action.impl;
 
 
-import com.forsrc.cxf.server.service.CxfRestful;
+import com.forsrc.cxf.server.restful.user.action.UserCxfAction;
 import com.forsrc.exception.ServiceException;
 import com.forsrc.pojo.User;
 
@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class CxfRestfulImpl implements CxfRestful<User> {
+public class UserCxfActionImpl implements UserCxfAction<User> {
     @Override
     public String doGet() {
         return "doGet";

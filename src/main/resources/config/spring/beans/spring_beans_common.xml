@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-4.2.xsd">
+
+    <bean id="springContextUtils" class="com.forsrc.utils.SpringContextUtils"/>
+
+    <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+        <property name="basename" value="message"/>
+        <property name="useCodeAsDefaultMessage" value="true" />
+        <property name="defaultEncoding" value="utf-8"/>
+        <!--<property name="cacheSeconds" value="120"/>-->
+    </bean>
+
+</beans>
