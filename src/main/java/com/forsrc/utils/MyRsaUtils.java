@@ -26,7 +26,7 @@ import java.security.SecureRandom;
 
 public final class MyRsaUtils {
 
-    public static final int BLOCK_SIZE = 127;
+    public static final int BLOCK_SIZE = 102;
 
     private static final String CHAR_SET = "UTF-8";
 
@@ -51,7 +51,7 @@ public final class MyRsaUtils {
         BigInteger plaintextNumber = string2BigInteger(plaintext);
         BigInteger encrypt = encrypt(rsaKey, plaintextNumber);
         return new BASE64Encoder().encode(encrypt.toString().getBytes())
-                //.replace("\r\n", "").replace("\n", "")
+                .replace("\r\n", "").replace("\n", "")
                 ;
     }
 
@@ -69,9 +69,13 @@ public final class MyRsaUtils {
 
     private static String base64Encode(String plaintext) {
         try {
-            return new BASE64Encoder().encode(plaintext.getBytes(CHAR_SET));
+            return new BASE64Encoder().encode(plaintext.getBytes(CHAR_SET))
+                    .replace("\r\n", "").replace("\n", "")
+                    ;
         } catch (UnsupportedEncodingException e) {
-            return new BASE64Encoder().encode(plaintext.getBytes());
+            return new BASE64Encoder().encode(plaintext.getBytes())
+                    .replace("\r\n", "").replace("\n", "")
+                    ;
         }
     }
 
@@ -84,7 +88,7 @@ public final class MyRsaUtils {
 
     public static String bigIntegers2String(BigInteger[] bigIntegers) throws IOException {
 
-        StringBuilder plaintext = new StringBuilder(128);
+        StringBuilder plaintext = new StringBuilder(BLOCK_SIZE + 1);
 
         for (int i = 0; i < bigIntegers.length; i++) {
             plaintext.append(toStr(bigIntegers[i]));
@@ -95,12 +99,11 @@ public final class MyRsaUtils {
 
     private static String toStr(BigInteger number) throws IOException {
 
-        StringBuilder plaintext = new StringBuilder(128);
+        StringBuilder plaintext = new StringBuilder(BLOCK_SIZE + 1);
 
         String plaintextNumber = number.toString();
 
         plaintextNumber = plaintextNumber.substring(1, plaintextNumber.length());
-
         for (int i = 0; i < plaintextNumber.length(); i += 3) {
             String blockString = plaintextNumber.substring(i, i + 3);
             int block = Integer.parseInt(blockString);
@@ -113,7 +116,7 @@ public final class MyRsaUtils {
     public static BigInteger[] string2BigIntegers(String plaintext) {
 
         String base64 = base64Encode(plaintext);
-        int length = (int) Math.ceil(base64.length() * 1.0d / 127);
+        int length = (int) Math.ceil(base64.length() * 1.0d / BLOCK_SIZE);
 
         BigInteger[] bigIntegers = new BigInteger[length];
         String text = null;
@@ -136,7 +139,7 @@ public final class MyRsaUtils {
     }
 
     private static BigInteger toBigInteger(String text) {
-        StringBuilder numberString = new StringBuilder(128);
+        StringBuilder numberString = new StringBuilder(BLOCK_SIZE + 1);
         numberString.append("1");
 
         for (int i = 0; i < text.length(); ++i) {
@@ -157,7 +160,7 @@ public final class MyRsaUtils {
     public static String encrypt2(RsaKey rsaKey, String plaintext) {
 
         BigInteger[] plaintextBigIntegers = string2BigIntegers(plaintext);
-        StringBuilder sb = new StringBuilder(128);
+        StringBuilder sb = new StringBuilder(BLOCK_SIZE + 1);
         for (BigInteger bigInteger : plaintextBigIntegers) {
             BigInteger encrypt = encrypt(rsaKey, bigInteger);
             sb.append(encrypt.toString()).append("$");
@@ -165,7 +168,7 @@ public final class MyRsaUtils {
         sb.delete(sb.length() - 1, sb.length());
 
         return new BASE64Encoder().encode(sb.toString().getBytes())
-                //.replace("\r\n", "").replace("\n", "")
+                .replace("\r\n", "").replace("\n", "")
                 ;
     }
 

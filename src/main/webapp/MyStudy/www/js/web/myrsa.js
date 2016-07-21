@@ -116,7 +116,7 @@ function MyRsa(n, e, d, isNewInstance) {
         var __base64 = Base64.encode(string);
         var __this = this;
 
-        var __length = Math.ceil(__base64.length * 1.0 / 127);
+        var __length = Math.ceil(__base64.length * 1.0 / __this.BLOCK_SIZE);
 
         var __bigIntegers = [];
         var __text = "";
@@ -176,7 +176,6 @@ function MyRsa(n, e, d, isNewInstance) {
         var __length = __bigIntegers.length;
         var i = 0;
         for (; i < __length; i++) {
-            console.log("-->" + __bigIntegers[i].toString());
             __text += "" + __this.encryptBigInteger(__bigIntegers[i]).toString()
                 + "$";
         }
@@ -195,9 +194,6 @@ function MyRsa(n, e, d, isNewInstance) {
         for (var i = 0; i < __length; i++) {
             __bigInteger = new BigInteger(__texts[i]);
             __bigIntegers.push(__this.decryptBigInteger(__bigInteger));
-
-            console.log("-->" + __this.decryptBigInteger(__bigInteger).toString());
-
         }
         return __this.bigIntegers2String(__bigIntegers);
     };
