@@ -327,8 +327,8 @@ function init() {
     $.material.init();
     $.material.ripples();
 
-    /*
-    var passPhrase = "forsrc@163.com";
+
+    /*var passPhrase = "forsrc@163.com";
 
     var bits = 1024;
 
@@ -342,12 +342,19 @@ function init() {
     var encryptionResult = cryptico.encrypt(plainText, publicKey);
     console.log(encryptionResult);
     var decryptionResult = cryptico.decrypt(encryptionResult.cipher, privateKey);
-    console.log(decryptionResult);
+    console.log(decryptionResult);*/
 
-    var rsa = new RSAKey();
+    /*var rsa = new RSAKey();
     rsa.generate(1024, "10001");
     console.log(rsa);
-    */
+
+    var myRsa = new MyRsa(rsa.n, "65537", rsa.d, true);
+    var text = "1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890";
+    text = text + text + text + text;
+    var encrypt = myRsa.encrypt2(text);
+    console.log(encrypt);
+    var decrypt = myRsa.decrypt2(encrypt);
+    console.log(decrypt);*/
     //console.log(rsa.n);
     //console.log(rsa.e);
     //console.log(rsa.d);
