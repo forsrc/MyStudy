@@ -1,0 +1,46 @@
+@startuml
+    title Login
+
+    partition Client {
+        (*)  --> "on Login Page"
+        --> "new RSA for client"
+        --> ==S1_START==
+        --> "get Login Token"
+        note left
+             1. Client: POST RSA publicKey to server
+             2. Server: return RSA publicKey and login token(use Client RAS encrypted) to client
+        end note
+        -.> "save token"
+        --> ==S1_END==
+        --> "user Client RSA private Key decrypt the login token"
+        --> "input username/password"
+        --> "use Server RSA publicKey encrypted the username/password"
+        --> "to login"
+        note left
+            1. Client: POST encrypted username/password and logon token
+        end note
+        -.> "login success"
+    }
+    partition Server {
+        "to login" -left-> "login"
+        --> "decrypt"
+        note left
+            use Server RSA privateKey to decrypt the username/password"
+        end note
+        --> "validate success"
+        "validate success" --> "login success"
+    }
+
+
+    partition Server {
+        "get Login Token" --> "getLoginToken"
+        note right
+              1. Client: POST RSA publicKey to server
+              2. Server: return RSA publicKey and login token(use Client RAS encrypted) to client
+        end note
+        --> "new MyToken and save on session"
+       "new MyToken and save on session" --> "save token"
+
+    }
+
+@enduml
