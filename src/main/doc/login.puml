@@ -8,6 +8,10 @@ boundary LoginSystemBoundary
 
 
     Browser -> LoginSystemBoundary : get login token ❷
+    note left
+        1. new RSA on client
+        2. [POST] client RSA publicKey
+    end note
 
 control LoginControl
     activate HttpSession
@@ -27,6 +31,10 @@ control LoginControl
         activate HttpSession
         deactivate HttpSession
     LoginControl --> LoginSystemBoundary : rsa4Server->n
+    note left
+        1. new RSA on server
+        2. return server RSA publicKey
+    end note
     deactivate LoginControl
     LoginSystemBoundary --> Browser
 
@@ -35,13 +43,20 @@ control LoginControl
 
     Admin -> Browser : login ❸
     activate Browser
-        Browser -> Browser : rsa4Server encode username and password
+        Browser -> Browser : rsa4Server encrypt username and password
+        note left
+            use server publicKey to
+            encrypt username and password
+        end note
     Browser -> LoginSystemBoundary
     deactivate Browser
 
     LoginSystemBoundary -> LoginControl : login()
 
     LoginControl -> LoginService : login()
+    note left
+         use server privateKey to decrypt username and password
+    end note
     activate LoginService
 
         LoginService -> UserDao : findByUsername()
