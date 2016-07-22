@@ -5,10 +5,12 @@ import com.forsrc.exception.DaoException;
 import org.apache.log4j.Logger;
 import org.hibernate.SessionFactory;
 import org.springframework.orm.hibernate5.HibernateTemplate;
+import org.springframework.stereotype.Repository;
 
 import java.io.Serializable;
 import java.util.List;
 
+@Repository
 public interface BaseHibernateDao<E, PK extends Serializable> extends BaseDaoEntityClassHandler<E> {
 
     public static final Logger LOGGER = Logger.getLogger(BaseHibernateDao.class.getName());

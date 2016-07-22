@@ -9,9 +9,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.io.Serializable;
 import java.util.List;
 
-@Service(value = "userService")
-@Transactional
-public class BaseServiceImpl<E, PK extends Serializable> implements BaseService<E, PK> {
+//@Service()
+//@Transactional
+public abstract class BaseServiceImpl<E, PK extends Serializable> implements BaseService<E, PK> {
 
 
     protected BaseHibernateDao<E, PK> dao;

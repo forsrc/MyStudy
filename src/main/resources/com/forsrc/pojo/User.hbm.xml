@@ -9,12 +9,12 @@
             <generator class="increment"/>
         </id>
 
-        <!--
+
         <version name="version" column="version" type="integer"></version>
-        -->
 
+        <!--
         <timestamp name="updateOn" column="update_on" generated="always"></timestamp>
-
+        -->
         <property name="updateOn" type="java.util.Date" update="false" generated="always">
             <column name="update_on" default="CURRENT_TIMESTAMP"/>
         </property>
