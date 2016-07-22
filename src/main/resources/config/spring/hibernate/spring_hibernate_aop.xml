@@ -14,7 +14,7 @@
 >
 
 
-    <!--<tx:advice id="txadvice" transaction-manager="txManager">
+    <tx:advice id="txadvice" transaction-manager="txManager">
         <tx:attributes>
             <tx:method name="jqGrid*" propagation="REQUIRED" rollback-for="java.lang.Exception"
                        no-rollback-for="com.forsrc.exception.NotRollbackException"/>
@@ -53,6 +53,6 @@
             and not execution(* com.forsrc.springmvc..service.impl.*.*Input*(..))
             " id="springmvcServiceMethod"/>
         <aop:advisor advice-ref="txadvice" pointcut-ref="springmvcServiceMethod"/>
-    </aop:config>-->
+    </aop:config>
 
 </beans>

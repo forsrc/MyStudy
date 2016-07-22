@@ -2,13 +2,18 @@ package com.forsrc.pojo;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.forsrc.lucene.IndexWhenPublishedInterceptor;
+import com.forsrc.utils.JsonSerializerDate;
 import com.forsrc.utils.JsonSerializerTimestamp;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.SelectBeforeUpdate;
 import org.hibernate.search.annotations.*;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.wltea.analyzer.lucene.IKAnalyzer;
 
 import javax.persistence.Id;
 import javax.xml.bind.annotation.*;
+import java.sql.Timestamp;
 import java.util.Date;
 
 
@@ -20,6 +25,9 @@ import java.util.Date;
 @com.fasterxml.jackson.annotation.JsonIgnoreProperties(value = {"handler", "hibernateLazyInitializer", "fieldHandler", "password"})
 @XmlRootElement(name = "User")
 @XmlAccessorType(XmlAccessType.FIELD)
+@DynamicUpdate(true)
+@DynamicInsert(true)
+@SelectBeforeUpdate(true)
 public class User implements java.io.Serializable {
 
 
@@ -32,13 +40,14 @@ public class User implements java.io.Serializable {
     private Long id;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @JsonSerialize(using = JsonSerializerTimestamp.class)
+    //@JsonSerialize(using = JsonSerializerTimestamp.class)
+    @JsonSerialize(using = JsonSerializerDate.class)
     @Field(index = Index.NO, analyze = Analyze.NO, store = Store.YES)
     private Date createOn;
 
 
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @JsonSerialize(using = JsonSerializerTimestamp.class)
+    @JsonSerialize(using = JsonSerializerDate.class)
     @Field(index = Index.NO, analyze = Analyze.NO, store = Store.YES)
     private Date updateOn;
 
@@ -60,6 +69,9 @@ public class User implements java.io.Serializable {
 
     @Field(index = Index.NO, analyze = Analyze.NO, store = Store.YES)
     private String image;
+
+    @Field(index = Index.NO, analyze = Analyze.NO, store = Store.YES)
+    private int version;
 
     // Constructors
 
@@ -149,5 +161,13 @@ public class User implements java.io.Serializable {
 
     public void setCreateOn(Date createOn) {
         this.createOn = createOn;
+    }
+
+    public int getVersion() {
+        return version;
+    }
+
+    public void setVersion(int version) {
+        this.version = version;
     }
 }

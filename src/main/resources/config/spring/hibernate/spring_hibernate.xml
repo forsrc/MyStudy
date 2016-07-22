@@ -100,11 +100,11 @@
             <props>
                 <prop key="hibernate.connection.useUnicode">true</prop>
                 <prop key="hibernate.connection.characterEncoding">UTF-8</prop>
-                <prop key="hibernate.connection.autocommit">false</prop>
+                <prop key="hibernate.connection.autocommit">true</prop>
                 <prop key="hibernate.dialect">${dialect}</prop>
-                <prop key="hibernate.show_sql">false</prop>
+                <prop key="hibernate.show_sql">true</prop>
                 <prop key="hibernate.hbm2ddl.auto">update</prop>
-                <prop key="hibernate.format_sql">false</prop>
+                <prop key="hibernate.format_sql">true</prop>
                 <prop key="hibernate.jdbc.batch_size">20</prop>
                 <prop key="hibernate.jdbc.substitutions">true 1, false 0</prop>
                 <!-- second_level_cache -->

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.forsrc.pojo">
+    <class name="Book" table="my_study_book" dynamic-update="true" dynamic-insert="true">
+        <id name="id" type="java.lang.Long">
+            <column name="id"/>
+            <generator class="increment"/>
+        </id>
+        <!--<version name="version" column="version" type="int"></version>-->
+        <timestamp name="updateOn" column="update_on"></timestamp>
+
+        <property name="createOn" type="java.util.Date">
+            <column name="create_on" not-null="true"/>
+        </property>
+
+        <property name="name" type="java.lang.String" index="index_book_name">
+            <column name="name" not-null="true" length="30"/>
+        </property>
+
+        <property name="isbnNumber" type="java.lang.String">
+            <column name="isbn_number" not-null="true" unique="true" length="30"/>
+        </property>
+
+        <property name="author" type="java.lang.String">
+            <column name="author" not-null="true" length="30"/>
+        </property>
+
+        <property name="categoryId" type="java.lang.Long">
+            <column name="category_id"/>
+        </property>
+
+
+    </class>
+    <sql-query name="sql_book_insert_init">
+        <![CDATA[
+             INSERT INTO
+                            my_study_book
+                            (id, name, isbn_number, author, category_id, create_on, update_on)
+             VALUES
+                            (1, 'Java 1', '001', 'forsrc', 1, '2016-07-07 12:00:00', '2016-07-07 13:00:00')
+             ;
+
+             INSERT INTO
+                            my_study_book
+                            (id, name, isbn_number, author, category_id, create_on, update_on)
+             VALUES
+                            (2, 'Java 2', '002', 'forsrc', 1, '2016-07-07 12:00:00', '2016-07-07 13:00:00')
+             ;
+
+             INSERT INTO
+                            my_study_book
+                            (id, name, isbn_number, author, category_id, create_on, update_on)
+             VALUES
+                            (3, 'JavaScript 1', '101', 'forsrc', 2, '2016-07-07 12:00:00', '2016-07-07 13:00:00')
+             ;
+
+             INSERT INTO
+                            my_study_book
+                            (id, name, isbn_number, author, category_id, create_on, update_on)
+             VALUES
+                            (4, 'JavaScript 2', '102', 'forsrc', 1, '2016-07-07 12:00:00', '2016-07-07 13:00:00')
+             ;
+
+         ]]>
+    </sql-query>
+
+    <sql-query name="sql_book_findByName" read-only="true">
+        <![CDATA[
+             SELECT
+                    b.id, b.name, b.isbn_number, b.author, b.create_on, b.update_on
+             FROM
+                    my_study_book b
+             WHERE
+                    b.name like :name
+
+
+         ]]>
+        <query-param name="name" type="java.lang.String"/>
+        <return alias="u" class="com.forsrc.pojo.Book"/>
+    </sql-query>
+
+    <sql-query name="sql_book_index_name" read-only="true">
+        <![CDATA[
+            CREATE index index_book_name on my_study_book (name)
+         ]]>
+    </sql-query>
+
+    <query name="hql_book_findByName" read-only="true">
+
+        FROM com.forsrc.pojo.Book b WHERE b.name like :name
+
+        <query-param name="name" type="java.lang.String"/>
+    </query>
+
+
+    <database-object>
+        <create>
+        </create>
+        <drop></drop>
+    </database-object>
+</hibernate-mapping>

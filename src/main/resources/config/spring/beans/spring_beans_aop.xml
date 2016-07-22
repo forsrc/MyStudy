@@ -23,7 +23,10 @@
     <bean id="log" class="com.forsrc.aop.LogTracing"/>
     <aop:config proxy-target-class="true">
         <aop:aspect id="aspect3" ref="log">
-            <aop:pointcut id="logService" expression="execution(* com.forsrc.springmvc..*.*(..))"/>
+            <aop:pointcut id="logService" expression="
+                execution(* com.forsrc.springmvc..*.*(..))
+             or execution(* com.forsrc.cxf..*.*(..))
+            "/>
             <aop:before pointcut-ref="logService" method="doBefore"/>
             <aop:after pointcut-ref="logService" method="doAfter"/>
             <aop:around pointcut-ref="logService" method="doAround"/>

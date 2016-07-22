@@ -12,6 +12,8 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -51,12 +53,14 @@ public class UserController {
         return modelAndView;
     }
 
-    @RequestMapping(value = {"/user/{id}"}, method = RequestMethod.GET, produces = {})
+    @RequestMapping(value = {"/user/{id}"}, method = RequestMethod.GET)
     @ResponseBody
     public ModelAndView get(@PathVariable Long id,
                             HttpServletRequest request,
                             HttpServletResponse response) throws ActionException {
+
         User user = this.userService.get(id);
+
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("return", user);
         modelAndView.addObject("status", 200);
@@ -73,6 +77,24 @@ public class UserController {
                                HttpServletResponse response) throws ActionException {
         //User bean = userManager.findUser(id);
         this.userService.update(user);
+        ModelAndView modelAndView = new ModelAndView();
+        Map<String, Object> message = new HashMap<String, Object>();
+        message.put("id", id);
+        modelAndView.addObject("return", message);
+        modelAndView.addObject("status", 200);
+        modelAndView.addObject("version", VERSION_V_1_0);
+        return modelAndView;
+
+    }
+
+    @RequestMapping(value = {"/user/{id}"}, method = RequestMethod.PATCH)
+    @ResponseBody
+    public ModelAndView patch(@PathVariable Long id,
+                               User user,
+                               HttpServletRequest request,
+                               HttpServletResponse response) throws ActionException {
+        //User bean = userManager.findUser(id);
+        this.userService.merge(user);
         ModelAndView modelAndView = new ModelAndView();
         Map<String, Object> message = new HashMap<String, Object>();
         message.put("id", id);

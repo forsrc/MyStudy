@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.forsrc.pojo">
+    <class name="BookCategory" table="my_study_book_category" dynamic-update="true" dynamic-insert="true">
+        <id name="id" type="java.lang.Integer">
+            <column name="id"/>
+            <generator class="increment"/>
+        </id>
+        <!--<version name="version" column="version" type="int"></version>-->
+        <timestamp name="updateOn" column="update_on"></timestamp>
+
+        <property name="createOn" type="java.util.Date">
+            <column name="create_on" not-null="true"/>
+        </property>
+
+        <property name="name" type="java.lang.String" index="index_book_category_name">
+            <column name="name" not-null="true" length="30"/>
+        </property>
+
+        <property name="parentId" type="java.lang.Integer">
+            <column name="parent_id"/>
+        </property>
+
+
+    </class>
+    <sql-query name="sql_book_category_insert_init">
+        <![CDATA[
+             INSERT INTO
+                            my_study_book_category
+                            (id, name, parent_id, create_on, update_on)
+             VALUES
+                            (1, 'Java', null, '2016-07-07 12:00:00', '2016-07-07 13:00:00')
+             ;
+
+             INSERT INTO
+                            my_study_book_category
+                            (id, name, parent_id, create_on, update_on)
+             VALUES
+                            (3, 'JavaScript', null, '2016-07-07 12:00:00', '2016-07-07 13:00:00')
+             ;
+
+
+         ]]>
+    </sql-query>
+
+    <sql-query name="sql_book_category_findByName" read-only="true">
+        <![CDATA[
+             SELECT
+                    b.id, b.name, b.parent_id, b.create_on, b.update_on
+             FROM
+                    my_study_book_category b
+             WHERE
+                    b.name like :name
+
+         ]]>
+        <query-param name="name" type="java.lang.String"/>
+        <return alias="b" class="com.forsrc.pojo.BookCategory"/>
+    </sql-query>
+
+    <sql-query name="sql_book_category_index_name" read-only="true">
+        <![CDATA[
+            CREATE index index_book_category_name on my_study_book_category (name)
+         ]]>
+    </sql-query>
+
+    <query name="hql_book_category_findByName" read-only="true">
+
+        FROM com.forsrc.pojo.BookCategory b WHERE b.name like :name
+        <query-param name="name" type="java.lang.String"/>
+    </query>
+
+
+    <database-object>
+        <create>
+        </create>
+        <drop></drop>
+    </database-object>
+</hibernate-mapping>

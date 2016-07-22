@@ -29,7 +29,13 @@ public interface BaseHibernateDao<E, PK extends Serializable> extends BaseDaoEnt
 
     public E update(E e) throws DaoException;
 
+    public E merge(E e) throws DaoException;
+
     public void delete(E e) throws DaoException;
 
     public void delete(List<E> list) throws DaoException;
+
+    public void flush();
+
+    public void clean();
 }

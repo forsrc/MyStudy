@@ -8,6 +8,7 @@ import com.forsrc.pojo.User;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.core.Context;
+import java.sql.Timestamp;
 import java.util.*;
 
 public class CxfRestfulImpl implements CxfRestful<User> {
@@ -49,7 +50,7 @@ public class CxfRestfulImpl implements CxfRestful<User> {
             user.setId(i * 1L);
             user.setPassword(String.valueOf(i));
             user.setCreateOn(new Date());
-            user.setUpdateOn(new Date());
+            user.setUpdateOn(new Timestamp(new Date().getTime()));
             user.setUsername("u-" + i);
             user.setEmail( i + "@forsrc.com");
             list.add(user);

@@ -75,7 +75,9 @@ public final class ExportDb {
                     .buildSessionFactory();
             session = sessionFactory.openSession();
 
-            executeNamedQuery(session, "user_insert_admin");
+            executeNamedQuery(session, "sql_user_insert_admin");
+            executeNamedQuery(session, "sql_book_c_insert_init");
+            executeNamedQuery(session, "sql_book_insert_init");
         } catch (Exception e) {
             e.printStackTrace();
             //LogUtils.LOGGER.error(e.getMessage(), e);

@@ -23,7 +23,8 @@
         <property name="hibernate.connection.characterEncoding">UTF-8</property>
 
         <mapping resource="com/forsrc/pojo/User.hbm.xml"/>
-
+        <mapping resource="com/forsrc/pojo/Book.hbm.xml"/>
+        <mapping resource="com/forsrc/pojo/BookCategory.hbm.xml"/>
 
     </session-factory>
 

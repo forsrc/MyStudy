@@ -73,7 +73,7 @@
                 <prop key="com.atomikos.icatch.console_log_level">INFO</prop>
                 <prop key="com.atomikos.icatch.log_base_name">atomikos.transaction.manager.log</prop>
                 <prop key="com.atomikos.icatch.tm_unique_name">userTransactionService</prop>
-                <prop key="com.atomikos.icatch.max_timeout">7200000</prop>
+                <prop key="com.atomikos.icatch.max_timeout">10000</prop>
             </props>
         </constructor-arg>
     </bean>
@@ -84,11 +84,11 @@
         <property name="forceShutdown">
             <value>true</value>
         </property>
-        <property name="transactionTimeout" value="7200000"/>
+        <property name="transactionTimeout" value="10000"/>
     </bean>
 
     <bean id="atomikosUserTransaction" class="com.atomikos.icatch.jta.UserTransactionImp">
-        <property name="transactionTimeout" value="7200000"/>
+        <property name="transactionTimeout" value="10000"/>
     </bean>
 
     <bean id="txManager" class="org.springframework.transaction.jta.JtaTransactionManager">
@@ -105,6 +105,10 @@
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>-->
 
+    <!--<bean id="transactionManager"
+          class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSourceAtomikosNonXADataSourceBean" />
+    </bean>-->
 
 
 

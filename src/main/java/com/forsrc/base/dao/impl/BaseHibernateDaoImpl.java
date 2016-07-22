@@ -12,6 +12,7 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.support.DaoSupport;
+import org.springframework.orm.hibernate5.HibernateCallback;
 import org.springframework.orm.hibernate5.HibernateTemplate;
 
 import javax.annotation.Resource;
@@ -155,15 +156,42 @@ public abstract class BaseHibernateDaoImpl<E, PK extends Serializable> extends D
 
 
     @Override
-    public E save(E e) throws DaoException {
+    public E save(final E e) throws DaoException {
+        /*getHibernateTemplate().executeWithNativeSession(new HibernateCallback<E>() {
+            @Override
+            public E doInHibernate(Session session) throws HibernateException {
+                session.save(e);
+                return e;
+            }
+        });*/
         getHibernateTemplate().save(e);
         return e;
     }
 
     @Override
-    public E update(E e) throws DaoException {
+    public E update(final E e) throws DaoException {
+        /*getHibernateTemplate().executeWithNativeSession(new HibernateCallback<E>() {
+            @Override
+            public E doInHibernate(Session session) throws HibernateException {
+                session.update(e);
+                return e;
+            }
+        });*/
         getHibernateTemplate().update(e);
         return e;
+    }
+
+    @Override
+    public E merge(final E e) throws DaoException {
+        /*getHibernateTemplate().executeWithNativeSession(new HibernateCallback<E>() {
+            @Override
+            public E doInHibernate(Session session) throws HibernateException {
+                session.merge(e);
+                return e;
+            }
+        });
+        return e;*/
+        return getHibernateTemplate().merge(e);
     }
 
     @Override
@@ -180,6 +208,17 @@ public abstract class BaseHibernateDaoImpl<E, PK extends Serializable> extends D
     public E load(PK pk) throws DaoException {
         return getHibernateTemplate().load(getEntityClass(), pk);
     }
+
+    @Override
+    public void flush() {
+        getHibernateTemplate().getSessionFactory().getCurrentSession().flush();
+    }
+
+    @Override
+    public void clean() {
+        getHibernateTemplate().getSessionFactory().getCurrentSession().clear();
+    }
+
 
     @Override
     public void delete(List<E> list) {

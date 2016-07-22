@@ -3,24 +3,32 @@
         "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping package="com.forsrc.pojo">
-    <class name="User" table="my_study_user" dynamic-update="true" dynamic-insert="true">
+    <class name="User" table="my_study_user" dynamic-update="true" dynamic-insert="true" select-before-update="true">
         <id name="id" type="java.lang.Long">
             <column name="id"/>
-            <generator class="native"/>
+            <generator class="increment"/>
         </id>
-        <!--<version name="version" column="version" type="int"></version>-->
-        <timestamp name="updateOn" column="update_on"></timestamp>
+
+        <!--
+        <version name="version" column="version" type="integer"></version>
+        -->
+
+        <timestamp name="updateOn" column="update_on" generated="always"></timestamp>
+
+        <property name="updateOn" type="java.util.Date" update="false" generated="always">
+            <column name="update_on" default="CURRENT_TIMESTAMP"/>
+        </property>
 
         <property name="username" type="java.lang.String">
-            <column name="username" not-null="true" unique="true" length="30"/>
+            <column name="username" not-null="true" unique="true" length="30" index="index_user_username"/>
         </property>
 
         <property name="password" type="java.lang.String" update="false">
             <column name="password" not-null="true" default="'EdbQzHVPKsmmwIOtmJOHJg=='" length="30"/>
         </property>
 
-        <property name="createOn" type="java.util.Date">
-            <column name="create_on" not-null="true"/>
+        <property name="createOn" type="java.util.Date" update="false" generated="insert">
+            <column name="create_on" default="CURRENT_TIMESTAMP"/>
         </property>
 
         <property name="status" type="int">
@@ -40,20 +48,20 @@
         </property>
 
     </class>
-    <sql-query name="user_insert_admin">
+    <sql-query name="sql_user_insert_admin">
         <![CDATA[
              INSERT INTO
                             my_study_user
-                            (id, username, password, email, status, is_admin, create_on, update_on)
+                            (id, username, password, email, status, is_admin, create_on, update_on, version)
              VALUES
-                            (1, 'admin', 'EdbQzHVPKsmmwIOtmJOHJg==', 'forsrc@163.com', 1, 1, '2016-07-07 12:00:00', '2016-07-07 12:00:00')
+                            (1, 'admin', 'EdbQzHVPKsmmwIOtmJOHJg==', 'forsrc@163.com', 1, 1, '2016-07-07 12:00:00', '2016-07-07 12:00:00', 1)
              ;
 
              INSERT INTO
                             my_study_user
-                            (id, username, password, email, status, is_admin, create_on, update_on)
+                            (id, username, password, email, status, is_admin, create_on, update_on, version)
              VALUES
-                            (2, 'forsrc', 'EdbQzHVPKsmmwIOtmJOHJg==', 'forsrc-@163.com', 1, 0, '2016-07-07 12:00:00', '2016-07-07 12:00:00')
+                            (2, 'forsrc', 'EdbQzHVPKsmmwIOtmJOHJg==', 'forsrc-@163.com', 1, 0, '2016-07-07 12:00:00', '2016-07-07 12:00:00', 1)
              ;
 
          ]]>
@@ -62,12 +70,12 @@
     <sql-query name="sql_user_findByUsername" read-only="true">
         <![CDATA[
              SELECT
-                    u.username, u.password, u.status, u.is_admin, u.email, u.createOn, u.updateOn
+                    u.id, u.username, u.password, u.status, u.is_admin, u.email, u.image, u.create_on, u.update_on, u.version
              FROM
                     my_study_user u
              WHERE
                     u.username = :username
-             ;
+
 
          ]]>
         <query-param name="username" type="java.lang.String"/>

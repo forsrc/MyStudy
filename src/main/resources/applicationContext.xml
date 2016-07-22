@@ -23,6 +23,7 @@
 
     <import resource="config/spring/hibernate/spring_hibernate.xml"/>
     <import resource="config/spring/hibernate/spring_hibernate_transaction.xml"/>
+    <import resource="config/spring/hibernate/spring_hibernate_aop.xml"/>
     <import resource="config/spring/beans/spring_beans_*.xml"/>
     <import resource="config/spring/hibernatesearch/spring_hibernate_search.xml"/>
     <import resource="config/spring/cxf/spring_cxf.xml"/>

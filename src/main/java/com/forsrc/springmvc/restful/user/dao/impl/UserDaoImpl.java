@@ -10,8 +10,6 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-
 @Repository(value = "userDao")
 public class UserDaoImpl
         extends BaseHibernateDaoImpl<User, Long>
@@ -25,11 +23,8 @@ public class UserDaoImpl
         Query query = session.getNamedQuery("hql_user_findByUsername");
         query.setParameter("username", username);
         query.setMaxResults(1);
-        List<User> list = query.list();
-        if(list.isEmpty()){
-            throw new NoSuchUserException(username);
-        }
-        return list.get(0);
+
+        return (User) query.uniqueResult();
     }
 
 
