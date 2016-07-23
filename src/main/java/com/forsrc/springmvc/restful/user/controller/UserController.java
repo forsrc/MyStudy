@@ -66,7 +66,7 @@ public class UserController {
         u.setImage(new Date().toString());
 
         u = this.userService.update(u);
-        User user = this.userService.get(id);
+        User user = this.userService.load(id);
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("return", user);
@@ -117,7 +117,7 @@ public class UserController {
     public ModelAndView delete(@PathVariable Long id,
                                HttpServletRequest request,
                                HttpServletResponse response) throws ActionException {
-        this.userService.delete(id);
+        this.userService.delete(new User(id));
         ModelAndView modelAndView = new ModelAndView();
         Map<String, Object> message = new HashMap<String, Object>();
         message.put("id", id);

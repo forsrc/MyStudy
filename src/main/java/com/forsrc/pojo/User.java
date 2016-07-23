@@ -79,6 +79,10 @@ public class User implements java.io.Serializable {
     public User() {
     }
 
+    public User(Long id) {
+        this.id = id;
+    }
+
     // Property accessors
 
     public Long getId() {

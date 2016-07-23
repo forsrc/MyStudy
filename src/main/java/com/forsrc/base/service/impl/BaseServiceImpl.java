@@ -14,60 +14,66 @@ import java.util.List;
 public abstract class BaseServiceImpl<E, PK extends Serializable> implements BaseService<E, PK> {
 
 
-    protected BaseHibernateDao<E, PK> dao;
+    protected BaseHibernateDao<E, PK> baseHibernateDao;
 
     @Override
     //@Transactional(propagation = Propagation.NOT_SUPPORTED, readOnly = true)
     public List<E> list(int start, int size) throws ServiceException {
-        return getDao().list(start, size);
+        return getBaseHibernateDao().list(start, size);
     }
 
     @Override
     //@Transactional(propagation = Propagation.NOT_SUPPORTED, readOnly = true)
     public E get(PK pk) throws ServiceException {
-        return (E) getDao().get(pk);
+        return (E) getBaseHibernateDao().get(pk);
+    }
+
+    @Override
+    //@Transactional(propagation = Propagation.NOT_SUPPORTED, readOnly = true)
+    public E load(PK pk) throws ServiceException {
+        return (E) getBaseHibernateDao().load(pk);
     }
 
     @Override
     //@Transactional(propagation = Propagation.REQUIRED, rollbackFor = DaoException.class)
     public E save(E bean) throws ServiceException {
-        return getDao().save(bean);
+        return getBaseHibernateDao().save(bean);
     }
 
     @Override
     //@Transactional(propagation = Propagation.REQUIRED, rollbackFor = DaoException.class)
     public E update(E bean) throws ServiceException {
-        return getDao().update(bean);
+        return getBaseHibernateDao().update(bean);
     }
 
     @Override
     //@Transactional(propagation = Propagation.REQUIRED, rollbackFor = DaoException.class)
     public E merge(E bean) throws ServiceException {
-        getDao().merge(bean);
+        getBaseHibernateDao().merge(bean);
         return bean;
     }
 
     @Override
     //@Transactional(propagation = Propagation.REQUIRED, rollbackFor = DaoException.class)
     public void delete(E e) throws ServiceException {
-        getDao().delete(e);
+        getBaseHibernateDao().delete(e);
     }
 
     @Override
     public void clean(){
-        getDao().clean();
+        getBaseHibernateDao().clean();
     }
 
     @Override
     public void flush(){
-        getDao().clean();
+        getBaseHibernateDao().clean();
     }
 
-    public BaseHibernateDao<E, PK> getDao() {
-        return dao;
+    public BaseHibernateDao<E, PK> getBaseHibernateDao() {
+        return baseHibernateDao;
     }
 
-    public void setDao(BaseHibernateDao<E, PK> dao) {
-        this.dao = dao;
+    public void setBaseHibernateDao(BaseHibernateDao<E, PK> baseHibernateDao) {
+        this.baseHibernateDao = baseHibernateDao;
     }
 }

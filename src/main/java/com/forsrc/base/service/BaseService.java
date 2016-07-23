@@ -1,6 +1,7 @@
 package com.forsrc.base.service;
 
 
+import com.forsrc.base.dao.BaseHibernateDao;
 import com.forsrc.exception.DaoException;
 import com.forsrc.exception.ServiceException;
 import org.springframework.orm.hibernate5.HibernateOptimisticLockingFailureException;
@@ -20,6 +21,9 @@ public interface BaseService<E, PK extends Serializable> {
     @Transactional(propagation = Propagation.NOT_SUPPORTED, readOnly = true)
     public E get(PK pk) throws ServiceException;
 
+    @Transactional(propagation = Propagation.NOT_SUPPORTED, readOnly = true)
+    public E load(PK pk) throws ServiceException;
+
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = DaoException.class)
     public E save(E user) throws ServiceException;
 
@@ -37,4 +41,10 @@ public interface BaseService<E, PK extends Serializable> {
 
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = DaoException.class)
     public void flush();
+
+
+    public BaseHibernateDao<E, PK> getBaseHibernateDao();
+
+    //public void setBaseHibernateDao(BaseHibernateDao<E, PK> baseHibernateDao);
+
 }
