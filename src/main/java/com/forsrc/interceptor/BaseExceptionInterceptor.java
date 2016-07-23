@@ -24,6 +24,7 @@ import com.forsrc.exception.ServiceException;
 //import com.opensymphony.xwork2.interceptor.AbstractInterceptor;
 import org.apache.log4j.Logger;
 //import org.apache.struts2.ServletActionContext;
+import org.springframework.orm.hibernate5.HibernateOptimisticLockingFailureException;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -76,6 +77,18 @@ public class BaseExceptionInterceptor
     @Override
     public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response, Object handler, Exception e) {
         //springmvc
+
+        if(e instanceof HibernateOptimisticLockingFailureException){
+            Map<String, Object> message = new HashMap<String, Object>();
+            message.put("message", e.getMessage());
+            message.put("exceptionClass", "HibernateOptimisticLockingFailureException");
+            ModelAndView modelAndView = new ModelAndView();
+            modelAndView.addObject("return", message);
+            modelAndView.addObject("status", 400);
+            return modelAndView;
+        }
+
+
         request.setAttribute("message", e.getMessage());
         request.setAttribute("status", 400);
         request.setAttribute("exception", e);

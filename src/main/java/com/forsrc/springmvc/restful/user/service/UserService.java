@@ -20,7 +20,7 @@ public interface UserService {
     public User get(Long id) throws ServiceException;
 
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = DaoException.class)
-    public Long save(User user) throws ServiceException;
+    public User save(User user) throws ServiceException;
 
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = DaoException.class)
     public User update(User user) throws ServiceException;
@@ -32,7 +32,10 @@ public interface UserService {
     public void delete(Long id) throws ServiceException;
 
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = DaoException.class)
-    public void clean() throws ServiceException;
+    public void clean();
+
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = DaoException.class)
+    public void flush();
 
 
 }

@@ -12,7 +12,7 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.support.DaoSupport;
-import org.springframework.orm.hibernate5.HibernateCallback;
+import org.springframework.orm.hibernate5.HibernateOptimisticLockingFailureException;
 import org.springframework.orm.hibernate5.HibernateTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -158,7 +158,7 @@ public abstract class BaseHibernateDaoImpl<E, PK extends Serializable> extends D
 
 
     @Override
-    public E save(final E e) throws DaoException {
+    public E save(E e) throws DaoException {
         /*getHibernateTemplate().executeWithNativeSession(new HibernateCallback<E>() {
             @Override
             public E doInHibernate(Session session) throws HibernateException {
@@ -171,7 +171,7 @@ public abstract class BaseHibernateDaoImpl<E, PK extends Serializable> extends D
     }
 
     @Override
-    public E update(final E e) throws DaoException {
+    public E update(E e) throws DaoException, HibernateOptimisticLockingFailureException {
         /*getHibernateTemplate().executeWithNativeSession(new HibernateCallback<E>() {
             @Override
             public E doInHibernate(Session session) throws HibernateException {
@@ -184,7 +184,7 @@ public abstract class BaseHibernateDaoImpl<E, PK extends Serializable> extends D
     }
 
     @Override
-    public E merge(final E e) throws DaoException {
+    public E merge(E e) throws DaoException, HibernateOptimisticLockingFailureException {
         /*getHibernateTemplate().executeWithNativeSession(new HibernateCallback<E>() {
             @Override
             public E doInHibernate(Session session) throws HibernateException {

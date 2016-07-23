@@ -57,7 +57,8 @@ public abstract class RestfulServiceImpl<E, PK extends Serializable> implements 
     @Override
     @Transactional(propagation = Propagation.REQUIRED, readOnly = false, rollbackFor = Exception.class)
     public E update(E e) throws ServiceException {
-        return (E) this.getRestfulDao().update(e);
+        this.getRestfulDao().update(e);
+        return e;
     }
 
     @Override

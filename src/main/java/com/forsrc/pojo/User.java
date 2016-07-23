@@ -3,7 +3,6 @@ package com.forsrc.pojo;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.forsrc.lucene.IndexWhenPublishedInterceptor;
 import com.forsrc.utils.JsonSerializerDate;
-import com.forsrc.utils.JsonSerializerTimestamp;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.SelectBeforeUpdate;
@@ -13,7 +12,6 @@ import org.wltea.analyzer.lucene.IKAnalyzer;
 
 import javax.persistence.Id;
 import javax.xml.bind.annotation.*;
-import java.sql.Timestamp;
 import java.util.Date;
 
 
@@ -62,16 +60,16 @@ public class User implements java.io.Serializable {
     private String password;
 
     @Field(index = Index.NO, analyze = Analyze.NO, store = Store.YES)
-    private int status; // 0: delete; 1: OK; 2: NG
+    private Integer status; // 0: delete; 1: OK; 2: NG
 
     @Field(index = Index.NO, analyze = Analyze.NO, store = Store.YES)
-    private boolean isAdmin;
+    private Boolean isAdmin;
 
     @Field(index = Index.NO, analyze = Analyze.NO, store = Store.YES)
     private String image;
 
     @Field(index = Index.NO, analyze = Analyze.NO, store = Store.YES)
-    private int version;
+    private Integer version;
 
     // Constructors
 
@@ -107,15 +105,15 @@ public class User implements java.io.Serializable {
         this.password = password;
     }
 
-    public int getStatus() {
+    public Integer getStatus() {
         return status;
     }
 
-    public void setStatus(int status) {
+    public void setStatus(Integer status) {
         this.status = status;
     }
 
-    public boolean isAdmin() {
+    public Boolean isAdmin() {
         return isAdmin;
     }
 
@@ -127,15 +125,15 @@ public class User implements java.io.Serializable {
         this.updateOn = updateOn;
     }
 
-    public void setAdmin(boolean admin) {
+    public void setAdmin(Boolean admin) {
         this.isAdmin = admin;
     }
 
-    public boolean getIsAdmin() {
+    public Boolean getIsAdmin() {
         return isAdmin;
     }
 
-    public void setIsAdmin(boolean admin) {
+    public void setIsAdmin(Boolean admin) {
         this.isAdmin = admin;
     }
 

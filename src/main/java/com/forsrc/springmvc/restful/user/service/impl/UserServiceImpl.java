@@ -33,8 +33,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     //@Transactional(propagation = Propagation.REQUIRED, rollbackFor = DaoException.class)
-    public Long save(User bean) throws ServiceException {
-        return this.userDao.save(bean).getId();
+    public User save(User bean) throws ServiceException {
+        return this.userDao.save(bean);
     }
 
     @Override
@@ -57,8 +57,13 @@ public class UserServiceImpl implements UserService {
         this.userDao.delete(user);
     }
 
-    public void clean() throws ServiceException {
+    @Override
+    public void clean() {
         this.userDao.clean();
+    }
+
+    public void flush(){
+        this.userDao.flush();
     }
 
     public UserDao getUserDao() {

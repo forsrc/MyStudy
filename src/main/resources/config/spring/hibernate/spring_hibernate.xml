@@ -106,7 +106,7 @@
                 <prop key="hibernate.hbm2ddl.auto">update</prop>
                 <prop key="hibernate.format_sql">true</prop>
                 <prop key="hibernate.jdbc.batch_size">20</prop>
-                <prop key="hibernate.jdbc.substitutions">true 1, false 0</prop>
+                <prop key="query.substitutions">true 1, false 0</prop>
                 <!-- second_level_cache -->
                 <prop key="hibernate.cache.use_second_level_cache">true</prop>
                 <prop key="hibernate.cache.use_query_cache">true</prop>

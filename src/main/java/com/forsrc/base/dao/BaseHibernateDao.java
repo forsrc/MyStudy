@@ -4,6 +4,7 @@ package com.forsrc.base.dao;
 import com.forsrc.exception.DaoException;
 import org.apache.log4j.Logger;
 import org.hibernate.SessionFactory;
+import org.springframework.orm.hibernate5.HibernateOptimisticLockingFailureException;
 import org.springframework.orm.hibernate5.HibernateTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -29,9 +30,9 @@ public interface BaseHibernateDao<E, PK extends Serializable> extends BaseDaoEnt
 
     public E save(E e) throws DaoException;
 
-    public E update(E e) throws DaoException;
+    public E update(E e) throws DaoException, HibernateOptimisticLockingFailureException;
 
-    public E merge(E e) throws DaoException;
+    public E merge(E e) throws DaoException, HibernateOptimisticLockingFailureException;
 
     public void delete(E e) throws DaoException;
 

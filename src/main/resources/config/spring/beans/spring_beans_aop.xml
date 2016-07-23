@@ -33,27 +33,4 @@
         </aop:aspect>
     </aop:config>
 
-    <!--<bean id="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">
-        <property name="sessionFactory" ref="sessionFactory"/>
-        <property name="dataSource" ref="dataSourceAtomikosNonXADataSourceBean"/>
-    </bean>
-
-
-    <tx:advice id="txadviceStruts" transaction-manager="transactionManager">
-        <tx:attributes>
-            <tx:method name="save*" propagation="REQUIRED" no-rollback-for="com.forsrc.exception.NotRollbackException"
-                       rollback-for="com.forsrc.exception.RollbackException"/>
-            <tx:method name="update*" propagation="REQUIRED" no-rollback-for="com.forsrc.exception.NotRollbackException"
-                       rollback-for="com.forsrc.exception.RollbackException"/>
-            <tx:method name="delete*" propagation="REQUIRED" no-rollback-for="com.forsrc.exception.NotRollbackException"
-                       rollback-for="com.forsrc.exception.RollbackException"/>
-            <tx:method name="*" propagation="REQUIRED" read-only="true"/>
-        </tx:attributes>
-    </tx:advice>
-
-    <aop:config>
-        <aop:pointcut expression="execution(* com.forsrc.web.*.service.*.*(..))" id="serviceMethod"/>
-        <aop:advisor advice-ref="txadviceStruts" pointcut-ref="serviceMethod"/>
-    </aop:config>-->
-
 </beans>

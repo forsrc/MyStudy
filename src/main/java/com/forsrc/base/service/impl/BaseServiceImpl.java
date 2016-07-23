@@ -25,21 +25,19 @@ public abstract class BaseServiceImpl<E, PK extends Serializable> implements Bas
     @Override
     //@Transactional(propagation = Propagation.NOT_SUPPORTED, readOnly = true)
     public E get(PK pk) throws ServiceException {
-        return (E) getDao().load(pk);
+        return (E) getDao().get(pk);
     }
 
     @Override
     //@Transactional(propagation = Propagation.REQUIRED, rollbackFor = DaoException.class)
     public E save(E bean) throws ServiceException {
-        getDao().save(bean);
-        return bean;
+        return getDao().save(bean);
     }
 
     @Override
     //@Transactional(propagation = Propagation.REQUIRED, rollbackFor = DaoException.class)
     public E update(E bean) throws ServiceException {
-        getDao().update(bean);
-        return bean;
+        return getDao().update(bean);
     }
 
     @Override
@@ -51,19 +49,25 @@ public abstract class BaseServiceImpl<E, PK extends Serializable> implements Bas
 
     @Override
     //@Transactional(propagation = Propagation.REQUIRED, rollbackFor = DaoException.class)
-    public void delete(PK pk) throws ServiceException {
-        getDao().delete(pk);
+    public void delete(E e) throws ServiceException {
+        getDao().delete(e);
     }
 
-    public void clean() throws ServiceException {
+    @Override
+    public void clean(){
         getDao().clean();
     }
 
-    public BaseHibernateDao getDao() {
+    @Override
+    public void flush(){
+        getDao().clean();
+    }
+
+    public BaseHibernateDao<E, PK> getDao() {
         return dao;
     }
 
-    public void setDao(BaseHibernateDao dao) {
+    public void setDao(BaseHibernateDao<E, PK> dao) {
         this.dao = dao;
     }
 }

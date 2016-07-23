@@ -59,6 +59,13 @@ public class UserController {
                             HttpServletRequest request,
                             HttpServletResponse response) throws ActionException {
 
+        User u = this.userService.get(id);
+        //u.setId(1L);
+        //u.setUsername("admin");
+        //u.setVersion(1);
+        u.setImage(new Date().toString());
+
+        u = this.userService.update(u);
         User user = this.userService.get(id);
 
         ModelAndView modelAndView = new ModelAndView();
@@ -126,7 +133,7 @@ public class UserController {
     public ModelAndView save(@RequestParam User bean,
                              HttpServletRequest request,
                              HttpServletResponse response) throws ActionException {
-        bean.setId(this.userService.save(bean));
+        bean = this.userService.save(bean);
         ModelAndView modelAndView = new ModelAndView();
         Map<String, Object> message = new HashMap<String, Object>();
         message.put("id", bean.getId());

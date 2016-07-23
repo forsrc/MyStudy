@@ -19,7 +19,11 @@
 
 
     <context:component-scan base-package="com.forsrc.springmvc"/>
+    <context:component-scan base-package="com.forsrc.cxf"/>
+    <context:component-scan base-package="com.forsrc.base"/>
     <context:component-scan base-package="com.forsrc.lucene"/>
+
+    <aop:aspectj-autoproxy proxy-target-class="true"/>
 
     <import resource="config/spring/hibernate/spring_hibernate.xml"/>
     <import resource="config/spring/hibernate/spring_hibernate_transaction.xml"/>
