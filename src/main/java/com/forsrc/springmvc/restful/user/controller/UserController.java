@@ -59,13 +59,14 @@ public class UserController {
                             HttpServletRequest request,
                             HttpServletResponse response) throws ActionException {
 
-        User u = this.userService.get(id);
+        User u = new User(1L);
         //u.setId(1L);
         //u.setUsername("admin");
-        //u.setVersion(1);
+        u.setVersion(1);
+        u.setUpdateOn(new Date());
         u.setImage(new Date().toString());
 
-        u = this.userService.update(u);
+        u = this.userService.merge(u);
         User user = this.userService.get(id);
 
         ModelAndView modelAndView = new ModelAndView();

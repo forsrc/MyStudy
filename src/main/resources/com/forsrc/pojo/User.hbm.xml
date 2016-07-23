@@ -28,7 +28,7 @@
         </property>
 
         <property name="createOn" type="java.util.Date" update="false" insert="false" generated="insert" access="field">
-            <column name="create_on" default="CURRENT_TIMESTAMP" not-null="true" sql-type="datetime" />
+            <column name="create_on" default="CURRENT_TIMESTAMP" not-null="true"/>
         </property>
 
         <property name="status" type="java.lang.Integer" update="false">
