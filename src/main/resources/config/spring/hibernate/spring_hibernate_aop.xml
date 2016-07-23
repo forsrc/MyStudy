@@ -48,6 +48,7 @@
                execution(* com.forsrc.springmvc..manager.impl.*.*(..))
             or execution(* com.forsrc.springmvc..service.impl.*.*(..))
             or execution(* com.forsrc.cxf..service.impl.*.*(..))
+            or execution(* com.forsrc.base..service.impl.*.*(..))
             )
             and not execution(* com.forsrc.springmvc..manager.impl.*.*Input*(..))
             and not execution(* com.forsrc.springmvc..service.impl.*.*Input*(..))

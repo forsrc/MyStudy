@@ -15,8 +15,8 @@
         <!--
         <timestamp name="updateOn" column="update_on" generated="always"></timestamp>
         -->
-        <property name="updateOn" type="java.util.Date" update="false" generated="always" >
-            <column name="update_on" default="CURRENT_TIMESTAMP" not-null="true"/>
+        <property name="updateOn" type="java.util.Date" update="false" insert="false" generated="always" >
+            <column name="update_on" default="CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP" not-null="true"/>
         </property>
 
         <property name="username" type="java.lang.String" update="false">
@@ -27,8 +27,8 @@
             <column name="password" not-null="true" default="'EdbQzHVPKsmmwIOtmJOHJg=='" length="30"/>
         </property>
 
-        <property name="createOn" type="java.util.Date" update="false" generated="insert">
-            <column name="create_on" default="CURRENT_TIMESTAMP" not-null="true"/>
+        <property name="createOn" type="java.util.Date" update="false" insert="false" generated="insert" access="field">
+            <column name="create_on" default="CURRENT_TIMESTAMP" not-null="true" sql-type="datetime" />
         </property>
 
         <property name="status" type="java.lang.Integer" update="false">

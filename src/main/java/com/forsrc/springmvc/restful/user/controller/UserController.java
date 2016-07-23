@@ -66,7 +66,7 @@ public class UserController {
         u.setImage(new Date().toString());
 
         u = this.userService.update(u);
-        User user = this.userService.load(id);
+        User user = this.userService.get(id);
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("return", user);
