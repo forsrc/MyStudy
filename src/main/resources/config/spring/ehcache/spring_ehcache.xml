@@ -26,19 +26,20 @@
     <aop:config proxy-target-class="true">
         <aop:pointcut id="ehcache1"
                       expression="(
-                               execution(* com.forsrc.springmvc..manager..get*(..))
-                            or execution(* com.forsrc.springmvc..service..get*(..))
-                            or execution(* com.forsrc.springmvc..manager..list*(..))
+                               execution(* com.forsrc.springmvc..service..get*(..))
+                            or execution(* com.forsrc.base..service..get*(..))
+                            or execution(* com.forsrc.cxf..service..get*(..))
                             or execution(* com.forsrc.springmvc..service..list*(..))
-                            or execution(* com.forsrc.springmvc..manager..find*(..))
+                            or execution(* com.forsrc.base..service..list*(..))
+                            or execution(* com.forsrc.cxf..service..list*(..))
                             or execution(* com.forsrc.springmvc..service..find*(..))
+                            or execution(* com.forsrc.base..service..find*(..))
+                            or execution(* com.forsrc.cxf..service..find*(..))
                             )
-                            and not execution(* com.forsrc.springmvc..manager..*Input*(..))
                             and not execution(* com.forsrc.springmvc..service..*Input*(..))
-                            and not execution(* com.forsrc.springmvc..manager..*Output*(..))
                             and not execution(* com.forsrc.springmvc..service..*Output*(..))
-                            and not execution(* com.forsrc.springmvc.user..manager..getCode(..))
-                            and not execution(* com.forsrc.springmvc.user..service..getCode(..))
+                            and not execution(* com.forsrc.springmvc..login..service..getCode(..))
+                            and not execution(* com.forsrc.springmvc..login..service..getToken(..))
                       "></aop:pointcut>
         <aop:aspect id="aspectEhcache1" ref="methodCacheInterceptor">
             <aop:around pointcut-ref="ehcache1" method="doAround"/>
@@ -51,14 +52,20 @@
                       expression="
                              execution(* com.forsrc.springmvc..manager..save*(..))
                           or execution(* com.forsrc.springmvc..service..save*(..))
+                          or execution(* com.forsrc.base..service..save*(..))
+                          or execution(* com.forsrc.cxf..service..save*(..))
                           or execution(* com.forsrc.springmvc..manager..update*(..))
                           or execution(* com.forsrc.springmvc..service..update*(..))
+                          or execution(* com.forsrc.base..service..update*(..))
+                          or execution(* com.forsrc.cxf..service..update*(..))
                           or execution(* com.forsrc.springmvc..manager..edit*(..))
                           or execution(* com.forsrc.springmvc..service..edit*(..))
+                          or execution(* com.forsrc.base..service..edit*(..))
+                          or execution(* com.forsrc.cxf..service..edit*(..))
                           or execution(* com.forsrc.springmvc..manager..delete*(..))
                           or execution(* com.forsrc.springmvc..service..delete*(..))
-                          or execution(* com.forsrc.springmvc..manager..jqGrid*(..))
-                          or execution(* com.forsrc.springmvc..service..jqGrid*(..))
+                          or execution(* com.forsrc.base..service..delete*(..))
+                          or execution(* com.forsrc.cxf..service..delete*(..))
                       "></aop:pointcut>
         <aop:aspect id="aspectEhcache2" ref="methodCacheInterceptor">
             <aop:after pointcut-ref="ehcache2" method="doAfter"/>
