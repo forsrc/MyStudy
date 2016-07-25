@@ -16,6 +16,8 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import javax.annotation.Resource;
 import javax.jws.WebService;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.ws.rs.core.Context;
 import java.io.IOException;
 import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
@@ -85,7 +87,16 @@ public abstract class BaseCxfActionImpl<E, PK extends Serializable> implements B
     }
 
     @Override
-    public List<E> list(Integer start, Integer size) throws ServiceException {
+    public List<E> list(//@FormParam("start") Integer start
+                        //, @FormParam("size") Integer size
+                        HttpServletRequest request
+                        ,HttpServletResponse response) throws ServiceException {
+
+        String startStr = request.getParameter("start");
+        String sizeStr = request.getParameter("size");
+        int start = startStr != null ? Integer.parseInt(startStr) : 0;
+        int size = sizeStr != null ? Integer.parseInt(sizeStr) : 10;
+
         return baseCxfService.list(entityClass, start, size);
         //return (List<E>) baseCxfService.list(Type.nameOf(name).getCls(), start, size);
     }
