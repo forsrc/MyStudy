@@ -6,8 +6,6 @@ import com.forsrc.cxf.server.restful.base.action.BaseCxfAction;
 import com.forsrc.cxf.server.restful.base.service.BaseCxfService;
 import com.forsrc.cxf.server.restful.base.vo.Page;
 import com.forsrc.exception.ServiceException;
-import com.forsrc.pojo.Book;
-import com.forsrc.pojo.User;
 import com.forsrc.utils.MyBeanUtils;
 import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,60 +14,19 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.annotation.Resource;
 import javax.jws.WebService;
+import javax.persistence.Transient;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.ws.rs.core.Context;
 import java.io.IOException;
 import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.ParameterizedType;
-import java.util.ArrayList;
 import java.util.List;
 
 @WebService
-public abstract class BaseCxfActionImpl<E, PK extends Serializable> implements BaseCxfAction<E, PK> {
+public abstract class BaseCxfActionImpl<E, PK> implements BaseCxfAction<E, PK> {
 
-    private enum Type {
-        USER("user", User.class),
-        BOOK("book", Book.class);
-
-
-        private String name;
-        private Class<?> cls;
-
-        private Type(String name, Class<?> cls) {
-            this.name = name;
-            this.cls = cls;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public Class<?> getCls() {
-            return cls;
-        }
-
-        public void setCls(Class<?> cls) {
-            this.cls = cls;
-        }
-
-        public static Type nameOf(String name) {
-            Type[] types = Type.values();
-            for (Type type : types) {
-                if (type.getName().equals(name)) {
-                    return type;
-                }
-            }
-            throw new IllegalArgumentException(name);
-        }
-    }
-
-    protected Class<E> entityClass;
+    @Transient
+    transient protected Class<E> entityClass;
 
     public BaseCxfActionImpl() {
         this.entityClass = (Class<E>) ((ParameterizedType) getClass()
@@ -79,21 +36,23 @@ public abstract class BaseCxfActionImpl<E, PK extends Serializable> implements B
 
     @Autowired
     @Resource
-    private BaseCxfService<E, PK> baseCxfService;
+    @Transient
+    transient private BaseCxfService<E, PK> baseCxfService;
 
 
     @Override
     public E get(PK id) throws ServiceException {
-        return baseCxfService.get(entityClass, id);
+        return baseCxfService.get(entityClass, (Serializable) id);
         //return (E) baseCxfService.get(Type.nameOf(name).getCls(), id);
     }
 
     @Override
     public Page<E> list(//@FormParam("start") Integer start
                         //, @FormParam("size") Integer size
-                        HttpServletRequest request
-                        , HttpServletResponse response) throws ServiceException {
-
+                        //HttpServletRequest request
+                        //, HttpServletResponse response
+    ) throws ServiceException {
+        HttpServletRequest request = getHttpServletRequest();
         String startStr = request.getParameter("start");
         String sizeStr = request.getParameter("size");
         int start = startStr != null ? Integer.parseInt(startStr) : 0;

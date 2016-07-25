@@ -13,7 +13,7 @@ import java.util.List;
 
 @Service
 @Transactional
-public interface BaseCxfService <E, PK extends Serializable>{
+public interface BaseCxfService <E, PK>{
 
     @Transactional(propagation = Propagation.NOT_SUPPORTED, readOnly = true)
     public <E> List<E> list(Class<E> cls, Integer start, Integer size) throws ServiceException;

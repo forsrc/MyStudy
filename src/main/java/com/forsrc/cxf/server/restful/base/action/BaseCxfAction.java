@@ -11,12 +11,10 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 @Path(value = "/v1.0/api")
 @WebService
-public interface BaseCxfAction<E, PK extends Serializable> {
+public interface BaseCxfAction<E, PK> {
 
     @GET
     @Path("/{id}")
@@ -30,8 +28,8 @@ public interface BaseCxfAction<E, PK extends Serializable> {
     public Page<E> list(
                         //@FormParam("start") Integer start
                         //, @FormParam("size") Integer size
-                        @Context HttpServletRequest servletRequest
-                        , @Context HttpServletResponse servletResponse
+                        //@Context HttpServletRequest servletRequest
+                        //, @Context HttpServletResponse servletResponse
     ) throws ServiceException;
 
     @POST
