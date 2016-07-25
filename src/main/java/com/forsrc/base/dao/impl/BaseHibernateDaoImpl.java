@@ -49,7 +49,7 @@ public abstract class BaseHibernateDaoImpl<E, PK extends Serializable> extends D
                 .setProjection(Projections.rowCount());
         Object obj = getHibernateTemplate().findByCriteria(criteria).get(0);
         if (obj instanceof Integer) {
-            return (Integer) ((Integer) obj).intValue();
+            return ((Integer) obj).intValue();
         }
         return 0;
     }
@@ -213,12 +213,12 @@ public abstract class BaseHibernateDaoImpl<E, PK extends Serializable> extends D
 
     @Override
     public void flush() {
-        getHibernateTemplate().getSessionFactory().getCurrentSession().flush();
+        getHibernateTemplate().flush();
     }
 
     @Override
     public void clean() {
-        getHibernateTemplate().getSessionFactory().getCurrentSession().clear();
+        getHibernateTemplate().clear();
     }
 
 

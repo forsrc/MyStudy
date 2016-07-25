@@ -10,6 +10,7 @@
     <jaxrs:server id="cxfRestful" address="/restful">
         <jaxrs:serviceBeans>
             <ref bean="cxfRestfulImpl"/>
+            <ref bean="userCxfActionImpl"/>
         </jaxrs:serviceBeans>
         <jaxrs:extensionMappings>
             <entry key="json" value="application/json"/>
@@ -65,6 +66,7 @@
 
 
     <bean id="cxfRestfulImpl" class="com.forsrc.cxf.server.demo.impl.CxfRestfulImpl"/>
+    <bean id="userCxfActionImpl" class="com.forsrc.cxf.server.restful.user.action.impl.UserCxfActionImpl"/>
 
 
 </beans>

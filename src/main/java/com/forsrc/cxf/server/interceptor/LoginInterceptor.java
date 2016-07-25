@@ -80,7 +80,8 @@ public class LoginInterceptor extends AbstractPhaseInterceptor<SoapMessage>
         String password = passwordNodeList.item(0).getTextContent();
 
         User user = new User();
-
+        user.setUsername(username);
+        user.setPassword(password);
 
         try {
             loginService.login(user);

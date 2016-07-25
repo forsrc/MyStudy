@@ -23,8 +23,11 @@ public class UserDaoImpl
         Query query = session.getNamedQuery("hql_user_findByUsername");
         query.setParameter("username", username);
         query.setMaxResults(1);
-
-        return (User) query.uniqueResult();
+        Object obj = query.uniqueResult();
+        if(obj == null){
+            throw new NoSuchUserException(username);
+        }
+        return (User) obj;
     }
 
 

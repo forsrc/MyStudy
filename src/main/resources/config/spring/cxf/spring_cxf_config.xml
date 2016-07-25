@@ -35,6 +35,10 @@
     <bean id="aegisDatabinding"
           class="org.apache.cxf.aegis.databinding.AegisDatabinding" />
 
+    <bean id="webServiceContext" class="org.apache.cxf.jaxws.context.WebServiceContextImpl"/>
+
+
+
 </beans>
 
 
