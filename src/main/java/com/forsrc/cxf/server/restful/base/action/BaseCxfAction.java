@@ -14,32 +14,32 @@ import java.util.List;
 public interface BaseCxfAction<E, PK extends Serializable> {
 
     @GET
-    @Path("/{name}/{id}")
+    @Path("/{id}")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public E get(@PathParam("name") String name, @PathParam("id") PK id) throws ServiceException;
+    public E get(@PathParam("id") PK id) throws ServiceException;
 
     @GET
-    @Path("/{name}")
+    @Path("")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public List<E> list(@PathParam("name") String name, @FormParam("start") Integer start, @FormParam("size") Integer size) throws ServiceException;
+    public List<E> list(@FormParam("start") Integer start, @FormParam("size") Integer size) throws ServiceException;
 
     @POST
-    @Path("/{name}")
+    @Path("")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public E save(@PathParam("name") String name, @BeanParam() E e) throws ServiceException;
+    public E save(@BeanParam() E e) throws ServiceException;
 
     @PUT
-    @Path("/{name}/{id}")
+    @Path("/{id}")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public E update(@PathParam("name") String name, @PathParam("id") PK id, @BeanParam() E e) throws ServiceException;
+    public E update(@PathParam("id") PK id, @BeanParam() E e) throws ServiceException;
 
     @PATCH
-    @Path("/{name}/{id}")
+    @Path("/{id}")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public E patch(@PathParam("name") String name, @PathParam("id") PK id, @BeanParam() E e) throws ServiceException;
+    public E patch(@PathParam("id") PK id, @BeanParam() E e) throws ServiceException;
 
     @DELETE
-    @Path("/{name}/{id}")
-    public void delete(@PathParam("name") String name, @PathParam("id") PK id) throws ServiceException;
+    @Path("/{id}")
+    public void delete(@PathParam("id") PK id) throws ServiceException;
 
 }

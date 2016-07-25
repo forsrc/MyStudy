@@ -79,13 +79,13 @@ public abstract class BaseCxfActionImpl<E, PK extends Serializable> implements B
 
 
     @Override
-    public E get(String name, PK id) throws ServiceException {
+    public E get(PK id) throws ServiceException {
         return baseCxfService.get(entityClass, id);
         //return (E) baseCxfService.get(Type.nameOf(name).getCls(), id);
     }
 
     @Override
-    public List<E> list(String name, Integer start, Integer size) throws ServiceException {
+    public List<E> list(Integer start, Integer size) throws ServiceException {
         return baseCxfService.list(entityClass, start, size);
         //return (List<E>) baseCxfService.list(Type.nameOf(name).getCls(), start, size);
     }
@@ -118,26 +118,26 @@ public abstract class BaseCxfActionImpl<E, PK extends Serializable> implements B
     }
 
     @Override
-    public E save(String name, E e) throws ServiceException {
+    public E save(E e) throws ServiceException {
 
         return (E) baseCxfService.save(e);
     }
 
     @Override
-    public E update(String name, PK id, E e) throws ServiceException {
+    public E update(PK id, E e) throws ServiceException {
 
         return (E) baseCxfService.update(e);
     }
 
     @Override
-    public E patch(String name, PK id, E e) throws ServiceException {
+    public E patch(PK id, E e) throws ServiceException {
 
         return (E) baseCxfService.merge(e);
     }
 
     @Override
-    public void delete(String name, PK id) throws ServiceException {
-        Class cls = Type.nameOf(name).getCls();
+    public void delete(PK id) throws ServiceException {
+        Class cls = entityClass;
         Object obj = null;
         try {
             obj = cls.newInstance();
@@ -166,7 +166,6 @@ public abstract class BaseCxfActionImpl<E, PK extends Serializable> implements B
                 ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         return request;
     }
-
 
 }
 
