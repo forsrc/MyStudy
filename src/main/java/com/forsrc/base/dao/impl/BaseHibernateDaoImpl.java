@@ -51,6 +51,9 @@ public abstract class BaseHibernateDaoImpl<E, PK extends Serializable> extends D
         if (obj instanceof Integer) {
             return ((Integer) obj).intValue();
         }
+        if (obj instanceof Long) {
+            return ((Long) obj).intValue();
+        }
         return 0;
     }
 

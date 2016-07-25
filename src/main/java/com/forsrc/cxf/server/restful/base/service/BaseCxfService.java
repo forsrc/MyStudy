@@ -22,6 +22,9 @@ public interface BaseCxfService <E, PK extends Serializable>{
     public <E, PK extends Serializable> E get(Class<E> cls, PK pk) throws ServiceException;
 
     @Transactional(propagation = Propagation.NOT_SUPPORTED, readOnly = true)
+    public <E> int count(Class<E> cls) throws ServiceException;
+
+    @Transactional(propagation = Propagation.NOT_SUPPORTED, readOnly = true)
     public <E, PK extends Serializable> E load(Class<E> cls, PK pk) throws ServiceException;
 
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = DaoException.class)

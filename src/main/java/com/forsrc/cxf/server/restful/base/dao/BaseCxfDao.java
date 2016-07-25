@@ -15,6 +15,8 @@ public interface BaseCxfDao {
 
     public <E, PK extends Serializable> E get(Class<E> cls, PK pk) throws DaoException;
 
+    public <E> int count(Class<E> cls) throws DaoException;
+
     public <E, PK extends Serializable> E load(Class<E> cls, PK pk) throws DaoException;
 
     public <E> E save(E e) throws DaoException;

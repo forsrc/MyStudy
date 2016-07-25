@@ -20,6 +20,10 @@ public class Book {
 
     private Date updateOn;
 
+    public Book(){
+
+    }
+
     public Long getId() {
         return id;
     }

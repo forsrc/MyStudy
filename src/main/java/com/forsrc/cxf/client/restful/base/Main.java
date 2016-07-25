@@ -1,12 +1,14 @@
 package com.forsrc.cxf.client.restful.base;
 
 
+import com.forsrc.cxf.server.restful.base.vo.Page;
 import com.forsrc.pojo.Book;
 import org.apache.cxf.jaxrs.client.WebClient;
 
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -36,19 +38,19 @@ public class Main {
         book = patch(book);
         System.out.println(book.getAuthor());
         delete(book.getId());
-        List<Book> list = list();
-        System.out.println(list.size());
+        Page<Book> page = list();
+        System.out.println(page.getList().size());
     }
 
-    public static List<Book> list() {
+    public static Page<Book> list() {
         WebClient client = WebClient.create(URL);
-        List<Book> list = client.path("/book")
+        Page page = client.path("/book")
                 .query("start", 0).query("size", 10)
                 .accept(MediaType.APPLICATION_XML_TYPE)
                 .type(MediaType.APPLICATION_XML_TYPE)
-                .get(List.class);
+                .get(Page.class);
 
-        return (List<Book>) list;
+        return page;
     }
 
     public static Book save(Book book) throws IOException {

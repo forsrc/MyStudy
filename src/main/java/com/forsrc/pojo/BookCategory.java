@@ -3,7 +3,7 @@ package com.forsrc.pojo;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Date;
 
-@XmlRootElement(name = "Category")
+@XmlRootElement(name = "BookCategory")
 public class BookCategory {
     private Integer id;
     private String name;
@@ -12,6 +12,10 @@ public class BookCategory {
     private Date createOn;
 
     private Date updateOn;
+
+    public BookCategory(){
+
+    }
 
     public Integer getId() {
         return id;

@@ -1,5 +1,6 @@
 package com.forsrc.cxf.server.restful.base.action;
 
+import com.forsrc.cxf.server.restful.base.vo.Page;
 import com.forsrc.exception.ServiceException;
 import org.apache.cxf.jaxrs.ext.PATCH;
 
@@ -10,6 +11,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 @Path(value = "/v1.0/api")
@@ -24,7 +26,8 @@ public interface BaseCxfAction<E, PK extends Serializable> {
     @GET
     @Path("")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public List<E> list(
+    @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public Page<E> list(
                         //@FormParam("start") Integer start
                         //, @FormParam("size") Integer size
                         @Context HttpServletRequest servletRequest

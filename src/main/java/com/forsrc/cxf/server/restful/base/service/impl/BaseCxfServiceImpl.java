@@ -30,6 +30,11 @@ public class BaseCxfServiceImpl<E, PK extends Serializable> implements BaseCxfSe
     }
 
     @Override
+    public <E> int count(Class<E> cls) throws ServiceException {
+        return getBaseCxfDao().count(cls);
+    }
+
+    @Override
     public <E, PK extends Serializable> E load(Class<E> cls, PK pk) throws ServiceException {
         return getBaseCxfDao().load(cls, pk);
     }

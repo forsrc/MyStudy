@@ -3,6 +3,7 @@ package com.forsrc.cxf.server.restful.base.dao.impl;
 import com.forsrc.cxf.server.restful.base.dao.BaseCxfDao;
 import com.forsrc.exception.DaoException;
 import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Projections;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate5.HibernateOptimisticLockingFailureException;
 import org.springframework.orm.hibernate5.HibernateTemplate;
@@ -32,6 +33,20 @@ public class BaseCxfDaoImpl implements BaseCxfDao {
     @Override
     public <E, PK extends Serializable> E get(Class<E> cls, PK pk) throws DaoException {
         return getHibernateTemplate().get(cls, pk);
+    }
+
+    @Override
+    public <E> int count(Class<E> cls) throws DaoException {
+        DetachedCriteria criteria = DetachedCriteria.forClass(cls)
+                .setProjection(Projections.rowCount());
+        Object obj = getHibernateTemplate().findByCriteria(criteria, 0, 1).get(0);
+        if (obj instanceof Integer) {
+            return ((Integer) obj).intValue();
+        }
+        if (obj instanceof Long) {
+            return ((Long) obj).intValue();
+        }
+        return 0;
     }
 
     @Override

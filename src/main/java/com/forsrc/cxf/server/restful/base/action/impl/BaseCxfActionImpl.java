@@ -4,6 +4,7 @@ package com.forsrc.cxf.server.restful.base.action.impl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.forsrc.cxf.server.restful.base.action.BaseCxfAction;
 import com.forsrc.cxf.server.restful.base.service.BaseCxfService;
+import com.forsrc.cxf.server.restful.base.vo.Page;
 import com.forsrc.exception.ServiceException;
 import com.forsrc.pojo.Book;
 import com.forsrc.pojo.User;
@@ -22,6 +23,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.ParameterizedType;
+import java.util.ArrayList;
 import java.util.List;
 
 @WebService
@@ -87,19 +89,23 @@ public abstract class BaseCxfActionImpl<E, PK extends Serializable> implements B
     }
 
     @Override
-    public List<E> list(//@FormParam("start") Integer start
+    public Page<E> list(//@FormParam("start") Integer start
                         //, @FormParam("size") Integer size
                         HttpServletRequest request
-                        ,HttpServletResponse response) throws ServiceException {
+                        , HttpServletResponse response) throws ServiceException {
 
         String startStr = request.getParameter("start");
         String sizeStr = request.getParameter("size");
         int start = startStr != null ? Integer.parseInt(startStr) : 0;
         int size = sizeStr != null ? Integer.parseInt(sizeStr) : 10;
-
-        return baseCxfService.list(entityClass, start, size);
-        //return (List<E>) baseCxfService.list(Type.nameOf(name).getCls(), start, size);
-    }
+        Page<E> page = new Page<E>();
+        page.setStart(start);
+        page.setSize(size);
+        page.setTotal(baseCxfService.count(entityClass));
+        List<E> list = baseCxfService.list(entityClass, start, size);
+        page.setList(list       );
+        return page;
+      }
 
     private E getBean(Class cls, byte[] bytes) throws ServiceException {
         ObjectMapper objectMapper = new ObjectMapper();
