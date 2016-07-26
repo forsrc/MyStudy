@@ -5,12 +5,9 @@ import com.forsrc.exception.ServiceException;
 import org.apache.cxf.jaxrs.ext.PATCH;
 
 import javax.jws.WebService;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.*;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
-import java.io.Serializable;
+import javax.ws.rs.core.Response;
 
 @Path(value = "/v1.0/api")
 @WebService
@@ -49,6 +46,6 @@ public interface BaseCxfAction<E, PK> {
 
     @DELETE
     @Path("/{id}")
-    public void delete(@PathParam("id") PK id) throws ServiceException;
+    public Response delete(@PathParam("id") PK id) throws ServiceException;
 
 }

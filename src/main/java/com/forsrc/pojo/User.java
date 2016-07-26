@@ -3,6 +3,7 @@ package com.forsrc.pojo;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.forsrc.lucene.IndexWhenPublishedInterceptor;
 import com.forsrc.utils.JsonSerializerDate;
+import com.forsrc.utils.XmlAdapterDate;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.SelectBeforeUpdate;
@@ -12,6 +13,7 @@ import org.wltea.analyzer.lucene.IKAnalyzer;
 
 import javax.persistence.Id;
 import javax.xml.bind.annotation.*;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.util.Date;
 
 
@@ -25,7 +27,7 @@ import java.util.Date;
 @XmlAccessorType(XmlAccessType.FIELD)
 @DynamicUpdate(true)
 @DynamicInsert(true)
-@SelectBeforeUpdate(true)
+@SelectBeforeUpdate(false)
 public class User implements java.io.Serializable {
 
 
@@ -37,6 +39,7 @@ public class User implements java.io.Serializable {
     @XmlElement(name = "id")
     private Long id;
 
+    @XmlJavaTypeAdapter(XmlAdapterDate.class)
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     //@JsonSerialize(using = JsonSerializerTimestamp.class)
     @JsonSerialize(using = JsonSerializerDate.class)
@@ -44,6 +47,7 @@ public class User implements java.io.Serializable {
     private Date createOn;
 
 
+    @XmlJavaTypeAdapter(XmlAdapterDate.class)
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonSerialize(using = JsonSerializerDate.class)
     @Field(index = Index.NO, analyze = Analyze.NO, store = Store.YES)

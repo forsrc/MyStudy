@@ -18,6 +18,12 @@ public class DateTimeUtils {
     public static final String FORMAT_DATE = "yyyy-MM-dd";
     public static final String FORMAT_TIME = "HH:mm:ss";
 
+    public static final SimpleDateFormat SDF_FORMAT = new SimpleDateFormat(FORMAT);
+    public static final SimpleDateFormat SDF_FORMAT_DATE_TIME = new SimpleDateFormat(FORMAT_DATE_TIME);
+    public static final SimpleDateFormat SDF_FORMAT_DATE = new SimpleDateFormat(FORMAT_DATE);
+    public static final SimpleDateFormat SDF_FORMAT_TIME = new SimpleDateFormat(FORMAT_TIME);
+
+
     /**
      * @param @return
      * @return String
@@ -26,10 +32,7 @@ public class DateTimeUtils {
      * @Description:
      */
     public static String getDateTime() {
-        // Calendar calendar = Calendar.getInstance();
-        SimpleDateFormat sdf = new SimpleDateFormat(FORMAT);
-        // return sdf.format(calendar.getTime());
-        return sdf.format(new Date());
+        return SDF_FORMAT.format(new Date());
     }
 
     /**
@@ -74,7 +77,7 @@ public class DateTimeUtils {
         // Calendar calendar = Calendar.getInstance();
         SimpleDateFormat sdf = new SimpleDateFormat(FORMAT);
         // return sdf.format(calendar.getTime());
-        return sdf.format(date);
+        return SDF_FORMAT.format(date);
     }
 
     public static String getDateTime(Date today, int index, String format) {
@@ -241,13 +244,13 @@ public class DateTimeUtils {
     }
 
 
-    public static Date format(String format, String date) throws ParseException {
+    public static String format(String format, Date date) throws ParseException {
         SimpleDateFormat sdf = new SimpleDateFormat(format);
-        try {
-            return sdf.parse(date);
-        } catch (ParseException e) {
-            throw e;
-        }
+        return sdf.format(date);
+    }
+
+    public static String format(Date date) throws ParseException {
+        return SDF_FORMAT.format(date);
     }
 
     public static Date parse(String format, String date) throws ParseException {
@@ -258,33 +261,34 @@ public class DateTimeUtils {
         Matcher matcher = pattern.matcher(date);
 
         if (matcher.matches()) {
-            return DateTimeUtils.format(FORMAT_DATE_TIME, date);
+            return SDF_FORMAT.parse(date);
         }
 
         pattern = Pattern.compile("^\\d{4}\\-\\d{2}\\-\\d{2}$");
         matcher = pattern.matcher(date);
 
         if (matcher.matches()) {
-            return DateTimeUtils.format(FORMAT_DATE, date);
+            return SDF_FORMAT_DATE.parse(date);
         }
 
         pattern = Pattern.compile("^\\d{2}\\:\\d{2}\\:\\d{2}$");
         matcher = pattern.matcher(date);
 
         if (matcher.matches()) {
-            return DateTimeUtils.format(FORMAT_TIME, date);
+            return SDF_FORMAT_TIME.parse(date);
         }
 
         pattern = Pattern.compile("^\\d+$");
         matcher = pattern.matcher(date);
-
         Date d = null;
         if (matcher.matches()) {
             long time = Long.parseLong(date);
             d = new Date(time);
             return d;
         }
-        throw new ParseException(date, 0);
+
+        SimpleDateFormat sdf = new SimpleDateFormat(format);
+        return sdf.parse(date);
     }
 
     public static Date parse(String date) throws ParseException {

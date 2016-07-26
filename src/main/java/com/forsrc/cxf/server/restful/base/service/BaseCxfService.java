@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @Transactional
@@ -38,6 +39,10 @@ public interface BaseCxfService <E, PK>{
 
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = DaoException.class)
     public <E> void delete(E e) throws ServiceException;
+
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = DaoException.class)
+    public <E, PK extends Serializable> void delete(Class<E> cls, PK id, final Map<String, Object> where) throws ServiceException;
+
 
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = DaoException.class)
     public void clean();

@@ -182,7 +182,7 @@ public class MyBeanUtils {
 
     public static <ENTITY> ENTITY getBean(final Class<ENTITY> clazz, final Map<String, Object> map)
             throws IllegalAccessException, InstantiationException, InvocationTargetException {
-
+        dateConvert();
         ENTITY obj = clazz.newInstance();
         BeanUtils.populate(obj, map);
         /*Iterator<Map.Entry<String, Object>> it = map.entrySet().iterator();
@@ -212,29 +212,69 @@ public class MyBeanUtils {
         return (ENTITY) obj;
     }
 
+    public synchronized static void dateConvert() {
+        ConvertUtils.deregister(Date.class);
+        ConvertUtils.register(new Converter() {
+            public Object convert(Class type, Object value) {
+                if (value instanceof String && type == Date.class) {
+                    try {
+                        return DateTimeUtils.parse(value.toString());
+                    } catch (ParseException e) {
+                        return value;
+                    }
+                }
+                if (type == String.class && value instanceof Date) {
+                    try {
+                        return DateTimeUtils.format(FORMAT, (Date) value);
+                    } catch (ParseException e) {
+                        return value;
+                    }
+                }
+                return value;
+            }
+        }, Date.class);
+        ConvertUtils.deregister(Timestamp.class);
+        ConvertUtils.register(new Converter() {
+            public Object convert(Class type, Object value) {
+                if (value instanceof String && type == Timestamp.class) {
+                    try {
+                        return new Timestamp(DateTimeUtils.parse(value.toString()).getTime());
+                    } catch (ParseException e) {
+                        return value;
+                    }
+                }
+                if (type == String.class && value instanceof Timestamp) {
+                    try {
+                        return DateTimeUtils.format(FORMAT, (Timestamp) value);
+                    } catch (ParseException e) {
+                        return value;
+                    }
+                }
+                return value;
+            }
+        }, Timestamp.class);
+
+    }
+
     public synchronized static void dateConvert(final String format) {
         ConvertUtils.deregister(Date.class);
         ConvertUtils.register(new Converter() {
             DateFormat df = new SimpleDateFormat(format);
 
             public Object convert(Class type, Object value) {
-                if (value instanceof String) {
-                    String d = (String) value;
-                    Date date = null;
-                    if (d.length() < format.length()) {
-                        DateFormat df = new SimpleDateFormat(FORMAT_DATE);
-                    }
+                if (value instanceof String && type == Date.class) {
                     try {
-                        date = df.parse(d);
+                        return DateTimeUtils.parse(format, value.toString());
                     } catch (ParseException e) {
-                        throw new IllegalArgumentException(e.getMessage());
+                        return value;
                     }
-
-                    return date;
                 }
-                if (type.getClass().getName().equals(String.class.getName())) {
-                    String date = df.format(value);
-                    return date;
+                if (type == String.class && value instanceof Date) {
+                    try {
+                        return DateTimeUtils.format(format, (Date) value);
+                    } catch (ParseException e) {
+                        return value;
+                    }
                 }
                 return value;
             }
@@ -244,21 +284,19 @@ public class MyBeanUtils {
             DateFormat df = new SimpleDateFormat(format);
 
             public Object convert(Class type, Object value) {
-                if (value instanceof String) {
-                    String d = (String) value;
-                    Date date = null;
-
+                if (value instanceof String && type == Timestamp.class) {
                     try {
-                        date = df.parse(d);
+                        return new Timestamp(DateTimeUtils.parse(format, value.toString()).getTime());
                     } catch (ParseException e) {
-                        throw new IllegalArgumentException(e.getMessage());
+                        return value;
                     }
-
-                    return new Timestamp(date.getTime());
                 }
-                if (type.getClass().getName().equals(String.class.getName())) {
-                    String date = df.format(new Date(((Timestamp) value).getTime()));
-                    return date;
+                if (type == String.class && value instanceof Timestamp) {
+                    try {
+                        return DateTimeUtils.format(format, (Timestamp) value);
+                    } catch (ParseException e) {
+                        return value;
+                    }
                 }
                 return value;
             }

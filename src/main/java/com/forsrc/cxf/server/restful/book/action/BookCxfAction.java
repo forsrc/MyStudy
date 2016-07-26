@@ -13,7 +13,7 @@ import java.io.Serializable;
 import java.util.List;
 
 @Path(value = "/v1.0/api/book")
-@WebService
+@WebService(name = "bookCxfService", targetNamespace = "http://com.forsrc.cxf.server.restful.book.action/")
 public interface BookCxfAction extends BaseCxfAction<Book, Long>{
 
 

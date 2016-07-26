@@ -1,9 +1,15 @@
 package com.forsrc.pojo;
 
+import com.forsrc.utils.XmlAdapterDate;
+
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.util.Date;
 
 @XmlRootElement(name = "Book")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Book {
 
     private Long id;
@@ -16,8 +22,12 @@ public class Book {
 
     private Long categoryId;
 
+    private int version;
+
+    @XmlJavaTypeAdapter(XmlAdapterDate.class)
     private Date createOn;
 
+    @XmlJavaTypeAdapter(XmlAdapterDate.class)
     private Date updateOn;
 
     public Book(){
@@ -30,6 +40,14 @@ public class Book {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public int getVersion() {
+        return version;
+    }
+
+    public void setVersion(int version) {
+        this.version = version;
     }
 
     public String getIsbnNumber() {

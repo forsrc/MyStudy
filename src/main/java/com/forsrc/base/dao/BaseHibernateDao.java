@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public interface BaseHibernateDao<E, PK extends Serializable> extends BaseDaoEntityClassHandler<E> {
@@ -35,6 +36,8 @@ public interface BaseHibernateDao<E, PK extends Serializable> extends BaseDaoEnt
     public E merge(E e) throws DaoException, HibernateOptimisticLockingFailureException;
 
     public void delete(E e) throws DaoException;
+
+    public void delete(PK id, final Map<String, Object> where) throws DaoException;
 
     public void delete(List<E> list) throws DaoException;
 

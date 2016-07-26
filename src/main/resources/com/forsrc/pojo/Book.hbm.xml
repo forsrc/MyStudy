@@ -8,12 +8,12 @@
             <column name="id"/>
             <generator class="increment"/>
         </id>
-        <!--<version name="version" column="version" type="int"></version>-->
+        <version name="version" column="version" type="integer"></version>
         <!--
         <timestamp name="updateOn" column="update_on" generated="always" source="vm"></timestamp>
         -->
         <property name="updateOn" type="java.util.Date">
-            <column name="update_on" default="CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP" not-null="true"/>
+            <column name="update_on" default="CURRENT_TIMESTAMP" not-null="true"/>
         </property>
 
 
@@ -43,30 +43,30 @@
         <![CDATA[
              INSERT INTO
                             my_study_book
-                            (id, name, isbn_number, author, category_id, create_on, update_on)
+                            (id, name, isbn_number, author, category_id, create_on, update_on, version)
              VALUES
-                            (1, 'Java 1', '001', 'forsrc', 1, '2016-07-07 12:00:00', '2016-07-07 13:00:00')
+                            (1, 'Java 1', '001', 'forsrc', 1, '2016-07-07 12:00:00', '2016-07-07 13:00:00', 1)
              ;
 
              INSERT INTO
                             my_study_book
-                            (id, name, isbn_number, author, category_id, create_on, update_on)
+                            (id, name, isbn_number, author, category_id, create_on, update_on, version)
              VALUES
-                            (2, 'Java 2', '002', 'forsrc', 1, '2016-07-07 12:00:00', '2016-07-07 13:00:00')
+                            (2, 'Java 2', '002', 'forsrc', 1, '2016-07-07 12:00:00', '2016-07-07 13:00:00', 1)
              ;
 
              INSERT INTO
                             my_study_book
-                            (id, name, isbn_number, author, category_id, create_on, update_on)
+                            (id, name, isbn_number, author, category_id, create_on, update_on, version)
              VALUES
-                            (3, 'JavaScript 1', '101', 'forsrc', 2, '2016-07-07 12:00:00', '2016-07-07 13:00:00')
+                            (3, 'JavaScript 1', '101', 'forsrc', 2, '2016-07-07 12:00:00', '2016-07-07 13:00:00', 1)
              ;
 
              INSERT INTO
                             my_study_book
-                            (id, name, isbn_number, author, category_id, create_on, update_on)
+                            (id, name, isbn_number, author, category_id, create_on, update_on, version)
              VALUES
-                            (4, 'JavaScript 2', '102', 'forsrc', 1, '2016-07-07 12:00:00', '2016-07-07 13:00:00')
+                            (4, 'JavaScript 2', '102', 'forsrc', 1, '2016-07-07 12:00:00', '2016-07-07 13:00:00', 1)
              ;
 
          ]]>
@@ -75,7 +75,7 @@
     <sql-query name="sql_book_findByName" read-only="true">
         <![CDATA[
              SELECT
-                    b.id, b.name, b.isbn_number, b.author, b.create_on, b.update_on
+                    b.id, b.name, b.isbn_number, b.author, b.create_on, b.update_on, version
              FROM
                     my_study_book b
              WHERE

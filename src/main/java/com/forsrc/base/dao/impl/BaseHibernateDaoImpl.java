@@ -5,6 +5,7 @@ import com.forsrc.base.dao.BaseHibernateDao;
 import com.forsrc.exception.DaoException;
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.HibernateException;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.DetachedCriteria;
@@ -12,6 +13,7 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.support.DaoSupport;
+import org.springframework.orm.hibernate5.HibernateCallback;
 import org.springframework.orm.hibernate5.HibernateOptimisticLockingFailureException;
 import org.springframework.orm.hibernate5.HibernateTemplate;
 import org.springframework.stereotype.Repository;
@@ -19,7 +21,9 @@ import org.springframework.stereotype.Repository;
 import javax.annotation.Resource;
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public abstract class BaseHibernateDaoImpl<E, PK extends Serializable> extends DaoSupport implements BaseHibernateDao<E, PK> {
@@ -205,6 +209,35 @@ public abstract class BaseHibernateDaoImpl<E, PK extends Serializable> extends D
     }
 
     @Override
+    public void delete(final PK id, final Map<String, Object> where) throws DaoException {
+        getHibernateTemplate().execute(new HibernateCallback<PK>() {
+            @Override
+            public PK doInHibernate(Session session) throws HibernateException {
+                StringBuilder hql = new StringBuilder("DELETE ")
+                        .append(getEntityClass().toString())
+                        .append(" e ")
+                        .append(" WHERE id = :id ");
+
+                for (String str : where.keySet()) {
+                    hql.append(" and ").append(str).append(" = :").append(str);
+                }
+
+
+                Query query = session.createQuery(hql.toString());
+
+                Iterator<Map.Entry<String, Object>> it = where.entrySet().iterator();
+                while (it.hasNext()) {
+                    Map.Entry<String, Object> entry = it.next();
+                    query.setParameter(entry.getKey(), entry.getValue());
+                }
+
+                query.executeUpdate();
+                return id;
+            }
+        });
+    }
+
+    @Override
     public E get(PK pk) throws DaoException {
         return getHibernateTemplate().get(getEntityClass(), pk);
     }
@@ -229,5 +262,6 @@ public abstract class BaseHibernateDaoImpl<E, PK extends Serializable> extends D
     public void delete(List<E> list) {
         getHibernateTemplate().deleteAll(list);
     }
+
 
 }

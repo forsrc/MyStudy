@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
 @Service(value = "baseCxfService")
 @Transactional
@@ -57,6 +58,11 @@ public class BaseCxfServiceImpl<E, PK extends Serializable> implements BaseCxfSe
     @Override
     public <E> void delete(E e) throws ServiceException {
         getBaseCxfDao().delete(e);
+    }
+
+    @Override
+    public <E, PK extends Serializable> void delete(Class<E> cls, PK id, final Map<String, Object> where) throws ServiceException {
+        getBaseCxfDao().delete(cls, id, where);
     }
 
     @Override

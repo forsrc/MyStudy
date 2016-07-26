@@ -7,8 +7,8 @@ import com.forsrc.cxf.server.restful.base.service.BaseCxfService;
 import com.forsrc.cxf.server.restful.base.vo.Page;
 import com.forsrc.exception.ServiceException;
 import com.forsrc.utils.MyBeanUtils;
-import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -16,11 +16,14 @@ import javax.annotation.Resource;
 import javax.jws.WebService;
 import javax.persistence.Transient;
 import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.core.Response;
 import java.io.IOException;
 import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.ParameterizedType;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @WebService
 public abstract class BaseCxfActionImpl<E, PK> implements BaseCxfAction<E, PK> {
@@ -66,7 +69,7 @@ public abstract class BaseCxfActionImpl<E, PK> implements BaseCxfAction<E, PK> {
         return page;
       }
 
-    private E getBean(Class cls, byte[] bytes) throws ServiceException {
+    private E getBean(Class<E> cls, byte[] bytes) throws ServiceException {
         ObjectMapper objectMapper = new ObjectMapper();
         E obj = null;
         try {
@@ -77,11 +80,11 @@ public abstract class BaseCxfActionImpl<E, PK> implements BaseCxfAction<E, PK> {
         return obj;
     }
 
-    private E getBean(Class cls) throws ServiceException {
+    private E getBean(Class<E> cls) throws ServiceException {
         E obj = null;
         HttpServletRequest request = getHttpServletRequest();
         try {
-            obj = (E)MyBeanUtils.getBean(cls, request);
+            obj = MyBeanUtils.getBean(cls, request);
         } catch (IllegalAccessException e) {
             throw new ServiceException(e);
         } catch (InvocationTargetException e) {
@@ -112,21 +115,39 @@ public abstract class BaseCxfActionImpl<E, PK> implements BaseCxfAction<E, PK> {
     }
 
     @Override
-    public void delete(PK id) throws ServiceException {
-        Class cls = entityClass;
-        Object obj = null;
+    public Response delete(PK id) throws ServiceException {
+        HttpServletRequest request = getHttpServletRequest();
+        /*Class<E> cls = entityClass;
+        E obj = null;
+
         try {
             obj = cls.newInstance();
             BeanUtils.setProperty(obj, "id", id);
+            BeanUtils.setProperty(obj, "version", request.getParameter("version"));
+            *//*E e = MyBeanUtils.getBean(cls, request);
+            obj = baseCxfService.get(cls, (Serializable) id);
+            MyBeanUtils.copyProperties(obj, e, true);*//*
         } catch (InstantiationException e) {
             e.printStackTrace();
+            return Response.ok(e.getMessage()).status(Response.Status.BAD_REQUEST).build();
         } catch (IllegalAccessException e) {
             e.printStackTrace();
+            return Response.ok(e.getMessage()).status(Response.Status.BAD_REQUEST).build();
         } catch (InvocationTargetException e) {
             e.printStackTrace();
-        }
+            return Response.ok(e.getMessage()).status(Response.Status.BAD_REQUEST).build();
+        }*/
 
-        baseCxfService.delete(obj);
+        Map<String, Object> where = new HashMap<String, Object>(2);
+        where.put("id", id);
+        where.put("version", Integer.parseInt(request.getParameter("version")));
+        try {
+            baseCxfService.delete(entityClass, (Serializable) id, where);
+        } catch (DataIntegrityViolationException de) {
+            de.printStackTrace();
+            return Response.ok(de.getMessage()).status(Response.Status.BAD_REQUEST).build();
+        }
+        return Response.ok().build();
     }
 
     public BaseCxfService getBaseCxfService() {
