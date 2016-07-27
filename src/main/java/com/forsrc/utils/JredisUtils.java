@@ -57,8 +57,28 @@ public class JredisUtils {
 
 
     public ShardedJedis getShardedJedis(ShardedJedisPool pool) {
-        ShardedJedis jedis = pool.getResource();
+        ShardedJedis jedis = _shardedJedis.get();
+        if (jedis == null) {
+            synchronized (JredisUtils.class) {
+                if (jedis == null) {
+                    jedis = pool.getResource();
+                    _shardedJedis.set(jedis);
+                }
+            }
+        }
         return jedis;
+    }
+
+    public void close() {
+        ShardedJedis jedis = getShardedJedis();
+        if (jedis == null) {
+            synchronized (JredisUtils.class) {
+                if (jedis != null) {
+                    jedis.close();
+                    _shardedJedis.remove();
+                }
+            }
+        }
     }
 
     public ShardedJedis getShardedJedis() {
@@ -115,52 +135,43 @@ public class JredisUtils {
         return k;
     }
 
-    public final void handle(final Callback<ShardedJedis> callback) throws JredisUtilsException {
+    public final JredisUtils handle(final Callback<ShardedJedis> callback) throws JredisUtilsException {
         ShardedJedis shardedJedis = getShardedJedis();
+
         try {
             callback.handle(shardedJedis);
         } catch (Exception e) {
+            close();
             throw new JredisUtilsException(e);
         } finally {
-            shardedJedis.close();
+
         }
+        return this;
     }
 
-    public final void handle(final String namespace, final String type, final String key, final CallbackHandler<ShardedJedis> callback) throws JredisUtilsException {
+    public final JredisUtils handle(final String namespace, final String type, final String key, final CallbackHandler<ShardedJedis> callback) throws JredisUtilsException {
         ShardedJedis shardedJedis = getShardedJedis();
         final String k = formatKey(namespace, KEY_TYPE_STRING, key);
         try {
             callback.handle(k, shardedJedis);
         } catch (Exception e) {
+            close();
             throw new JredisUtilsException(e);
         } finally {
-            shardedJedis.close();
+
         }
+        return this;
     }
 
     public static final void call(final String namespace, final String type, final String key, final CallbackHandler<ShardedJedis> callback) throws JredisUtilsException {
         JredisUtils jredisUtils = JredisUtils.getInstance();
         final String k = jredisUtils.formatKey(namespace, KEY_TYPE_STRING, key);
-        final ShardedJedis shardedJedis = jredisUtils.getShardedJedis();
-        try {
-            jredisUtils.handle(namespace, type, key, callback);
-        } catch (Exception e) {
-            throw new JredisUtilsException(e);
-        } finally {
-            shardedJedis.close();
-        }
+        jredisUtils.handle(namespace, type, key, callback);
     }
 
     public static final <T> void call(final Callback<ShardedJedis> callback) throws JredisUtilsException {
         JredisUtils jredisUtils = JredisUtils.getInstance();
-        final ShardedJedis shardedJedis = jredisUtils.getShardedJedis();
-        try {
-            jredisUtils.handle(callback);
-        } catch (Exception e) {
-            throw new JredisUtilsException(e);
-        } finally {
-            shardedJedis.close();
-        }
+        jredisUtils.handle(callback);
     }
 
     public static interface Callback<T> {
