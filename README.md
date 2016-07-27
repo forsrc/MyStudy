@@ -2,7 +2,7 @@
 see https://github.com/forsrc/MyStudy
 see http://git.oschina.net/forsrc/MyStudy
 
-* Server: Springmvc(REST) + Spring4 + Hibernate5 + cxf(REST) + Activiti5 + ActiveMQ5 + ...
+* Server: Springmvc(REST) + Spring4 + Hibernate5 + cxf(REST) + Activiti5 + ActiveMQ5 + Rdis (NoSql DB) + MySQL + Ehcache + Freemaker...
 * Clinet: cordova(Android/Blackberry 10/iOS/OS X/Ubuntu/Windows/WP8)
           HTML + CSS + JavaScript + JQuery + cordova + bootstrap + bootstrap-material-design + ...
 
@@ -77,6 +77,19 @@ You must have Java installed on your machine, and optionally [Graphviz](http://w
 
 #### see http://plantuml.com/
 #### see http://www.graphviz.org/
+
+### 4. Redis
+Redis is an open source (BSD licensed), in-memory data structure store, used as database, cache and message broker. It supports data structures such as strings, hashes, lists, sets, sorted sets with range queries, bitmaps, hyperloglogs and geospatial indexes with radius queries. Redis has built-in replication, Lua scripting, LRU eviction, transactions and different levels of on-disk persistence, and provides high availability via Redis Sentinel and automatic partitioning with Redis Cluster.
+
+* Download ``` redis-3.2.1.tar.gz ```
+* $ ``` cd redis-3.2.1 ```
+* $ ``` make && make install```
+* $ ``` cd src```
+* $ ``` redis-server ../src/redis.conf ```
+
+#### see http://redis.io/
+
+
 ----
 
 ### Springmvc4
