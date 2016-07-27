@@ -20,6 +20,7 @@ import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.security.SecureRandom;
@@ -187,7 +188,7 @@ public final class MyRsaUtils {
         return bigIntegers2String(bigIntegers);
     }
 
-    public static class RsaKey {
+    public static class RsaKey implements Serializable {
 
         public static final BigInteger DEF_E =  new BigInteger("65537");
 
@@ -196,32 +197,32 @@ public final class MyRsaUtils {
         /**
          * @Fields coeff : coefficient ; (inverse of q) mod p
          */
-        private BigInteger coeff;
+        transient private BigInteger coeff;
 
         /**
          * @Fields d : private exponent; d = (publicKey^-1) * mod(phi)
          */
-        private BigInteger d;
+        transient private BigInteger d;
 
         /**
          * @Fields dmp1 : dmp1 = d mod (p-1)
          */
-        private BigInteger dmp1;
+        transient private BigInteger dmp1;
 
         /**
          * @Fields dmq1 : dmq1 = d mod (q-1)
          */
-        private BigInteger dmq1;
+        transient private BigInteger dmq1;
 
         /**
          * @Fields e : public exponent; e = common prime = 2^16 + 1 = 65537
          */
-        private BigInteger e; //65537
+        transient private BigInteger e; //65537
 
         /**
          * @Fields iqmp : q^-1 mod p
          */
-        private BigInteger iqmp;
+        transient private BigInteger iqmp;
 
         /**
          * @Fields n : public modulus; n = p*q
@@ -231,12 +232,12 @@ public final class MyRsaUtils {
         /**
          * @Fields p : secret prime factor; generating a big prime number (bits)
          */
-        private BigInteger p;
+        transient private BigInteger p;
 
         /**
          * @Fields phi : phi = (p -1)*(q - 1)
          */
-        private BigInteger phi;
+        transient private BigInteger phi;
 
         private BigInteger privateKey;
 

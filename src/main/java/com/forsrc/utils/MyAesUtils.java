@@ -28,8 +28,12 @@ import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 import java.io.IOException;
+import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
-import java.security.*;
+import java.security.InvalidAlgorithmParameterException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.security.Security;
 import java.text.MessageFormat;
 
 /**
@@ -145,7 +149,7 @@ public final class MyAesUtils {
         }
     }
 
-    public static class AesKey {
+    public static class AesKey implements Serializable {
 
         private static final String CIPHER_KEY = "AES/CBC/PKCS7Padding";
 

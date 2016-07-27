@@ -23,6 +23,7 @@ import sun.misc.BASE64Encoder;
 import javax.crypto.*;
 import javax.crypto.spec.DESKeySpec;
 import java.io.IOException;
+import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
@@ -167,7 +168,7 @@ public final class MyDesUtils {
         }
     }
 
-    public static class DesKey {
+    public static class DesKey implements Serializable {
 
         private static final String CIPHER_KEY = "DES";
 

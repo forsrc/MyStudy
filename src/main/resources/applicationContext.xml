@@ -31,6 +31,7 @@
     <import resource="config/spring/beans/spring_beans_*.xml"/>
     <import resource="config/spring/hibernatesearch/spring_hibernate_search.xml"/>
     <import resource="config/spring/ehcache/spring_ehcache.xml"/>
+    <import resource="config/spring/redis/spring_redis.xml"/>
     <import resource="config/spring/cxf/spring_cxf.xml"/>
 
 </beans>

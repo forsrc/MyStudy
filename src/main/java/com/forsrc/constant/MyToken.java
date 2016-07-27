@@ -5,10 +5,11 @@ import com.forsrc.utils.MyAesUtils;
 import com.forsrc.utils.MyDesUtils;
 import com.forsrc.utils.MyRsaUtils;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.UUID;
 
-public class MyToken {
+public class MyToken implements Serializable {
     private String loginToken;
     private long loginTokenTime = -1;
     private String token;
