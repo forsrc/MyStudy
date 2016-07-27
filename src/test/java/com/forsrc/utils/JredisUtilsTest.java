@@ -91,7 +91,8 @@ public class JredisUtilsTest {
                         public void handle(final String s) {
                             assertEquals("77", s);
                         }
-                    }).close();
+                    })
+                    .close();
         } catch (JredisUtils.JredisUtilsException e) {
             e.printStackTrace();
             fail(e.getMessage());
@@ -115,7 +116,8 @@ public class JredisUtilsTest {
                                     public void handle(final String s) {
                                         assertEquals("77", s);
                                     }
-                                }).close();
+                                })
+                                .close();
                     } catch (JredisUtils.JredisUtilsException e) {
                         e.printStackTrace();
                         fail(e.getMessage());

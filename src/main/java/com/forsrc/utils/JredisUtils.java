@@ -6,6 +6,8 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import redis.clients.jedis.ShardedJedis;
 import redis.clients.jedis.ShardedJedisPool;
 
+import java.text.MessageFormat;
+
 public class JredisUtils {
 
     public static final String KEY_TYPE_STRING = "/STRING/";
@@ -90,8 +92,12 @@ public class JredisUtils {
         ShardedJedis shardedJedis = getShardedJedis();
         handle(new Callback<ShardedJedis>() {
             @Override
-            public void handle(ShardedJedis shardedJedis) {
-                shardedJedis.set(k, value);
+            public void handle(ShardedJedis shardedJedis) throws JredisUtilsException {
+                String statusCodeReply = shardedJedis.set(k, value);
+                if (!"OK".equalsIgnoreCase(statusCodeReply)) {
+                    throw new JredisUtilsException(statusCodeReply);
+                }
+
             }
         });
         return this;
@@ -102,7 +108,7 @@ public class JredisUtils {
         ShardedJedis shardedJedis = getShardedJedis();
         handle(new Callback<ShardedJedis>() {
             @Override
-            public void handle(ShardedJedis shardedJedis) {
+            public void handle(ShardedJedis shardedJedis) throws JredisUtilsException {
                 String value = shardedJedis.get(k);
                 callback.handle(value);
             }
@@ -116,8 +122,12 @@ public class JredisUtils {
         ShardedJedis shardedJedis = getShardedJedis();
         handle(new Callback<ShardedJedis>() {
             @Override
-            public void handle(ShardedJedis shardedJedis) {
-                shardedJedis.del(k);
+            public void handle(ShardedJedis shardedJedis) throws JredisUtilsException {
+                Long integerReply = shardedJedis.del(k);
+                if (integerReply == null || integerReply < 0) {
+                    throw new JredisUtilsException(
+                            MessageFormat.format("Delete key '{0}' integerReply: {1}", key, integerReply));
+                }
             }
         });
         return this;
@@ -175,11 +185,11 @@ public class JredisUtils {
     }
 
     public static interface Callback<T> {
-        public void handle(final T t);
+        public void handle(final T t) throws JredisUtilsException;
     }
 
     public static interface CallbackHandler<T> {
-        public void handle(final String key, final T t);
+        public void handle(final String key, final T t) throws JredisUtilsException;
     }
 
 
