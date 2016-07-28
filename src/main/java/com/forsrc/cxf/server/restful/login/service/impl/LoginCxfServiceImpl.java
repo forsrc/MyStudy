@@ -4,6 +4,7 @@ package com.forsrc.cxf.server.restful.login.service.impl;
 import com.forsrc.cxf.server.restful.login.service.LoginCxfService;
 import com.forsrc.exception.NoSuchUserException;
 import com.forsrc.exception.PasswordNotMatchException;
+import com.forsrc.exception.ServiceException;
 import com.forsrc.pojo.User;
 import com.forsrc.springmvc.restful.login.service.LoginService;
 import org.apache.cxf.interceptor.Fault;
@@ -27,7 +28,7 @@ public class LoginCxfServiceImpl implements LoginCxfService{
 
 
     @Override
-    public void login(SOAPMessage soapMessage) throws SOAPException, NoSuchUserException, PasswordNotMatchException {
+    public void login(SOAPMessage soapMessage) throws SOAPException, ServiceException {
 
         SOAPHeader head = null;
         try {
@@ -53,6 +54,8 @@ public class LoginCxfServiceImpl implements LoginCxfService{
         } catch (NoSuchUserException e) {
             throw e;
         } catch (PasswordNotMatchException e) {
+            throw e;
+        } catch (ServiceException e) {
             throw e;
         }
 

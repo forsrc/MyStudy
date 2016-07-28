@@ -3,6 +3,7 @@ package com.forsrc.cxf.server.interceptor;
 
 import com.forsrc.exception.NoSuchUserException;
 import com.forsrc.exception.PasswordNotMatchException;
+import com.forsrc.exception.ServiceException;
 import com.forsrc.pojo.User;
 import com.forsrc.springmvc.restful.login.service.LoginService;
 import org.apache.cxf.binding.soap.SoapMessage;
@@ -89,6 +90,9 @@ public class LoginInterceptor extends AbstractPhaseInterceptor<SoapMessage>
             SOAPException soapExc = new SOAPException(e.getMessage());
             throw new Fault(soapExc);
         } catch (PasswordNotMatchException e) {
+            SOAPException soapExc = new SOAPException(e.getMessage());
+            throw new Fault(soapExc);
+        } catch (ServiceException e) {
             SOAPException soapExc = new SOAPException(e.getMessage());
             throw new Fault(soapExc);
         }

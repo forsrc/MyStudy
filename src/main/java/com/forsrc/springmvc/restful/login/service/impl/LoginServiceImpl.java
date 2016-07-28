@@ -3,20 +3,18 @@ package com.forsrc.springmvc.restful.login.service.impl;
 
 import com.forsrc.exception.NoSuchUserException;
 import com.forsrc.exception.PasswordNotMatchException;
+import com.forsrc.exception.ServiceException;
 import com.forsrc.pojo.User;
 import com.forsrc.springmvc.restful.login.service.LoginService;
 import com.forsrc.springmvc.restful.user.dao.UserDao;
 import com.forsrc.utils.AesUtils;
-import org.apache.cxf.interceptor.Fault;
+import com.forsrc.utils.JredisUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.w3c.dom.NodeList;
+import redis.clients.jedis.ShardedJedis;
 
 import javax.annotation.Resource;
-import javax.xml.soap.SOAPException;
-import javax.xml.soap.SOAPHeader;
-import javax.xml.soap.SOAPMessage;
 
 @Service(value = "loginService")
 @Transactional
@@ -27,8 +25,8 @@ public class LoginServiceImpl implements LoginService {
     private UserDao userDao;
 
     @Override
-    public User login(User user) throws NoSuchUserException, PasswordNotMatchException {
-        User u = this.userDao.findByUsername(user.getUsername());
+    public User login(final User user) throws NoSuchUserException, PasswordNotMatchException, ServiceException {
+        final User u = this.userDao.findByUsername(user.getUsername());
 
         if (u == null) {
             throw new NoSuchUserException(user.getUsername());
@@ -43,6 +41,30 @@ public class LoginServiceImpl implements LoginService {
         if (!password.equals(user.getPassword())) {
             throw new PasswordNotMatchException(user.getUsername());
         }
+
+        try {
+            JredisUtils.getInstance().handle(new JredisUtils.Callback<ShardedJedis>() {
+
+                @Override
+                public void handle(ShardedJedis shardedJedis) throws JredisUtils.JredisUtilsException {
+                    String key = JredisUtils.formatKey("MyStudy"
+                            , JredisUtils.KEY_TYPE_LIST
+                            , "loginTime/" + u.getId());
+
+                    Long reply = shardedJedis.lpush(key, System.currentTimeMillis() + "");
+                    JredisUtils.checkReply(reply, 1L);
+                    key = JredisUtils.formatKey("MyStudy"
+                            , JredisUtils.KEY_TYPE_STRING
+                            , "loginTimes/" + u.getId());
+                    reply = shardedJedis.incr(key);
+                    JredisUtils.checkReply(reply, 1L);
+                }
+            }).close();
+        } catch (JredisUtils.JredisUtilsException e) {
+            throw new ServiceException(e);
+        }
+
+
         return u;
     }
 

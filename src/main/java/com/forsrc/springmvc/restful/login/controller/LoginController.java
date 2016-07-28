@@ -5,6 +5,7 @@ import com.forsrc.constant.KeyConstants;
 import com.forsrc.constant.MyToken;
 import com.forsrc.exception.NoSuchUserException;
 import com.forsrc.exception.PasswordNotMatchException;
+import com.forsrc.exception.ServiceException;
 import com.forsrc.pojo.User;
 import com.forsrc.springmvc.restful.login.service.LoginService;
 import com.forsrc.springmvc.restful.login.validator.LoginValidator;
@@ -158,6 +159,10 @@ public class LoginController {
             return modelAndView;
         } catch (NoSuchUserException e) {
             message.put("message", MessageUtils.getText(messageSource, "msg.password.not.match.exception"));
+            message.put("error", e.getMessage());
+            return modelAndView;
+        } catch (ServiceException e) {
+            message.put("message", MessageUtils.getText(messageSource, "msg.login.failed"));
             message.put("error", e.getMessage());
             return modelAndView;
         }

@@ -134,7 +134,7 @@ public class JredisUtils {
     }
 
 
-    private String formatKey(final String namespace, final String type, final String key) throws JredisUtilsException {
+    public static String formatKey(final String namespace, final String type, final String key) throws JredisUtilsException {
         String k = namespace + type + key;
         if (MyStringUtils.isBlank(namespace)) {
             throw new IllegalArgumentException("Namespace is blank. -> " + k);
@@ -182,6 +182,28 @@ public class JredisUtils {
     public static final <T> void call(final Callback<ShardedJedis> callback) throws JredisUtilsException {
         JredisUtils jredisUtils = JredisUtils.getInstance();
         jredisUtils.handle(callback);
+    }
+
+    public static void checkReply(Long actual, long expected) throws JredisUtilsException {
+        if (actual == null) {
+            throw new JredisUtilsException("Actual reply is null, expected : " + expected);
+        }
+        if (actual.equals(expected)) {
+            throw new JredisUtilsException(
+                    MessageFormat.format("Actual reply is {0}, expected : {1}", actual, expected)
+            );
+        }
+    }
+
+    public static void checkReply(String actual) throws JredisUtilsException {
+        if (actual == null) {
+            throw new JredisUtilsException("Actual reply is null, expected : OK");
+        }
+        if (actual.equalsIgnoreCase("OK")) {
+            throw new JredisUtilsException(
+                    MessageFormat.format("Actual reply is {0}, expected : OK", actual)
+            );
+        }
     }
 
     public static interface Callback<T> {

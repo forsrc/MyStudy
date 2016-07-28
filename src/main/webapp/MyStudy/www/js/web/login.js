@@ -257,6 +257,7 @@ function toLogin(username, password) {
             console.log(textStatus, errorThrown);
             $("#loader").fadeOut("slow", function () {
                 showAjaxFail();
+                getLoginToken();
                 $("#login").removeAttr("disabled");
             });
         }
