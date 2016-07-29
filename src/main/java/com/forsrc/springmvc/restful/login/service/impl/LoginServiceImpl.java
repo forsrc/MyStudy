@@ -48,14 +48,16 @@ public class LoginServiceImpl implements LoginService {
                 @Override
                 public void handle(ShardedJedis shardedJedis) throws JredisUtils.JredisUtilsException {
                     String key = JredisUtils.formatKey("MyStudy"
-                            , JredisUtils.KEY_TYPE_LIST
+                            , JredisUtils.KeyType.KEY_TYPE_LIST
                             , "loginTime/" + u.getId());
 
                     Long reply = shardedJedis.lpush(key, System.currentTimeMillis() + "");
                     JredisUtils.checkReply(reply, 1L);
+
                     key = JredisUtils.formatKey("MyStudy"
-                            , JredisUtils.KEY_TYPE_STRING
+                            , JredisUtils.KeyType.KEY_TYPE_STRING
                             , "loginTimes/" + u.getId());
+
                     reply = shardedJedis.incr(key);
                     JredisUtils.checkReply(reply, 1L);
                 }

@@ -40,43 +40,58 @@ public class JredisUtilsTest {
     public void test() throws IOException {
 
         try {
-            JredisUtils.getInstance(shardedJedisPool).handle(namespace, type, key, new JredisUtils.CallbackHandler<ShardedJedis>() {
-                @Override
-                public void handle(String key, ShardedJedis shardedJedis) {
-                    //shardedJedis.set(key, "77");
-                    ShardedJedisPipeline pipeline = shardedJedis.pipelined();
-                    pipeline.set(key, "77");
-                    pipeline.set(key, "7777");
-                    pipeline.set(key, "77");
-                    pipeline.sync();
-                }
-            }).close();
+            JredisUtils.getInstance(shardedJedisPool)
+                    .setNamespace("my_study_test")
+                    .setKeyType(JredisUtils.KeyType.KEY_TYPE_STRING)
+                    .setKey("name")
+                    .handle(new JredisUtils.CallbackWithKey<ShardedJedis>() {
+                        @Override
+                        public void handle(String key, ShardedJedis shardedJedis) {
+                            //shardedJedis.set(key, "77");
+                            ShardedJedisPipeline pipeline = shardedJedis.pipelined();
+                            pipeline.set(key, "77");
+                            pipeline.set(key, "7777");
+                            pipeline.set(key, "77");
+                            pipeline.sync();
+                        }
+                    })
+                    .close();
         } catch (JredisUtils.JredisUtilsException e) {
             e.printStackTrace();
             fail(e.getMessage());
         }
 
         try {
-            JredisUtils.getInstance(shardedJedisPool).handle(namespace, type, key, new JredisUtils.CallbackHandler<ShardedJedis>() {
-                @Override
-                public void handle(String key, ShardedJedis shardedJedis) {
-                    shardedJedis.set(key, "77");
-                    assertEquals("77", shardedJedis.get(key));
-                }
-            }).close();
+            JredisUtils.getInstance(shardedJedisPool)
+                    .setNamespace("my_study_test")
+                    .setKeyType(JredisUtils.KeyType.KEY_TYPE_STRING)
+                    .setKey("name")
+                    .handle(new JredisUtils.CallbackWithKey<ShardedJedis>() {
+                        @Override
+                        public void handle(String key, ShardedJedis shardedJedis) {
+                            shardedJedis.set(key, "77");
+                            assertEquals("77", shardedJedis.get(key));
+                        }
+                    })
+                    .close();
         } catch (JredisUtils.JredisUtilsException e) {
             e.printStackTrace();
             fail(e.getMessage());
         }
 
         try {
-            JredisUtils.getInstance(shardedJedisPool).handle(namespace, type, key, new JredisUtils.CallbackHandler<ShardedJedis>() {
-                @Override
-                public void handle(String key, ShardedJedis shardedJedis) {
-                    shardedJedis.set(key, "77");
-                    assertEquals("77", shardedJedis.get(key));
-                }
-            }).close();
+            JredisUtils.getInstance(shardedJedisPool)
+                    .setNamespace("my_study_test")
+                    .setKeyType(JredisUtils.KeyType.KEY_TYPE_STRING)
+                    .setKey("name")
+                    .handle(new JredisUtils.CallbackWithKey<ShardedJedis>() {
+                        @Override
+                        public void handle(String key, ShardedJedis shardedJedis) {
+                            shardedJedis.set(key, "77");
+                            assertEquals("77", shardedJedis.get(key));
+                        }
+                    })
+                    .close();
         } catch (JredisUtils.JredisUtilsException e) {
             e.printStackTrace();
             fail(e.getMessage());
@@ -85,8 +100,11 @@ public class JredisUtilsTest {
 
         try {
             JredisUtils.getInstance(shardedJedisPool)
-                    .set(namespace, key, "77")
-                    .get(namespace, key, new JredisUtils.Callback<String>() {
+                    .setNamespace("my_study_test")
+                    .setKeyType(JredisUtils.KeyType.KEY_TYPE_STRING)
+                    .setKey("name")
+                    .set("77")
+                    .get(new JredisUtils.Callback<String>() {
                         @Override
                         public void handle(final String s) {
                             assertEquals("77", s);
@@ -110,8 +128,10 @@ public class JredisUtilsTest {
 
                     try {
                         JredisUtils.getInstance(shardedJedisPool)
-                                .set(namespace, key, "77")
-                                .get(namespace, key, new JredisUtils.Callback<String>() {
+                                .setNamespace("my_study_test")
+                                .setKeyType(JredisUtils.KeyType.KEY_TYPE_STRING)
+                                .setKey("name")
+                                .get(new JredisUtils.Callback<String>() {
                                     @Override
                                     public void handle(final String s) {
                                         assertEquals("77", s);

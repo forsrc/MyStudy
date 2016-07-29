@@ -7,16 +7,35 @@ import redis.clients.jedis.ShardedJedis;
 import redis.clients.jedis.ShardedJedisPool;
 
 import java.text.MessageFormat;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class JredisUtils {
 
-    public static final String KEY_TYPE_STRING = "/STRING/";
-    public static final String KEY_TYPE_HASH = "/HASH/";
-    public static final String KEY_TYPE_LIST = "/LIST/";
-    public static final String KEY_TYPE_SET = "/SET/";
-    public static final String KEY_TYPE_SORTED_SET = "/SORTED_SET/";
-    public static final String KEY_TYPE_PUB_SUB = "/PUB_SUB/";
+    public static enum KeyType {
+        KEY_TYPE_STRING("/key_type_string/"),
+        KEY_TYPE_STRING_JSON("/key_type_string_json/"),
+        KEY_TYPE_HASH("/key_type_hash/"),
+        KEY_TYPE_LIST("/key_type_list/"),
+        KEY_TYPE_SET("/key_type_set/"),
+        KEY_TYPE_SORTED_SET("/key_type_sorted_set/"),
+        KEY_TYPE_PUB_SUB("/key_type_pub_sub/");
 
+        private String type;
+
+        KeyType(String type) {
+            this.type = type;
+        }
+
+        public String getType() {
+            return type;
+        }
+    }
+
+    private static final Pattern PATTERN_KEY = Pattern.compile("^.+/key_type_.+/.+$");
+
+    private static ThreadLocal<KeyType> _keyType = new ThreadLocal<KeyType>();
+    private static ThreadLocal<String> _namespace = new ThreadLocal<String>();
     private static ThreadLocal<String> _key = new ThreadLocal<String>();
     private static ThreadLocal<ShardedJedis> _shardedJedis = new ThreadLocal<ShardedJedis>();
 
@@ -72,6 +91,9 @@ public class JredisUtils {
     }
 
     public void close() {
+        _keyType.remove();
+        _key.remove();
+        _namespace.remove();
         ShardedJedis jedis = getShardedJedis();
         if (jedis == null) {
             synchronized (JredisUtils.class) {
@@ -87,12 +109,13 @@ public class JredisUtils {
         return getShardedJedis(_shardedJedisPool);
     }
 
-    public JredisUtils set(final String namespace, final String key, final String value) throws JredisUtilsException {
-        final String k = formatKey(namespace, KEY_TYPE_STRING, key);
+    public JredisUtils set(final String value) throws JredisUtilsException {
         ShardedJedis shardedJedis = getShardedJedis();
+        final String k = formatKey(_namespace.get(), _keyType.get(), _key.get());
         handle(new Callback<ShardedJedis>() {
             @Override
             public void handle(ShardedJedis shardedJedis) throws JredisUtilsException {
+
                 String statusCodeReply = shardedJedis.set(k, value);
                 if (!"OK".equalsIgnoreCase(statusCodeReply)) {
                     throw new JredisUtilsException(statusCodeReply);
@@ -103,8 +126,30 @@ public class JredisUtils {
         return this;
     }
 
-    public JredisUtils get(final String namespace, final String key, final Callback<String> callback) throws JredisUtilsException {
-        final String k = formatKey(namespace, KEY_TYPE_STRING, key);
+    public JredisUtils setKeyType(KeyType keyType) {
+        _keyType.set(keyType);
+        return this;
+    }
+
+    public JredisUtils setNamespace(String namespace) {
+        _namespace.set(namespace);
+        return this;
+    }
+
+    public JredisUtils setKey(String key) {
+        _key.set(key);
+        return this;
+    }
+
+    public JredisUtils setKey(String namespace, KeyType keyType, String key) {
+        _namespace.set(namespace);
+        _keyType.set(keyType);
+        _key.set(key);
+        return this;
+    }
+
+    public JredisUtils get(final Callback<String> callback) throws JredisUtilsException {
+        final String k = formatKey(_namespace.get(), _keyType.get(), _key.get());
         ShardedJedis shardedJedis = getShardedJedis();
         handle(new Callback<ShardedJedis>() {
             @Override
@@ -117,8 +162,8 @@ public class JredisUtils {
         return this;
     }
 
-    public JredisUtils delete(final String namespace, final String key) throws JredisUtilsException {
-        final String k = formatKey(namespace, KEY_TYPE_STRING, key);
+    public JredisUtils delete() throws JredisUtilsException {
+        final String k = formatKey(_namespace.get(), _keyType.get(), _key.get());
         ShardedJedis shardedJedis = getShardedJedis();
         handle(new Callback<ShardedJedis>() {
             @Override
@@ -126,7 +171,7 @@ public class JredisUtils {
                 Long integerReply = shardedJedis.del(k);
                 if (integerReply == null || integerReply < 0) {
                     throw new JredisUtilsException(
-                            MessageFormat.format("Delete key '{0}' integerReply: {1}", key, integerReply));
+                            MessageFormat.format("Delete key '{0}' integerReply: {1}", k, integerReply));
                 }
             }
         });
@@ -134,14 +179,15 @@ public class JredisUtils {
     }
 
 
-    public static String formatKey(final String namespace, final String type, final String key) throws JredisUtilsException {
-        String k = namespace + type + key;
+    public static String formatKey(final String namespace, final KeyType keyType, final String key) throws JredisUtilsException {
+        String k = namespace + keyType.getType() + key;
         if (MyStringUtils.isBlank(namespace)) {
             throw new IllegalArgumentException("Namespace is blank. -> " + k);
         }
         if (MyStringUtils.isBlank(key)) {
             throw new IllegalArgumentException("Key is blank. -> " + k);
         }
+        checkKey(k);
         return k;
     }
 
@@ -159,9 +205,9 @@ public class JredisUtils {
         return this;
     }
 
-    public final JredisUtils handle(final String namespace, final String type, final String key, final CallbackHandler<ShardedJedis> callback) throws JredisUtilsException {
+    public final JredisUtils handle(final CallbackWithKey<ShardedJedis> callback) throws JredisUtilsException {
         ShardedJedis shardedJedis = getShardedJedis();
-        final String k = formatKey(namespace, KEY_TYPE_STRING, key);
+        final String k = formatKey(_namespace.get(), _keyType.get(), _key.get());
         try {
             callback.handle(k, shardedJedis);
         } catch (Exception e) {
@@ -173,10 +219,11 @@ public class JredisUtils {
         return this;
     }
 
-    public static final void call(final String namespace, final String type, final String key, final CallbackHandler<ShardedJedis> callback) throws JredisUtilsException {
+    public static final void call(final String namespace, final KeyType type, final String key, final CallbackWithKey<ShardedJedis> callback) throws JredisUtilsException {
         JredisUtils jredisUtils = JredisUtils.getInstance();
-        final String k = jredisUtils.formatKey(namespace, KEY_TYPE_STRING, key);
-        jredisUtils.handle(namespace, type, key, callback);
+        final String k = jredisUtils.formatKey(namespace, type, key);
+        jredisUtils.setKey(namespace, type, key);
+        jredisUtils.handle(callback);
     }
 
     public static final <T> void call(final Callback<ShardedJedis> callback) throws JredisUtilsException {
@@ -206,11 +253,28 @@ public class JredisUtils {
         }
     }
 
+    public static void checkKey(String key) throws JredisUtilsException {
+        if (key == null) {
+            throw new JredisUtilsException("The key is null.");
+        }
+        if (key.indexOf("/key_type_") < 0) {
+            throw new JredisUtilsException("Incorrect key type in the key: " + key);
+        }
+        if (key.indexOf("/key_type_") == 0) {
+            throw new JredisUtilsException("No namespace in the key : " + key);
+        }
+        Matcher matcher = PATTERN_KEY.matcher(key);
+        if (!matcher.matches()) {
+            throw new JredisUtilsException("Incorrect key format: " + key);
+
+        }
+    }
+
     public static interface Callback<T> {
         public void handle(final T t) throws JredisUtilsException;
     }
 
-    public static interface CallbackHandler<T> {
+    public static interface CallbackWithKey<T> {
         public void handle(final String key, final T t) throws JredisUtilsException;
     }
 
