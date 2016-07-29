@@ -23,6 +23,10 @@ public class DateTimeUtils {
     public static final SimpleDateFormat SDF_FORMAT_DATE = new SimpleDateFormat(FORMAT_DATE);
     public static final SimpleDateFormat SDF_FORMAT_TIME = new SimpleDateFormat(FORMAT_TIME);
 
+    public static final Pattern PATTERN_YYYY_MM_DD_HH_MM_SS = Pattern.compile("^\\d{4}\\-\\d{2}\\-\\d{2} \\d{2}\\:\\d{2}\\:\\d{2}$");
+    public static final Pattern PATTERN_YYYY_MM_DD = Pattern.compile("^\\d{4}\\-\\d{2}\\-\\d{2}$");
+    public static final Pattern PATTERN_HH_MM_SS = Pattern.compile("^\\d{2}\\:\\d{2}\\:\\d{2}$");
+    public static final Pattern PATTERN_LONG = Pattern.compile("^\\d+$");
 
     /**
      * @param @return
@@ -257,29 +261,33 @@ public class DateTimeUtils {
         if (date == null) {
             return null;
         }
-        Pattern pattern = Pattern.compile("^\\d{4}\\-\\d{2}\\-\\d{2} \\d{2}\\:\\d{2}\\:\\d{2}$");
-        Matcher matcher = pattern.matcher(date);
+        //Pattern pattern = Pattern.compile("^\\d{4}\\-\\d{2}\\-\\d{2} \\d{2}\\:\\d{2}\\:\\d{2}$");
+        //Matcher matcher = pattern.matcher(date);
+        Matcher matcher = PATTERN_YYYY_MM_DD_HH_MM_SS.matcher(date);
 
         if (matcher.matches()) {
             return SDF_FORMAT.parse(date);
         }
 
-        pattern = Pattern.compile("^\\d{4}\\-\\d{2}\\-\\d{2}$");
-        matcher = pattern.matcher(date);
+        //pattern = Pattern.compile("^\\d{4}\\-\\d{2}\\-\\d{2}$");
+        //matcher = pattern.matcher(date);
+        matcher = PATTERN_YYYY_MM_DD.matcher(date);
 
         if (matcher.matches()) {
             return SDF_FORMAT_DATE.parse(date);
         }
 
-        pattern = Pattern.compile("^\\d{2}\\:\\d{2}\\:\\d{2}$");
-        matcher = pattern.matcher(date);
+        //pattern = Pattern.compile("^\\d{2}\\:\\d{2}\\:\\d{2}$");
+        //matcher = pattern.matcher(date);
+        matcher = PATTERN_HH_MM_SS.matcher(date);
 
         if (matcher.matches()) {
             return SDF_FORMAT_TIME.parse(date);
         }
 
-        pattern = Pattern.compile("^\\d+$");
-        matcher = pattern.matcher(date);
+        //pattern = Pattern.compile("^\\d+$");
+        //matcher = pattern.matcher(date);
+        matcher = PATTERN_LONG.matcher(date);
         Date d = null;
         if (matcher.matches()) {
             long time = Long.parseLong(date);
