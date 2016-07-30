@@ -1,7 +1,7 @@
 "use strict";
 
 //var SERVER = "http://localhost:8077/";
-var SERVER      = "http://192.168.11.8:8077";
+var SERVER      = "http://192.168.2.107:8077";
 var WEB_NAME    = "";
 var SERVER_TEST = SERVER + WEB_NAME + "/MyStudy/www";
 var SERVER_REST = SERVER + WEB_NAME + "/springmvc"
@@ -14,7 +14,7 @@ var MY_WEB_URL = {
     "listViewJson"     : SERVER_TEST + "/json/appListView.json",
     "detailJson"       : SERVER_TEST + "/json/detail.json",
 
-    "toLogin"           : SERVER_REST + "/v1.0/login",
+    "toLogin"          : SERVER_REST + "/v1.0/login",
     "user_list"        : SERVER_REST + "/v1.0/user",
     "getLoginToken"    : SERVER_REST + "/v1.0/login/getLoginToken",
 
