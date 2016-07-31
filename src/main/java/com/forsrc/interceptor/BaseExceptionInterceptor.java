@@ -16,6 +16,7 @@
  */
 package com.forsrc.interceptor;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.forsrc.exception.ActionException;
 import com.forsrc.exception.RollbackException;
 import com.forsrc.exception.ServiceException;
@@ -30,6 +31,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.Map;
@@ -140,7 +142,7 @@ public class BaseExceptionInterceptor
             //String url = request.getRequestURI();
             //return null;
         }
-        ModelAndView modelAndView = new ModelAndView("/error.html");
+        ModelAndView modelAndView = new ModelAndView();
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("message", e.getMessage());
         map.put("exceptionClass", e.getClass());
@@ -153,6 +155,16 @@ public class BaseExceptionInterceptor
         }
         modelAndView.addObject("error", map);
         //modelAndView.getModelMap().put("error", map);
+
+        response.setCharacterEncoding("UTF-8");
+        response.setContentType("application/json; charset=utf-8");
+
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            mapper.writeValue(response.getWriter(), map);
+        } catch (IOException e1) {
+            LOGGER.warn(e1);
+        }
         return modelAndView;
     }
 }
