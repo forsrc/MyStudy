@@ -59,8 +59,30 @@ public class LoginController {
      * @param request    the request
      * @param response   the response
      * @return login token
-     * @satrtuml Login.getLoginToken.png A -> B
-     * @enduml
+     *
+     *
+     * ![Login Diagram](Login.getLoginToken.png)
+     *
+     * @uml Login.getLoginToken.png
+     * actor User
+     * boundary LoginBoundary
+     * control LoginControl
+     *
+     * User -> LoginBoundary : [POST] /login/getLoginToken?rsa4Client=XX
+     * LoginBoundary -> LoginControl : getLoginToken()
+     *
+     * create ModelAndView
+     * LoginControl -> ModelAndView : new ModelAndView()
+     *
+     * create RsaKey
+     * LoginControl -> RsaKey : new RsaKey() -> Use the client RSA publicKey
+     *
+     * create MyToken
+     * LoginControl -> MyToken : new MyToken()
+     * LoginControl -> MyToken : setRsaKey4Client() -> set RsaKey in MyToken
+     * LoginControl -> HttpSession : setAttribute() -> save the MyToken
+     * LoginControl -> ModelAndView : save server RSA publicKey and info in ModelAndView
+     * LoginControl -> LoginBoundary : return ModelAndView
      */
     @RequestMapping(value = {"/login/getLoginToken"}, method = RequestMethod.POST)
     @ResponseBody
