@@ -62,29 +62,41 @@ public class PlantUmlController {
         return new ModelAndView("from");
     }
 
-    @RequestMapping(value = {"/img"}, method = {RequestMethod.GET, RequestMethod.POST})
+    @RequestMapping(value = {"/img/{text}"}, method = {RequestMethod.GET, RequestMethod.POST})
     //@ResponseBody
     public void img(HttpServletRequest request
             , HttpServletResponse response
-            , @RequestParam("text") String text
-            , @RequestParam ("format") String fileFormat) throws IOException, ServletException, ActionException {
+            , @PathVariable("text") String text
+            ) throws IOException, ServletException, ActionException {
 
-        FileFormat ff = FileFormat.PNG;
-        if (fileFormat != null) {
+        FileFormat fileFormat = FileFormat.PNG;
+        String format = request.getParameter("format");
+        if (format != null) {
             try {
-                ff = FileFormat.valueOf(fileFormat.trim().toUpperCase());
+                fileFormat = FileFormat.valueOf(format.trim().toUpperCase());
             } catch (Exception e) {
                 ;
             }
         }
-        handle(request, response, text, ff);
+        handle(request, response, text, fileFormat);
     }
 
-    @RequestMapping(value = {"/txt"}, method = {RequestMethod.GET, RequestMethod.POST})
+    @RequestMapping(value = {"/svg/{text}"}, method = {RequestMethod.GET, RequestMethod.POST})
+    //@ResponseBody
+    public void svg(HttpServletRequest request
+            , HttpServletResponse response
+            , @PathVariable("text") String text
+    ) throws IOException, ServletException, ActionException {
+
+        FileFormat fileFormat = FileFormat.SVG;
+        handle(request, response, text, fileFormat);
+    }
+
+    @RequestMapping(value = {"/txt/{text}"}, method = {RequestMethod.GET, RequestMethod.POST})
     //@ResponseBody
     public void txt(HttpServletRequest request
             , HttpServletResponse response
-            , @RequestParam ("text") String text) throws IOException, ServletException, ActionException {
+            , @PathVariable ("text") String text) throws IOException, ServletException, ActionException {
         handle(request, response, text, FileFormat.UTXT);
     }
 
