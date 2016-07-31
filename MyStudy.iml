@@ -30,6 +30,7 @@
           <file>file://$MODULE_DIR$/src/main/resources/config/spring/restful/spring_restful.xml</file>
           <file>file://$MODULE_DIR$/src/main/resources/config/spring/restful/spring_restful_config.xml</file>
           <file>file://$MODULE_DIR$/src/main/resources/config/spring/hibernate/spring_sessionfactory.xml</file>
+          <file>file://$MODULE_DIR$/src/main/resources/config/spring/lucene/spring_lucene_config.xml</file>
         </fileset>
       </configuration>
     </facet>
