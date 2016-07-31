@@ -45,7 +45,9 @@
       </configuration>
     </facet>
   </component>
-  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_6" inherit-compiler-output="true">
+  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_6" inherit-compiler-output="false">
+    <output url="file://$MODULE_DIR$/target/classes" />
+    <output-test url="file://$MODULE_DIR$/target/test-classes" />
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/src/main/java" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/test/java" isTestSource="true" />
@@ -581,6 +583,7 @@
           <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/HTTPClient-0.3-3.jar!/" />
           <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/args4j-2.32.jar!/" />
           <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/org.osgi.core-4.1.0.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/pegdown-1.6.0.jar!/" />
         </CLASSES>
         <JAVADOC>
           <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/ode-tools.jar!/" />
