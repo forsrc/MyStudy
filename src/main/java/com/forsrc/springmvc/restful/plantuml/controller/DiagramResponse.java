@@ -23,12 +23,8 @@
  */
 package com.forsrc.springmvc.restful.plantuml.controller;
 
-import net.sourceforge.plantuml.FileFormat;
-import net.sourceforge.plantuml.FileFormatOption;
-import net.sourceforge.plantuml.SourceStringReader;
-import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.*;
 import net.sourceforge.plantuml.core.DiagramDescription;
-import net.sourceforge.plantuml.servlet.utility.NullOutputStream;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;

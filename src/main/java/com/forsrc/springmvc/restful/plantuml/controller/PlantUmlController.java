@@ -7,7 +7,7 @@ import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.api.PlantumlUtils;
 import net.sourceforge.plantuml.code.Transcoder;
 import net.sourceforge.plantuml.code.TranscoderUtil;
-import net.sourceforge.plantuml.servlet.utility.UmlExtractor;
+import net.sourceforge.plantuml.servlet.UmlExtractor;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
