@@ -27,6 +27,9 @@
         <fileset dir="${libs.dir}">
             <include name="*.jar"/>
         </fileset>
+        <fileset dir="/tools/lib">
+            <include name="*.jar"/>
+        </fileset>
     </path>
 
     <taskdef classpathref="cobertura.classpath" resource="tasks.properties"/>
@@ -166,4 +169,20 @@
             depends="compile,instrument,test,coverage-report,summary-coverage-report,alternate-coverage-report"
             description="Compile, instrument ourself, run the tests and generate JUnit and coverage reports."/>
 
+    <target name="plantuml">
+        <javadoc doclet="de.mallox.doclet.PlantUMLDoclet"
+                 docletpath="./tools/lib/plantUmlDoclet.jar"
+                 access="private"
+                 additionalparam=
+                         "-J-DdestinationFile=out/uml.puml -J-DcreatePackages=false -J-DshowPublicMethods=true -J-DshowPublicConstructors=false -J-DshowPublicFields=true"
+        >
+            <packageset dir="src/main/java">
+                <include name="**"/>
+            </packageset>
+        </javadoc>
+
+        <java jar="./tools/lib/plantuml-jar-asl-8046.jar" fork="true" maxmemory="128m">
+            <arg value="out/uml.puml"/>
+        </java>
+    </target>
 </project>
