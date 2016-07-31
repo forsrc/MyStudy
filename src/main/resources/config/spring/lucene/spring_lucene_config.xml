@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+        http://www.springframework.org/schema/util
+        http://www.springframework.org/schema/util/spring-util-4.2.xsd">
+
+    <util:constant id="LUCENE_VERSION" static-field="org.apache.lucene.util.Version.LUCENE_5_5_0"></util:constant>
+
+    <bean id="directory" class="com.forsrc.lucene.MySimpleFSDirectory">
+        <constructor-arg>
+            <bean class="java.lang.String">
+                <constructor-arg value="out/my_study.index/lucene"/>
+            </bean>
+        </constructor-arg>
+    </bean>
+
+    <bean id="analyzer" class="org.wltea.analyzer.lucene.IKAnalyzer" destroy-method="close">
+        <constructor-arg value="true"></constructor-arg>
+    </bean>
+
+    <bean id="indexWriterConfig" class="org.apache.lucene.index.IndexWriterConfig">
+        <!--<constructor-arg name="matchVersion" ref="LUCENE_VERSION"/>-->
+        <constructor-arg name="analyzer" ref="analyzer"></constructor-arg>
+    </bean>
+
+    <bean id="indexWriter" class="org.apache.lucene.index.IndexWriter" destroy-method="close">
+        <constructor-arg name="d" ref="directory"/>
+        <constructor-arg name="conf" ref="indexWriterConfig"/>
+    </bean>
+
+</beans>

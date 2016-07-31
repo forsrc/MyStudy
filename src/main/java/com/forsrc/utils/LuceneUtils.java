@@ -118,6 +118,7 @@ public class LuceneUtils {
      * @param analyzer  the analyzer
      * @return the index writer
      * @throws IOException the io exception
+     * @since 1.7
      */
     public synchronized IndexWriter createIndexWriter(String indexFile, Analyzer analyzer) throws IOException {
         Directory directory = null;
@@ -377,11 +378,11 @@ public class LuceneUtils {
         if (this.analyzer != null) {
             this.analyzer.close();
         }
-        if (this.indexWriter != null) {
-            this.indexWriter.close();
-        }
         if (this.indexWriter.getDirectory() != null) {
             this.indexWriter.getDirectory().close();
+        }
+        if (this.indexWriter != null) {
+            this.indexWriter.close();
         }
     }
 
