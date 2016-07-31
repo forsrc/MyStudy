@@ -21,8 +21,14 @@ import org.apache.log4j.Logger;
 import java.io.IOException;
 import java.text.MessageFormat;
 
+/**
+ * The type Base exception.
+ */
 public class BaseException extends IOException {
 
+    /**
+     * The constant LOGGER.
+     */
     protected static final Logger LOGGER = Logger
             .getLogger(BaseException.class);
     /**
@@ -30,22 +36,41 @@ public class BaseException extends IOException {
      */
     private static final long serialVersionUID = 5928339805378210608L;
 
+    /**
+     * Instantiates a new Base exception.
+     */
     public BaseException() {
         super();
         LOGGER.error(
                 MessageFormat.format("[BusinessException] --> {0}", this.getMessage()), this); //$NON-NLS-1$
     }
 
+    /**
+     * Instantiates a new Base exception.
+     *
+     * @param message the message
+     */
     public BaseException(String message) {
 
         super(message);
     }
 
+    /**
+     * Instantiates a new Base exception.
+     *
+     * @param message the message
+     * @param cause   the cause
+     */
     public BaseException(String message, Throwable cause) {
 
         super(message, cause);
     }
 
+    /**
+     * Instantiates a new Base exception.
+     *
+     * @param cause the cause
+     */
     public BaseException(Throwable cause) {
 
         super(cause);

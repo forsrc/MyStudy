@@ -27,6 +27,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * The type Login interceptor.
+ */
 public class LoginInterceptor extends AbstractPhaseInterceptor<SoapMessage>
 {
 
@@ -35,6 +38,9 @@ public class LoginInterceptor extends AbstractPhaseInterceptor<SoapMessage>
     @Resource(name = "loginService")
     private LoginService loginService;
 
+    /**
+     * Instantiates a new Login interceptor.
+     */
     public LoginInterceptor() {
         super(Phase.PRE_PROTOCOL);
         saajInInterceptor = new SAAJInInterceptor();

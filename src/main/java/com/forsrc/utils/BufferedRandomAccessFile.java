@@ -21,17 +21,49 @@ package com.forsrc.utils;
 import java.io.*;
 import java.util.Arrays;
 
+/**
+ * The interface File data input.
+ */
 interface FileDataInput extends DataInput, Closeable {
+    /**
+     * Gets path.
+     *
+     * @return the path
+     */
     public String getPath();
 
+    /**
+     * Is eof boolean.
+     *
+     * @return the boolean
+     * @throws IOException the io exception
+     */
     public boolean isEOF() throws IOException;
 
+    /**
+     * Mark.
+     */
     public void mark();
 
+    /**
+     * Reset.
+     *
+     * @throws IOException the io exception
+     */
     public void reset() throws IOException;
 
+    /**
+     * Bytes past mark int.
+     *
+     * @return the int
+     */
     public int bytesPastMark();
 
+    /**
+     * Gets absolute position.
+     *
+     * @return the absolute position
+     */
     long getAbsolutePosition();
 }
 
@@ -48,8 +80,17 @@ interface FileDataInput extends DataInput, Closeable {
  */
 public class BufferedRandomAccessFile extends RandomAccessFile implements FileDataInput {
 
+    /**
+     * The Log buff sz.
+     */
     static final int LogBuffSz_ = 16; // 64K buffer
+    /**
+     * The constant BuffSz_.
+     */
     public static final int BuffSz_ = (1 << LogBuffSz_);
+    /**
+     * The Buff mask.
+     */
     static final long BuffMask_ = ~(((long) BuffSz_) - 1L);
 
     private String path_;
@@ -126,11 +167,23 @@ public class BufferedRandomAccessFile extends RandomAccessFile implements FileDa
      * Open a new <code>BufferedRandomAccessFile</code> on <code>file</code>
      * in mode <code>mode</code>, which should be "r" for reading only, or
      * "rw" for reading and writing.
+     *
+     * @param file the file
+     * @param mode the mode
+     * @throws IOException the io exception
      */
     public BufferedRandomAccessFile(File file, String mode) throws IOException {
         this(file, mode, 0);
     }
 
+    /**
+     * Instantiates a new Buffered random access file.
+     *
+     * @param file the file
+     * @param mode the mode
+     * @param size the size
+     * @throws IOException the io exception
+     */
     public BufferedRandomAccessFile(File file, String mode, int size) throws IOException {
         super(file, mode);
         path_ = file.getAbsolutePath();
@@ -141,11 +194,23 @@ public class BufferedRandomAccessFile extends RandomAccessFile implements FileDa
      * Open a new <code>BufferedRandomAccessFile</code> on the file named
      * <code>name</code> in mode <code>mode</code>, which should be "r" for
      * reading only, or "rw" for reading and writing.
+     *
+     * @param name the name
+     * @param mode the mode
+     * @throws IOException the io exception
      */
     public BufferedRandomAccessFile(String name, String mode) throws IOException {
         this(name, mode, 0);
     }
 
+    /**
+     * Instantiates a new Buffered random access file.
+     *
+     * @param name the name
+     * @param mode the mode
+     * @param size the size
+     * @throws IOException the io exception
+     */
     public BufferedRandomAccessFile(String name, String mode, int size) throws IOException {
         super(name, mode);
         path_ = name;
@@ -169,6 +234,11 @@ public class BufferedRandomAccessFile extends RandomAccessFile implements FileDa
         return path_;
     }
 
+    /**
+     * Sync.
+     *
+     * @throws IOException the io exception
+     */
     public void sync() throws IOException {
         if (syncNeeded_) {
             flushBuffer();

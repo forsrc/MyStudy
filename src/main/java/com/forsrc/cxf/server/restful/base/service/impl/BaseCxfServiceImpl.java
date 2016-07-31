@@ -13,6 +13,12 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * The type Base cxf service.
+ *
+ * @param <E>  the type parameter
+ * @param <PK> the type parameter
+ */
 @Service(value = "baseCxfService")
 @Transactional
 public class BaseCxfServiceImpl<E, PK extends Serializable> implements BaseCxfService<E, PK> {
@@ -75,10 +81,20 @@ public class BaseCxfServiceImpl<E, PK extends Serializable> implements BaseCxfSe
         getBaseCxfDao().flush();
     }
 
+    /**
+     * Gets base cxf dao.
+     *
+     * @return the base cxf dao
+     */
     public BaseCxfDao getBaseCxfDao() {
         return baseCxfDao;
     }
 
+    /**
+     * Sets base cxf dao.
+     *
+     * @param baseCxfDao the base cxf dao
+     */
     public void setBaseCxfDao(BaseCxfDao baseCxfDao) {
         this.baseCxfDao = baseCxfDao;
     }

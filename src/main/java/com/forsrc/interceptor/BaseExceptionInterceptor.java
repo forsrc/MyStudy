@@ -34,6 +34,9 @@ import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * The type Base exception interceptor.
+ */
 public class BaseExceptionInterceptor
         //extends AbstractInterceptor
         implements HandlerExceptionResolver {

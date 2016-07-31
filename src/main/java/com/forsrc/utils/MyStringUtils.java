@@ -4,7 +4,18 @@ import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
 import java.util.Random;
 
+/**
+ * The type My string utils.
+ */
 public class MyStringUtils {
+    /**
+     * Gets multi language.
+     *
+     * @param string the string
+     * @param src    the src
+     * @param des    the des
+     * @return the multi language
+     */
     public static String getMultiLanguage(String string, Charset src,
                                           Charset des) {
         if (src.name().equals(des.name())) {
@@ -19,6 +30,13 @@ public class MyStringUtils {
         return str == null ? string : str;
     }
 
+    /**
+     * Gets last line break offset.
+     *
+     * @param txt       the txt
+     * @param lineBreak the line break
+     * @return the last line break offset
+     */
     public static int getLastLineBreakOffset(String txt, String lineBreak) {
         int offset = -1;
         byte[] txtBytes = txt.getBytes();
@@ -39,6 +57,12 @@ public class MyStringUtils {
         return offset;
     }
 
+    /**
+     * Generate letter string.
+     *
+     * @param length the length
+     * @return the string
+     */
     public static String generateLetter(int length) {
         Random random = new Random(length);
         StringBuilder sb = new StringBuilder(length);
@@ -50,6 +74,12 @@ public class MyStringUtils {
         return sb.toString();
     }
 
+    /**
+     * Generate string.
+     *
+     * @param length the length
+     * @return the string
+     */
     public static String generate(int length) {
         Random random = new Random();
         StringBuilder sb = new StringBuilder(length + 1);
@@ -65,6 +95,12 @@ public class MyStringUtils {
         return sb.toString();
     }
 
+    /**
+     * Generate number string.
+     *
+     * @param length the length
+     * @return the string
+     */
     public static String generateNumber(int length) {
         Random random = new Random();
         StringBuilder sb = new StringBuilder(length);
@@ -156,6 +192,12 @@ public class MyStringUtils {
         return true;
     }
 
+    /**
+     * Is blank boolean.
+     *
+     * @param str the str
+     * @return the boolean
+     */
     public static boolean isBlank(String str) {
         if (str == null || "".equals(str.trim())) {
             return true;
@@ -169,6 +211,12 @@ public class MyStringUtils {
         return true;
     }
 
+    /**
+     * Is not blank boolean.
+     *
+     * @param str the str
+     * @return the boolean
+     */
     public static boolean isNotBlank(String str) {
         return !isBlank(str);
     }

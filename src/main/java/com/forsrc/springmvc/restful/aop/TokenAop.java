@@ -16,13 +16,28 @@ import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * The type Token aop.
+ */
 public class TokenAop {
 
     private static final Logger LOGGER = Logger.getLogger(LogTracing.class);
 
+    /**
+     * Do after.
+     *
+     * @param jp the jp
+     */
     public void doAfter(JoinPoint jp) {
     }
 
+    /**
+     * Do around object.
+     *
+     * @param proceedingJoinPoint the proceeding join point
+     * @return the object
+     * @throws Throwable the throwable
+     */
     public Object doAround(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
 
         if (RequestContextHolder.getRequestAttributes() == null) {
@@ -62,9 +77,20 @@ public class TokenAop {
         return proceedingJoinPoint.proceed();
     }
 
+    /**
+     * Do before.
+     *
+     * @param jp the jp
+     */
     public void doBefore(JoinPoint jp) {
     }
 
+    /**
+     * Do after throwing.
+     *
+     * @param jp        the jp
+     * @param throwable the throwable
+     */
     public void doAfterThrowing(JoinPoint jp, Throwable throwable) {
 
     }

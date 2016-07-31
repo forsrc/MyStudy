@@ -20,8 +20,19 @@ package com.forsrc.utils;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * The type Dir utils.
+ */
 public class DirUtils {
 
+    /**
+     * File.
+     *
+     * @param file        the file
+     * @param dirHandler  the dir handler
+     * @param fileHandler the file handler
+     * @throws HandleException the handle exception
+     */
     public static void file(final File file, final DirHandler dirHandler, final FileHandler fileHandler) throws HandleException {
 
         if (file.isFile()) {
@@ -45,6 +56,14 @@ public class DirUtils {
 
     }
 
+    /**
+     * File.
+     *
+     * @param fileName    the file name
+     * @param dirHandler  the dir handler
+     * @param fileHandler the file handler
+     * @throws HandleException the handle exception
+     */
     public static void file(final String fileName, final DirHandler dirHandler, final FileHandler fileHandler) throws HandleException {
         File file = new File(fileName);
         if (file.isFile()) {
@@ -75,6 +94,14 @@ public class DirUtils {
 
     }
 
+    /**
+     * Dir.
+     *
+     * @param dir         the dir
+     * @param dirHandler  the dir handler
+     * @param fileHandler the file handler
+     * @throws HandleException the handle exception
+     */
     public static void dir(final File dir, final DirHandler dirHandler, final FileHandler fileHandler) throws HandleException {
         if (dir.isFile()) {
             fileHandler.handle(dir);
@@ -92,6 +119,14 @@ public class DirUtils {
 
     }
 
+    /**
+     * Dir.
+     *
+     * @param dirList     the dir list
+     * @param dirHandler  the dir handler
+     * @param fileHandler the file handler
+     * @throws HandleException the handle exception
+     */
     public static void dir(File[] dirList, final DirHandler dirHandler, final FileHandler fileHandler) throws HandleException {
         if (dirList == null) {
             return;
@@ -117,14 +152,37 @@ public class DirUtils {
         }
     }
 
+    /**
+     * The interface Dir handler.
+     */
     public static interface DirHandler {
+        /**
+         * Handle boolean.
+         *
+         * @param dir the dir
+         * @return the boolean
+         * @throws HandleException the handle exception
+         */
         public boolean handle(final File dir) throws HandleException;
     }
 
+    /**
+     * The interface File handler.
+     */
     public static interface FileHandler {
+        /**
+         * Handle boolean.
+         *
+         * @param file the file
+         * @return the boolean
+         * @throws HandleException the handle exception
+         */
         public boolean handle(final File file) throws HandleException;
     }
 
+    /**
+     * The type Handle exception.
+     */
     public static class HandleException extends IOException {
 
     }

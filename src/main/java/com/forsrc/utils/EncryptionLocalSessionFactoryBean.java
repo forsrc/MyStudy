@@ -24,6 +24,9 @@ import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 
 import javax.sql.DataSource;
 
+/**
+ * The type Encryption local session factory bean.
+ */
 public class EncryptionLocalSessionFactoryBean extends LocalSessionFactoryBean {
 
     private static final Logger LOGGER = Logger.getLogger(EncryptionLocalSessionFactoryBean.class);

@@ -10,6 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * The type My freemarker servlet.
+ */
 public class MyFreemarkerServlet extends FreemarkerServlet {
 
     @Override

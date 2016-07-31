@@ -16,26 +16,48 @@
  */
 package com.forsrc.exception;
 
+/**
+ * The type No such entity exception.
+ */
 public class NoSuchEntityException extends DaoException {
 
 
     private static final long serialVersionUID = -1190898173887247319L;
 
+    /**
+     * Instantiates a new No such entity exception.
+     */
     public NoSuchEntityException() {
 
         super();
     }
 
+    /**
+     * Instantiates a new No such entity exception.
+     *
+     * @param message the message
+     */
     public NoSuchEntityException(String message) {
 
         super(message);
     }
 
+    /**
+     * Instantiates a new No such entity exception.
+     *
+     * @param message the message
+     * @param cause   the cause
+     */
     public NoSuchEntityException(String message, Throwable cause) {
 
         super(message, cause);
     }
 
+    /**
+     * Instantiates a new No such entity exception.
+     *
+     * @param cause the cause
+     */
     public NoSuchEntityException(Throwable cause) {
 
         super(cause);

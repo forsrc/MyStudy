@@ -14,6 +14,9 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 
+/**
+ * The type User cxf dao.
+ */
 @Repository(value = "userCxfDaoImpl")
 public class UserCxfDaoImpl extends UserDaoImpl
         implements UserCxfDao, BaseHibernateDao<User, Long> {

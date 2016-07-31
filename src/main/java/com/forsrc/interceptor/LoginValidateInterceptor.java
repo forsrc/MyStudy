@@ -31,6 +31,9 @@ import javax.servlet.http.HttpSession;
 import java.math.BigDecimal;
 import java.util.Date;
 
+/**
+ * The type Login validate interceptor.
+ */
 public class LoginValidateInterceptor //extends AbstractInterceptor
         implements HandlerInterceptor {
 

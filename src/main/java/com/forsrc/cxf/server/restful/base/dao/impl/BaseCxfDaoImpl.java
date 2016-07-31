@@ -20,6 +20,9 @@ import java.util.List;
 import java.util.Map;
 
 
+/**
+ * The type Base cxf dao.
+ */
 @Repository(value = "baseCxfDao")
 public class BaseCxfDaoImpl implements BaseCxfDao {
     @Autowired
@@ -121,10 +124,20 @@ public class BaseCxfDaoImpl implements BaseCxfDao {
         getHibernateTemplate().flush();
     }
 
+    /**
+     * Gets hibernate template.
+     *
+     * @return the hibernate template
+     */
     public HibernateTemplate getHibernateTemplate() {
         return hibernateTemplate;
     }
 
+    /**
+     * Sets hibernate template.
+     *
+     * @param hibernateTemplate the hibernate template
+     */
     public void setHibernateTemplate(HibernateTemplate hibernateTemplate) {
         this.hibernateTemplate = hibernateTemplate;
     }

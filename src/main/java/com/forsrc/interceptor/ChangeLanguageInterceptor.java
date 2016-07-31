@@ -23,6 +23,9 @@ import org.apache.struts2.ServletActionContext;*/
 
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * The type Change language interceptor.
+ */
 public class ChangeLanguageInterceptor
         //extends AbstractInterceptor
 {

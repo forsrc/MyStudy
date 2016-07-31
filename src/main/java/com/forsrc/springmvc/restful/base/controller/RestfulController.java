@@ -8,24 +8,62 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.Serializable;
 
+/**
+ * The interface Restful controller.
+ *
+ * @param <E>  the type parameter
+ * @param <PK> the type parameter
+ */
 //@Controller
 //@RequestMapping(value = "/")
 public interface RestfulController<E, PK extends Serializable> {
 
 
-    //@RequestMapping(value = {"/{version}/{name}"}, method = RequestMethod.GET)
+    /**
+     * List model and view.
+     *
+     * @param version  the version
+     * @param start    the start
+     * @param size     the size
+     * @param request  the request
+     * @param response the response
+     * @return the model and view
+     * @throws ActionException the action exception
+     */
+//@RequestMapping(value = {"/{version}/{name}"}, method = RequestMethod.GET)
     //@ResponseBody
     public ModelAndView list(@PathVariable String version, Integer start, Integer size, HttpServletRequest request,
                              HttpServletResponse response) throws ActionException;
 
-    //@RequestMapping(value = {"/{version}/{name}/{id}"}, method = RequestMethod.GET)
+    /**
+     * Get model and view.
+     *
+     * @param version  the version
+     * @param id       the id
+     * @param request  the request
+     * @param response the response
+     * @return the model and view
+     * @throws ActionException the action exception
+     */
+//@RequestMapping(value = {"/{version}/{name}/{id}"}, method = RequestMethod.GET)
     //@ResponseBody
     public ModelAndView get(@PathVariable String version,
                             @PathVariable Long id,
                             HttpServletRequest request,
                             HttpServletResponse response) throws ActionException;
 
-    //@RequestMapping(value = {"/{version}/{name}/{id}"}, method = RequestMethod.PUT)
+    /**
+     * Update model and view.
+     *
+     * @param version  the version
+     * @param id       the id
+     * @param bean     the bean
+     * @param request  the request
+     * @param response the response
+     * @return the model and view
+     * @throws ActionException the action exception
+     */
+//@RequestMapping(value = {"/{version}/{name}/{id}"}, method = RequestMethod.PUT)
     //@ResponseBody
     public ModelAndView update(@PathVariable String version,
                                @PathVariable Long id,
@@ -33,7 +71,18 @@ public interface RestfulController<E, PK extends Serializable> {
                                HttpServletRequest request,
                                HttpServletResponse response) throws ActionException;
 
-    //@RequestMapping(value = {"/{version}/{name}/{id}"}, method = RequestMethod.DELETE)
+    /**
+     * Delete model and view.
+     *
+     * @param version  the version
+     * @param id       the id
+     * @param bean     the bean
+     * @param request  the request
+     * @param response the response
+     * @return the model and view
+     * @throws ActionException the action exception
+     */
+//@RequestMapping(value = {"/{version}/{name}/{id}"}, method = RequestMethod.DELETE)
     //@ResponseBody
     public ModelAndView delete(@PathVariable String version,
                                @PathVariable Long id,
@@ -41,7 +90,17 @@ public interface RestfulController<E, PK extends Serializable> {
                                HttpServletRequest request,
                                HttpServletResponse response) throws ActionException;
 
-    //@RequestMapping(value = {"/{version}/{name}"}, method = RequestMethod.POST)
+    /**
+     * Save model and view.
+     *
+     * @param version  the version
+     * @param bean     the bean
+     * @param request  the request
+     * @param response the response
+     * @return the model and view
+     * @throws ActionException the action exception
+     */
+//@RequestMapping(value = {"/{version}/{name}"}, method = RequestMethod.POST)
     //@ResponseBody
     public ModelAndView save(@PathVariable String version,
                              @PathVariable E bean,

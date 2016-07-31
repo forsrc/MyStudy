@@ -16,6 +16,9 @@
  */
 package com.forsrc.exception;
 
+/**
+ * The type No such user exception.
+ */
 public class NoSuchUserException extends ServiceException {
 
     /**
@@ -23,21 +26,40 @@ public class NoSuchUserException extends ServiceException {
      */
     private static final long serialVersionUID = 6755320921491878153L;
 
+    /**
+     * Instantiates a new No such user exception.
+     */
     public NoSuchUserException() {
 
         super();
     }
 
+    /**
+     * Instantiates a new No such user exception.
+     *
+     * @param message the message
+     */
     public NoSuchUserException(String message) {
 
         super(message);
     }
 
+    /**
+     * Instantiates a new No such user exception.
+     *
+     * @param message the message
+     * @param cause   the cause
+     */
     public NoSuchUserException(String message, Throwable cause) {
 
         super(message, cause);
     }
 
+    /**
+     * Instantiates a new No such user exception.
+     *
+     * @param cause the cause
+     */
     public NoSuchUserException(Throwable cause) {
 
         super(cause);

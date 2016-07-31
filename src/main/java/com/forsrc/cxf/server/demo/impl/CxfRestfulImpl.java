@@ -11,6 +11,9 @@ import javax.ws.rs.core.Context;
 import java.sql.Timestamp;
 import java.util.*;
 
+/**
+ * The type Cxf restful.
+ */
 public class CxfRestfulImpl implements CxfRestful<User> {
     @Override
     public String doGet() {

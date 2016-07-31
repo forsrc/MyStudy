@@ -13,6 +13,9 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.Resource;
 import java.util.List;
 
+/**
+ * The type User service.
+ */
 @Service(value = "userService")
 @Transactional
 public class UserServiceImpl extends BaseServiceImpl<User, Long> implements UserService {
@@ -27,10 +30,20 @@ public class UserServiceImpl extends BaseServiceImpl<User, Long> implements User
     }
 
 
+    /**
+     * Gets user dao.
+     *
+     * @return the user dao
+     */
     public UserDao getUserDao() {
         return userDao;
     }
 
+    /**
+     * Sets user dao.
+     *
+     * @param userDao the user dao
+     */
     public void setUserDao(UserDao userDao) {
         this.userDao = userDao;
     }

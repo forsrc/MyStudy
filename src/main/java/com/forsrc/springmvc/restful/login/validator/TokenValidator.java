@@ -30,13 +30,28 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+/**
+ * The type Token validator.
+ */
 public class TokenValidator extends Validator {
 
 
+    /**
+     * Instantiates a new Token validator.
+     *
+     * @param request       the request
+     * @param messageSource the message source
+     */
     public TokenValidator(HttpServletRequest request, MessageSource messageSource) {
         super(request, messageSource);
     }
 
+    /**
+     * Validate boolean.
+     *
+     * @param token the token
+     * @return the boolean
+     */
     public boolean validate(String token) {
 
         HttpSession session = request.getSession();

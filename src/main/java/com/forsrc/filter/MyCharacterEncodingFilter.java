@@ -10,6 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * The type My character encoding filter.
+ */
 public class MyCharacterEncodingFilter extends CharacterEncodingFilter{
 
     @Override

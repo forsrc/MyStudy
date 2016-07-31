@@ -9,6 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import javax.annotation.Resource;
 
 
+/**
+ * The type Purge index aop.
+ */
 public class PurgeIndexAop {
 
     private static final Logger LOGGER = Logger.getLogger(PurgeIndexAop.class.getName());
@@ -17,6 +20,11 @@ public class PurgeIndexAop {
     @Resource(name = "purgeHibernateSearchService")
     private PurgeHibernateSearchService purgeHibernateSearchService;
 
+    /**
+     * Do after delete.
+     *
+     * @param jp the jp
+     */
     public void doAfterDelete(JoinPoint jp) {
         try {
             Object obj[] = jp.getArgs();
@@ -51,10 +59,20 @@ public class PurgeIndexAop {
         }
     }
 
+    /**
+     * Gets purge hibernate search service.
+     *
+     * @return the purge hibernate search service
+     */
     public PurgeHibernateSearchService getPurgeHibernateSearchService() {
         return this.purgeHibernateSearchService;
     }
 
+    /**
+     * Sets purge hibernate search service.
+     *
+     * @param purgeHibernateSearchService the purge hibernate search service
+     */
     public void setPurgeHibernateSearchService(PurgeHibernateSearchService purgeHibernateSearchService) {
         this.purgeHibernateSearchService = purgeHibernateSearchService;
     }

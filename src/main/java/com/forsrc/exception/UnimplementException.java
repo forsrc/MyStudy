@@ -16,6 +16,9 @@
  */
 package com.forsrc.exception;
 
+/**
+ * The type Unimplement exception.
+ */
 public class UnimplementException extends ServiceException {
 
     /**
@@ -23,21 +26,40 @@ public class UnimplementException extends ServiceException {
      */
     private static final long serialVersionUID = 3858784885939140280L;
 
+    /**
+     * Instantiates a new Unimplement exception.
+     */
     public UnimplementException() {
 
         super();
     }
 
+    /**
+     * Instantiates a new Unimplement exception.
+     *
+     * @param message the message
+     */
     public UnimplementException(String message) {
 
         super(message);
     }
 
+    /**
+     * Instantiates a new Unimplement exception.
+     *
+     * @param message the message
+     * @param cause   the cause
+     */
     public UnimplementException(String message, Throwable cause) {
 
         super(message, cause);
     }
 
+    /**
+     * Instantiates a new Unimplement exception.
+     *
+     * @param cause the cause
+     */
     public UnimplementException(Throwable cause) {
 
         super(cause);

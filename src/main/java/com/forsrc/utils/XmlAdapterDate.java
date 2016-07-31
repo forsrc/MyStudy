@@ -5,6 +5,9 @@ import javax.xml.bind.annotation.adapters.XmlAdapter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/**
+ * The type Xml adapter date.
+ */
 public class XmlAdapterDate extends XmlAdapter<String, Date> {
 
     private static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

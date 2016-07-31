@@ -14,14 +14,23 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The type Utf 8 string http message converter.
+ */
 public class Utf8StringHttpMessageConverter extends AbstractHttpMessageConverter<String> {
 
+    /**
+     * The constant DEFAULT_CHARSET.
+     */
     public static final Charset DEFAULT_CHARSET = Charset.forName("UTF-8");
 
     private final List<Charset> availableCharsets;
 
     private boolean writeAcceptCharset = true;
 
+    /**
+     * Instantiates a new Utf 8 string http message converter.
+     */
     public Utf8StringHttpMessageConverter() {
         super(new MediaType("text", "plain", DEFAULT_CHARSET), MediaType.ALL);
         this.availableCharsets = new ArrayList<Charset>(Charset.availableCharsets().values());
@@ -30,6 +39,8 @@ public class Utf8StringHttpMessageConverter extends AbstractHttpMessageConverter
     /**
      * Indicates whether the {@code Accept-Charset} should be written to any outgoing request.
      * <p>Default is {@code true}.
+     *
+     * @param writeAcceptCharset the write accept charset
      */
     public void setWriteAcceptCharset(boolean writeAcceptCharset) {
         this.writeAcceptCharset = writeAcceptCharset;

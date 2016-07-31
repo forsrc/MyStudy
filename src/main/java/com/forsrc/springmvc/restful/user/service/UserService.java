@@ -6,6 +6,9 @@ import com.forsrc.pojo.User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+/**
+ * The interface User service.
+ */
 @Service
 @Transactional
 public interface UserService extends BaseService<User, Long> {

@@ -16,12 +16,21 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * The type Restful controller.
+ *
+ * @param <E>  the type parameter
+ * @param <PK> the type parameter
+ */
 //@Controller
 @RequestMapping(value = "/{restful}/{version}")
 public abstract class RestfulControllerImpl<E, PK extends Serializable> implements RestfulController<E, PK> {
 
 
-    //@Autowired
+    /**
+     * The Restful service.
+     */
+//@Autowired
     //@Resource(name = "restfulService"
     protected RestfulService restfulService;
 
@@ -133,10 +142,20 @@ public abstract class RestfulControllerImpl<E, PK extends Serializable> implemen
 
     }
 
+    /**
+     * Gets restful service.
+     *
+     * @return the restful service
+     */
     public RestfulService getRestfulService() {
         return this.restfulService;
     }
 
+    /**
+     * Sets restful service.
+     *
+     * @param restfulService the restful service
+     */
     public void setRestfulService(RestfulService restfulService) {
         this.restfulService = restfulService;
     }

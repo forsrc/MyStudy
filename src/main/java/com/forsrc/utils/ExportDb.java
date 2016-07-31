@@ -30,11 +30,17 @@ import org.hibernate.tool.hbm2ddl.SchemaExport;
 
 //import org.hibernate.service.ServiceRegistryBuilder;
 
+/**
+ * The type Export db.
+ */
 public final class ExportDb {
 
     private ExportDb() {
     }
 
+    /**
+     * Init.
+     */
     public static void init() {
         Configuration cfg = new Configuration().configure();
         String isInit = cfg.getProperty("isInitDb");
@@ -107,6 +113,11 @@ public final class ExportDb {
         }
     }
 
+    /**
+     * The entry point of application.
+     *
+     * @param args the input arguments
+     */
     public static void main(String[] args) {
 
         init();

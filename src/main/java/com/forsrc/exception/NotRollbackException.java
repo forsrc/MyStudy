@@ -16,6 +16,9 @@
  */
 package com.forsrc.exception;
 
+/**
+ * The type Not rollback exception.
+ */
 public class NotRollbackException extends ServiceException {
 
     /**
@@ -23,21 +26,40 @@ public class NotRollbackException extends ServiceException {
      */
     private static final long serialVersionUID = 3988783935032162868L;
 
+    /**
+     * Instantiates a new Not rollback exception.
+     */
     public NotRollbackException() {
 
         super();
     }
 
+    /**
+     * Instantiates a new Not rollback exception.
+     *
+     * @param message the message
+     */
     public NotRollbackException(String message) {
 
         super(message);
     }
 
+    /**
+     * Instantiates a new Not rollback exception.
+     *
+     * @param message the message
+     * @param cause   the cause
+     */
     public NotRollbackException(String message, Throwable cause) {
 
         super(message, cause);
     }
 
+    /**
+     * Instantiates a new Not rollback exception.
+     *
+     * @param cause the cause
+     */
     public NotRollbackException(Throwable cause) {
 
         super(cause);

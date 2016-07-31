@@ -10,6 +10,9 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
 
+/**
+ * The interface User cxf action.
+ */
 @Path(value = "/v1.0/api/user")
 @WebService
 public interface UserCxfAction extends BaseCxfAction <User, Long>{

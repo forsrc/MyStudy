@@ -16,17 +16,53 @@
  */
 package com.forsrc.constant;
 
+/**
+ * The enum Key constants.
+ */
 public enum KeyConstants {
+    /**
+     * User key constants.
+     */
     USER("User"),
+    /**
+     * Code key constants.
+     */
     CODE("code"),
+    /**
+     * Key pair key constants.
+     */
     KEY_PAIR("KeyPair"),
+    /**
+     * Login time key constants.
+     */
     LOGIN_TIME("loginTime"),
+    /**
+     * Rsa key key constants.
+     */
     RSA_KEY("RsaKey"),
+    /**
+     * Aes key key constants.
+     */
     AES_KEY("AesKey"),
+    /**
+     * Des key key constants.
+     */
     DES_KEY("DesKey"),
+    /**
+     * Username key constants.
+     */
     USERNAME("username"),
+    /**
+     * Language key constants.
+     */
     LANGUAGE("language"),
+    /**
+     * Ready key constants.
+     */
     READY("ready"),
+    /**
+     * Token key constants.
+     */
     TOKEN("Token");
 
     private String key;
@@ -37,6 +73,11 @@ public enum KeyConstants {
 
     }
 
+    /**
+     * Gets key.
+     *
+     * @return the key
+     */
     public String getKey() {
 
         return key;

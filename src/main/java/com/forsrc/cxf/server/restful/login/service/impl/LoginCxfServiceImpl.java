@@ -18,6 +18,9 @@ import javax.xml.soap.SOAPException;
 import javax.xml.soap.SOAPHeader;
 import javax.xml.soap.SOAPMessage;
 
+/**
+ * The type Login cxf service.
+ */
 @Service(value = "loginCxfService")
 @Transactional
 public class LoginCxfServiceImpl implements LoginCxfService{

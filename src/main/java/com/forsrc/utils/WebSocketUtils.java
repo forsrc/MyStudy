@@ -10,11 +10,19 @@ import java.util.HashMap;
 import java.util.Map;
 
 
+/**
+ * The type Web socket utils.
+ */
 public class WebSocketUtils {
 
     //public static final String SessionAttribute = "isWEB";
 
-    // Construct a successful websocket handshake response using the key param
+    /**
+     * Forbidden response string.
+     *
+     * @return the string
+     */
+// Construct a successful websocket handshake response using the key param
     // (See RFC 6455).
     public static String forbiddenResponse() {
 
@@ -26,6 +34,12 @@ public class WebSocketUtils {
         return response.toString();
     }
 
+    /**
+     * Handshake response string.
+     *
+     * @param key the key
+     * @return the string
+     */
     public static String handshakeResponse(final String key) {
 
         // String response = "HTTP/1.1 101 Web Socket Protocol Handshake\r\n";
@@ -43,6 +57,12 @@ public class WebSocketUtils {
     }
 
 
+    /**
+     * Parse request map.
+     *
+     * @param WSRequest the ws request
+     * @return the map
+     */
     public static Map<String, String> parseRequest(final String WSRequest) {
         HashMap<String, String> ret = new HashMap<String, String>();
         String[] headers = WSRequest.split("\r\n");
@@ -60,7 +80,13 @@ public class WebSocketUtils {
         return ret;
     }
 
-    // Parse the string as a websocket request and return the value from
+    /**
+     * Gets client ws request key.
+     *
+     * @param WSRequest the ws request
+     * @return the client ws request key
+     */
+// Parse the string as a websocket request and return the value from
     // Sec-WebSocket-Key header (See RFC 6455). Return empty string if not found.
     public static String getClientWSRequestKey(final String WSRequest) {
 
@@ -77,7 +103,15 @@ public class WebSocketUtils {
         return socketKey;
     }
 
-    // 
+    /**
+     * Gets web socket key challenge response.
+     *
+     * @param challenge the challenge
+     * @return the web socket key challenge response
+     * @throws NoSuchAlgorithmException     the no such algorithm exception
+     * @throws UnsupportedEncodingException the unsupported encoding exception
+     */
+//
     // Builds the challenge response to be used in WebSocket handshake.
     // First append the challenge with "258EAFA5-E914-47DA-95CA-C5AB0DC85B11" and then
     // make a SHA1 hash and finally Base64 encode it. (See RFC 6455)

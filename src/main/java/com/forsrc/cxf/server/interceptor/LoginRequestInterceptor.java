@@ -15,6 +15,9 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+/**
+ * The type Login request interceptor.
+ */
 public class LoginRequestInterceptor extends AbstractPhaseInterceptor<Message> {
 
     private SAAJInInterceptor saajInInterceptor;
@@ -22,10 +25,16 @@ public class LoginRequestInterceptor extends AbstractPhaseInterceptor<Message> {
     @Resource(name = "loginService")
     private LoginService loginService;
 
+    /**
+     * The Message source.
+     */
     @Autowired
     @Resource(name = "messageSource")
     protected MessageSource messageSource;
 
+    /**
+     * Instantiates a new Login request interceptor.
+     */
     public LoginRequestInterceptor() {
         super(Phase.PRE_PROTOCOL);
         saajInInterceptor = new SAAJInInterceptor();

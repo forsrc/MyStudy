@@ -16,6 +16,9 @@
  */
 package com.forsrc.exception;
 
+/**
+ * The type Code exception.
+ */
 public class CodeException extends ServiceException {
 
     /**
@@ -23,21 +26,40 @@ public class CodeException extends ServiceException {
      */
     private static final long serialVersionUID = -7799175888183597462L;
 
+    /**
+     * Instantiates a new Code exception.
+     */
     public CodeException() {
 
         super();
     }
 
+    /**
+     * Instantiates a new Code exception.
+     *
+     * @param message the message
+     */
     public CodeException(String message) {
 
         super(message);
     }
 
+    /**
+     * Instantiates a new Code exception.
+     *
+     * @param message the message
+     * @param cause   the cause
+     */
     public CodeException(String message, Throwable cause) {
 
         super(message, cause);
     }
 
+    /**
+     * Instantiates a new Code exception.
+     *
+     * @param cause the cause
+     */
     public CodeException(Throwable cause) {
 
         super(cause);

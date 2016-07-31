@@ -12,6 +12,9 @@ import javax.ws.rs.core.MediaType;
 import java.io.Serializable;
 import java.util.List;
 
+/**
+ * The interface Book cxf action.
+ */
 @Path(value = "/v1.0/api/book")
 @WebService(name = "bookCxfService", targetNamespace = "http://com.forsrc.cxf.server.restful.book.action/")
 public interface BookCxfAction extends BaseCxfAction<Book, Long>{

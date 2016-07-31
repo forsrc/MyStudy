@@ -25,12 +25,24 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * The type Base cxf action.
+ *
+ * @param <E>  the type parameter
+ * @param <PK> the type parameter
+ */
 @WebService
 public abstract class BaseCxfActionImpl<E, PK> implements BaseCxfAction<E, PK> {
 
+    /**
+     * The Entity class.
+     */
     @Transient
     transient protected Class<E> entityClass;
 
+    /**
+     * Instantiates a new Base cxf action.
+     */
     public BaseCxfActionImpl() {
         this.entityClass = (Class<E>) ((ParameterizedType) getClass()
                 .getGenericSuperclass()).getActualTypeArguments()[0];
@@ -150,14 +162,29 @@ public abstract class BaseCxfActionImpl<E, PK> implements BaseCxfAction<E, PK> {
         return Response.ok().build();
     }
 
+    /**
+     * Gets base cxf service.
+     *
+     * @return the base cxf service
+     */
     public BaseCxfService getBaseCxfService() {
         return baseCxfService;
     }
 
+    /**
+     * Sets base cxf service.
+     *
+     * @param baseCxfService the base cxf service
+     */
     public void setBaseCxfService(BaseCxfService baseCxfService) {
         this.baseCxfService = baseCxfService;
     }
 
+    /**
+     * Gets http servlet request.
+     *
+     * @return the http servlet request
+     */
     public HttpServletRequest getHttpServletRequest() {
         HttpServletRequest request =
                 ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();

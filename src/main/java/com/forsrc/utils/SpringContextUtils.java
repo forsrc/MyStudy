@@ -16,9 +16,17 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
+/**
+ * The type Spring context utils.
+ */
 public class SpringContextUtils implements ApplicationContextAware {
     private static ApplicationContext applicationContext;
 
+    /**
+     * Gets application context.
+     *
+     * @return the application context
+     */
     public static ApplicationContext getApplicationContext() {
         return applicationContext;
     }
@@ -29,35 +37,75 @@ public class SpringContextUtils implements ApplicationContextAware {
         }
     }
 
+    /**
+     * Gets application context.
+     *
+     * @param xml the xml
+     * @return the application context
+     */
     public static ApplicationContext getApplicationContext(String xml) {
         String xmlFile = xml == null ? "applicationContext.xml" : xml;
         return new FileSystemXmlApplicationContext(xmlFile);
     }
 
+    /**
+     * Gets web application context.
+     *
+     * @return the web application context
+     */
     public static ApplicationContext getWebApplicationContext() {
 
         return ContextLoader.getCurrentWebApplicationContext();
     }
 
+    /**
+     * Gets application context.
+     *
+     * @param request the request
+     * @return the application context
+     */
     public static ApplicationContext getApplicationContext(HttpServletRequest request) {
         ServletContext servletContext = request.getSession().getServletContext();
         return getApplicationContext(servletContext);
     }
 
+    /**
+     * Gets application context.
+     *
+     * @param sc the sc
+     * @return the application context
+     */
     public static ApplicationContext getApplicationContext(ServletContext sc) {
 
         return WebApplicationContextUtils.getWebApplicationContext(sc);
     }
 
+    /**
+     * Gets bean.
+     *
+     * @param id the id
+     * @return the bean
+     */
     public static Object getBean(String id) {
         return applicationContext.getBean(id);
 
     }
 
+    /**
+     * Contains bean boolean.
+     *
+     * @param beanid the beanid
+     * @return the boolean
+     */
     public static boolean containsBean(String beanid) {
         return applicationContext.containsBean(beanid);
     }
 
+    /**
+     * Gets user principal.
+     *
+     * @return the user principal
+     */
     public static UserDetails getUserPrincipal() {
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -66,6 +114,11 @@ public class SpringContextUtils implements ApplicationContextAware {
         return user;
     }
 
+    /**
+     * Gets all principals.
+     *
+     * @return the all principals
+     */
     public static List<Object> getAllPrincipals() {
         SessionRegistry sessionRegistry = (SessionRegistry) SpringContextUtils.getBean("sessionRegistry");
         List<Object> principals = sessionRegistry.getAllPrincipals();
@@ -75,6 +128,12 @@ public class SpringContextUtils implements ApplicationContextAware {
         return principals;
     }
 
+    /**
+     * Expire boolean.
+     *
+     * @param username the username
+     * @return the boolean
+     */
     public static boolean expire(String username) {
 
         SessionRegistry sessionRegistry = (SessionRegistry) SpringContextUtils.getBean("sessionRegistry");

@@ -605,4 +605,7 @@
     </orderEntry>
     <orderEntry type="library" scope="TEST" name="Maven: junit:junit:3.8.1" level="project" />
   </component>
+  <component name="PegdownDocletIdea.ModuleConfiguration">
+    <option name="enabled" value="true" />
+  </component>
 </module>

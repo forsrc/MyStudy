@@ -16,6 +16,9 @@
  */
 package com.forsrc.exception;
 
+/**
+ * The type Action exception.
+ */
 public class ActionException extends BaseException {
 
     /**
@@ -23,21 +26,40 @@ public class ActionException extends BaseException {
      */
     private static final long serialVersionUID = 1427178669529676561L;
 
+    /**
+     * Instantiates a new Action exception.
+     */
     public ActionException() {
 
         super();
     }
 
+    /**
+     * Instantiates a new Action exception.
+     *
+     * @param message the message
+     */
     public ActionException(String message) {
 
         super(message);
     }
 
+    /**
+     * Instantiates a new Action exception.
+     *
+     * @param message the message
+     * @param cause   the cause
+     */
     public ActionException(String message, Throwable cause) {
 
         super(message, cause);
     }
 
+    /**
+     * Instantiates a new Action exception.
+     *
+     * @param cause the cause
+     */
     public ActionException(Throwable cause) {
 
         super(cause);

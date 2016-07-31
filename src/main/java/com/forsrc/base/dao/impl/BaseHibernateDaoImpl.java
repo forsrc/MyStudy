@@ -25,9 +25,18 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * The type Base hibernate dao.
+ *
+ * @param <E>  the type parameter
+ * @param <PK> the type parameter
+ */
 @Repository
 public abstract class BaseHibernateDaoImpl<E, PK extends Serializable> extends DaoSupport implements BaseHibernateDao<E, PK> {
 
+    /**
+     * The Entity class.
+     */
     protected Class<E> entityClass;
 
     @Autowired
@@ -37,6 +46,9 @@ public abstract class BaseHibernateDaoImpl<E, PK extends Serializable> extends D
     @Resource(name = "hibernateTemplate")
     private HibernateTemplate hibernateTemplate;
 
+    /**
+     * Instantiates a new Base hibernate dao.
+     */
     public BaseHibernateDaoImpl() {
         try {
             getEntityClass();
@@ -66,12 +78,33 @@ public abstract class BaseHibernateDaoImpl<E, PK extends Serializable> extends D
         return list(getEntityClass(), begin, size, null);
     }
 
+    /**
+     * List list.
+     *
+     * @param <T>   the type parameter
+     * @param clazz the clazz
+     * @param begin the begin
+     * @param size  the size
+     * @return the list
+     * @throws DaoException the dao exception
+     */
     public <T> List<T> list(Class<T> clazz, int begin, int size)
             throws DaoException {
 
         return list(clazz, begin, size, null);
     }
 
+    /**
+     * List list.
+     *
+     * @param <T>             the type parameter
+     * @param clazz           the clazz
+     * @param begin           the begin
+     * @param size            the size
+     * @param orderColumnName the order column name
+     * @return the list
+     * @throws DaoException the dao exception
+     */
     public <T> List<T> list(Class<T> clazz, int begin, int size, String orderColumnName)
             throws DaoException {
         DetachedCriteria criteria = DetachedCriteria.forClass(clazz);
@@ -89,11 +122,21 @@ public abstract class BaseHibernateDaoImpl<E, PK extends Serializable> extends D
     }
 
 
+    /**
+     * Sets session factory.
+     *
+     * @param sessionFactory the session factory
+     */
     public void setSessionFactory(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
         this.hibernateTemplate = createHibernateTemplate(sessionFactory);
     }
 
+    /**
+     * Gets session.
+     *
+     * @return the session
+     */
     public Session getSession() {
         if (this.sessionFactory == null) {
             throw new HibernateException("Session Create Fail, SessionFactory is null!");
@@ -105,6 +148,12 @@ public abstract class BaseHibernateDaoImpl<E, PK extends Serializable> extends D
         return session;
     }
 
+    /**
+     * Create hibernate template hibernate template.
+     *
+     * @param sessionFactory the session factory
+     * @return the hibernate template
+     */
     protected HibernateTemplate createHibernateTemplate(
             SessionFactory sessionFactory) {
         return new HibernateTemplate(sessionFactory);
@@ -117,6 +166,12 @@ public abstract class BaseHibernateDaoImpl<E, PK extends Serializable> extends D
         }
     }
 
+    /**
+     * Gets session.
+     *
+     * @param allowCreate the allow create
+     * @return the session
+     */
     protected final Session getSession(boolean allowCreate) {
         Session session = this.sessionFactory.getCurrentSession();
         if (session == null && allowCreate) {
@@ -125,14 +180,31 @@ public abstract class BaseHibernateDaoImpl<E, PK extends Serializable> extends D
         return session;
     }
 
+    /**
+     * Open session session.
+     *
+     * @param allowCreate the allow create
+     * @return the session
+     */
     protected final Session openSession(boolean allowCreate) {
         return getSessionFactory().openSession();
     }
 
+    /**
+     * Gets current session.
+     *
+     * @param allowCreate the allow create
+     * @return the current session
+     */
     protected final Session getCurrentSession(boolean allowCreate) {
         return getSessionFactory().getCurrentSession();
     }
 
+    /**
+     * Release session.
+     *
+     * @param session the session
+     */
     protected final void releaseSession(Session session) {
         if (session != null) {
             session.close();
@@ -144,6 +216,11 @@ public abstract class BaseHibernateDaoImpl<E, PK extends Serializable> extends D
         return this.hibernateTemplate;
     }
 
+    /**
+     * Sets hibernate template.
+     *
+     * @param hibernateTemplate the hibernate template
+     */
     public final void setHibernateTemplate(HibernateTemplate hibernateTemplate) {
         this.hibernateTemplate = hibernateTemplate;
     }

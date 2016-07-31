@@ -11,6 +11,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.Iterator;
 import java.util.Map;
 
+/**
+ * The type Pdf view.
+ */
 public class PdfView extends AbstractPdfView {
 
 

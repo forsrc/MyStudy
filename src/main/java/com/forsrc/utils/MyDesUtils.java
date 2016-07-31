@@ -32,20 +32,31 @@ import java.security.spec.InvalidKeySpecException;
 import java.text.MessageFormat;
 
 /**
+ * The type My des utils.
+ *
  * @ClassName: MyDesUtils
  * @Description: The MyDesUtils is a singleton class.
  */
 public final class MyDesUtils {
 
+    /**
+     * The constant CHARSET_ASCII.
+     */
     public static final String CHARSET_ASCII = "ASCII";
+    /**
+     * The constant CHARSET_UTF8.
+     */
     public static final String CHARSET_UTF8 = "UTF-8";
     private static final String PREFIX = "Salted__";
     private static final byte[] SALT = {0, 1, 0, 1, 0, 1, 0, 1};
 
     /**
-     * @param code
-     * @return String
-     * @throws DesException
+     * Decrypt string.
+     *
+     * @param des  the des
+     * @param code the code
+     * @return String string
+     * @throws DesException the des exception
      * @Title: decrypt
      * @Description:
      */
@@ -81,9 +92,12 @@ public final class MyDesUtils {
     }
 
     /**
-     * @param src
-     * @return String
-     * @throws DesException
+     * Encrypt string.
+     *
+     * @param des the des
+     * @param src the src
+     * @return String string
+     * @throws DesException the des exception
      * @Title: encrypt
      * @Description:
      */
@@ -108,9 +122,12 @@ public final class MyDesUtils {
     }
 
     /**
-     * @param pwd
-     * @return String
-     * @throws DesException
+     * Gets decrypt password.
+     *
+     * @param des the des
+     * @param pwd the pwd
+     * @return String decrypt password
+     * @throws DesException the des exception
      * @Title: getDecryptPassword
      * @Description:
      */
@@ -135,9 +152,12 @@ public final class MyDesUtils {
     }
 
     /**
-     * @param pwd
-     * @return String
-     * @throws DesException
+     * Gets encrypt password.
+     *
+     * @param des the des
+     * @param pwd the pwd
+     * @return String encrypt password
+     * @throws DesException the des exception
      * @Title: getEncryptPassword
      * @Description:
      */
@@ -158,16 +178,32 @@ public final class MyDesUtils {
         }
     }
 
+    /**
+     * The type Des exception.
+     */
     public static class DesException extends Exception {
+        /**
+         * Instantiates a new Des exception.
+         *
+         * @param cause the cause
+         */
         public DesException(Throwable cause) {
             super(cause);
         }
 
+        /**
+         * Instantiates a new Des exception.
+         *
+         * @param cause the cause
+         */
         public DesException(String cause) {
             super(cause);
         }
     }
 
+    /**
+     * The type Des key.
+     */
     public static class DesKey implements Serializable {
 
         private static final String CIPHER_KEY = "DES";
@@ -182,42 +218,88 @@ public final class MyDesUtils {
         private String key;
         private String iv;
 
+        /**
+         * Instantiates a new Des key.
+         */
         public DesKey() {
             this.key = generateKey();
             this.iv = generateIv();
         }
 
+        /**
+         * Instantiates a new Des key.
+         *
+         * @param key the key
+         * @param iv  the iv
+         */
         public DesKey(String key, String iv) {
             this.key = key;
             this.iv = iv;
         }
 
 
+        /**
+         * Gets key.
+         *
+         * @return the key
+         */
         public String getKey() {
             return this.key;
         }
 
+        /**
+         * Sets key.
+         *
+         * @param key the key
+         */
         public void setKey(String key) {
             this.key = key;
         }
 
+        /**
+         * Gets iv.
+         *
+         * @return the iv
+         */
         public String getIv() {
             return this.iv;
         }
 
+        /**
+         * Sets iv.
+         *
+         * @param iv the iv
+         */
         public void setIv(String iv) {
             this.iv = iv;
         }
 
+        /**
+         * Generate key string.
+         *
+         * @return the string
+         */
         public String generateKey() {
             return MyStringUtils.generate(8);
         }
 
+        /**
+         * Generate iv string.
+         *
+         * @return the string
+         */
         public String generateIv() {
             return MyStringUtils.generate(8);
         }
 
 
+        /**
+         * Gets cipher.
+         *
+         * @param isEncrypt the is encrypt
+         * @return the cipher
+         * @throws DesException the des exception
+         */
         public Cipher getCipher(boolean isEncrypt) throws DesException {
             Cipher cipher = null;
             try {

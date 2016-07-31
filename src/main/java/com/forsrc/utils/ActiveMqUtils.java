@@ -7,6 +7,9 @@ import org.apache.activemq.ActiveMQConnectionFactory;
 import javax.jms.*;
 import java.text.MessageFormat;
 
+/**
+ * The type Active mq utils.
+ */
 public final class ActiveMqUtils {
 
     private ThreadLocal<Connection> threadLocal = new ThreadLocal<Connection>();
@@ -15,6 +18,11 @@ public final class ActiveMqUtils {
 
     private String url;
 
+    /**
+     * Instantiates a new Active mq utils.
+     *
+     * @param url the url
+     */
     public ActiveMqUtils(String url) {
         connectionFactory = getConnectionFactory(url);
     }
@@ -29,6 +37,12 @@ public final class ActiveMqUtils {
         return connectionFactory;
     }
 
+    /**
+     * Gets connection.
+     *
+     * @return the connection
+     * @throws JMSException the jms exception
+     */
     public synchronized Connection getConnection() throws JMSException {
         Connection connection = threadLocal.get();
         if (connection != null) {
@@ -41,6 +55,11 @@ public final class ActiveMqUtils {
         return connectionFactory.createConnection();
     }
 
+    /**
+     * Close.
+     *
+     * @throws JMSException the jms exception
+     */
     public synchronized void close() throws JMSException {
 
         Connection connection = threadLocal.get();
@@ -51,6 +70,14 @@ public final class ActiveMqUtils {
         }
     }
 
+    /**
+     * Send message active mq utils.
+     *
+     * @param queueName                the queue name
+     * @param activeMqUtilsSendMessage the active mq utils send message
+     * @return the active mq utils
+     * @throws JMSException the jms exception
+     */
     public ActiveMqUtils sendMessage(String queueName, ActiveMqUtilsSendMessage activeMqUtilsSendMessage) throws JMSException {
         Connection connection = getConnection();
         connection.start();
@@ -70,6 +97,14 @@ public final class ActiveMqUtils {
         return this;
     }
 
+    /**
+     * Send message active mq utils.
+     *
+     * @param queueName the queue name
+     * @param message   the message
+     * @return the active mq utils
+     * @throws JMSException the jms exception
+     */
     public ActiveMqUtils sendMessage(String queueName, final String message) throws JMSException {
         return sendMessage(queueName, new ActiveMqUtilsSendMessage() {
             @Override
@@ -80,6 +115,14 @@ public final class ActiveMqUtils {
         });
     }
 
+    /**
+     * Send message active mq utils.
+     *
+     * @param topic                    the topic
+     * @param activeMqUtilsSendMessage the active mq utils send message
+     * @return the active mq utils
+     * @throws JMSException the jms exception
+     */
     public ActiveMqUtils sendMessage(String[] topic, ActiveMqUtilsSendMessage activeMqUtilsSendMessage) throws JMSException {
         Connection connection = getConnection();
         connection.start();
@@ -102,6 +145,14 @@ public final class ActiveMqUtils {
         return this;
     }
 
+    /**
+     * Receive message active mq utils.
+     *
+     * @param queueName                   the queue name
+     * @param activeMqUtilsReceiveMessage the active mq utils receive message
+     * @return the active mq utils
+     * @throws JMSException the jms exception
+     */
     public ActiveMqUtils receiveMessage(String queueName, ActiveMqUtilsReceiveMessage activeMqUtilsReceiveMessage) throws JMSException {
         Connection connection = getConnection();
         connection.start();
@@ -128,6 +179,13 @@ public final class ActiveMqUtils {
         return this;
     }
 
+    /**
+     * Receive message active mq utils.
+     *
+     * @param queueName the queue name
+     * @return the active mq utils
+     * @throws JMSException the jms exception
+     */
     public ActiveMqUtils receiveMessage(String queueName) throws JMSException {
         return receiveMessage(queueName, new ActiveMqUtilsReceiveMessage() {
             @Override
@@ -142,13 +200,40 @@ public final class ActiveMqUtils {
         });
     }
 
+    /**
+     * The interface Active mq utils send message.
+     */
     public interface ActiveMqUtilsSendMessage {
+        /**
+         * Send message.
+         *
+         * @param session     the session
+         * @param producer    the producer
+         * @param destination the destination
+         * @throws JMSException the jms exception
+         */
         void sendMessage(Session session, MessageProducer producer, Destination destination) throws JMSException;
     }
 
+    /**
+     * The interface Active mq utils receive message.
+     */
     public interface ActiveMqUtilsReceiveMessage {
+        /**
+         * Receive message.
+         *
+         * @param session     the session
+         * @param consumer    the consumer
+         * @param destination the destination
+         * @throws JMSException the jms exception
+         */
         void receiveMessage(Session session, MessageConsumer consumer, Destination destination) throws JMSException;
 
+        /**
+         * Todo.
+         *
+         * @param message the message
+         */
         void todo(TextMessage message);
     }
 

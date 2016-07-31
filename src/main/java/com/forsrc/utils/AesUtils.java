@@ -34,12 +34,20 @@ import java.security.NoSuchAlgorithmException;
 import java.text.MessageFormat;
 
 /**
+ * The type Aes utils.
+ *
  * @ClassName: AesUtils
  * @Description: The AesUtils is a singleton class.
  */
 public final class AesUtils {
 
+    /**
+     * The constant CHARSET_ASCII.
+     */
     public static final String CHARSET_ASCII = "ASCII";
+    /**
+     * The constant CHARSET_UTF8.
+     */
     public static final String CHARSET_UTF8 = "UTF-8";
     private static final String CIPHER_KEY = "AES/CBC/PKCS5Padding";
     private static final String IV_PARAMETER = "x0123456789abcde";
@@ -49,15 +57,22 @@ public final class AesUtils {
     private AesUtils() {
     }
 
+    /**
+     * Gets instance.
+     *
+     * @return the instance
+     */
     public static AesUtils getInstance() {
 
         return AesUtilsStaticClass.INSTANCE;
     }
 
     /**
-     * @param code
-     * @return String
-     * @throws AesException
+     * Decrypt string.
+     *
+     * @param code the code
+     * @return String string
+     * @throws AesException the aes exception
      * @Title: decrypt
      * @Description:
      */
@@ -116,9 +131,11 @@ public final class AesUtils {
     }
 
     /**
-     * @param src
-     * @return String
-     * @throws AesException
+     * Encrypt string.
+     *
+     * @param src the src
+     * @return String string
+     * @throws AesException the aes exception
      * @Title: encrypt
      * @Description:
      */
@@ -163,9 +180,11 @@ public final class AesUtils {
     }
 
     /**
-     * @param pwd
-     * @return String
-     * @throws AesException
+     * Gets decrypt password.
+     *
+     * @param pwd the pwd
+     * @return String decrypt password
+     * @throws AesException the aes exception
      * @Title: getDecryptPassword
      * @Description:
      */
@@ -184,9 +203,11 @@ public final class AesUtils {
     }
 
     /**
-     * @param pwd
-     * @return String
-     * @throws AesException
+     * Gets encrypt password.
+     *
+     * @param pwd the pwd
+     * @return String encrypt password
+     * @throws AesException the aes exception
      * @Title: getEncryptPassword
      * @Description:
      */
@@ -200,6 +221,13 @@ public final class AesUtils {
         }
     }
 
+    /**
+     * Matches boolean.
+     *
+     * @param password the password
+     * @param pwd      the pwd
+     * @return the boolean
+     */
     public boolean matches(String password, String pwd) {
         if (MyStringUtils.isBlank(password) || MyStringUtils.isBlank(pwd)) {
             return false;
@@ -211,7 +239,15 @@ public final class AesUtils {
         }
     }
 
+    /**
+     * The type Aes exception.
+     */
     public static class AesException extends Exception {
+        /**
+         * Instantiates a new Aes exception.
+         *
+         * @param cause the cause
+         */
         public AesException(Throwable cause) {
             super(cause);
         }

@@ -15,6 +15,9 @@ import javax.xml.ws.Provider;
 import java.io.IOException;
 
 
+/**
+ * The type Login provider.
+ */
 public class LoginProvider implements Provider<DOMSource> {
 
     @Autowired

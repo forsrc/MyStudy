@@ -10,27 +10,68 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 
+/**
+ * The type Date time utils.
+ */
 public class DateTimeUtils {
 
 
+    /**
+     * The constant FORMAT.
+     */
     public static final String FORMAT = "yyyy-MM-dd HH:mm:ss";
+    /**
+     * The constant FORMAT_DATE_TIME.
+     */
     public static final String FORMAT_DATE_TIME = "yyyy-MM-dd HH:mm:ss";
+    /**
+     * The constant FORMAT_DATE.
+     */
     public static final String FORMAT_DATE = "yyyy-MM-dd";
+    /**
+     * The constant FORMAT_TIME.
+     */
     public static final String FORMAT_TIME = "HH:mm:ss";
 
+    /**
+     * The constant SDF_FORMAT.
+     */
     public static final SimpleDateFormat SDF_FORMAT = new SimpleDateFormat(FORMAT);
+    /**
+     * The constant SDF_FORMAT_DATE_TIME.
+     */
     public static final SimpleDateFormat SDF_FORMAT_DATE_TIME = new SimpleDateFormat(FORMAT_DATE_TIME);
+    /**
+     * The constant SDF_FORMAT_DATE.
+     */
     public static final SimpleDateFormat SDF_FORMAT_DATE = new SimpleDateFormat(FORMAT_DATE);
+    /**
+     * The constant SDF_FORMAT_TIME.
+     */
     public static final SimpleDateFormat SDF_FORMAT_TIME = new SimpleDateFormat(FORMAT_TIME);
 
+    /**
+     * The constant PATTERN_YYYY_MM_DD_HH_MM_SS.
+     */
     public static final Pattern PATTERN_YYYY_MM_DD_HH_MM_SS = Pattern.compile("^\\d{4}\\-\\d{2}\\-\\d{2} \\d{2}\\:\\d{2}\\:\\d{2}$");
+    /**
+     * The constant PATTERN_YYYY_MM_DD.
+     */
     public static final Pattern PATTERN_YYYY_MM_DD = Pattern.compile("^\\d{4}\\-\\d{2}\\-\\d{2}$");
+    /**
+     * The constant PATTERN_HH_MM_SS.
+     */
     public static final Pattern PATTERN_HH_MM_SS = Pattern.compile("^\\d{2}\\:\\d{2}\\:\\d{2}$");
+    /**
+     * The constant PATTERN_LONG.
+     */
     public static final Pattern PATTERN_LONG = Pattern.compile("^\\d+$");
 
     /**
+     * Gets date time.
+     *
      * @param @return
-     * @return String
+     * @return String date time
      * @throws
      * @Title: getDateTime
      * @Description:
@@ -40,9 +81,10 @@ public class DateTimeUtils {
     }
 
     /**
-     * @param @param  format
-     * @param @return
-     * @return String
+     * Gets date time.
+     *
+     * @param format the format
+     * @return String date time
      * @throws
      * @Title: getDateTime
      * @Description:
@@ -55,10 +97,11 @@ public class DateTimeUtils {
     }
 
     /**
-     * @param @param  date
-     * @param @param  format
-     * @param @return
-     * @return String
+     * Gets date time.
+     *
+     * @param date   the date
+     * @param format the format
+     * @return String date time
      * @throws
      * @Title: getDateTime
      * @Description:
@@ -71,8 +114,10 @@ public class DateTimeUtils {
     }
 
     /**
-     * @param date
-     * @return String
+     * Gets date time.
+     *
+     * @param date the date
+     * @return String date time
      * @throws
      * @Title: getDateTime
      * @Description:
@@ -84,6 +129,14 @@ public class DateTimeUtils {
         return SDF_FORMAT.format(date);
     }
 
+    /**
+     * Gets date time.
+     *
+     * @param today  the today
+     * @param index  the index
+     * @param format the format
+     * @return the date time
+     */
     public static String getDateTime(Date today, int index, String format) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(today);
@@ -93,10 +146,12 @@ public class DateTimeUtils {
     }
 
     /**
-     * @param today
+     * Gets week.
+     *
+     * @param today  the today
      * @param index  　0-6
-     * @param format
-     * @return String
+     * @param format the format
+     * @return String week
      * @throws
      * @Title: getWeek
      * @Description:
@@ -118,9 +173,11 @@ public class DateTimeUtils {
     }
 
     /**
-     * @param today
-     * @param index
-     * @return ArrayList<Date>
+     * Gets date list.
+     *
+     * @param today the today
+     * @param index the index
+     * @return ArrayList<Date> date list
      * @throws
      * @Title: getDateList
      * @Description:
@@ -141,14 +198,24 @@ public class DateTimeUtils {
         return list;
     }
 
+    /**
+     * Gets date list reg.
+     *
+     * @param today  the today
+     * @param index  the index
+     * @param format the format
+     * @return the date list reg
+     */
     public static String getDateListReg(Date today, int index, String format) {
         return getDatesReg(getDateList(today, index), format);
     }
 
     /**
-     * @param today
-     * @param index
-     * @return ArrayList<Date>
+     * Gets week date list.
+     *
+     * @param today the today
+     * @param index the index
+     * @return ArrayList<Date> week date list
      * @throws
      * @Title: getWeekDateList
      * @Description:
@@ -175,11 +242,26 @@ public class DateTimeUtils {
         return list;
     }
 
+    /**
+     * Gets week date list reg.
+     *
+     * @param today  the today
+     * @param index  the index
+     * @param format the format
+     * @return the week date list reg
+     */
     public static String getWeekDateListReg(Date today, int index, String format) {
         ArrayList<Date> list = DateTimeUtils.getWeekDateList(today, index);
         return getDatesReg(list, format);
     }
 
+    /**
+     * Gets dates reg.
+     *
+     * @param list   the list
+     * @param format the format
+     * @return the dates reg
+     */
     public static String getDatesReg(ArrayList<Date> list, String format) {
         Iterator<Date> it = list.iterator();
         StringBuffer sb = new StringBuffer();
@@ -197,10 +279,11 @@ public class DateTimeUtils {
     }
 
     /**
-     * @param @param  currentTimeMillis
-     * @param @param  format
-     * @param @return
-     * @return String
+     * Gets date time.
+     *
+     * @param currentTimeMillis the current time millis
+     * @param format            the format
+     * @return String date time
      * @throws
      * @Title: getDateTime
      * @Description:
@@ -210,6 +293,13 @@ public class DateTimeUtils {
         return sdf.format(new Date(currentTimeMillis));
     }
 
+    /**
+     * String to date date.
+     *
+     * @param date   the date
+     * @param format the format
+     * @return the date
+     */
     public static Date stringToDate(String date, String format) {
         SimpleDateFormat sdf = new SimpleDateFormat(format);
         try {
@@ -221,9 +311,10 @@ public class DateTimeUtils {
     }
 
     /**
-     * @param @param  currentTimeMillis
-     * @param @return
-     * @return String
+     * Gets date time.
+     *
+     * @param currentTimeMillis the current time millis
+     * @return String date time
      * @throws
      * @Title: getDateTime
      * @Description:
@@ -234,9 +325,11 @@ public class DateTimeUtils {
     }
 
     /**
-     * @param currentTimeMillis
-     * @param ms
-     * @return String
+     * Gets date time.
+     *
+     * @param currentTimeMillis the current time millis
+     * @param ms                the ms
+     * @return String date time
      * @throws
      * @Title: getDateTime
      * @Description:
@@ -248,15 +341,38 @@ public class DateTimeUtils {
     }
 
 
+    /**
+     * Format string.
+     *
+     * @param format the format
+     * @param date   the date
+     * @return the string
+     * @throws ParseException the parse exception
+     */
     public static String format(String format, Date date) throws ParseException {
         SimpleDateFormat sdf = new SimpleDateFormat(format);
         return sdf.format(date);
     }
 
+    /**
+     * Format string.
+     *
+     * @param date the date
+     * @return the string
+     * @throws ParseException the parse exception
+     */
     public static String format(Date date) throws ParseException {
         return SDF_FORMAT.format(date);
     }
 
+    /**
+     * Parse date.
+     *
+     * @param format the format
+     * @param date   the date
+     * @return the date
+     * @throws ParseException the parse exception
+     */
     public static Date parse(String format, String date) throws ParseException {
         if (date == null) {
             return null;
@@ -299,6 +415,13 @@ public class DateTimeUtils {
         return sdf.parse(date);
     }
 
+    /**
+     * Parse date.
+     *
+     * @param date the date
+     * @return the date
+     * @throws ParseException the parse exception
+     */
     public static Date parse(String date) throws ParseException {
         return parse(FORMAT, date);
     }

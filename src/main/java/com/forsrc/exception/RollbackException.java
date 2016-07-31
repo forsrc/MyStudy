@@ -16,6 +16,9 @@
  */
 package com.forsrc.exception;
 
+/**
+ * The type Rollback exception.
+ */
 public class RollbackException extends ServiceException {
 
     /**
@@ -23,21 +26,40 @@ public class RollbackException extends ServiceException {
      */
     private static final long serialVersionUID = 7402974243801900798L;
 
+    /**
+     * Instantiates a new Rollback exception.
+     */
     public RollbackException() {
 
         super();
     }
 
+    /**
+     * Instantiates a new Rollback exception.
+     *
+     * @param message the message
+     */
     public RollbackException(String message) {
 
         super(message);
     }
 
+    /**
+     * Instantiates a new Rollback exception.
+     *
+     * @param message the message
+     * @param cause   the cause
+     */
     public RollbackException(String message, Throwable cause) {
 
         super(message, cause);
     }
 
+    /**
+     * Instantiates a new Rollback exception.
+     *
+     * @param cause the cause
+     */
     public RollbackException(Throwable cause) {
 
         super(cause);

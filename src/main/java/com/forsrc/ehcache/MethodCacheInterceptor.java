@@ -16,16 +16,27 @@ import org.springframework.beans.factory.InitializingBean;
 import java.lang.reflect.Method;
 import java.util.Iterator;
 
+/**
+ * The type Method cache interceptor.
+ */
 public class MethodCacheInterceptor implements MethodInterceptor, AfterReturningAdvice, InitializingBean {
 
     private static final Logger LOGGER = Logger.getLogger(MethodCacheInterceptor.class);
 
     private Cache cache;
 
+    /**
+     * Sets cache.
+     *
+     * @param cache the cache
+     */
     public void setCache(Cache cache) {
         this.cache = cache;
     }
 
+    /**
+     * Instantiates a new Method cache interceptor.
+     */
     public MethodCacheInterceptor() {
         super();
     }
@@ -56,7 +67,7 @@ public class MethodCacheInterceptor implements MethodInterceptor, AfterReturning
      *
      * @param proceedingJoinPoint the proceedingJoinPoint
      * @return the cached object
-     * @throws Throwable
+     * @throws Throwable the throwable
      */
     public Object doAround(ProceedingJoinPoint proceedingJoinPoint)
             throws Throwable {

@@ -11,8 +11,18 @@ import java.util.Iterator;
 import java.util.Map;
 
 
+/**
+ * The type Json utils.
+ */
 public class JsonUtils {
 
+    /**
+     * Gets value.
+     *
+     * @param key        the key
+     * @param jsonString the json string
+     * @return the value
+     */
     public static String getValue(String key, String jsonString) {
         ObjectMapper objectMapper = new ObjectMapper();
         try {
@@ -24,6 +34,15 @@ public class JsonUtils {
         return null;
     }
 
+    /**
+     * Gets value.
+     *
+     * @param <V>        the type parameter
+     * @param key        the key
+     * @param v          the v
+     * @param jsonString the json string
+     * @return the value
+     */
     public static <V> V getValue(String key, Class<V> v, String jsonString) {
         ObjectMapper objectMapper = new ObjectMapper();
 
@@ -37,6 +56,14 @@ public class JsonUtils {
         return null;
     }
 
+    /**
+     * Sets value.
+     *
+     * @param key        the key
+     * @param value      the value
+     * @param jsonString the json string
+     * @return the value
+     */
     public static String setValue(String key, String value, String jsonString) {
         ObjectMapper objectMapper = new ObjectMapper();
 
@@ -50,6 +77,13 @@ public class JsonUtils {
         return null;
     }
 
+    /**
+     * Json to ini string.
+     *
+     * @param jsonString the json string
+     * @param session    the session
+     * @return the string
+     */
     public static String jsonToIni(String jsonString, String session) {
         ObjectMapper objectMapper = new ObjectMapper();
 
@@ -63,6 +97,13 @@ public class JsonUtils {
         return null;
     }
 
+    /**
+     * Json to ini string.
+     *
+     * @param jsonNode the json node
+     * @param session  the session
+     * @return the string
+     */
     public static String jsonToIni(JsonNode jsonNode, String session) {
 
         StringBuilder sb = new StringBuilder();
@@ -81,6 +122,12 @@ public class JsonUtils {
     }
 
 
+    /**
+     * Json to println string.
+     *
+     * @param json the json
+     * @return the string
+     */
     public static String jsonToPrintln(String json) {
         json = json.replaceAll("^\\{", "{\n  ");
         json = json.replaceAll("\\}$", "\n}");
@@ -92,6 +139,13 @@ public class JsonUtils {
         return json;
     }
 
+    /**
+     * Json to println string.
+     *
+     * @param json  the json
+     * @param index the index
+     * @return the string
+     */
     public static String jsonToPrintln(String json, int index) {
         if (json == null) {
             return null;

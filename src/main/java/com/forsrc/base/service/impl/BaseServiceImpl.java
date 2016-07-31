@@ -9,11 +9,20 @@ import org.springframework.transaction.annotation.Transactional;
 import java.io.Serializable;
 import java.util.List;
 
+/**
+ * The type Base service.
+ *
+ * @param <E>  the type parameter
+ * @param <PK> the type parameter
+ */
 //@Service()
 //@Transactional
 public abstract class BaseServiceImpl<E, PK extends Serializable> implements BaseService<E, PK> {
 
 
+    /**
+     * The Base hibernate dao.
+     */
     protected BaseHibernateDao<E, PK> baseHibernateDao;
 
     @Override
@@ -73,6 +82,11 @@ public abstract class BaseServiceImpl<E, PK extends Serializable> implements Bas
         return baseHibernateDao;
     }
 
+    /**
+     * Sets base hibernate dao.
+     *
+     * @param baseHibernateDao the base hibernate dao
+     */
     public void setBaseHibernateDao(BaseHibernateDao<E, PK> baseHibernateDao) {
         this.baseHibernateDao = baseHibernateDao;
     }

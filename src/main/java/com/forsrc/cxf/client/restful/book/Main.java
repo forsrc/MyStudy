@@ -10,12 +10,21 @@ import javax.ws.rs.core.Response;
 import java.io.IOException;
 import java.util.Date;
 
+/**
+ * The type Main.
+ */
 public class Main {
 
     private static final String URL = "http://localhost:8077/cxf/restful/v1.0/api";
     private static final String ID = "1";
 
 
+    /**
+     * The entry point of application.
+     *
+     * @param args the input arguments
+     * @throws IOException the io exception
+     */
     public static void main(String[] args) throws IOException {
 
 
@@ -40,6 +49,11 @@ public class Main {
         System.out.println(page.getList().size());
     }
 
+    /**
+     * List page.
+     *
+     * @return the page
+     */
     public static Page<Book> list() {
         WebClient client = WebClient.create(URL);
         Page page = client.path("/book")
@@ -51,6 +65,13 @@ public class Main {
         return page;
     }
 
+    /**
+     * Save book.
+     *
+     * @param book the book
+     * @return the book
+     * @throws IOException the io exception
+     */
     public static Book save(Book book) throws IOException {
         WebClient client = WebClient.create(URL);
         client.path("/book")
@@ -62,6 +83,12 @@ public class Main {
         return b;
     }
 
+    /**
+     * Get book.
+     *
+     * @param id the id
+     * @return the book
+     */
     public static Book get(Long id) {
         WebClient client = WebClient.create(URL);
         client.path("/book/" + id + "").accept(MediaType.APPLICATION_XML_TYPE)
@@ -71,6 +98,12 @@ public class Main {
         return book;
     }
 
+    /**
+     * Update book.
+     *
+     * @param book the book
+     * @return the book
+     */
     public static Book update(Book book) {
         WebClient client = WebClient.create(URL);
         client.path("/book/" + book.getId())
@@ -81,6 +114,12 @@ public class Main {
         return b;
     }
 
+    /**
+     * Patch book.
+     *
+     * @param book the book
+     * @return the book
+     */
     public static Book patch(Book book) {
         WebClient client = WebClient.create(URL);
         client.path("/book/" + book.getId())
@@ -91,6 +130,11 @@ public class Main {
         return b;
     }
 
+    /**
+     * Delete.
+     *
+     * @param book the book
+     */
     public static void delete(Book book) {
         WebClient client = WebClient.create(URL);
 

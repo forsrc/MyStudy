@@ -6,6 +6,9 @@ import org.springframework.core.convert.converter.Converter;
 import java.text.ParseException;
 import java.util.Date;
 
+/**
+ * The type Converter date.
+ */
 public class ConverterDate implements Converter<String, Date> {
 
     @Override

@@ -21,25 +21,68 @@ import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * The type My hibernate utils.
+ */
 public class MyHibernateUtils {
 
+    /**
+     * The constant PREPARED_STATEMENT_SET_METHOD_MAP.
+     */
     public static final Map<Class<?>, Method> PREPARED_STATEMENT_SET_METHOD_MAP = getPreparedStatementSetMethodMap();
 
+    /**
+     * The constant PATTERN.
+     */
     public static final Pattern PATTERN = Pattern.compile("[:#$](\\w+)");
+    /**
+     * The constant PATTERN_COLON.
+     */
     public static final Pattern PATTERN_COLON = Pattern.compile(":(\\w+)");
+    /**
+     * The constant PATTERN_POUND.
+     */
     public static final Pattern PATTERN_POUND = Pattern.compile("#(\\w+)");
+    /**
+     * The constant PATTERN_$.
+     */
     public static final Pattern PATTERN_$ = Pattern.compile("$(\\w+)");
 
+    /**
+     * Format sql string.
+     *
+     * @param sql the sql
+     * @return the string
+     */
     public static String formatSql(final String sql) {
         return sql.replaceAll(PATTERN.pattern(), "?");
     }
 
+    /**
+     * Gets prepared statement.
+     *
+     * @param sessionFactory the session factory
+     * @param sql            the sql
+     * @return the prepared statement
+     * @throws SQLException the sql exception
+     */
     public static PreparedStatement getPreparedStatement(SessionFactory sessionFactory, final String sql) throws SQLException {
         DataSource ds = SessionFactoryUtils.getDataSource(sessionFactory);
         Connection connection = ds.getConnection();
         return connection.prepareStatement(sql);
     }
 
+    /**
+     * Add batch.
+     *
+     * @param <E>                the type parameter
+     * @param ps                 the ps
+     * @param sqlPropertyColumns the sql property columns
+     * @param e                  the e
+     * @throws SQLException              the sql exception
+     * @throws InvocationTargetException the invocation target exception
+     * @throws IllegalAccessException    the illegal access exception
+     */
     public static <E> void addBatch(PreparedStatement ps, List<PropertyColumn> sqlPropertyColumns, E e) throws SQLException, InvocationTargetException, IllegalAccessException {
 
         Method method = null;
@@ -56,6 +99,15 @@ public class MyHibernateUtils {
         ps.addBatch();
     }
 
+    /**
+     * Gets sql property column list.
+     *
+     * @param sessionFactory the session factory
+     * @param cls            the cls
+     * @param sql            the sql
+     * @return the sql property column list
+     * @throws IOException the io exception
+     */
     public static List<PropertyColumn> getSqlPropertyColumnList(SessionFactory sessionFactory, final Class<?> cls, final String sql) throws IOException {
 
         final List<String> propertyColumnNameList = getPropertyNames(sql, PATTERN);
@@ -75,6 +127,13 @@ public class MyHibernateUtils {
         return list;
     }
 
+    /**
+     * Gets property names.
+     *
+     * @param sql     the sql
+     * @param pattern the pattern
+     * @return the property names
+     */
     public static List<String> getPropertyNames(final String sql, Pattern pattern) {
         Matcher matcher = pattern.matcher(sql);
         List<String> list = new ArrayList<String>();
@@ -84,6 +143,14 @@ public class MyHibernateUtils {
         return list;
     }
 
+    /**
+     * Handle.
+     *
+     * @param sessionFactory the session factory
+     * @param cls            the cls
+     * @param handler        the handler
+     * @throws IOException the io exception
+     */
     public static void handle(SessionFactory sessionFactory, Class<?> cls, Handler handler) throws IOException {
         SingleTableEntityPersister singleTableEntityPersister = (SingleTableEntityPersister)
                 (sessionFactory.getAllClassMetadata().get(cls.getName()));
@@ -104,10 +171,30 @@ public class MyHibernateUtils {
         }
     }
 
+    /**
+     * The interface Handler.
+     */
     public static interface Handler {
+        /**
+         * Handle boolean.
+         *
+         * @param propertyName       the property name
+         * @param propertyColumnName the property column name
+         * @param type               the type
+         * @return the boolean
+         * @throws IOException the io exception
+         */
         public boolean handle(String propertyName, String propertyColumnName, Type type) throws IOException;
     }
 
+    /**
+     * Gets property names.
+     *
+     * @param sessionFactory the session factory
+     * @param cls            the cls
+     * @return the property names
+     * @throws IOException the io exception
+     */
     public static Map<String, PropertyColumn> getPropertyNames(SessionFactory sessionFactory, final Class<?> cls) throws IOException {
         final Map<String, PropertyColumn> map = new HashMap<String, PropertyColumn>();
         handle(sessionFactory, cls, new Handler() {
@@ -120,6 +207,14 @@ public class MyHibernateUtils {
         return map;
     }
 
+    /**
+     * Gets property column names.
+     *
+     * @param sessionFactory the session factory
+     * @param cls            the cls
+     * @return the property column names
+     * @throws IOException the io exception
+     */
     public static Map<String, PropertyColumn> getPropertyColumnNames(SessionFactory sessionFactory, final Class<?> cls) throws IOException {
 
         final Map<String, PropertyColumn> map = new HashMap<String, PropertyColumn>();
@@ -133,16 +228,32 @@ public class MyHibernateUtils {
         return map;
     }
 
+    /**
+     * The type Property column.
+     */
     public static class PropertyColumn {
         private Class<?> cls;
         private String propertyName;
         private String propertyColumnName;
         private Type type;
 
+        /**
+         * Instantiates a new Property column.
+         *
+         * @param cls the cls
+         */
         public PropertyColumn(Class<?> cls) {
             this.cls = cls;
         }
 
+        /**
+         * Instantiates a new Property column.
+         *
+         * @param cls                the cls
+         * @param propertyName       the property name
+         * @param propertyColumnName the property column name
+         * @param type               the type
+         */
         public PropertyColumn(Class<?> cls, String propertyName, String propertyColumnName, Type type) {
             this.cls = cls;
             this.propertyName = propertyName;
@@ -150,34 +261,74 @@ public class MyHibernateUtils {
             this.type = type;
         }
 
+        /**
+         * Gets cls.
+         *
+         * @return the cls
+         */
         public Class<?> getCls() {
             return cls;
         }
 
+        /**
+         * Sets cls.
+         *
+         * @param cls the cls
+         */
         public void setCls(Class<?> cls) {
             this.cls = cls;
         }
 
+        /**
+         * Gets property name.
+         *
+         * @return the property name
+         */
         public String getPropertyName() {
             return propertyName;
         }
 
+        /**
+         * Sets property name.
+         *
+         * @param propertyName the property name
+         */
         public void setPropertyName(String propertyName) {
             this.propertyName = propertyName;
         }
 
+        /**
+         * Gets property column name.
+         *
+         * @return the property column name
+         */
         public String getPropertyColumnName() {
             return propertyColumnName;
         }
 
+        /**
+         * Sets property column name.
+         *
+         * @param propertyColumnName the property column name
+         */
         public void setPropertyColumnName(String propertyColumnName) {
             this.propertyColumnName = propertyColumnName;
         }
 
+        /**
+         * Gets type.
+         *
+         * @return the type
+         */
         public Type getType() {
             return type;
         }
 
+        /**
+         * Sets type.
+         *
+         * @param type the type
+         */
         public void setType(Type type) {
             this.type = type;
         }
@@ -204,6 +355,11 @@ public class MyHibernateUtils {
         }
     }
 
+    /**
+     * Gets prepared statement set method map.
+     *
+     * @return the prepared statement set method map
+     */
     public static Map<Class<?>, Method> getPreparedStatementSetMethodMap() {
         Map<Class<?>, Method> map = new HashMap<Class<?>, Method>();
 

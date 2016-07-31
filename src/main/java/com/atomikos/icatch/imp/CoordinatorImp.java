@@ -69,17 +69,17 @@ import com.atomikos.timing.AlarmTimerListener;
 import com.atomikos.timing.PooledAlarmTimer;
 
 /**
- *
  * All things related to termination logic.
- *
  */
-
 public class CoordinatorImp implements CompositeCoordinator, Participant,
         RecoveryCoordinator, StateRecoverable<TxState>, AlarmTimerListener, Stateful<TxState>,
         FSMPreEnterListener<TxState>, FSMTransitionListener<TxState>, FSMEnterListener<TxState>
 {
     private static final Logger LOGGER = LoggerFactory.createLogger(CoordinatorImp.class);
 
+    /**
+     * The Default millis between timer wakeups.
+     */
     static long DEFAULT_MILLIS_BETWEEN_TIMER_WAKEUPS = 150;
     // SHOULD NOT BE BIG, otherwise lots of sleeping threads -> OUT OF MEMORY!
 
@@ -111,8 +111,11 @@ public class CoordinatorImp implements CompositeCoordinator, Participant,
 
     /**
      * Constructor for testing only.
+     *
+     * @param root             the root
+     * @param heuristic_commit the heuristic commit
+     * @param checkorphans     the checkorphans
      */
-
     protected CoordinatorImp ( String root , boolean heuristic_commit ,
                                boolean checkorphans )
     {
@@ -149,25 +152,13 @@ public class CoordinatorImp implements CompositeCoordinator, Participant,
     /**
      * Constructor.
      *
-     * @param root
-     *            The root tid.
-     * @param coord
-     *            The RecoverCoordinator, null if root.
-     * @param console
-     *            The console to log to, or null if none.
-     * @param heuristic_commit
-     *            Whether to do commit on heuristic.
-     * @param timeout
-     *            The timeout in milliseconds for indoubts before a heuristic
-     *            decision is made.
-     * @param checkorphans
-     *            If true, orphan checks are made on prepare. For OTS, this is
-     *            false.
-     * @param single_threaded_2pc
-     * 			 If true then commit is done in the same thread as the one that
-     *            started the tx.
+     * @param root                The root tid.
+     * @param coord               The RecoverCoordinator, null if root.
+     * @param heuristic_commit    Whether to do commit on heuristic.
+     * @param timeout             The timeout in milliseconds for indoubts before a heuristic            decision is made.
+     * @param checkorphans        If true, orphan checks are made on prepare. For OTS, this is            false.
+     * @param single_threaded_2pc If true then commit is done in the same thread as the one that            started the tx.
      */
-
     protected CoordinatorImp ( String root , RecoveryCoordinator coord ,
                                boolean heuristic_commit ,
                                long timeout , boolean checkorphans , boolean single_threaded_2pc )
@@ -197,18 +188,11 @@ public class CoordinatorImp implements CompositeCoordinator, Participant,
     /**
      * Constructor.
      *
-     * @param root
-     *            The root String for this one.
-     * @param console
-     *            The console to log to, or null if none.
-     * @param coord
-     *            The recovery coordinator for indoubt resolution.
-     * @param heuristic_commit
-     *            If true, heuristic decision is commit.
-     * @param checkorphans
-     *            If true, orphan checking is done at prepare.
+     * @param root             The root String for this one.
+     * @param coord            The recovery coordinator for indoubt resolution.
+     * @param heuristic_commit If true, heuristic decision is commit.
+     * @param checkorphans     If true, orphan checking is done at prepare.
      */
-
     public CoordinatorImp ( String root , RecoveryCoordinator coord ,
                             boolean heuristic_commit , boolean checkorphans )
     {
@@ -219,7 +203,6 @@ public class CoordinatorImp implements CompositeCoordinator, Participant,
     /**
      * No argument constructor as required by Recoverable interface.
      */
-
     public CoordinatorImp ()
     {
 
@@ -234,7 +217,11 @@ public class CoordinatorImp implements CompositeCoordinator, Participant,
     }
 
 
-
+    /**
+     * Prefers single threaded 2 pc boolean.
+     *
+     * @return the boolean
+     */
     boolean prefersSingleThreaded2PC()
     {
         return single_threaded_2pc_;
@@ -243,12 +230,16 @@ public class CoordinatorImp implements CompositeCoordinator, Participant,
     /**
      * Mark the tx as committed. Needed for testing.
      */
-
     void setCommitted ()
     {
         stateHandler_.setCommitted ();
     }
 
+    /**
+     * Add tag.
+     *
+     * @param tag the tag
+     */
     void addTag ( HeuristicMessage tag )
     {
         synchronized ( fsm_ ) {
@@ -261,10 +252,8 @@ public class CoordinatorImp implements CompositeCoordinator, Participant,
      * Set the state handler. This method should always be preferred over
      * calling setState directly.
      *
-     * @param stateHandler
-     *            The next state handler.
+     * @param stateHandler The next state handler.
      */
-
     void setStateHandler ( CoordinatorStateHandler stateHandler )
     {
         // NB: if this method is synchronized then deadlock happens on heuristic mixed!
@@ -274,37 +263,72 @@ public class CoordinatorImp implements CompositeCoordinator, Participant,
     }
 
 
+    /**
+     * Gets superior recovery coordinator.
+     *
+     * @return the superior recovery coordinator
+     */
     RecoveryCoordinator getSuperiorRecoveryCoordinator ()
     {
         return superiorCoordinator_;
     }
 
+    /**
+     * Gets participants.
+     *
+     * @return the participants
+     */
     Vector<Participant> getParticipants ()
     {
         return participants_;
     }
 
 
+    /**
+     * Prefers heuristic commit boolean.
+     *
+     * @return the boolean
+     */
     boolean prefersHeuristicCommit ()
     {
         return heuristicMeansCommit_;
     }
 
+    /**
+     * Gets local sibling count.
+     *
+     * @return the local sibling count
+     */
     int getLocalSiblingCount ()
     {
         return localSiblingCount_;
     }
 
+    /**
+     * Gets max indoubt ticks.
+     *
+     * @return the max indoubt ticks
+     */
     long getMaxIndoubtTicks ()
     {
         return maxNumberOfTimeoutTicksBeforeHeuristicDecision_;
     }
 
+    /**
+     * Gets max rollback ticks.
+     *
+     * @return the max rollback ticks
+     */
     long getMaxRollbackTicks ()
     {
         return maxNumberOfTimeoutTicksBeforeRollback_;
     }
 
+    /**
+     * Check siblings boolean.
+     *
+     * @return the boolean
+     */
     boolean checkSiblings ()
     {
         return checkSiblings_;
@@ -319,12 +343,9 @@ public class CoordinatorImp implements CompositeCoordinator, Participant,
      * Gets the heuristic messages for all participants that are in the given
      * heuristic state
      *
-     * @param heuristicState
-     *            The heuristic state, or the terminated state.
-     * @return HeuristicMessage[] The heuristic messages of all participants in
-     *         the given state, or an empty array if none.
+     * @param heuristicState The heuristic state, or the terminated state.
+     * @return HeuristicMessage[] The heuristic messages of all participants in         the given state, or an empty array if none.
      */
-
     public HeuristicMessage[] getHeuristicMessages (
             Object heuristicState )
     {
@@ -337,7 +358,6 @@ public class CoordinatorImp implements CompositeCoordinator, Participant,
      *
      * @return boolean True iff committed.
      */
-
     public boolean isCommitted ()
     {
         return stateHandler_.isCommitted ();
@@ -377,12 +397,8 @@ public class CoordinatorImp implements CompositeCoordinator, Participant,
      * Start threads, propagator and timer logic. Needed on construction AND by
      * replay request events: timers have stopped by then!
      *
-     * @param timeout
-     *            The timeout for the thread wakeup interval.
-     * @param console
-     *            The console, null if none.
+     * @param timeout The timeout for the thread wakeup interval.
      */
-
     protected void startThreads ( long timeout )
     {
 
@@ -402,6 +418,11 @@ public class CoordinatorImp implements CompositeCoordinator, Participant,
         TaskManager.getInstance().executeTask (timer);
     }
 
+    /**
+     * Gets time out.
+     *
+     * @return the time out
+     */
     protected long getTimeOut ()
     {
         return (maxNumberOfTimeoutTicksBeforeRollback_ - stateHandler_.getRollbackTicks ())
@@ -409,6 +430,12 @@ public class CoordinatorImp implements CompositeCoordinator, Participant,
     }
 
 
+    /**
+     * Sets state.
+     *
+     * @param state the state
+     * @throws IllegalStateException the illegal state exception
+     */
     void setState ( TxState state ) throws IllegalStateException
     {
         if ( LOGGER.isDebugEnabled() ) LOGGER.logDebug ( "Coordinator " + getCoordinatorId ()
@@ -430,9 +457,12 @@ public class CoordinatorImp implements CompositeCoordinator, Participant,
 
 
     /**
+     * Add fsm enter listener.
+     *
+     * @param l     the l
+     * @param state the state
      * @see FSMEnterEventSource.
      */
-
     public void addFSMEnterListener ( FSMEnterListener l ,
                                       TxState state )
     {
@@ -463,9 +493,12 @@ public class CoordinatorImp implements CompositeCoordinator, Participant,
     }
 
     /**
+     * Gets participant.
+     *
+     * @return the participant
+     * @throws UnsupportedOperationException the unsupported operation exception
      * @see CompositeCoordinator.
      */
-
     public Participant getParticipant () throws UnsupportedOperationException
     {
         return this;
@@ -480,6 +513,15 @@ public class CoordinatorImp implements CompositeCoordinator, Participant,
         return root_;
     }
 
+    /**
+     * Add participant recovery coordinator.
+     *
+     * @param participant the participant
+     * @return the recovery coordinator
+     * @throws SysException          the sys exception
+     * @throws IllegalStateException the illegal state exception
+     * @throws RollbackException     the rollback exception
+     */
     public RecoveryCoordinator addParticipant (
             Participant participant ) throws SysException,
             java.lang.IllegalStateException, RollbackException
@@ -507,7 +549,6 @@ public class CoordinatorImp implements CompositeCoordinator, Participant,
     /**
      * Called when a tx import is being done.
      */
-
     protected void incLocalSiblingCount ()
     {
         synchronized ( fsm_ ) {
@@ -515,6 +556,15 @@ public class CoordinatorImp implements CompositeCoordinator, Participant,
         }
     }
 
+    /**
+     * Register synchronization.
+     *
+     * @param sync the sync
+     * @throws RollbackException             the rollback exception
+     * @throws IllegalStateException         the illegal state exception
+     * @throws UnsupportedOperationException the unsupported operation exception
+     * @throws SysException                  the sys exception
+     */
     void registerSynchronization ( Synchronization sync )
             throws RollbackException, IllegalStateException,
             UnsupportedOperationException, SysException
@@ -540,6 +590,11 @@ public class CoordinatorImp implements CompositeCoordinator, Participant,
         }
     }
 
+    /**
+     * Notify synchronizations after completion.
+     *
+     * @param successiveStates the successive states
+     */
     void notifySynchronizationsAfterCompletion(TxState... successiveStates) {
         for ( TxState state : successiveStates ) {
             for (Synchronization s : getSynchronizations()) {
@@ -747,6 +802,16 @@ public class CoordinatorImp implements CompositeCoordinator, Participant,
     }
 
 
+    /**
+     * Rollback heuristically heuristic message [ ].
+     *
+     * @return the heuristic message [ ]
+     * @throws HeurCommitException   the heur commit exception
+     * @throws HeurMixedException    the heur mixed exception
+     * @throws SysException          the sys exception
+     * @throws HeurHazardException   the heur hazard exception
+     * @throws IllegalStateException the illegal state exception
+     */
     public HeuristicMessage[] rollbackHeuristically ()
             throws HeurCommitException, HeurMixedException, SysException,
             HeurHazardException, java.lang.IllegalStateException
@@ -758,6 +823,17 @@ public class CoordinatorImp implements CompositeCoordinator, Participant,
         return ret;
     }
 
+    /**
+     * Commit heuristically heuristic message [ ].
+     *
+     * @return the heuristic message [ ]
+     * @throws HeurMixedException    the heur mixed exception
+     * @throws SysException          the sys exception
+     * @throws HeurRollbackException the heur rollback exception
+     * @throws HeurHazardException   the heur hazard exception
+     * @throws IllegalStateException the illegal state exception
+     * @throws RollbackException     the rollback exception
+     */
     public HeuristicMessage[] commitHeuristically () throws HeurMixedException,
             SysException, HeurRollbackException, HeurHazardException,
             java.lang.IllegalStateException, RollbackException
@@ -791,8 +867,9 @@ public class CoordinatorImp implements CompositeCoordinator, Participant,
 
     /**
      * Help function for restoration.
+     *
+     * @param image the image
      */
-
     protected void restore ( ObjectImage image )
     {
         CoordinatorLogImage img = (CoordinatorLogImage) image;
@@ -939,6 +1016,9 @@ public class CoordinatorImp implements CompositeCoordinator, Participant,
         }
     }
 
+    /**
+     * Dispose.
+     */
     protected void dispose ()
     {
         synchronized ( fsm_ ) {
@@ -955,10 +1035,16 @@ public class CoordinatorImp implements CompositeCoordinator, Participant,
     /**
      * Terminate the work, on behalf of Terminator.
      *
-     * @param commit
-     *            True iff commit termination is asked.
+     * @param commit True iff commit termination is asked.
+     * @throws HeurRollbackException the heur rollback exception
+     * @throws HeurMixedException    the heur mixed exception
+     * @throws SysException          the sys exception
+     * @throws SecurityException     the security exception
+     * @throws HeurCommitException   the heur commit exception
+     * @throws HeurHazardException   the heur hazard exception
+     * @throws RollbackException     the rollback exception
+     * @throws IllegalStateException the illegal state exception
      */
-
     protected void terminate ( boolean commit ) throws HeurRollbackException,
             HeurMixedException, SysException, java.lang.SecurityException,
             HeurCommitException, HeurHazardException, RollbackException,
@@ -986,6 +1072,9 @@ public class CoordinatorImp implements CompositeCoordinator, Participant,
         recoverableWhileActive_ = true;
     }
 
+    /**
+     * Sets rollback only.
+     */
     void setRollbackOnly() {
         StringHeuristicMessage msg = new StringHeuristicMessage (
                 "setRollbackOnly" );
@@ -1002,6 +1091,11 @@ public class CoordinatorImp implements CompositeCoordinator, Participant,
         }
     }
 
+    /**
+     * Gets state with two phase commit decision.
+     *
+     * @return the state with two phase commit decision
+     */
     public TxState getStateWithTwoPhaseCommitDecision() {
         TxState ret = getState();
         if (TxState.TERMINATED.equals(getState())) {

@@ -25,14 +25,32 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+/**
+ * The type My bean utils.
+ */
 public class MyBeanUtils {
 
+    /**
+     * The constant REF_GET_ID.
+     */
     public static final String REF_GET_ID = "getId";
 
+    /**
+     * The constant FORMAT.
+     */
     public static final String FORMAT = "yyyy-MM-dd HH:mm:ss";
+    /**
+     * The constant FORMAT_DATE.
+     */
     public static final String FORMAT_DATE = "yyyy-MM-dd";
 
 
+    /**
+     * Gets params.
+     *
+     * @param request the request
+     * @return the params
+     */
     public static Map<String, Object> getParams(final HttpServletRequest request) {
         Map<String, Object> map = new HashMap<String, Object>();
         if (request.getMethod().equalsIgnoreCase("POST")) {
@@ -61,6 +79,11 @@ public class MyBeanUtils {
         return map;
     }
 
+    /**
+     * Remove blank.
+     *
+     * @param map the map
+     */
     public static void removeBlank(Map<String, Object> map) {
         Iterator<Map.Entry<String, Object>> it = map.entrySet().iterator();
         while (it.hasNext()) {
@@ -74,6 +97,13 @@ public class MyBeanUtils {
         }
     }
 
+    /**
+     * Gets params.
+     *
+     * @param request the request
+     * @param prefix  the prefix
+     * @return the params
+     */
     public static Map<String, Object> getParams(final HttpServletRequest request, final String prefix) {
         Map<String, Object> map = new HashMap<String, Object>();
         if (request.getMethod().equalsIgnoreCase("POST")) {
@@ -111,6 +141,13 @@ public class MyBeanUtils {
         return map;
     }
 
+    /**
+     * Gets params map.
+     *
+     * @param map    the map
+     * @param prefix the prefix
+     * @return the params map
+     */
     public static Map<String, Object> getParamsMap(final Map<String, String[]> map, final String prefix) {
         Map<String, Object> params = new HashMap<String, Object>();
         Iterator<Map.Entry<String, String[]>> it = map.entrySet().iterator();
@@ -127,6 +164,13 @@ public class MyBeanUtils {
         return params;
     }
 
+    /**
+     * Gets params map obj.
+     *
+     * @param map    the map
+     * @param prefix the prefix
+     * @return the params map obj
+     */
     public static Map<String, Object> getParamsMapObj(final Map<String, Object> map, final String prefix) {
         Map<String, Object> params = new HashMap<String, Object>();
         Iterator<Map.Entry<String, Object>> it = map.entrySet().iterator();
@@ -160,6 +204,17 @@ public class MyBeanUtils {
     }
 
 
+    /**
+     * Gets bean.
+     *
+     * @param <ENTITY> the type parameter
+     * @param clazz    the clazz
+     * @param request  the request
+     * @return the bean
+     * @throws IllegalAccessException    the illegal access exception
+     * @throws InvocationTargetException the invocation target exception
+     * @throws InstantiationException    the instantiation exception
+     */
     public static <ENTITY> ENTITY getBean(final Class<ENTITY> clazz, final HttpServletRequest request)
             throws IllegalAccessException, InvocationTargetException, InstantiationException {
 
@@ -167,6 +222,18 @@ public class MyBeanUtils {
         return getBean(clazz, map);
     }
 
+    /**
+     * Gets bean.
+     *
+     * @param <ENTITY> the type parameter
+     * @param clazz    the clazz
+     * @param request  the request
+     * @param prefix   the prefix
+     * @return the bean
+     * @throws IllegalAccessException    the illegal access exception
+     * @throws InvocationTargetException the invocation target exception
+     * @throws InstantiationException    the instantiation exception
+     */
     public static <ENTITY> ENTITY getBean(final Class<ENTITY> clazz, final HttpServletRequest request, String prefix)
             throws IllegalAccessException, InvocationTargetException, InstantiationException {
 
@@ -174,12 +241,35 @@ public class MyBeanUtils {
         return getBean(clazz, map);
     }
 
+    /**
+     * Gets bean.
+     *
+     * @param <ENTITY> the type parameter
+     * @param clazz    the clazz
+     * @param map      the map
+     * @param prefix   the prefix
+     * @return the bean
+     * @throws IllegalAccessException    the illegal access exception
+     * @throws InvocationTargetException the invocation target exception
+     * @throws InstantiationException    the instantiation exception
+     */
     public static <ENTITY> ENTITY getBean(final Class<ENTITY> clazz, final Map<String, Object> map, String prefix)
             throws IllegalAccessException, InvocationTargetException, InstantiationException {
 
         return getBean(clazz, getParamsMapObj(map, prefix));
     }
 
+    /**
+     * Gets bean.
+     *
+     * @param <ENTITY> the type parameter
+     * @param clazz    the clazz
+     * @param map      the map
+     * @return the bean
+     * @throws IllegalAccessException    the illegal access exception
+     * @throws InstantiationException    the instantiation exception
+     * @throws InvocationTargetException the invocation target exception
+     */
     public static <ENTITY> ENTITY getBean(final Class<ENTITY> clazz, final Map<String, Object> map)
             throws IllegalAccessException, InstantiationException, InvocationTargetException {
         dateConvert();
@@ -204,6 +294,17 @@ public class MyBeanUtils {
         return (ENTITY) obj;
     }
 
+    /**
+     * To bean entity.
+     *
+     * @param <ENTITY> the type parameter
+     * @param clazz    the clazz
+     * @param map      the map
+     * @return the entity
+     * @throws IllegalAccessException    the illegal access exception
+     * @throws InstantiationException    the instantiation exception
+     * @throws InvocationTargetException the invocation target exception
+     */
     public static <ENTITY> ENTITY toBean(final Class<ENTITY> clazz, final Map<String, ?> map)
             throws IllegalAccessException, InstantiationException, InvocationTargetException {
         //ENTITY obj = (ENTITY)Class.forName(clazz.getName()).newInstance();
@@ -212,6 +313,9 @@ public class MyBeanUtils {
         return (ENTITY) obj;
     }
 
+    /**
+     * Date convert.
+     */
     public synchronized static void dateConvert() {
         ConvertUtils.deregister(Date.class);
         ConvertUtils.register(new Converter() {
@@ -256,6 +360,11 @@ public class MyBeanUtils {
 
     }
 
+    /**
+     * Date convert.
+     *
+     * @param format the format
+     */
     public synchronized static void dateConvert(final String format) {
         ConvertUtils.deregister(Date.class);
         ConvertUtils.register(new Converter() {
@@ -304,6 +413,13 @@ public class MyBeanUtils {
 
     }
 
+    /**
+     * To map map.
+     *
+     * @param obj        the obj
+     * @param ignoreNull the ignore null
+     * @return the map
+     */
     public static Map<String, Object> toMap(Object obj, boolean ignoreNull) {
         final BeanWrapper src = new BeanWrapperImpl(obj);
         PropertyDescriptor[] pds = src.getPropertyDescriptors();
@@ -320,12 +436,34 @@ public class MyBeanUtils {
         return map;
     }
 
+    /**
+     * Copy properties.
+     *
+     * @param <E>        the type parameter
+     * @param src        the src
+     * @param target     the target
+     * @param ignoreNull the ignore null
+     * @throws InvocationTargetException the invocation target exception
+     * @throws IllegalAccessException    the illegal access exception
+     */
     public static <E> void copyProperties(final E src, final E target, boolean ignoreNull)
             throws InvocationTargetException, IllegalAccessException {
         dateConvert(FORMAT);
         BeanUtils.copyProperties(src, toMap(target, ignoreNull));
     }
 
+    /**
+     * Copy properties.
+     *
+     * @param <E>        the type parameter
+     * @param clazz      the clazz
+     * @param src        the src
+     * @param target     the target
+     * @param ignoreNull the ignore null
+     * @throws IllegalAccessException    the illegal access exception
+     * @throws InvocationTargetException the invocation target exception
+     * @throws InstantiationException    the instantiation exception
+     */
     public static <E> void copyProperties(final Class<E> clazz, final E src, final Object target, boolean ignoreNull)
             throws IllegalAccessException, InvocationTargetException, InstantiationException {
         dateConvert(FORMAT);
@@ -333,10 +471,27 @@ public class MyBeanUtils {
         BeanUtils.copyProperties(src, toMap(e, ignoreNull));
     }
 
+    /**
+     * Gets id.
+     *
+     * @param <PK> the type parameter
+     * @param <E>  the type parameter
+     * @param e    the e
+     * @return the id
+     * @throws Exception the exception
+     */
     public static <PK, E> PK getId(E e) throws Exception {
         return (PK) e.getClass().getMethod(REF_GET_ID).invoke(e);
     }
 
+    /**
+     * Md 5 string.
+     *
+     * @param <E> the type parameter
+     * @param e   the e
+     * @return the string
+     * @throws IOException the io exception
+     */
     public static <E> String md5(E e) throws IOException {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         ObjectOutputStream oos = null;

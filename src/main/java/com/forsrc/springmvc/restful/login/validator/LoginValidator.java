@@ -29,15 +29,32 @@ import org.springframework.context.MessageSource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+/**
+ * The type Login validator.
+ */
 public class LoginValidator extends Validator {
 
     private User user;
     private String loginToken;
 
+    /**
+     * Instantiates a new Login validator.
+     *
+     * @param request       the request
+     * @param messageSource the message source
+     */
     public LoginValidator(HttpServletRequest request, MessageSource messageSource) {
         super(request, messageSource);
     }
 
+    /**
+     * Instantiates a new Login validator.
+     *
+     * @param user          the user
+     * @param loginToken    the login token
+     * @param request       the request
+     * @param messageSource the message source
+     */
     public LoginValidator(User user, String loginToken,
                           HttpServletRequest request, MessageSource messageSource) {
         super(request, messageSource);
@@ -45,6 +62,11 @@ public class LoginValidator extends Validator {
         this.loginToken = loginToken;
     }
 
+    /**
+     * Validate boolean.
+     *
+     * @return the boolean
+     */
     public boolean validate() {
         String msg = "";
 
@@ -88,6 +110,11 @@ public class LoginValidator extends Validator {
         return true;
     }
 
+    /**
+     * Validate already login boolean.
+     *
+     * @return the boolean
+     */
     public boolean validateAlreadyLogin() {
 
         String token = request.getParameter("token");

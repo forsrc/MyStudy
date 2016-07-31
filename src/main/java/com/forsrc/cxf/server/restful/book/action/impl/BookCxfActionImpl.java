@@ -8,6 +8,9 @@ import com.forsrc.pojo.Book;
 import javax.jws.WebService;
 import javax.ws.rs.Path;
 
+/**
+ * The type Book cxf action.
+ */
 @Path(value = "/v1.0/api/book")
 @WebService
 public class BookCxfActionImpl extends BaseCxfActionImpl<Book, Long> implements BookCxfAction {

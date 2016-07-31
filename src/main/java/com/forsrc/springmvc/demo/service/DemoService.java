@@ -7,6 +7,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.io.Serializable;
 
+/**
+ * The interface Demo service.
+ *
+ * @param <E>  the type parameter
+ * @param <PK> the type parameter
+ */
 @Service
 @Transactional
 public interface DemoService<E, PK extends Serializable>

@@ -9,8 +9,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.*;
 
+/**
+ * The type Web utils.
+ */
 public class WebUtils {
 
+    /**
+     * The constant contentType.
+     */
     public static final Map<String, String> contentType = new HashMap<String, String>(4) {
         {
             put(".js", "text/javascript");
@@ -23,6 +29,12 @@ public class WebUtils {
         }
     };
 
+    /**
+     * Gets ip.
+     *
+     * @param request the request
+     * @return the ip
+     */
     public static String getIp(HttpServletRequest request) {
 
         String ip = request.getHeader("x-forwarded-for");
@@ -38,6 +50,12 @@ public class WebUtils {
         return ip;
     }
 
+    /**
+     * Sets content type.
+     *
+     * @param request  the request
+     * @param response the response
+     */
     public static void setContentType(HttpServletRequest request, HttpServletResponse response) {
         int index = request.getRequestURI().lastIndexOf(".");
         if (index < 0) {
@@ -50,6 +68,11 @@ public class WebUtils {
 
     }
 
+    /**
+     * Gets available language.
+     *
+     * @return the available language
+     */
     public static List<String> getAvailableLanguage() {
 
         List<String> list = new ArrayList<String>();
@@ -60,6 +83,12 @@ public class WebUtils {
         return list;
     }
 
+    /**
+     * Gets locale.
+     *
+     * @param language the language
+     * @return the locale
+     */
     public static Locale getLocale(String language) {
 
         if (language == null || language.indexOf("_") < 0) {
@@ -72,6 +101,11 @@ public class WebUtils {
         return locale;
     }
 
+    /**
+     * Sets language.
+     *
+     * @param request the request
+     */
     public static void setLanguage(HttpServletRequest request) {
 
         String languageFromRequest = request.getParameter(KeyConstants.LANGUAGE.getKey());

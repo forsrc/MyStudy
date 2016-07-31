@@ -16,6 +16,9 @@ import redis.clients.jedis.ShardedJedis;
 
 import javax.annotation.Resource;
 
+/**
+ * The type Login service.
+ */
 @Service(value = "loginService")
 @Transactional
 public class LoginServiceImpl implements LoginService {
@@ -70,10 +73,20 @@ public class LoginServiceImpl implements LoginService {
         return u;
     }
 
+    /**
+     * Gets user dao.
+     *
+     * @return the user dao
+     */
     public UserDao getUserDao() {
         return userDao;
     }
 
+    /**
+     * Sets user dao.
+     *
+     * @param userDao the user dao
+     */
     public void setUserDao(UserDao userDao) {
         this.userDao = userDao;
     }

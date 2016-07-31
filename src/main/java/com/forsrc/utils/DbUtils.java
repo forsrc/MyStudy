@@ -26,6 +26,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Properties;
 
+/**
+ * The type Db utils.
+ */
 public final class DbUtils {
 
     private static DataSource dataSource;
@@ -46,6 +49,12 @@ public final class DbUtils {
     private DbUtils() {
     }
 
+    /**
+     * Close.
+     *
+     * @param stmt the stmt
+     * @param rs   the rs
+     */
     public static void close(Statement stmt, ResultSet rs) {
 
         try {
@@ -66,6 +75,9 @@ public final class DbUtils {
 
     }
 
+    /**
+     * Close in thread local.
+     */
     public static void closeInThreadLocal() {
 
         Connection connection = threadLocal.get();
@@ -79,6 +91,12 @@ public final class DbUtils {
         }
     }
 
+    /**
+     * Open in thread local connection.
+     *
+     * @return the connection
+     * @throws SQLException the sql exception
+     */
     public static Connection openInThreadLocal() throws SQLException {
 
         Connection connection = threadLocal.get();

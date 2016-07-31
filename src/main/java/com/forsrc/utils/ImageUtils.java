@@ -47,6 +47,7 @@ public final class ImageUtils {
     }
 
     /**
+     * Gets buffered image.
      *
      * @param code {String} code
      * @return {BufferedImage}
@@ -83,6 +84,7 @@ public final class ImageUtils {
     }
 
     /**
+     * Gets image.
      *
      * @return {Map<String, BufferedImage>}
      */
@@ -96,6 +98,7 @@ public final class ImageUtils {
     }
 
     /**
+     * Gets input stream.
      *
      * @param bufferedImage {BufferedImage}
      * @return {ByteArrayInputStream}
@@ -114,6 +117,7 @@ public final class ImageUtils {
     }
 
     /**
+     * Gets number.
      *
      * @return {String} 4 random number
      */
@@ -130,6 +134,7 @@ public final class ImageUtils {
     }
 
     /**
+     * Gets code.
      *
      * @param length {int}
      * @return {String} 4 random code
@@ -147,6 +152,7 @@ public final class ImageUtils {
     }
 
     /**
+     * Gets random char.
      *
      * @param x 0: 0~9; 1: A~Z; 2: a~z; other: word
      * @return {char}

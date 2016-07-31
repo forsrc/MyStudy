@@ -25,17 +25,38 @@ import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.security.SecureRandom;
 
+/**
+ * The type My rsa utils.
+ */
 public final class MyRsaUtils {
 
+    /**
+     * The constant BLOCK_SIZE.
+     */
     public static final int BLOCK_SIZE = 102;
 
     private static final String CHAR_SET = "UTF-8";
 
+    /**
+     * Decrypt big integer.
+     *
+     * @param rsaKey    the rsa key
+     * @param encrypted the encrypted
+     * @return the big integer
+     */
     public static BigInteger decrypt(RsaKey rsaKey, BigInteger encrypted) {
         // C = (encrypted^privateKey) * mod m
         return encrypted.modPow(rsaKey.getPrivateKey()/* d */, rsaKey.getN());
     }
 
+    /**
+     * Decrypt string.
+     *
+     * @param rsaKey    the rsa key
+     * @param encrypted the encrypted
+     * @return the string
+     * @throws IOException the io exception
+     */
     public static String decrypt(RsaKey rsaKey, String encrypted)
             throws IOException {
         BigInteger encrypt = new BigInteger(
@@ -43,11 +64,25 @@ public final class MyRsaUtils {
         return bigInteger2String(decrypt(rsaKey, encrypt));
     }
 
+    /**
+     * Encrypt big integer.
+     *
+     * @param rsaKey    the rsa key
+     * @param plaintext the plaintext
+     * @return the big integer
+     */
     public static BigInteger encrypt(RsaKey rsaKey, BigInteger plaintext) {
         // C = (plaintext^publicKey) * mod n
         return plaintext.modPow(rsaKey.getPublicKey()/* e */, rsaKey.getN());
     }
 
+    /**
+     * Encrypt string.
+     *
+     * @param rsaKey    the rsa key
+     * @param plaintext the plaintext
+     * @return the string
+     */
     public static String encrypt(RsaKey rsaKey, String plaintext) {
         BigInteger plaintextNumber = string2BigInteger(plaintext);
         BigInteger encrypt = encrypt(rsaKey, plaintextNumber);
@@ -57,12 +92,22 @@ public final class MyRsaUtils {
     }
 
 
-
-
+    /**
+     * Gets rsa key.
+     *
+     * @return the rsa key
+     */
     public static RsaKey getRsaKey() {
         return new RsaKey();
     }
 
+    /**
+     * Big integer 2 string string.
+     *
+     * @param bigInteger the big integer
+     * @return the string
+     * @throws IOException the io exception
+     */
     public static String bigInteger2String(BigInteger bigInteger) throws IOException {
 
         return new String(new BASE64Decoder().decodeBuffer(toStr(bigInteger)));
@@ -80,6 +125,12 @@ public final class MyRsaUtils {
         }
     }
 
+    /**
+     * String 2 big integer big integer.
+     *
+     * @param plaintext the plaintext
+     * @return the big integer
+     */
     public static BigInteger string2BigInteger(String plaintext) {
 
         String msg = base64Encode(plaintext);
@@ -87,6 +138,13 @@ public final class MyRsaUtils {
     }
 
 
+    /**
+     * Big integers 2 string string.
+     *
+     * @param bigIntegers the big integers
+     * @return the string
+     * @throws IOException the io exception
+     */
     public static String bigIntegers2String(BigInteger[] bigIntegers) throws IOException {
 
         StringBuilder plaintext = new StringBuilder(BLOCK_SIZE + 1);
@@ -114,6 +172,12 @@ public final class MyRsaUtils {
         return plaintext.toString();
     }
 
+    /**
+     * String 2 big integers big integer [ ].
+     *
+     * @param plaintext the plaintext
+     * @return the big integer [ ]
+     */
     public static BigInteger[] string2BigIntegers(String plaintext) {
 
         String base64 = base64Encode(plaintext);
@@ -158,6 +222,13 @@ public final class MyRsaUtils {
     }
 
 
+    /**
+     * Encrypt 2 string.
+     *
+     * @param rsaKey    the rsa key
+     * @param plaintext the plaintext
+     * @return the string
+     */
     public static String encrypt2(RsaKey rsaKey, String plaintext) {
 
         BigInteger[] plaintextBigIntegers = string2BigIntegers(plaintext);
@@ -173,6 +244,14 @@ public final class MyRsaUtils {
                 ;
     }
 
+    /**
+     * Decrypt 2 string.
+     *
+     * @param rsaKey    the rsa key
+     * @param encrypted the encrypted
+     * @return the string
+     * @throws IOException the io exception
+     */
     public static String decrypt2(RsaKey rsaKey, String encrypted)
             throws IOException {
 
@@ -188,8 +267,14 @@ public final class MyRsaUtils {
         return bigIntegers2String(bigIntegers);
     }
 
+    /**
+     * The type Rsa key.
+     */
     public static class RsaKey implements Serializable {
 
+        /**
+         * The constant DEF_E.
+         */
         public static final BigInteger DEF_E =  new BigInteger("65537");
 
         private int bits = 1024;
@@ -250,6 +335,9 @@ public final class MyRsaUtils {
 
         private SecureRandom random;
 
+        /**
+         * Instantiates a new Rsa key.
+         */
         public RsaKey() {
             this.random = getSecureRandom();
             // generating a big prime number (bits)
@@ -259,11 +347,24 @@ public final class MyRsaUtils {
             init(this.p, this.q);
         }
 
+        /**
+         * Instantiates a new Rsa key.
+         *
+         * @param p the p
+         * @param q the q
+         */
         public RsaKey(BigInteger p, BigInteger q) {
 
             init(p, q);
         }
 
+        /**
+         * Instantiates a new Rsa key.
+         *
+         * @param n the n
+         * @param e the e
+         * @param d the d
+         */
         public RsaKey(BigInteger n, BigInteger e, BigInteger d) {
             this.n = n;
             this.e = e;
@@ -272,6 +373,12 @@ public final class MyRsaUtils {
             this.privateKey = d;
         }
 
+        /**
+         * Init.
+         *
+         * @param p the p
+         * @param q the q
+         */
         public void init(BigInteger p, BigInteger q) {
 
             this.p = p;
@@ -299,121 +406,266 @@ public final class MyRsaUtils {
             this.coeff = this.iqmp;
         }
 
+        /**
+         * Gets bits.
+         *
+         * @return the bits
+         */
         public int getBits() {
             return this.bits;
         }
 
+        /**
+         * Sets bits.
+         *
+         * @param bits the bits
+         */
         public void setBits(int bits) {
             this.bits = bits;
         }
 
+        /**
+         * Gets coeff.
+         *
+         * @return the coeff
+         */
         public BigInteger getCoeff() {
             return this.coeff;
         }
 
+        /**
+         * Sets coeff.
+         *
+         * @param coeff the coeff
+         */
         public void setCoeff(BigInteger coeff) {
             this.coeff = coeff;
         }
 
+        /**
+         * Gets d.
+         *
+         * @return the d
+         */
         public BigInteger getD() {
             return this.d;
         }
 
+        /**
+         * Sets d.
+         *
+         * @param d the d
+         */
         public void setD(BigInteger d) {
             this.d = d;
         }
 
+        /**
+         * Gets dmp 1.
+         *
+         * @return the dmp 1
+         */
         public BigInteger getDmp1() {
             return this.dmp1;
         }
 
+        /**
+         * Sets dmp 1.
+         *
+         * @param dmp1 the dmp 1
+         */
         public void setDmp1(BigInteger dmp1) {
             this.dmp1 = dmp1;
         }
 
+        /**
+         * Gets dmq 1.
+         *
+         * @return the dmq 1
+         */
         public BigInteger getDmq1() {
             return this.dmq1;
         }
 
+        /**
+         * Sets dmq 1.
+         *
+         * @param dmq1 the dmq 1
+         */
         public void setDmq1(BigInteger dmq1) {
             this.dmq1 = dmq1;
         }
 
+        /**
+         * Gets e.
+         *
+         * @return the e
+         */
         public BigInteger getE() {
             return this.e;
         }
 
+        /**
+         * Sets e.
+         *
+         * @param e the e
+         */
         public void setE(BigInteger e) {
             this.e = e;
             this.privateKey = e;
         }
 
+        /**
+         * Gets iqmp.
+         *
+         * @return the iqmp
+         */
         public BigInteger getIqmp() {
             return this.iqmp;
         }
 
+        /**
+         * Sets iqmp.
+         *
+         * @param iqmp the iqmp
+         */
         public void setIqmp(BigInteger iqmp) {
             this.iqmp = iqmp;
         }
 
+        /**
+         * Gets n.
+         *
+         * @return the n
+         */
         public BigInteger getN() {
             return this.n;
         }
 
+        /**
+         * Sets n.
+         *
+         * @param n the n
+         */
         public void setN(BigInteger n) {
             this.n = n;
         }
 
+        /**
+         * Gets p.
+         *
+         * @return the p
+         */
         public BigInteger getP() {
             return this.p;
         }
 
+        /**
+         * Sets p.
+         *
+         * @param p the p
+         */
         public void setP(BigInteger p) {
             this.p = p;
         }
 
+        /**
+         * Gets phi.
+         *
+         * @return the phi
+         */
         public BigInteger getPhi() {
             return this.phi;
         }
 
+        /**
+         * Sets phi.
+         *
+         * @param phi the phi
+         */
         public void setPhi(BigInteger phi) {
             this.phi = phi;
         }
 
+        /**
+         * Gets private key.
+         *
+         * @return the private key
+         */
         public BigInteger getPrivateKey() {
             return this.privateKey;
         }
 
+        /**
+         * Sets private key.
+         *
+         * @param privateKey the private key
+         */
         public void setPrivateKey(BigInteger privateKey) {
             this.privateKey = privateKey;
             this.d = privateKey;
         }
 
+        /**
+         * Gets public key.
+         *
+         * @return the public key
+         */
         public BigInteger getPublicKey() {
             return this.publicKey;
         }
 
+        /**
+         * Sets public key.
+         *
+         * @param publicKey the public key
+         */
         public void setPublicKey(BigInteger publicKey) {
             this.publicKey = publicKey;
             this.e = publicKey;
         }
 
+        /**
+         * Gets q.
+         *
+         * @return the q
+         */
         public BigInteger getQ() {
             return this.q;
         }
 
+        /**
+         * Sets q.
+         *
+         * @param q the q
+         */
         public void setQ(BigInteger q) {
             this.q = q;
         }
 
+        /**
+         * Gets random.
+         *
+         * @return the random
+         */
         public SecureRandom getRandom() {
             return this.random;
         }
 
+        /**
+         * Sets random.
+         *
+         * @param random the random
+         */
         public void setRandom(SecureRandom random) {
             this.random = random;
         }
 
+        /**
+         * Gets secure random.
+         *
+         * @return the secure random
+         */
         public SecureRandom getSecureRandom() {
             return new SecureRandom("forsrc@163.com".getBytes());
         }

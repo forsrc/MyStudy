@@ -32,6 +32,9 @@ import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * The type Login controller.
+ */
 @Controller
 @RequestMapping(value = "/v1.0")
 public class LoginController {
@@ -40,12 +43,25 @@ public class LoginController {
     @Resource(name = "loginService")
     private LoginService loginService;
 
+    /**
+     * The Message source.
+     */
     @Autowired
     @Resource(name = "messageSource")
     protected MessageSource messageSource;
 
     private static final String VERSION_V_1_0 = "v1.0";
 
+    /**
+     * Gets login token.
+     *
+     * @param rsa4Client RSA for client
+     * @param request    the request
+     * @param response   the response
+     * @return login token
+     * @satrtuml Login.getLoginToken.png A -> B
+     * @enduml
+     */
     @RequestMapping(value = {"/login/getLoginToken"}, method = RequestMethod.POST)
     @ResponseBody
     public ModelAndView getLoginToken(@RequestParam String rsa4Client,
@@ -89,6 +105,16 @@ public class LoginController {
         return modelAndView;
     }
 
+    /**
+     * Login model and view.
+     *
+     * @param username   the username
+     * @param password   the password
+     * @param loginToken the login token
+     * @param request    the request
+     * @param response   the response
+     * @return the model and view
+     */
     @RequestMapping(value = {"/login"}, method = RequestMethod.POST)
     @ResponseBody
     public ModelAndView login(//User user,
@@ -198,18 +224,38 @@ public class LoginController {
 
     }
 
+    /**
+     * Gets login service.
+     *
+     * @return the login service
+     */
     public LoginService getLoginService() {
         return loginService;
     }
 
+    /**
+     * Sets login service.
+     *
+     * @param loginService the login service
+     */
     public void setLoginService(LoginService loginService) {
         this.loginService = loginService;
     }
 
+    /**
+     * Gets message source.
+     *
+     * @return the message source
+     */
     public MessageSource getMessageSource() {
         return messageSource;
     }
 
+    /**
+     * Sets message source.
+     *
+     * @param messageSource the message source
+     */
     public void setMessageSource(MessageSource messageSource) {
         this.messageSource = messageSource;
     }

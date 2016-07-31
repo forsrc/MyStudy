@@ -10,6 +10,9 @@ import java.io.IOException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 
+/**
+ * The type Json serializer timestamp.
+ */
 public class JsonSerializerTimestamp extends JsonSerializer<Timestamp> {
 
     private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

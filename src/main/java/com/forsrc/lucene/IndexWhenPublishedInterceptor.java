@@ -3,6 +3,11 @@ package com.forsrc.lucene;
 import org.hibernate.search.indexes.interceptor.EntityIndexingInterceptor;
 import org.hibernate.search.indexes.interceptor.IndexingOverride;
 
+/**
+ * The type Index when published interceptor.
+ *
+ * @param <E> the type parameter
+ */
 public class IndexWhenPublishedInterceptor<E> implements EntityIndexingInterceptor<E> {
     @Override
     public IndexingOverride onAdd(E entity) {

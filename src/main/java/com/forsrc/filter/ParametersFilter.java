@@ -18,6 +18,9 @@ import java.text.MessageFormat;
 import java.util.Iterator;
 import java.util.Map;
 
+/**
+ * The type Parameters filter.
+ */
 public class ParametersFilter extends OncePerRequestFilter {
 
     private static final Logger LOGGER = Logger.getLogger(ParametersFilter.class);

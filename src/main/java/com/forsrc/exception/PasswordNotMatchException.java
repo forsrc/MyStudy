@@ -16,6 +16,9 @@
  */
 package com.forsrc.exception;
 
+/**
+ * The type Password not match exception.
+ */
 public class PasswordNotMatchException extends ServiceException {
 
     /**
@@ -23,21 +26,40 @@ public class PasswordNotMatchException extends ServiceException {
      */
     private static final long serialVersionUID = -4893612045786564211L;
 
+    /**
+     * Instantiates a new Password not match exception.
+     */
     public PasswordNotMatchException() {
 
         super();
     }
 
+    /**
+     * Instantiates a new Password not match exception.
+     *
+     * @param message the message
+     */
     public PasswordNotMatchException(String message) {
 
         super(message);
     }
 
+    /**
+     * Instantiates a new Password not match exception.
+     *
+     * @param message the message
+     * @param cause   the cause
+     */
     public PasswordNotMatchException(String message, Throwable cause) {
 
         super(message, cause);
     }
 
+    /**
+     * Instantiates a new Password not match exception.
+     *
+     * @param cause the cause
+     */
     public PasswordNotMatchException(Throwable cause) {
 
         super(cause);

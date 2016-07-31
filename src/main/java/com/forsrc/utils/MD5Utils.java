@@ -11,18 +11,37 @@ import java.util.Iterator;
 import java.util.Set;
 import java.util.concurrent.ExecutorService;
 
+/**
+ * The type Md 5 utils.
+ */
 public class MD5Utils {
 
+    /**
+     * The constant MAX_BUFFER_SIZE.
+     */
     public static final int MAX_BUFFER_SIZE = 1024 * 1024 * 1;
+    /**
+     * The constant FILE_DEF_EXT.
+     */
     public final static String FILE_DEF_EXT = ".json.md5"; //$NON-NLS-1$
+    /**
+     * The constant MAX_BUFFER.
+     */
     public final static int MAX_BUFFER = 1024 * 1024;
+    /**
+     * The constant isSaveMd5Info.
+     */
     public static boolean isSaveMd5Info = true;
+    /**
+     * The constant isShowProgress.
+     */
     public static boolean isShowProgress = false;
 
     /**
-     * @param @param  string
-     * @param @return
-     * @return String
+     * Md 5 string.
+     *
+     * @param string the string
+     * @return String string
      * @throws
      * @Title: md5
      * @Description:
@@ -35,10 +54,11 @@ public class MD5Utils {
     }
 
     /**
-     * @param @param  dir
-     * @param @throws IOException
+     * Md 5 dir.
+     *
+     * @param dir the dir
      * @return void
-     * @throws
+     * @throws IOException the io exception
      * @Title: md5dir
      * @Description:
      */
@@ -70,6 +90,13 @@ public class MD5Utils {
         }
     }
 
+    /**
+     * Md 5 thread.
+     *
+     * @param file the file
+     * @param pool the pool
+     * @throws IOException the io exception
+     */
     public static void md5Thread(File file, ExecutorService pool)
             throws IOException {
         if (file == null || !file.exists()) {
@@ -111,11 +138,12 @@ public class MD5Utils {
     }
 
     /**
-     * @param @param  file
-     * @param @return
-     * @param @throws IOException
-     * @return String
-     * @throws
+     * Gets file md 5.
+     *
+     * @param file      the file
+     * @param isBigfile the is bigfile
+     * @return String file md 5
+     * @throws IOException the io exception
      * @Title: getFileMd5
      * @Description:
      */
@@ -146,10 +174,24 @@ public class MD5Utils {
         return md5;
     }
 
+    /**
+     * Gets file md 5 x.
+     *
+     * @param file the file
+     * @return the file md 5 x
+     * @throws IOException the io exception
+     */
     public static String getFileMd5X(File file) throws IOException {
         return getFileMd5(file);
     }
 
+    /**
+     * Gets file md 5.
+     *
+     * @param file the file
+     * @return the file md 5
+     * @throws IOException the io exception
+     */
     public static String getFileMd5(File file) throws IOException {
         if (file == null || !file.exists() || file.isDirectory()) {
             return "";
@@ -214,11 +256,11 @@ public class MD5Utils {
     }
 
     /**
-     * @param @param  file
-     * @param @return
+     * Md 5.
+     *
+     * @param file the file
      * @return String
-     * @throws IOException
-     * @throws
+     * @throws IOException the io exception
      * @Title: md5
      * @Description:
      */
@@ -285,6 +327,12 @@ public class MD5Utils {
 
     }
 
+    /**
+     * Is md 5 file boolean.
+     *
+     * @param file the file
+     * @return the boolean
+     */
     public static boolean isMd5File(File file) {
         if (file == null || !file.exists() || file.isDirectory()
                 || file.length() <= 0) {
@@ -297,6 +345,12 @@ public class MD5Utils {
         return false;
     }
 
+    /**
+     * Is md 5 file type boolean.
+     *
+     * @param fileName the file name
+     * @return the boolean
+     */
     public static boolean isMd5FileType(String fileName) {
         if (fileName == null) {
             return false;
@@ -310,6 +364,14 @@ public class MD5Utils {
         return false;
     }
 
+    /**
+     * Gets file md 5.
+     *
+     * @param file  the file
+     * @param start the start
+     * @return the file md 5
+     * @throws IOException the io exception
+     */
     public static String getFileMd5(File file, long start) throws IOException {
         RandomAccessFile raf = null;
         long size = 0;
@@ -348,6 +410,15 @@ public class MD5Utils {
         }
     }
 
+    /**
+     * Gets file md 5.
+     *
+     * @param file   the file
+     * @param start  the start
+     * @param length the length
+     * @return the file md 5
+     * @throws IOException the io exception
+     */
     public static String getFileMd5(File file, long start, long length)
             throws IOException {
         // RandomAccessFile in = null;
@@ -389,6 +460,15 @@ public class MD5Utils {
         }
     }
 
+    /**
+     * Gets file md 5 old.
+     *
+     * @param file   the file
+     * @param start  the start
+     * @param length the length
+     * @return the file md 5 old
+     * @throws IOException the io exception
+     */
     public static String getFileMd5Old(File file, long start, long length)
             throws IOException {
         RandomAccessFile raf = null;
@@ -446,10 +526,23 @@ public class MD5Utils {
         }
     }
 
+    /**
+     * Check md 5 boolean.
+     *
+     * @param file the file
+     * @return the boolean
+     */
     public static boolean checkMd5(File file) {
         return checkMd5(file, null);
     }
 
+    /**
+     * Check md 5 boolean.
+     *
+     * @param file the file
+     * @param md5  the md 5
+     * @return the boolean
+     */
     public static boolean checkMd5(File file, String md5) {
         if (file == null || !file.exists()) {
             return false;
@@ -494,9 +587,17 @@ public class MD5Utils {
         private File file;
         private boolean isShow = false;
 
+        /**
+         * Instantiates a new Md 5 thread.
+         */
         public Md5Thread() {
         }
 
+        /**
+         * Instantiates a new Md 5 thread.
+         *
+         * @param file the file
+         */
         public Md5Thread(File file) {
             this.file = file;
             this.isShow = false;
@@ -514,10 +615,20 @@ public class MD5Utils {
             }
         }
 
+        /**
+         * Gets file.
+         *
+         * @return the file
+         */
         public File getFile() {
             return this.file;
         }
 
+        /**
+         * Sets file.
+         *
+         * @param file the file
+         */
         public void setFile(File file) {
             this.file = file;
         }

@@ -6,6 +6,9 @@ import org.springframework.core.convert.converter.Converter;
 import java.sql.Timestamp;
 import java.text.ParseException;
 
+/**
+ * The type Converter timestamp.
+ */
 public class ConverterTimestamp implements Converter<String, Timestamp> {
 
     @Override

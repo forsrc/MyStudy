@@ -18,6 +18,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * The type User controller.
+ */
 //@RestController
 @Controller
 @RequestMapping(value = "/v1.0")
@@ -27,6 +30,9 @@ public class UserController {
     @Resource(name = "userService")
     private UserService userService;
 
+    /**
+     * The Message source.
+     */
     @Autowired
     @Resource(name = "messageSource")
     protected MessageSource messageSource;
@@ -34,6 +40,16 @@ public class UserController {
     private final String VERSION_V_1_0 = "v1.0";
 
 
+    /**
+     * List model and view.
+     *
+     * @param start    the start
+     * @param size     the size
+     * @param request  the request
+     * @param response the response
+     * @return the model and view
+     * @throws ActionException the action exception
+     */
     @RequestMapping(value = {"/user"}, method = RequestMethod.GET
             //, headers = "Accept=application/json"
     )
@@ -53,6 +69,15 @@ public class UserController {
         return modelAndView;
     }
 
+    /**
+     * Get model and view.
+     *
+     * @param id       the id
+     * @param request  the request
+     * @param response the response
+     * @return the model and view
+     * @throws ActionException the action exception
+     */
     @RequestMapping(value = {"/user/{id}"}, method = RequestMethod.GET)
     @ResponseBody
     public ModelAndView get(@PathVariable Long id,
@@ -68,6 +93,16 @@ public class UserController {
 
     }
 
+    /**
+     * Update model and view.
+     *
+     * @param id       the id
+     * @param user     the user
+     * @param request  the request
+     * @param response the response
+     * @return the model and view
+     * @throws ActionException the action exception
+     */
     @RequestMapping(value = {"/user/{id}"}, method = RequestMethod.PUT)
     @ResponseBody
     public ModelAndView update(@PathVariable Long id,
@@ -86,6 +121,16 @@ public class UserController {
 
     }
 
+    /**
+     * Patch model and view.
+     *
+     * @param id       the id
+     * @param user     the user
+     * @param request  the request
+     * @param response the response
+     * @return the model and view
+     * @throws ActionException the action exception
+     */
     @RequestMapping(value = {"/user/{id}"}, method = RequestMethod.PATCH)
     @ResponseBody
     public ModelAndView patch(@PathVariable Long id,
@@ -104,6 +149,15 @@ public class UserController {
 
     }
 
+    /**
+     * Delete model and view.
+     *
+     * @param id       the id
+     * @param request  the request
+     * @param response the response
+     * @return the model and view
+     * @throws ActionException the action exception
+     */
     @RequestMapping(value = {"/user/{id}"}, method = RequestMethod.DELETE)
     @ResponseBody
     public ModelAndView delete(@PathVariable Long id,
@@ -120,6 +174,15 @@ public class UserController {
 
     }
 
+    /**
+     * Save model and view.
+     *
+     * @param bean     the bean
+     * @param request  the request
+     * @param response the response
+     * @return the model and view
+     * @throws ActionException the action exception
+     */
     @RequestMapping(value = {"/user"}, method = RequestMethod.POST)
     @ResponseBody
     public ModelAndView save(@RequestParam User bean,
@@ -136,10 +199,20 @@ public class UserController {
 
     }
 
+    /**
+     * Gets user service.
+     *
+     * @return the user service
+     */
     public UserService getUserService() {
         return userService;
     }
 
+    /**
+     * Sets user service.
+     *
+     * @param userService the user service
+     */
     public void setUserService(UserService userService) {
         this.userService = userService;
     }

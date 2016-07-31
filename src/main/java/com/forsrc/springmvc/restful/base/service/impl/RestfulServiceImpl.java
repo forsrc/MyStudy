@@ -12,20 +12,39 @@ import java.io.Serializable;
 import java.util.List;
 
 
+/**
+ * The type Restful service.
+ *
+ * @param <E>  the type parameter
+ * @param <PK> the type parameter
+ */
 //@Service(value = "restfulService")
 //@Service
 @Transactional
 public abstract class RestfulServiceImpl<E, PK extends Serializable> implements RestfulService<E, PK> {
 
-    //@Autowired
+    /**
+     * The Restful dao.
+     */
+//@Autowired
     //@Resource(name = "restfulDao")
     protected RestfulDao restfulDao;
 
 
+    /**
+     * Gets restful dao.
+     *
+     * @return the restful dao
+     */
     public RestfulDao getRestfulDao() {
         return this.restfulDao;
     }
 
+    /**
+     * Sets restful dao.
+     *
+     * @param restfulDao the restful dao
+     */
     public void setRestfulDao(RestfulDao restfulDao) {
         this.restfulDao = restfulDao;
     }

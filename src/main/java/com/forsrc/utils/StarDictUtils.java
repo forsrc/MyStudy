@@ -7,11 +7,26 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
+/**
+ * The type Star dict utils.
+ */
 public class StarDictUtils {
 
+    /**
+     * The constant UTF8_END_BYTE.
+     */
     public static byte UTF8_END_BYTE = 0x00;
+    /**
+     * The constant CHARSET_NAME.
+     */
     public static String CHARSET_NAME = "UTF-8";
 
+    /**
+     * Byte array to int int.
+     *
+     * @param bytesToConvert the bytes to convert
+     * @return the int
+     */
     public static int byteArrayToInt(final byte[] bytesToConvert) {
         byte[] bytes = bytesToConvert;
         if (bytesToConvert.length < 4) {
@@ -24,6 +39,13 @@ public class StarDictUtils {
                 (bytes[3] & 0xff);
     }
 
+    /**
+     * Filter utf 8 mb 4 string.
+     *
+     * @param text the text
+     * @return the string
+     * @throws UnsupportedEncodingException the unsupported encoding exception
+     */
     public static String filterUtf8Mb4(String text) throws UnsupportedEncodingException {
         byte[] bytes = text.getBytes(CHARSET_NAME);
         ByteBuffer buffer = ByteBuffer.allocate(bytes.length);
@@ -49,6 +71,13 @@ public class StarDictUtils {
         return new String(buffer.array(), CHARSET_NAME);
     }
 
+    /**
+     * Gets info.
+     *
+     * @param file the file
+     * @return the info
+     * @throws FileNotFoundException the file not found exception
+     */
     public static Info getInfo(File file) throws FileNotFoundException {
         Info info = new Info();
         Scanner scanner = new Scanner(file, CHARSET_NAME);
@@ -62,6 +91,13 @@ public class StarDictUtils {
         return info;
     }
 
+    /**
+     * Get file bytes byte [ ].
+     *
+     * @param file the file
+     * @return the byte [ ]
+     * @throws IOException the io exception
+     */
     public static byte[] getFileBytes(File file) throws IOException {
         byte[] fileBytes;
         FileInputStream fileIn = new FileInputStream(file);
@@ -78,6 +114,14 @@ public class StarDictUtils {
         return fileBytes;
     }
 
+    /**
+     * Gets syn.
+     *
+     * @param currentIndex the current index
+     * @param fileBytes    the file bytes
+     * @return the syn
+     * @throws UnsupportedEncodingException the unsupported encoding exception
+     */
     public static Syn getSyn(int currentIndex, byte[] fileBytes) throws UnsupportedEncodingException {
         if (currentIndex >= fileBytes.length) {
             return null;
@@ -104,6 +148,14 @@ public class StarDictUtils {
         return syn;
     }
 
+    /**
+     * Gets idx.
+     *
+     * @param currentIndex the current index
+     * @param fileBytes    the file bytes
+     * @return the idx
+     * @throws UnsupportedEncodingException the unsupported encoding exception
+     */
     public static Idx getIdx(int currentIndex, byte[] fileBytes) throws UnsupportedEncodingException {
         if (currentIndex >= fileBytes.length) {
             return null;
@@ -138,6 +190,13 @@ public class StarDictUtils {
         return idx;
     }
 
+    /**
+     * Handle.
+     *
+     * @param fileName the file name
+     * @param handler  the handler
+     * @throws Exception the exception
+     */
     public static void handle(String fileName, Handler handler) throws Exception {
         File idxFile = new File(fileName + ".idx");
         File dictFile = new File(fileName + ".dict");
@@ -167,6 +226,15 @@ public class StarDictUtils {
         } while (idx != null);
     }
 
+    /**
+     * Gets definition.
+     *
+     * @param fileBytes the file bytes
+     * @param offset    the offset
+     * @param size      the size
+     * @return the definition
+     * @throws UnsupportedEncodingException the unsupported encoding exception
+     */
     public static String getDefinition(byte[] fileBytes, int offset, int size) throws UnsupportedEncodingException {
         if (offset >= fileBytes.length) {
             return "";
@@ -176,54 +244,127 @@ public class StarDictUtils {
         return definition;
     }
 
+    /**
+     * The interface Handler.
+     */
     public static interface Handler {
+        /**
+         * Handle boolean.
+         *
+         * @param index      the index
+         * @param hasNext    the has next
+         * @param info       the info
+         * @param idx        the idx
+         * @param syn        the syn
+         * @param definition the definition
+         * @return the boolean
+         * @throws Exception the exception
+         */
         public boolean handle(int index, boolean hasNext, Info info, Idx idx, Syn syn, String definition) throws Exception;
     }
 
+    /**
+     * The type Info.
+     */
     public static class Info {
 
         private Map<String, String> info = new HashMap<String, String>();
 
+        /**
+         * Gets version.
+         *
+         * @return the version
+         */
         public String getVersion() {
             return info.get("version");
         }
 
+        /**
+         * Gets date.
+         *
+         * @return the date
+         */
         public String getDate() {
             return info.get("date");
         }
 
+        /**
+         * Gets description.
+         *
+         * @return the description
+         */
         public String getDescription() {
             return info.get("description");
         }
 
+        /**
+         * Gets same type sequence.
+         *
+         * @return the same type sequence
+         */
         public String getSameTypeSequence() {
             return info.get("sametypesequence");
         }
 
+        /**
+         * Gets idx file size.
+         *
+         * @return the idx file size
+         */
         public String getIdxFileSize() {
             return info.get("idxfilesize");
         }
 
+        /**
+         * Gets bookname.
+         *
+         * @return the bookname
+         */
         public String getBookname() {
             return info.get("bookname");
         }
 
+        /**
+         * Gets author.
+         *
+         * @return the author
+         */
         public String getAuthor() {
             return info.get("author");
         }
 
+        /**
+         * Gets wordcount.
+         *
+         * @return the wordcount
+         */
         public String getWordcount() {
             return info.get("wordcount");
         }
 
+        /**
+         * Gets synwordcount.
+         *
+         * @return the synwordcount
+         */
         public String getSynwordcount() {
             return info.get("synwordcount");
         }
 
+        /**
+         * Gets info.
+         *
+         * @return the info
+         */
         public Map<String, String> getInfo() {
             return this.info;
         }
 
+        /**
+         * Sets info.
+         *
+         * @param info the info
+         */
         public void setInfo(Map<String, String> info) {
             this.info = info;
         }
@@ -236,6 +377,9 @@ public class StarDictUtils {
         }
     }
 
+    /**
+     * The type Idx.
+     */
     public static class Idx {
 
         private String word;
@@ -244,81 +388,174 @@ public class StarDictUtils {
         private int nextIndex;
         private int currentIndex;
 
+        /**
+         * Gets next index.
+         *
+         * @return the next index
+         */
         public int getNextIndex() {
             return this.nextIndex;
         }
 
+        /**
+         * Sets next index.
+         *
+         * @param nextIndex the next index
+         */
         public void setNextIndex(int nextIndex) {
             this.nextIndex = nextIndex;
         }
 
+        /**
+         * Gets word.
+         *
+         * @return the word
+         */
         public String getWord() {
             return this.word;
         }
 
+        /**
+         * Sets word.
+         *
+         * @param word the word
+         */
         public void setWord(String word) {
             this.word = word;
         }
 
+        /**
+         * Gets data offset.
+         *
+         * @return the data offset
+         */
         public int getDataOffset() {
             return this.dataOffset;
         }
 
+        /**
+         * Sets data offset.
+         *
+         * @param dataOffset the data offset
+         */
         public void setDataOffset(int dataOffset) {
             this.dataOffset = dataOffset;
         }
 
+        /**
+         * Gets data size.
+         *
+         * @return the data size
+         */
         public int getDataSize() {
             return this.dataSize;
         }
 
+        /**
+         * Sets data size.
+         *
+         * @param dataSize the data size
+         */
         public void setDataSize(int dataSize) {
             this.dataSize = dataSize;
         }
 
+        /**
+         * Gets current index.
+         *
+         * @return the current index
+         */
         public int getCurrentIndex() {
             return this.currentIndex;
         }
 
+        /**
+         * Sets current index.
+         *
+         * @param currentIndex the current index
+         */
         public void setCurrentIndex(int currentIndex) {
             this.currentIndex = currentIndex;
         }
     }
 
+    /**
+     * The type Syn.
+     */
     public static class Syn {
         private String word;
         private int currentIndex;
         private int synIndex;
         private int nextIndex;
 
+        /**
+         * Gets word.
+         *
+         * @return the word
+         */
         public String getWord() {
             return this.word;
         }
 
+        /**
+         * Sets word.
+         *
+         * @param word the word
+         */
         public void setWord(String word) {
             this.word = word;
         }
 
+        /**
+         * Gets current index.
+         *
+         * @return the current index
+         */
         public int getCurrentIndex() {
             return this.currentIndex;
         }
 
+        /**
+         * Sets current index.
+         *
+         * @param currentIndex the current index
+         */
         public void setCurrentIndex(int currentIndex) {
             this.currentIndex = currentIndex;
         }
 
+        /**
+         * Gets syn index.
+         *
+         * @return the syn index
+         */
         public int getSynIndex() {
             return this.synIndex;
         }
 
+        /**
+         * Sets syn index.
+         *
+         * @param synIndex the syn index
+         */
         public void setSynIndex(int synIndex) {
             this.synIndex = synIndex;
         }
 
+        /**
+         * Gets next index.
+         *
+         * @return the next index
+         */
         public int getNextIndex() {
             return this.nextIndex;
         }
 
+        /**
+         * Sets next index.
+         *
+         * @param nextIndex the next index
+         */
         public void setNextIndex(int nextIndex) {
             this.nextIndex = nextIndex;
         }

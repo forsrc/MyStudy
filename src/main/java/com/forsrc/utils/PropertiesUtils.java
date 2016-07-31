@@ -8,6 +8,9 @@ import java.util.Iterator;
 import java.util.Properties;
 import java.util.Set;
 
+/**
+ * The type Properties utils.
+ */
 public final class PropertiesUtils {
 
 
@@ -16,12 +19,13 @@ public final class PropertiesUtils {
     }
 
     /**
-     * @param file
-     * @param key
-     * @param charset
-     * @return String
-     * @throws IOException
-     * @throws
+     * Gets properties vaule.
+     *
+     * @param file    the file
+     * @param key     the key
+     * @param charset the charset
+     * @return String properties vaule
+     * @throws IOException the io exception
      * @Title: getPropertiesVaule
      * @Description:
      */
@@ -64,11 +68,12 @@ public final class PropertiesUtils {
     }
 
     /**
-     * @param file
-     * @param key
-     * @return String
-     * @throws IOException
-     * @throws
+     * Gets properties vaule.
+     *
+     * @param file the file
+     * @param key  the key
+     * @return String properties vaule
+     * @throws IOException the io exception
      * @Title: getPropertiesVaule
      * @Description:
      */
@@ -78,13 +83,13 @@ public final class PropertiesUtils {
     }
 
     /**
-     * @param @param  file
-     * @param @param  key
-     * @param @param  value
-     * @param @return
-     * @return String
-     * @throws IOException
-     * @throws
+     * Sets properties vaule.
+     *
+     * @param file  the file
+     * @param key   the key
+     * @param value the value
+     * @return String properties vaule
+     * @throws IOException the io exception
      * @Title: setPropertiesVaule
      * @Description:
      */
@@ -95,13 +100,14 @@ public final class PropertiesUtils {
 
 
     /**
-     * @param file
-     * @param key
-     * @param value
-     * @param comments
-     * @return String
-     * @throws IOException
-     * @throws
+     * Sets properties vaule.
+     *
+     * @param file     the file
+     * @param key      the key
+     * @param value    the value
+     * @param comments the comments
+     * @return String properties vaule
+     * @throws IOException the io exception
      * @Title: setPropertiesVaule
      * @Description:
      */
@@ -111,13 +117,15 @@ public final class PropertiesUtils {
     }
 
     /**
-     * @param file
-     * @param key
-     * @param value
-     * @param comments
-     * @return String
-     * @throws IOException
-     * @throws
+     * Sets properties vaule.
+     *
+     * @param file     the file
+     * @param key      the key
+     * @param value    the value
+     * @param comments the comments
+     * @param charset  the charset
+     * @return String properties vaule
+     * @throws IOException the io exception
      * @Title: setPropertiesVaule
      * @Description:
      */
@@ -177,6 +185,13 @@ public final class PropertiesUtils {
                 v.toString().getBytes("ISO8859-1"), charset);
     }
 
+    /**
+     * Gets properties.
+     *
+     * @param propertiesFileName the properties file name
+     * @return the properties
+     * @throws IOException the io exception
+     */
     public static Properties getProperties(String propertiesFileName)
             throws IOException {
         Properties properties = new Properties();

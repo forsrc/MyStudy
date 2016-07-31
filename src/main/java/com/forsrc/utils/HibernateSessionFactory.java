@@ -51,7 +51,7 @@ public final class HibernateSessionFactory {
     /**
      * Close the single hibernate session instance.
      *
-     * @throws HibernateException
+     * @throws HibernateException the hibernate exception
      */
     public static void closeSession() throws HibernateException {
         Session session = threadLocal.get();
@@ -64,6 +64,8 @@ public final class HibernateSessionFactory {
 
     /**
      * return hibernate configuration
+     *
+     * @return the configuration
      */
     public static Configuration getConfiguration() {
         return configuration;
@@ -73,8 +75,8 @@ public final class HibernateSessionFactory {
      * Returns the ThreadLocal Session instance. Lazy initialize the
      * <code>SessionFactory</code> if needed.
      *
-     * @return Session
-     * @throws HibernateException
+     * @return Session session
+     * @throws HibernateException the hibernate exception
      */
     public static Session getSession() throws HibernateException {
         Session session = threadLocal.get();
@@ -93,6 +95,8 @@ public final class HibernateSessionFactory {
 
     /**
      * return session factory
+     *
+     * @return the session factory
      */
     public static org.hibernate.SessionFactory getSessionFactory() {
         return sessionFactory;
@@ -122,6 +126,8 @@ public final class HibernateSessionFactory {
      * return session factory
      * <p/>
      * session factory will be rebuilded in the next call
+     *
+     * @param configFile the config file
      */
     public static void setConfigFile(String configFile) {
         HibernateSessionFactory.configFile = configFile;

@@ -8,6 +8,9 @@ import com.forsrc.springmvc.restful.user.service.impl.UserServiceImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+/**
+ * The type Book cxf service.
+ */
 @Service(value = "bookCxfService")
 @Transactional
 public class BookCxfServiceImpl extends BaseCxfServiceImpl<Book, Long> implements BookService {

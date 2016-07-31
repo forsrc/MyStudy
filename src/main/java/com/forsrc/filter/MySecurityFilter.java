@@ -14,6 +14,9 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Collection;
 
+/**
+ * The type My security filter.
+ */
 public class MySecurityFilter extends AbstractSecurityInterceptor implements
         Filter {
 
@@ -65,10 +68,20 @@ public class MySecurityFilter extends AbstractSecurityInterceptor implements
 
     }
 
+    /**
+     * Gets security metadata source.
+     *
+     * @return the security metadata source
+     */
     public FilterInvocationSecurityMetadataSource getSecurityMetadataSource() {
         return securityMetadataSource;
     }
 
+    /**
+     * Sets security metadata source.
+     *
+     * @param securityMetadataSource the security metadata source
+     */
     public void setSecurityMetadataSource(FilterInvocationSecurityMetadataSource securityMetadataSource) {
         this.securityMetadataSource = securityMetadataSource;
     }

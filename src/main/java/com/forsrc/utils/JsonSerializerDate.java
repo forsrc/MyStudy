@@ -10,6 +10,9 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/**
+ * The type Json serializer date.
+ */
 public class JsonSerializerDate extends JsonSerializer<Date> {
 
     private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

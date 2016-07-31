@@ -16,6 +16,9 @@
  */
 package com.forsrc.exception;
 
+/**
+ * The type Dao exception.
+ */
 public class DaoException extends ServiceException {
 
     /**
@@ -23,21 +26,40 @@ public class DaoException extends ServiceException {
      */
     private static final long serialVersionUID = -4401075899966500536L;
 
+    /**
+     * Instantiates a new Dao exception.
+     */
     public DaoException() {
 
         super();
     }
 
+    /**
+     * Instantiates a new Dao exception.
+     *
+     * @param message the message
+     */
     public DaoException(String message) {
 
         super(message);
     }
 
+    /**
+     * Instantiates a new Dao exception.
+     *
+     * @param message the message
+     * @param cause   the cause
+     */
     public DaoException(String message, Throwable cause) {
 
         super(message, cause);
     }
 
+    /**
+     * Instantiates a new Dao exception.
+     *
+     * @param cause the cause
+     */
     public DaoException(Throwable cause) {
 
         super(cause);

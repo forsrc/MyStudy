@@ -23,12 +23,23 @@ import javax.annotation.Resource;
 import java.io.IOException;
 import java.io.Serializable;
 
+/**
+ * The type Base hibernate search service.
+ *
+ * @param <E> the type parameter
+ */
 @Service(value = "baseHibernateSearchServiceImpl")
 @Transactional
 public abstract class BaseHibernateSearchServiceImpl<E> implements BaseHibernateSearchService<E> {
 
+    /**
+     * The Analyzer.
+     */
     protected Analyzer analyzer;
 
+    /**
+     * The Base hibernate search dao.
+     */
     @Autowired
     @Resource(name = "baseHibernateSearchDao")
     protected BaseHibernateSearchDao<E> baseHibernateSearchDao;
@@ -115,26 +126,56 @@ public abstract class BaseHibernateSearchServiceImpl<E> implements BaseHibernate
     }
 
 
+    /**
+     * Gets base hibernate search dao.
+     *
+     * @return the base hibernate search dao
+     */
     public BaseHibernateSearchDao getBaseHibernateSearchDao() {
         return this.baseHibernateSearchDao;
     }
 
+    /**
+     * Sets base hibernate search dao.
+     *
+     * @param baseHibernateSearchDao the base hibernate search dao
+     */
     public void setBaseHibernateSearchDao(BaseHibernateSearchDao baseHibernateSearchDao) {
         this.baseHibernateSearchDao = baseHibernateSearchDao;
     }
 
+    /**
+     * Gets analyzer.
+     *
+     * @return the analyzer
+     */
     public Analyzer getAnalyzer() {
         return this.analyzer == null ? new SmartChineseAnalyzer() : this.analyzer;
     }
 
+    /**
+     * Sets analyzer.
+     *
+     * @param analyzer the analyzer
+     */
     public void setAnalyzer(Analyzer analyzer) {
         this.analyzer = analyzer;
     }
 
+    /**
+     * Gets my simple fs directory.
+     *
+     * @return the my simple fs directory
+     */
     public MySimpleFSDirectory getMySimpleFSDirectory() {
         return this.mySimpleFSDirectory;
     }
 
+    /**
+     * Sets my simple fs directory.
+     *
+     * @param mySimpleFSDirectory the my simple fs directory
+     */
     public void setMySimpleFSDirectory(MySimpleFSDirectory mySimpleFSDirectory) {
         this.mySimpleFSDirectory = mySimpleFSDirectory;
     }

@@ -35,6 +35,9 @@ import java.util.Map.Entry;
 import java.util.Properties;
 import java.util.Set;
 
+/**
+ * The type Resource filter.
+ */
 public class ResourceFilter implements Filter {
 
     private static final Logger LOGGER = Logger.getLogger(ResourceFilter.class);
@@ -43,6 +46,12 @@ public class ResourceFilter implements Filter {
 
     private static Properties properties;
 
+    /**
+     * Sets resource.
+     *
+     * @param request  the request
+     * @param response the response
+     */
     public static void setResource(HttpServletRequest request, HttpServletResponse response) {
 
         //WebUtils.setContentType(request, response);

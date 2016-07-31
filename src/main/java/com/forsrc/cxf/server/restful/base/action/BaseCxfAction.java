@@ -9,15 +9,34 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+/**
+ * The interface Base cxf action.
+ *
+ * @param <E>  the type parameter
+ * @param <PK> the type parameter
+ */
 @Path(value = "/v1.0/api")
 @WebService
 public interface BaseCxfAction<E, PK> {
 
+    /**
+     * Get e.
+     *
+     * @param id the id
+     * @return the e
+     * @throws ServiceException the service exception
+     */
     @GET
     @Path("/{id}")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public E get(@PathParam("id") PK id) throws ServiceException;
 
+    /**
+     * List page.
+     *
+     * @return the page
+     * @throws ServiceException the service exception
+     */
     @GET
     @Path("")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
@@ -29,21 +48,51 @@ public interface BaseCxfAction<E, PK> {
                         //, @Context HttpServletResponse servletResponse
     ) throws ServiceException;
 
+    /**
+     * Save e.
+     *
+     * @param e the e
+     * @return the e
+     * @throws ServiceException the service exception
+     */
     @POST
     @Path("")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public E save(E e) throws ServiceException;
 
+    /**
+     * Update e.
+     *
+     * @param id the id
+     * @param e  the e
+     * @return the e
+     * @throws ServiceException the service exception
+     */
     @PUT
     @Path("/{id}")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public E update(@PathParam("id") PK id, E e) throws ServiceException;
 
+    /**
+     * Patch e.
+     *
+     * @param id the id
+     * @param e  the e
+     * @return the e
+     * @throws ServiceException the service exception
+     */
     @PATCH
     @Path("/{id}")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public E patch(@PathParam("id") PK id, E e) throws ServiceException;
 
+    /**
+     * Delete response.
+     *
+     * @param id the id
+     * @return the response
+     * @throws ServiceException the service exception
+     */
     @DELETE
     @Path("/{id}")
     public Response delete(@PathParam("id") PK id) throws ServiceException;

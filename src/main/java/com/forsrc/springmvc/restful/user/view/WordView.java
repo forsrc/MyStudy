@@ -11,11 +11,20 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.util.Map;
 
+/**
+ * The type Word view.
+ */
 public class WordView extends AbstractView {
 
 
+    /**
+     * The Configuration.
+     */
     Configuration configuration;
 
+    /**
+     * Instantiates a new Word view.
+     */
     public WordView() {
         this.setContentType("application/msword");
         configuration = new Configuration();

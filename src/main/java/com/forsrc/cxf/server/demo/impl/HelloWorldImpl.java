@@ -9,6 +9,9 @@ import javax.jws.WebParam;
 import javax.jws.WebService;
 import javax.xml.ws.WebServiceContext;
 
+/**
+ * The type Hello world.
+ */
 @Component
 @WebService(targetNamespace = "http://service.server.cxf.forsrc.com/", endpointInterface = "com.forsrc.cxf.server.demo.HelloWorld")
 public class HelloWorldImpl implements HelloWorld {
@@ -25,10 +28,20 @@ public class HelloWorldImpl implements HelloWorld {
     }
 
 
+    /**
+     * Gets context.
+     *
+     * @return the context
+     */
     public WebServiceContext getContext() {
         return this.context;
     }
 
+    /**
+     * Sets context.
+     *
+     * @param context the context
+     */
     public void setContext(WebServiceContext context) {
         this.context = context;
     }

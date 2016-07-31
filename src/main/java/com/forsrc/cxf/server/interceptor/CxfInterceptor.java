@@ -12,6 +12,9 @@ import javax.annotation.Resource;
 import java.util.Iterator;
 import java.util.Map;
 
+/**
+ * The type Cxf interceptor.
+ */
 public class CxfInterceptor extends AbstractPhaseInterceptor<Message> {
 
     private SAAJInInterceptor saajInInterceptor;
@@ -19,6 +22,9 @@ public class CxfInterceptor extends AbstractPhaseInterceptor<Message> {
     @Resource(name = "loginService")
     private LoginService loginService;
 
+    /**
+     * Instantiates a new Cxf interceptor.
+     */
     public CxfInterceptor() {
         super(Phase.PRE_PROTOCOL);
         saajInInterceptor = new SAAJInInterceptor();

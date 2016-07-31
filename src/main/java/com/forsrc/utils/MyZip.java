@@ -17,6 +17,9 @@ import java.util.zip.ZipOutputStream;
 //import org.apache.commons.compress.archivers.zip.Zip64Mode;
 
 
+/**
+ * The type My zip.
+ */
 public class MyZip {
     private static final String VERSION_DEF = "0.0.1";
     private File zipFile;
@@ -36,12 +39,20 @@ public class MyZip {
 
     // private Zip64Mode zip64Mode = Zip64Mode.Never;
 
+    /**
+     * Instantiates a new My zip.
+     *
+     * @param zipFile the zip file
+     */
     public MyZip(File zipFile) {
         this.zipFile = zipFile;
     }
 
     /**
-     * @param zipEntry
+     * Add zip entry.
+     *
+     * @param zipEntry the zip entry
+     * @param isSucc   the is succ
      * @return void
      * @throws
      * @Title: addZipEntry
@@ -53,6 +64,13 @@ public class MyZip {
         }
     }
 
+    /**
+     * Check zip file boolean.
+     *
+     * @param onlySize the only size
+     * @return the boolean
+     * @throws IOException the io exception
+     */
     public boolean checkZipFile(boolean onlySize) throws IOException {
         if (this.zipFile == null || !this.zipFile.exists()) {
             return false;
@@ -93,6 +111,14 @@ public class MyZip {
         return isSucc;
     }
 
+    /**
+     * Check file list boolean.
+     *
+     * @param listZipEntry the list zip entry
+     * @param onlySize     the only size
+     * @return the boolean
+     * @throws IOException the io exception
+     */
     public boolean checkFileList(ZipEntry listZipEntry, boolean onlySize)
             throws IOException {
 
@@ -159,6 +185,14 @@ public class MyZip {
         return isSucc;
     }
 
+    /**
+     * Check zip file boolean.
+     *
+     * @param zipFile  the zip file
+     * @param zipEntry the zip entry
+     * @return the boolean
+     * @throws IOException the io exception
+     */
     public boolean checkZipFile(ZipFile zipFile, ZipEntry zipEntry)
             throws IOException {
 
@@ -255,22 +289,48 @@ public class MyZip {
         return isSucc;
     }
 
+    /**
+     * Gets buffer sizip entry.
+     *
+     * @return the buffer sizip entry
+     */
     public int getBufferSizipEntry() {
         return this.bufferSizipEntry;
     }
 
+    /**
+     * Sets buffer sizip entry.
+     *
+     * @param bufferSizipEntry the buffer sizip entry
+     */
     public void setBufferSizipEntry(int bufferSizipEntry) {
         this.bufferSizipEntry = bufferSizipEntry;
     }
 
+    /**
+     * Gets encode.
+     *
+     * @return the encode
+     */
     public String getEncode() {
         return this.encode;
     }
 
+    /**
+     * Sets encode.
+     *
+     * @param encode the encode
+     */
     public void setEncode(String encode) {
         this.encode = encode;
     }
 
+    /**
+     * Gets entries.
+     *
+     * @return the entries
+     * @throws IOException the io exception
+     */
     public Enumeration<ZipEntry> getEntries() throws IOException {
         ZipFile zip = null;
         try {
@@ -292,28 +352,58 @@ public class MyZip {
         }
     }
 
+    /**
+     * Gets level.
+     *
+     * @return the level
+     */
     public int getLevel() {
         return this.level;
     }
 
+    /**
+     * Sets level.
+     *
+     * @param level the level
+     */
     public void setLevel(int level) {
         if (level > -1 && level <= 9) {
             this.level = level;
         }
     }
 
+    /**
+     * Gets list.
+     *
+     * @return the list
+     */
     public synchronized Map<ZipEntry, Boolean> getList() {
         return this.list;
     }
 
+    /**
+     * Sets list.
+     *
+     * @param list the list
+     */
     public synchronized void setList(Map<ZipEntry, Boolean> list) {
         this.list = list;
     }
 
+    /**
+     * Gets root.
+     *
+     * @return the root
+     */
     public String getRoot() {
         return this.root;
     }
 
+    /**
+     * Sets root.
+     *
+     * @param root the root
+     */
     public void setRoot(String root) {
         if (root == null) {
             return;
@@ -321,18 +411,29 @@ public class MyZip {
         this.root = root;
     }
 
+    /**
+     * Gets version.
+     *
+     * @return the version
+     */
     public String getVersion() {
         return this.version;
     }
 
+    /**
+     * Sets version.
+     *
+     * @param version the version
+     */
     public void setVersion(String version) {
         this.version = version;
     }
 
     /**
-     * @return Enumeration<ZipEntry>
-     * @throws IOException
-     * @throws
+     * Gets zip entries.
+     *
+     * @return Enumeration<ZipEntry> zip entries
+     * @throws IOException the io exception
      * @Title: getZipEntries
      * @Description:
      */
@@ -347,6 +448,14 @@ public class MyZip {
         return getEntries();
     }
 
+    /**
+     * Gets zip entry.
+     *
+     * @param zip   the zip
+     * @param key   the key
+     * @param isReg the is reg
+     * @return the zip entry
+     */
     public ZipEntry getZipEntry(ZipFile zip, String key, boolean isReg) {
         if (zip == null) {
             return null;
@@ -367,6 +476,15 @@ public class MyZip {
         return zipEntry;
     }
 
+    /**
+     * Gets zip entry file.
+     *
+     * @param zip      the zip
+     * @param key      the key
+     * @param saveFile the save file
+     * @param isReg    the is reg
+     * @throws IOException the io exception
+     */
     public void getZipEntryFile(ZipFile zip, String key, File saveFile,
                                 boolean isReg) throws IOException {
         if (zip == null || saveFile == null) {
@@ -395,6 +513,15 @@ public class MyZip {
 
     }
 
+    /**
+     * Gets zip entry file txt.
+     *
+     * @param zip   the zip
+     * @param key   the key
+     * @param isReg the is reg
+     * @return the zip entry file txt
+     * @throws IOException the io exception
+     */
     public String getZipEntryFileTxt(ZipFile zip, String key, boolean isReg)
             throws IOException {
         if (zip == null) {
@@ -431,16 +558,28 @@ public class MyZip {
         return stringBuffer.toString();
     }
 
+    /**
+     * Gets zip file.
+     *
+     * @return the zip file
+     */
     public File getZipFile() {
         return this.zipFile;
     }
 
+    /**
+     * Sets zip file.
+     *
+     * @param zipFile the zip file
+     */
     public void setZipFile(File zipFile) {
         this.zipFile = zipFile;
     }
 
     /**
-     * @return String
+     * Gets zip file md 5.
+     *
+     * @return String zip file md 5
      * @throws
      * @Title: getZipFileMd5
      * @Description:
@@ -456,62 +595,128 @@ public class MyZip {
         return this.zipFileMd5;
     }
 
+    /**
+     * Sets zip file md 5.
+     *
+     * @param md5 the md 5
+     */
     public void setZipFileMd5(String md5) {
         this.zipFileMd5 = md5;
     }
 
+    /**
+     * Gets zip map.
+     *
+     * @return the zip map
+     */
     public synchronized Map<File, String> getZipMap() {
         return this.zipMap;
     }
 
+    /**
+     * Sets zip map.
+     *
+     * @param zipMap the zip map
+     */
     public synchronized void setZipMap(Map<File, String> zipMap) {
         this.zipMap = zipMap;
     }
 
+    /**
+     * Is append boolean.
+     *
+     * @return the boolean
+     */
     public boolean isAppend() {
         return this.isAppend;
     }
 
+    /**
+     * Sets append.
+     *
+     * @param isAppend the is append
+     */
     public void setAppend(boolean isAppend) {
         this.isAppend = isAppend;
     }
 
+    /**
+     * Is check boolean.
+     *
+     * @return the boolean
+     */
     public boolean isCheck() {
         return this.isCheck;
     }
 
+    /**
+     * Sets check.
+     *
+     * @param isCheck the is check
+     */
     public void setCheck(boolean isCheck) {
         this.isCheck = isCheck;
     }
 
+    /**
+     * Is cover boolean.
+     *
+     * @return the boolean
+     */
     public boolean isCover() {
         return this.isCover;
     }
 
+    /**
+     * Sets cover.
+     *
+     * @param isCover the is cover
+     */
     public void setCover(boolean isCover) {
         this.isCover = isCover;
     }
 
+    /**
+     * Is progress boolean.
+     *
+     * @return the boolean
+     */
     public boolean isProgress() {
         return this.progress;
     }
 
+    /**
+     * Sets progress.
+     *
+     * @param progress the progress
+     */
     public void setProgress(boolean progress) {
         this.progress = progress;
     }
 
+    /**
+     * Is save md 5 info boolean.
+     *
+     * @return the boolean
+     */
     public synchronized boolean isSaveMd5Info() {
         return this.saveMd5Info;
     }
 
+    /**
+     * Sets save md 5 info.
+     *
+     * @param saveMd5Info the save md 5 info
+     */
     public synchronized void setSaveMd5Info(boolean saveMd5Info) {
         this.saveMd5Info = saveMd5Info;
     }
 
     /**
+     * Unzip.
+     *
      * @return void
-     * @throws IOException
-     * @throws
+     * @throws IOException the io exception
      * @Title: unzip
      * @Description:
      */
@@ -553,11 +758,13 @@ public class MyZip {
     }
 
     /**
-     * @param zipFile
-     * @param zipEntry
+     * Unzip.
+     *
+     * @param zipFile  the zip file
+     * @param zipEntry the zip entry
+     * @param saveFile the save file
      * @return void
-     * @throws IOException
-     * @throws
+     * @throws IOException the io exception
      * @Title: unzip
      * @Description:
      */
@@ -663,9 +870,10 @@ public class MyZip {
     }
 
     /**
+     * Zip.
+     *
      * @return void
-     * @throws IOException
-     * @throws
+     * @throws IOException the io exception
      * @Title: zip
      * @Description:
      */
@@ -785,12 +993,13 @@ public class MyZip {
     }
 
     /**
-     * @param zip
-     * @param zipOutputStream
-     * @param zipEntry
+     * Zip.
+     *
+     * @param zip             the zip
+     * @param zipOutputStream the zip output stream
+     * @param zipEntry        the zip entry
      * @return void
-     * @throws IOException
-     * @throws
+     * @throws IOException the io exception
      * @Title: zip
      * @Description:
      */
@@ -907,10 +1116,11 @@ public class MyZip {
     }
 
     /**
-     * @param zipOutputStream
+     * Zip.
+     *
+     * @param zipOutputStream the zip output stream
      * @return void
-     * @throws IOException
-     * @throws
+     * @throws IOException the io exception
      * @Title: zip
      * @Description:
      */
@@ -959,12 +1169,13 @@ public class MyZip {
     }
 
     /**
-     * @param zipOutputStream
-     * @param dir
-     * @param path
+     * Zip.
+     *
+     * @param zipOutputStream the zip output stream
+     * @param dir             the dir
+     * @param path            the path
      * @return void
-     * @throws IOException
-     * @throws
+     * @throws IOException the io exception
      * @Title: zip
      * @Description:
      */
@@ -1005,12 +1216,13 @@ public class MyZip {
     }
 
     /**
-     * @param zipOutputStream
-     * @param file
-     * @param zipEntry
+     * Zip.
+     *
+     * @param zipOutputStream the zip output stream
+     * @param file            the file
+     * @param zipEntry        the zip entry
      * @return void
-     * @throws IOException
-     * @throws
+     * @throws IOException the io exception
      * @Title: zip
      * @Description:
      */

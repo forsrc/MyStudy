@@ -30,6 +30,9 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+/**
+ * The type Log tracing.
+ */
 public final class LogTracing {
 
     private static final Logger LOGGER = Logger.getLogger(LogTracing.class);
@@ -37,47 +40,70 @@ public final class LogTracing {
     private LogTracing() {
     }
 
-    public void doAfter(JoinPoint jp) {
+    /**
+     * Do after.
+     *
+     * @param joinPoint the join point
+     */
+    public void doAfter(JoinPoint joinPoint) {
 
         StringBuilder msg = new StringBuilder("[END]   method: ")
-                .append(jp.getSignature().getName()).append("() @  ")
-                .append(jp.getTarget().getClass().getName()).append(".");
+                .append(joinPoint.getSignature().getName()).append("() @  ")
+                .append(joinPoint.getTarget().getClass().getName()).append(".");
         this.appendMessage(msg);
         LOGGER.info(msg);
     }
 
-    public Object doAround(ProceedingJoinPoint pjp) throws Throwable {
+    /**
+     * Do around object.
+     *
+     * @param proceedingJoinPoint the proceeding join point
+     * @return the object
+     * @throws Throwable the throwable
+     */
+    public Object doAround(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
 
         long ms = System.currentTimeMillis();
         long time = System.nanoTime();
-        Object retVal = pjp.proceed();
+        Object retVal = proceedingJoinPoint.proceed();
         time = System.nanoTime() - time;
         ms = System.currentTimeMillis() - ms;
         StringBuilder msg = new StringBuilder("[TIME]  method: ")
-                .append(pjp.getSignature().getName()).append("() -> ")
+                .append(proceedingJoinPoint.getSignature().getName()).append("() -> ")
                 .append(new Double(1.0d * time / (1000000000d)).toString()).append(" s (")
                 .append(ms).append(" ms) --> ")
-                .append(pjp.getTarget().getClass());
+                .append(proceedingJoinPoint.getTarget().getClass());
         this.appendMessage(msg);
         LOGGER.info(msg);
 
         return retVal;
     }
 
-    public void doBefore(JoinPoint jp) {
+    /**
+     * Do before.
+     *
+     * @param joinPoint the join point
+     */
+    public void doBefore(JoinPoint joinPoint) {
 
         StringBuilder msg = new StringBuilder("[START] method: ")
-                .append(jp.getSignature().getName()).append("() @  ")
-                .append(jp.getTarget().getClass().getName());
+                .append(joinPoint.getSignature().getName()).append("() @  ")
+                .append(joinPoint.getTarget().getClass().getName());
         this.appendMessage(msg);
         LOGGER.info(msg);
     }
 
-    public void doAfterThrowing(JoinPoint jp, Throwable throwable) {
+    /**
+     * Do after throwing.
+     *
+     * @param joinPoint the join point
+     * @param throwable the throwable
+     */
+    public void doAfterThrowing(JoinPoint joinPoint, Throwable throwable) {
 
         StringBuilder msg = new StringBuilder("[THROW] method: ")
-                .append(jp.getSignature().getName()).append(" : ").append(throwable.getMessage()).append("() @  ")
-                .append(jp.getTarget().getClass().getName());
+                .append(joinPoint.getSignature().getName()).append(" : ").append(throwable.getMessage()).append("() @  ")
+                .append(joinPoint.getTarget().getClass().getName());
         this.appendMessage(msg);
         LOGGER.info(msg);
     }

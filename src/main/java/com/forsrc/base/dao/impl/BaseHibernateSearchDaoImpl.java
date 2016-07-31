@@ -32,10 +32,21 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * The type Base hibernate search dao.
+ *
+ * @param <E> the type parameter
+ */
 @Repository(value = "baseHibernateSearchDao")
 public class BaseHibernateSearchDaoImpl<E> extends BaseHibernateDaoImpl<E, Serializable> implements BaseHibernateSearchDao<E>, BaseHibernateDao<E, Serializable> {
 
+    /**
+     * The constant DEF_MAX_SIZE.
+     */
     public static final int DEF_MAX_SIZE = 10;
+    /**
+     * The constant BATCH_SIZE.
+     */
     public static final int BATCH_SIZE = 100;
 
     @Autowired
@@ -287,10 +298,20 @@ public class BaseHibernateSearchDaoImpl<E> extends BaseHibernateDaoImpl<E, Seria
         }
     }
 
+    /**
+     * Gets my simple fs directory.
+     *
+     * @return the my simple fs directory
+     */
     public MySimpleFSDirectory getMySimpleFSDirectory() {
         return this.mySimpleFSDirectory;
     }
 
+    /**
+     * Sets my simple fs directory.
+     *
+     * @param mySimpleFSDirectory the my simple fs directory
+     */
     public void setMySimpleFSDirectory(MySimpleFSDirectory mySimpleFSDirectory) {
         this.mySimpleFSDirectory = mySimpleFSDirectory;
     }

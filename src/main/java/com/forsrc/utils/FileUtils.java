@@ -13,14 +13,37 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
+/**
+ * The type File utils.
+ */
 public class FileUtils {
+    /**
+     * The constant LOCK.
+     */
     public static final ReentrantReadWriteLock LOCK = new ReentrantReadWriteLock();
+    /**
+     * The constant READ_LOCK.
+     */
     public static final Lock READ_LOCK = LOCK.readLock();
+    /**
+     * The constant WRITE_LOCK.
+     */
     public static final Lock WRITE_LOCK = LOCK.writeLock();
     private static final int BUFFER_SIZE = 1024 * 512;
     private static final Charset CHARSET = Charset.forName("UTF-8");
+    /**
+     * The constant isDebug.
+     */
     public static boolean isDebug = false;
 
+    /**
+     * Read line.
+     *
+     * @param file      the file
+     * @param adapter   the adapter
+     * @param isUseLock the is use lock
+     * @throws IOException the io exception
+     */
     public static void readLine(File file, FileReadLineAdapter adapter, boolean isUseLock) throws IOException {
         if (!isUseLock) {
             readLine(file, adapter);
@@ -34,6 +57,13 @@ public class FileUtils {
         }
     }
 
+    /**
+     * Read line.
+     *
+     * @param file    the file
+     * @param adapter the adapter
+     * @throws IOException the io exception
+     */
     public static void readLine(File file, FileReadLineAdapter adapter) throws IOException {
         if (file == null) {
             throw new IllegalArgumentException("File is null.");
@@ -67,6 +97,16 @@ public class FileUtils {
         }
     }
 
+    /**
+     * Random access file read line.
+     *
+     * @param file      the file
+     * @param start     the start
+     * @param length    the length
+     * @param adapter   the adapter
+     * @param isUseLock the is use lock
+     * @throws IOException the io exception
+     */
     public static void randomAccessFileReadLine(File file,
                                                 long start,
                                                 long length,
@@ -84,6 +124,15 @@ public class FileUtils {
         }
     }
 
+    /**
+     * Random access file read line.
+     *
+     * @param file    the file
+     * @param start   the start
+     * @param length  the length
+     * @param adapter the adapter
+     * @throws IOException the io exception
+     */
     public static void randomAccessFileReadLine(File file, long start,
                                                 long length, FileReadLineAdapter adapter) throws IOException {
         if (file == null) {
@@ -124,6 +173,14 @@ public class FileUtils {
         }
     }
 
+    /**
+     * Scanner read line.
+     *
+     * @param file      the file
+     * @param adapter   the adapter
+     * @param isUseLock the is use lock
+     * @throws IOException the io exception
+     */
     public static void scannerReadLine(File file, FileReadLineAdapter adapter, boolean isUseLock) throws IOException {
         if (!isUseLock) {
             scannerReadLine(file, adapter);
@@ -137,6 +194,13 @@ public class FileUtils {
         }
     }
 
+    /**
+     * Scanner read line.
+     *
+     * @param file    the file
+     * @param adapter the adapter
+     * @throws FileNotFoundException the file not found exception
+     */
     public static void scannerReadLine(File file, FileReadLineAdapter adapter) throws FileNotFoundException {
         if (file == null) {
             throw new IllegalArgumentException("File is null.");
@@ -167,6 +231,16 @@ public class FileUtils {
         }
     }
 
+    /**
+     * Read line.
+     *
+     * @param file      the file
+     * @param start     the start
+     * @param length    the length
+     * @param adapter   the adapter
+     * @param isUseLock the is use lock
+     * @throws IOException the io exception
+     */
     public static void readLine(final File file,
                                 final long start,
                                 final long length,
@@ -184,6 +258,15 @@ public class FileUtils {
         }
     }
 
+    /**
+     * Read line.
+     *
+     * @param file    the file
+     * @param start   the start
+     * @param length  the length
+     * @param adapter the adapter
+     * @throws IOException the io exception
+     */
     public static void readLine(final File file,
                                 final long start,
                                 final long length,
@@ -250,6 +333,17 @@ public class FileUtils {
         }
     }
 
+    /**
+     * Rewrite line.
+     *
+     * @param file      the file
+     * @param saveFile  the save file
+     * @param start     the start
+     * @param length    the length
+     * @param adapter   the adapter
+     * @param isUseLock the is use lock
+     * @throws IOException the io exception
+     */
     public static void rewriteLine(final File file,
                                    final File saveFile,
                                    final long start,
@@ -268,6 +362,16 @@ public class FileUtils {
         }
     }
 
+    /**
+     * Rewrite line.
+     *
+     * @param file     the file
+     * @param saveFile the save file
+     * @param start    the start
+     * @param length   the length
+     * @param adapter  the adapter
+     * @throws IOException the io exception
+     */
     public static void rewriteLine(final File file,
                                    final File saveFile,
                                    final long start,
@@ -349,10 +453,25 @@ public class FileUtils {
     }
 
 
+    /**
+     * Cut file.
+     *
+     * @param file   the file
+     * @param length the length
+     * @throws IOException the io exception
+     */
     public static void cutFile(File file, long length) throws IOException {
         cutFile(file, length, null);
     }
 
+    /**
+     * Cut file.
+     *
+     * @param file    the file
+     * @param length  the length
+     * @param adapter the adapter
+     * @throws IOException the io exception
+     */
     public static void cutFile(File file, long length,
                                FileWriteReadLineAdapter adapter) throws IOException {
         check(file);
@@ -375,6 +494,11 @@ public class FileUtils {
         // (System.currentTimeMillis() - startTime) / 1000f));
     }
 
+    /**
+     * Check.
+     *
+     * @param file the file
+     */
     public static void check(File file) {
         if (file == null) {
             throw new IllegalArgumentException("File is null.");
@@ -385,6 +509,16 @@ public class FileUtils {
 
     }
 
+    /**
+     * Thread read line.
+     *
+     * @param file    the file
+     * @param length  the length
+     * @param thread  the thread
+     * @param adapter the adapter
+     * @throws IOException          the io exception
+     * @throws InterruptedException the interrupted exception
+     */
     public static void threadReadLine(final File file, final long length,
                                       int thread, final FileReadLineAdapter adapter) throws IOException, InterruptedException {
         check(file);
@@ -432,6 +566,15 @@ public class FileUtils {
         }
     }
 
+    /**
+     * Thread cut file.
+     *
+     * @param file    the file
+     * @param length  the length
+     * @param thread  the thread
+     * @param adapter the adapter
+     * @throws InterruptedException the interrupted exception
+     */
     public static void threadCutFile(final File file, final long length,
                                      int thread, final FileWriteReadLineAdapter adapter) throws InterruptedException {
         check(file);
@@ -478,12 +621,12 @@ public class FileUtils {
     }
 
     /**
-     * @param @param  src
-     * @param @param  dst
-     * @param @return
+     * Save file.
+     *
+     * @param src the src
+     * @param dst the dst
      * @return boolean
-     * @throws IOException
-     * @throws
+     * @throws IOException the io exception
      * @Title: saveFile
      * @Description:
      */
@@ -509,11 +652,12 @@ public class FileUtils {
     }
 
     /**
-     * @param @param file
-     * @param @param info
+     * Sets file txt.
+     *
+     * @param file the file
+     * @param info the info
      * @return void
-     * @throws IOException
-     * @throws
+     * @throws IOException the io exception
      * @Title: setFileTxt
      * @Description:
      */
@@ -522,12 +666,13 @@ public class FileUtils {
     }
 
     /**
-     * @param @param file
-     * @param @param info
-     * @param @param append
+     * Sets file txt.
+     *
+     * @param file   the file
+     * @param info   the info
+     * @param append the append
      * @return void
-     * @throws IOException
-     * @throws
+     * @throws IOException the io exception
      * @Title: setFileTxt
      * @Description:
      */
@@ -536,6 +681,15 @@ public class FileUtils {
         setFileTxt(file, info, Charset.defaultCharset(), append);
     }
 
+    /**
+     * Sets file txt.
+     *
+     * @param file    the file
+     * @param info    the info
+     * @param charset the charset
+     * @param append  the append
+     * @throws IOException the io exception
+     */
     public static void setFileTxt(File file, String info, Charset charset,
                                   boolean append) throws IOException {
         BufferedWriter bw = null;
@@ -552,12 +706,11 @@ public class FileUtils {
     }
 
     /**
-     * @param @param  file
-     * @param @return
-     * @return String
-     * @throws IOException
-     * @throws FileNotFoundException
-     * @throws
+     * Gets file txt.
+     *
+     * @param file the file
+     * @return String file txt
+     * @throws IOException the io exception
      * @Title: getFileTxt
      * @Description:
      */
@@ -566,13 +719,13 @@ public class FileUtils {
     }
 
     /**
-     * @param @param  file
-     * @param @param  start
-     * @param @param  number
-     * @param @return
-     * @return String
-     * @throws IOException
-     * @throws
+     * Gets file txt.
+     *
+     * @param file      the file
+     * @param startLine the start line
+     * @param countLine the count line
+     * @return String file txt
+     * @throws IOException the io exception
      * @Title: getFileTxt
      * @Description:
      */
@@ -581,14 +734,14 @@ public class FileUtils {
     }
 
     /**
-     * @param @param  file
-     * @param @param  charsetName
-     * @param @param  startLine
-     * @param @param  countLine
-     * @param @return
-     * @return String
-     * @throws Exception
-     * @throws
+     * Gets file txt.
+     *
+     * @param file      the file
+     * @param charset   the charset
+     * @param startLine the start line
+     * @param countLine the count line
+     * @return String file txt
+     * @throws IOException the io exception
      * @Title: getFileTxt
      * @Description:
      */
@@ -634,10 +787,25 @@ public class FileUtils {
         return info;
     }
 
+    /**
+     * Gets file list.
+     *
+     * @param dir       the dir
+     * @param arrayList the array list
+     * @return the file list
+     */
     public static boolean getFileList(File dir, Set<File> arrayList) {
         return getFileList(dir, null, arrayList);
     }
 
+    /**
+     * Gets file list.
+     *
+     * @param dir    the dir
+     * @param filter the filter
+     * @param set    the set
+     * @return the file list
+     */
     public static boolean getFileList(File dir, FileFilter filter, Set<File> set) {
         if (dir == null || !dir.exists()) {
             return false;
@@ -660,6 +828,12 @@ public class FileUtils {
         return true;
     }
 
+    /**
+     * Close.
+     *
+     * @param in the in
+     * @throws IOException the io exception
+     */
     public static void close(InputStream in) throws IOException {
         if (in == null) {
             return;
@@ -671,6 +845,12 @@ public class FileUtils {
         }
     }
 
+    /**
+     * Close.
+     *
+     * @param out the out
+     * @throws IOException the io exception
+     */
     public static void close(OutputStream out) throws IOException {
         if (out == null) {
             return;
@@ -682,6 +862,13 @@ public class FileUtils {
         }
     }
 
+    /**
+     * Close.
+     *
+     * @param in  the in
+     * @param out the out
+     * @throws IOException the io exception
+     */
     public static void close(InputStream in, OutputStream out)
             throws IOException {
         try {
@@ -697,6 +884,12 @@ public class FileUtils {
         }
     }
 
+    /**
+     * Close.
+     *
+     * @param br the br
+     * @throws IOException the io exception
+     */
     public static void close(BufferedReader br) throws IOException {
         if (br == null) {
             return;
@@ -708,6 +901,12 @@ public class FileUtils {
         }
     }
 
+    /**
+     * Close.
+     *
+     * @param bw the bw
+     * @throws IOException the io exception
+     */
     public static void close(BufferedWriter bw) throws IOException {
         if (bw == null) {
             return;
@@ -719,6 +918,13 @@ public class FileUtils {
         }
     }
 
+    /**
+     * Close.
+     *
+     * @param in  the in
+     * @param out the out
+     * @throws IOException the io exception
+     */
     public static void close(BufferedReader in, BufferedWriter out)
             throws IOException {
         try {
@@ -735,6 +941,12 @@ public class FileUtils {
     }
 
 
+    /**
+     * Gets file info.
+     *
+     * @param file the file
+     * @return the file info
+     */
     public static String getFileInfo(File file) {
         if (file == null) {
             return "File is null.";
@@ -749,10 +961,25 @@ public class FileUtils {
                 (file.isFile() ? file.length() : ""));
     }
 
+    /**
+     * Read txt file string.
+     *
+     * @param file the file
+     * @return the string
+     * @throws IOException the io exception
+     */
     public static String readTxtFile(File file) throws IOException {
         return readTxtFile(file, null);
     }
 
+    /**
+     * Read txt file string.
+     *
+     * @param file    the file
+     * @param charset the charset
+     * @return the string
+     * @throws IOException the io exception
+     */
     public static String readTxtFile(File file, Charset charset) throws IOException {
         long fileLength = file.length();
         if (fileLength >= Integer.MAX_VALUE) {
@@ -773,6 +1000,15 @@ public class FileUtils {
         return charset == null ? new String(b) : new String(b, charset);
     }
 
+    /**
+     * Read txt file.
+     *
+     * @param file       the file
+     * @param charset    the charset
+     * @param adapter    the adapter
+     * @param bufferSize the buffer size
+     * @throws IOException the io exception
+     */
     public static void readTxtFile(File file, Charset charset,
                                    ReadTxtFileAdapter adapter, int bufferSize) throws IOException {
         long fileLength = file.length();
@@ -800,6 +1036,16 @@ public class FileUtils {
 
     }
 
+    /**
+     * Read txt file.
+     *
+     * @param file       the file
+     * @param charset    the charset
+     * @param adapter    the adapter
+     * @param bufferSize the buffer size
+     * @param lineBreak  the line break
+     * @throws IOException the io exception
+     */
     public static void readTxtFile(File file, Charset charset,
                                    ReadTxtFileAdapter adapter, int bufferSize, String lineBreak) throws IOException {
         long fileLength = file.length();
@@ -856,11 +1102,27 @@ public class FileUtils {
 
     }
 
+    /**
+     * Read txt file.
+     *
+     * @param file    the file
+     * @param charset the charset
+     * @param adapter the adapter
+     * @throws IOException the io exception
+     */
     public static void readTxtFile(File file, Charset charset,
                                    ReadTxtFileAdapter adapter) throws IOException {
         readTxtFile(file, charset, adapter, BUFFER_SIZE);
     }
 
+    /**
+     * Read line.
+     *
+     * @param file    the file
+     * @param charset the charset
+     * @param adapter the adapter
+     * @throws IOException the io exception
+     */
     public static void readLine(File file, Charset charset,
                                 ReadLineAdapter adapter) throws IOException {
         // if (file == null || !file.exists()) {
@@ -883,6 +1145,12 @@ public class FileUtils {
         }
     }
 
+    /**
+     * Delete boolean.
+     *
+     * @param dir the dir
+     * @return the boolean
+     */
     public static boolean delete(File dir) {
         boolean ok = true;
         if (!dir.exists()) {
@@ -903,6 +1171,11 @@ public class FileUtils {
         return ok;
     }
 
+    /**
+     * Close quietly.
+     *
+     * @param closeable the closeable
+     */
     public static void closeQuietly(Closeable closeable) {
         try {
             if (closeable != null) {
@@ -914,11 +1187,27 @@ public class FileUtils {
 
     }
 
+    /**
+     * The interface Read txt file adapter.
+     */
     public interface ReadTxtFileAdapter {
+        /**
+         * Todo.
+         *
+         * @param str the str
+         */
         public void todo(String str);
     }
 
+    /**
+     * The interface Read line adapter.
+     */
     public interface ReadLineAdapter {
+        /**
+         * Todo.
+         *
+         * @param str the str
+         */
         public void todo(String str);
     }
 }

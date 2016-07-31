@@ -10,6 +10,9 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
 
+/**
+ * The type User dao.
+ */
 @Repository(value = "userDao")
 public class UserDaoImpl
         extends BaseHibernateDaoImpl<User, Long>

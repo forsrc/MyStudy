@@ -16,26 +16,48 @@
  */
 package com.forsrc.exception;
 
+/**
+ * The type Invalid update token exception.
+ */
 public class InvalidUpdateTokenException extends DaoException {
 
 
     private static final long serialVersionUID = 124803752942311L;
 
+    /**
+     * Instantiates a new Invalid update token exception.
+     */
     public InvalidUpdateTokenException() {
 
         super();
     }
 
+    /**
+     * Instantiates a new Invalid update token exception.
+     *
+     * @param message the message
+     */
     public InvalidUpdateTokenException(String message) {
 
         super(message);
     }
 
+    /**
+     * Instantiates a new Invalid update token exception.
+     *
+     * @param message the message
+     * @param cause   the cause
+     */
     public InvalidUpdateTokenException(String message, Throwable cause) {
 
         super(message, cause);
     }
 
+    /**
+     * Instantiates a new Invalid update token exception.
+     *
+     * @param cause the cause
+     */
     public InvalidUpdateTokenException(Throwable cause) {
 
         super(cause);

@@ -24,11 +24,21 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 
+/**
+ * The type Cookie utils.
+ */
 public final class CookieUtils {
 
     private CookieUtils() {
     }
 
+    /**
+     * Delete.
+     *
+     * @param request  the request
+     * @param response the response
+     * @param name     the name
+     */
     public static void delete(HttpServletRequest request,
                               HttpServletResponse response, String name) {
 
@@ -38,6 +48,14 @@ public final class CookieUtils {
         response.addCookie(cookie);
     }
 
+    /**
+     * Gets cookie.
+     *
+     * @param name    the name
+     * @param request the request
+     * @return the cookie
+     * @throws UnsupportedEncodingException the unsupported encoding exception
+     */
     public static String getCookie(String name, HttpServletRequest request)
             throws UnsupportedEncodingException {
 
@@ -52,6 +70,15 @@ public final class CookieUtils {
         return null;
     }
 
+    /**
+     * Save cookie.
+     *
+     * @param request  the request
+     * @param response the response
+     * @param name     the name
+     * @param value    the value
+     * @throws UnsupportedEncodingException the unsupported encoding exception
+     */
     public static void saveCookie(HttpServletRequest request,
                                   HttpServletResponse response, String name, String value)
             throws UnsupportedEncodingException {
@@ -60,6 +87,16 @@ public final class CookieUtils {
                 .saveCookie(request, response, name, value, 7 * 24 * 60 * 60);
     }
 
+    /**
+     * Save cookie.
+     *
+     * @param request  the request
+     * @param response the response
+     * @param name     the name
+     * @param value    the value
+     * @param maxAge   the max age
+     * @throws UnsupportedEncodingException the unsupported encoding exception
+     */
     public static void saveCookie(HttpServletRequest request,
                                   HttpServletResponse response, String name, String value, int maxAge)
             throws UnsupportedEncodingException {

@@ -25,14 +25,33 @@ import java.io.IOException;
 import java.security.*;
 import java.security.spec.*;
 
+/**
+ * The type My rsa 2 utils.
+ */
 public final class MyRsa2Utils {
 
     private static final String CHAR_SET = "UTF-8";
 
+    /**
+     * Decrypt string.
+     *
+     * @param rsaKey     the rsa key
+     * @param cipherText the cipher text
+     * @return the string
+     * @throws RsaException the rsa exception
+     */
     public static String decrypt(RsaKey rsaKey, String cipherText) throws RsaException {
         return decrypt(rsaKey.getKeyPair().getPrivate(), cipherText);
     }
 
+    /**
+     * Decrypt string.
+     *
+     * @param privateKey the private key
+     * @param cipherText the cipher text
+     * @return the string
+     * @throws RsaException the rsa exception
+     */
     public static String decrypt(PrivateKey privateKey, String cipherText) throws RsaException {
         Cipher cipher = null;
         try {
@@ -75,10 +94,26 @@ public final class MyRsa2Utils {
         return new String(baos.toByteArray());
     }
 
+    /**
+     * Encrypt string.
+     *
+     * @param rsaKey    the rsa key
+     * @param plaintext the plaintext
+     * @return the string
+     * @throws RsaException the rsa exception
+     */
     public static String encrypt(RsaKey rsaKey, String plaintext) throws RsaException {
         return encrypt(rsaKey.getKeyPair().getPublic(), plaintext);
     }
 
+    /**
+     * Encrypt string.
+     *
+     * @param publicKey the public key
+     * @param plaintext the plaintext
+     * @return the string
+     * @throws RsaException the rsa exception
+     */
     public static String encrypt(PublicKey publicKey, String plaintext) throws RsaException {
         Cipher cipher = null;
         try {
@@ -128,6 +163,13 @@ public final class MyRsa2Utils {
     }
 
 
+    /**
+     * Gets public key.
+     *
+     * @param key the key
+     * @return the public key
+     * @throws RsaException the rsa exception
+     */
     public static PublicKey getPublicKey(String key) throws RsaException {
         byte[] keyBytes;
         try {
@@ -152,6 +194,13 @@ public final class MyRsa2Utils {
     }
 
 
+    /**
+     * Gets private key.
+     *
+     * @param key the key
+     * @return the private key
+     * @throws RsaException the rsa exception
+     */
     public static PrivateKey getPrivateKey(String key) throws RsaException {
         byte[] keyBytes;
         try {
@@ -176,14 +225,28 @@ public final class MyRsa2Utils {
     }
 
 
+    /**
+     * Gets rsa key.
+     *
+     * @return the rsa key
+     */
     public static RsaKey getRsaKey() {
         return new RsaKey();
     }
 
 
+    /**
+     * The type Rsa key.
+     */
     public static class RsaKey {
 
+        /**
+         * The constant KEY_SIZE.
+         */
         public static final int KEY_SIZE = 1024;
+        /**
+         * The constant ALGORITHM.
+         */
         public static final String ALGORITHM = "RSA";
 
         private static Cipher cipher;
@@ -191,6 +254,9 @@ public final class MyRsa2Utils {
 
         private KeyPair keyPair;
 
+        /**
+         * Instantiates a new Rsa key.
+         */
         public RsaKey() {
             try {
                 cipher = Cipher.getInstance(ALGORITHM, new org.bouncycastle.jce.provider.BouncyCastleProvider());
@@ -206,14 +272,30 @@ public final class MyRsa2Utils {
 
         }
 
+        /**
+         * Gets key pair.
+         *
+         * @return the key pair
+         */
         public KeyPair getKeyPair() {
             return keyPair;
         }
 
+        /**
+         * Sets key pair.
+         *
+         * @param keyPair the key pair
+         */
         public void setKeyPair(KeyPair keyPair) {
             this.keyPair = keyPair;
         }
 
+        /**
+         * Gets rsa public key spec.
+         *
+         * @return the rsa public key spec
+         * @throws RsaException the rsa exception
+         */
         public RSAPublicKeySpec getRSAPublicKeySpec() throws RsaException {
             try {
                 return keyFactory.getKeySpec(this.getKeyPair().getPublic(), RSAPublicKeySpec.class);
@@ -222,6 +304,12 @@ public final class MyRsa2Utils {
             }
         }
 
+        /**
+         * Gets rsa private key spec.
+         *
+         * @return the rsa private key spec
+         * @throws RsaException the rsa exception
+         */
         public RSAPrivateKeySpec getRSAPrivateKeySpec() throws RsaException {
             try {
                 return keyFactory.getKeySpec(this.getKeyPair().getPrivate(), RSAPrivateKeySpec.class);
@@ -231,11 +319,24 @@ public final class MyRsa2Utils {
         }
     }
 
+    /**
+     * The type Rsa exception.
+     */
     public static class RsaException extends IOException {
+        /**
+         * Instantiates a new Rsa exception.
+         *
+         * @param e the e
+         */
         public RsaException(Exception e) {
             super(e);
         }
 
+        /**
+         * Instantiates a new Rsa exception.
+         *
+         * @param e the e
+         */
         public RsaException(String e) {
             super(e);
         }

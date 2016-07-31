@@ -9,14 +9,27 @@ import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * The type Hibernate search application listener.
+ */
 public class HibernateSearchApplicationListener implements ApplicationListener {
 
     private static SessionFactory sessionFactory;
 
+    /**
+     * Gets session factory.
+     *
+     * @return the session factory
+     */
     public static SessionFactory getSessionFactory() {
         return HibernateSearchApplicationListener.sessionFactory;
     }
 
+    /**
+     * Sets session factory.
+     *
+     * @param sessionFactory the session factory
+     */
     public static void setSessionFactory(SessionFactory sessionFactory) {
         HibernateSearchApplicationListener.sessionFactory = sessionFactory;
     }
@@ -33,6 +46,8 @@ public class HibernateSearchApplicationListener implements ApplicationListener {
     }
 
     /**
+     * The enum Hibernate search handle.
+     *
      * @see HibernateSearchApplicationEvent.Op
      */
     public static enum HibernateSearchHandle {
@@ -73,10 +88,18 @@ public class HibernateSearchApplicationListener implements ApplicationListener {
             }
         };
 
+        /**
+         * Handle.
+         *
+         * @param event the event
+         */
         public abstract void handle(HibernateSearchApplicationEvent event);
     }
 
     private static class MyThreadPoolExecutor {
+        /**
+         * The constant EXECUTOR.
+         */
         public static final ThreadPoolExecutor EXECUTOR = new ThreadPoolExecutor(2, 3, 50,
                 TimeUnit.MILLISECONDS, new ArrayBlockingQueue<Runnable>(3),
                 new ThreadPoolExecutor.CallerRunsPolicy());

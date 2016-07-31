@@ -11,6 +11,9 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * The type My cross domain filter.
+ */
 public class MyCrossDomainFilter extends CharacterEncodingFilter {
 
     private static final ThreadLocal<Map<String, RateLimit>> threadLocal = new ThreadLocal<Map<String, RateLimit>>();
@@ -55,6 +58,12 @@ public class MyCrossDomainFilter extends CharacterEncodingFilter {
         super.doFilterInternal(request, response, filterChain);
     }
 
+    /**
+     * Gets rate limit.
+     *
+     * @param uri the uri
+     * @return the rate limit
+     */
     public synchronized Map<String, RateLimit> getRateLimit(String uri) {
         Map<String, RateLimit> map = threadLocal.get();
         if (map == null) {
@@ -69,16 +78,27 @@ public class MyCrossDomainFilter extends CharacterEncodingFilter {
         return map;
     }
 
+    /**
+     * The type Rate limit.
+     */
     public static class RateLimit {
         private int limit = 100;
         private long reset = 1L * 1000 * 60 * 10;
         private int remaining = 100;
         private long start = 0;
 
+        /**
+         * Instantiates a new Rate limit.
+         */
         public RateLimit() {
             this.start = System.currentTimeMillis();
         }
 
+        /**
+         * Gets remaining.
+         *
+         * @return the remaining
+         */
         public synchronized int getRemaining() {
             this.remaining--;
             if (this.remaining <= 0) {
@@ -87,6 +107,9 @@ public class MyCrossDomainFilter extends CharacterEncodingFilter {
             return this.remaining;
         }
 
+        /**
+         * Reset.
+         */
         public synchronized void reset() {
             Long now = System.currentTimeMillis();
             if (now - start >= this.reset) {
@@ -96,14 +119,29 @@ public class MyCrossDomainFilter extends CharacterEncodingFilter {
 
         }
 
+        /**
+         * Gets limit.
+         *
+         * @return the limit
+         */
         public int getLimit() {
             return this.limit;
         }
 
+        /**
+         * Gets reset.
+         *
+         * @return the reset
+         */
         public long getReset() {
             return this.reset;
         }
 
+        /**
+         * Gets start.
+         *
+         * @return the start
+         */
         public long getStart() {
             return this.start;
         }
