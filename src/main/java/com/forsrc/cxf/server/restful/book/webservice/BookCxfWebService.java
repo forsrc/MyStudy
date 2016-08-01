@@ -10,7 +10,7 @@ import javax.ws.rs.*;
  * The interface Book cxf action.
  */
 @Path(value = "/v1.0/api/book")
-@WebService(name = "bookCxfService", targetNamespace = "http://com.forsrc.cxf.server.restful.book.action/")
+@WebService(name = "bookCxfService")
 public interface BookCxfWebService extends BaseCxfWebService<Book, Long> {
 
 
