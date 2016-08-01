@@ -1,4 +1,4 @@
-package com.forsrc.cxf.server.restful.base.action;
+package com.forsrc.cxf.server.restful.base.webservice;
 
 import com.forsrc.cxf.server.restful.base.vo.Page;
 import com.forsrc.exception.ServiceException;
@@ -17,7 +17,7 @@ import javax.ws.rs.core.Response;
  */
 @Path(value = "/v1.0/api")
 @WebService
-public interface BaseCxfAction<E, PK> {
+public interface BaseCxfWebService<E, PK> {
 
     /**
      * Get e.

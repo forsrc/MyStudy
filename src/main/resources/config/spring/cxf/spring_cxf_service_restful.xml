@@ -72,8 +72,8 @@
 
 
     <bean id="cxfRestfulImpl" class="com.forsrc.cxf.server.demo.impl.CxfRestfulImpl"/>
-    <bean id="userCxfActionImpl" class="com.forsrc.cxf.server.restful.user.action.impl.UserCxfActionImpl"/>
-    <bean id="bookCxfActionImpl" class="com.forsrc.cxf.server.restful.book.action.impl.BookCxfActionImpl"/>
+    <bean id="userCxfActionImpl" class="com.forsrc.cxf.server.restful.user.webservice.impl.UserCxfWebServiceImpl"/>
+    <bean id="bookCxfActionImpl" class="com.forsrc.cxf.server.restful.book.webservice.impl.BookCxfWebServiceImpl"/>
 
 
     <jaxws:endpoint id="wsService" address="/ws"

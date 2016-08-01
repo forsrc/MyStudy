@@ -1,8 +1,8 @@
-package com.forsrc.cxf.server.restful.base.action.impl;
+package com.forsrc.cxf.server.restful.base.webservice.impl;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.forsrc.cxf.server.restful.base.action.BaseCxfAction;
+import com.forsrc.cxf.server.restful.base.webservice.BaseCxfWebService;
 import com.forsrc.cxf.server.restful.base.service.BaseCxfService;
 import com.forsrc.cxf.server.restful.base.vo.Page;
 import com.forsrc.exception.ServiceException;
@@ -32,7 +32,7 @@ import java.util.Map;
  * @param <PK> the type parameter
  */
 @WebService
-public abstract class BaseCxfActionImpl<E, PK> implements BaseCxfAction<E, PK> {
+public abstract class BaseCxfWebServiceImpl<E, PK> implements BaseCxfWebService<E, PK> {
 
     /**
      * The Entity class.
@@ -43,7 +43,7 @@ public abstract class BaseCxfActionImpl<E, PK> implements BaseCxfAction<E, PK> {
     /**
      * Instantiates a new Base cxf action.
      */
-    public BaseCxfActionImpl() {
+    public BaseCxfWebServiceImpl() {
         this.entityClass = (Class<E>) ((ParameterizedType) getClass()
                 .getGenericSuperclass()).getActualTypeArguments()[0];
 
