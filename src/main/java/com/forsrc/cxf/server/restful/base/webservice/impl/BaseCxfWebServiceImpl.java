@@ -2,9 +2,9 @@ package com.forsrc.cxf.server.restful.base.webservice.impl;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.forsrc.cxf.server.restful.base.webservice.BaseCxfWebService;
 import com.forsrc.cxf.server.restful.base.service.BaseCxfService;
 import com.forsrc.cxf.server.restful.base.vo.Page;
+import com.forsrc.cxf.server.restful.base.webservice.BaseCxfWebService;
 import com.forsrc.exception.ServiceException;
 import com.forsrc.utils.MyBeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +31,7 @@ import java.util.Map;
  * @param <E>  the type parameter
  * @param <PK> the type parameter
  */
-@WebService
+//@WebService
 public abstract class BaseCxfWebServiceImpl<E, PK> implements BaseCxfWebService<E, PK> {
 
     /**
@@ -56,12 +56,6 @@ public abstract class BaseCxfWebServiceImpl<E, PK> implements BaseCxfWebService<
 
 
     @Override
-    public E get(PK id) throws ServiceException {
-        return baseCxfService.get(entityClass, (Serializable) id);
-        //return (E) baseCxfService.get(Type.nameOf(name).getCls(), id);
-    }
-
-    @Override
     public Page<E> list(//@FormParam("start") Integer start
                         //, @FormParam("size") Integer size
                         //HttpServletRequest request
@@ -80,6 +74,12 @@ public abstract class BaseCxfWebServiceImpl<E, PK> implements BaseCxfWebService<
         page.setList(list       );
         return page;
       }
+
+    @Override
+    public E get(PK id) throws ServiceException {
+        return baseCxfService.get(entityClass, (Serializable) id);
+        //return (E) baseCxfService.get(Type.nameOf(name).getCls(), id);
+    }
 
     private E getBean(Class<E> cls, byte[] bytes) throws ServiceException {
         ObjectMapper objectMapper = new ObjectMapper();

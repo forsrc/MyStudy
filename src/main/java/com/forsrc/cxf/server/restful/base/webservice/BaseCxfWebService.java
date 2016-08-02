@@ -4,10 +4,14 @@ import com.forsrc.cxf.server.restful.base.vo.Page;
 import com.forsrc.exception.ServiceException;
 import org.apache.cxf.jaxrs.ext.PATCH;
 
+import javax.jws.WebMethod;
+import javax.jws.WebResult;
 import javax.jws.WebService;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.xml.ws.RequestWrapper;
+import javax.xml.ws.ResponseWrapper;
 
 /**
  * The interface Base cxf action.
@@ -16,7 +20,8 @@ import javax.ws.rs.core.Response;
  * @param <PK> the type parameter
  */
 @Path(value = "/v1.0/api")
-@WebService
+//@SOAPBinding(style = SOAPBinding.Style.RPC, use = SOAPBinding.Use.LITERAL)
+//WebService
 public interface BaseCxfWebService<E, PK> {
 
     /**
@@ -28,6 +33,10 @@ public interface BaseCxfWebService<E, PK> {
      */
     @GET
     @Path("/{id}")
+    //@WebMethod
+    //@RequestWrapper()
+    //@ResponseWrapper(targetNamespace = "http://pojo.forsrc.com")
+    //@WebResult(name = "return", targetNamespace = "http://webservice.book.restful.server.cxf.forsrc.com")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public E get(@PathParam("id") PK id) throws ServiceException;
 

@@ -11,7 +11,7 @@ import java.util.Date;
 /**
  * The type Book category.
  */
-@XmlRootElement(name = "BookCategory")
+@XmlRootElement(name = "MyStudy.BookCategory")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class BookCategory {
     private Integer id;

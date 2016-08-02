@@ -12,7 +12,7 @@ import javax.ws.rs.Path;
  * The type Book cxf action.
  */
 @Path(value = "/v1.0/api/book")
-@WebService
+@WebService(endpointInterface = "com.forsrc.cxf.server.restful.book.webservice.BookCxfWebService")
 public class BookCxfWebServiceImpl extends BaseCxfWebServiceImpl<Book, Long> implements BookCxfWebService {
 
 
