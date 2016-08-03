@@ -351,11 +351,12 @@ public class JredisUtils {
         ShardedJedisPipeline pipelined = shardedJedis.pipelined();
         try {
             callback.handle(pipelined);
+            pipelined.sync();
         } catch (Exception e) {
             close();
             throw new JredisUtilsException(e);
         } finally {
-            pipelined.sync();
+
         }
         return this;
     }
