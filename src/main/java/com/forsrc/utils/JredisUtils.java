@@ -3,10 +3,9 @@ package com.forsrc.utils;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import redis.clients.jedis.ShardedJedis;
-import redis.clients.jedis.ShardedJedisPipeline;
-import redis.clients.jedis.ShardedJedisPool;
+import redis.clients.jedis.*;
 
+import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -326,9 +325,65 @@ public class JredisUtils {
      */
     public final JredisUtils handle(final Callback<ShardedJedis> callback) throws JredisUtilsException {
         ShardedJedis shardedJedis = getShardedJedis();
+        shardedJedis.getShard("");
 
         try {
             callback.handle(shardedJedis);
+        } catch (Exception e) {
+            close();
+            throw new JredisUtilsException(e);
+        } finally {
+
+        }
+        return this;
+    }
+
+
+    /**
+     * Handle transaction jredis utils.
+     *
+     * @param jedisKey the jedis key
+     * @param callback the callback
+     * @return the jredis utils
+     * @throws JredisUtilsException the jredis utils exception
+     */
+    public final JredisUtils handleTransaction(String jedisKey, final Callback<Jedis> callback) throws JredisUtilsException {
+        ShardedJedis shardedJedis = getShardedJedis();
+        Jedis jedis = shardedJedis.getShard(jedisKey);
+        Transaction transaction = jedis.multi();
+        try {
+            callback.handle(jedis);
+            transaction.exec();
+            transaction.close();
+        } catch (Exception e) {
+            transaction.discard();
+            try {
+                transaction.close();
+            } catch (IOException e1) {
+                throw new JredisUtilsException(e1);
+            } finally {
+                close();
+            }
+            throw new JredisUtilsException(e);
+        } finally {
+
+        }
+        return this;
+    }
+
+    /**
+     * Handle jedis jredis utils.
+     *
+     * @param jedisKey the jedis key
+     * @param callback the callback
+     * @return the jredis utils
+     * @throws JredisUtilsException the jredis utils exception
+     */
+    public final JredisUtils handleJedis(String jedisKey, final Callback<Jedis> callback) throws JredisUtilsException {
+        ShardedJedis shardedJedis = getShardedJedis();
+        Jedis jedis = shardedJedis.getShard(jedisKey);
+        try {
+            callback.handle(jedis);
         } catch (Exception e) {
             close();
             throw new JredisUtilsException(e);

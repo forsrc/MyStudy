@@ -4,9 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
-import redis.clients.jedis.ShardedJedis;
-import redis.clients.jedis.ShardedJedisPipeline;
-import redis.clients.jedis.ShardedJedisPool;
+import redis.clients.jedis.*;
 
 import java.io.IOException;
 import java.util.concurrent.ArrayBlockingQueue;
@@ -146,6 +144,61 @@ public class JredisUtilsTest {
             });
         }
 
+        try {
+            JredisUtils.getInstance(shardedJedisPool)
+                    .setNamespace("my_study_test")
+                    .setKeyType(JredisUtils.KeyType.KEY_TYPE_STRING)
+                    .setKey("name")
+                    .handleJedis("Jedis-1", new JredisUtils.Callback<Jedis>() {
+                        @Override
+                        public void handle(Jedis jedis) throws JredisUtils.JredisUtilsException{
+                            Transaction transaction = jedis.multi();
+
+                            transaction.set(key, "77");
+                            transaction.set(key, "7777");
+                            transaction.set(key, "77");
+                            transaction.set(key, "75");
+                            if(true) {
+                                transaction.discard();
+                                try {
+                                    transaction.close();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                    fail(e.getMessage());
+                                }
+                                throw new JredisUtils.JredisUtilsException("Transaction test");
+                            }
+                            transaction.exec();
+                        }
+                    })
+                    .handleJedis("Jedis-1", new JredisUtils.Callback<Jedis>() {
+                        @Override
+                        public void handle(Jedis jedis) {
+                            assertEquals("77", jedis.get(key));
+
+                        }
+                    })
+                    .close();
+        } catch (JredisUtils.JredisUtilsException e) {
+
+        }
+
+        try {
+            JredisUtils.getInstance(shardedJedisPool)
+                    .setNamespace("my_study_test")
+                    .setKeyType(JredisUtils.KeyType.KEY_TYPE_STRING)
+                    .setKey("name")
+                    .get(new JredisUtils.Callback<String>() {
+                        @Override
+                        public void handle(final String s) {
+                            assertEquals("77", s);
+                        }
+                    })
+                    .close();
+        } catch (JredisUtils.JredisUtilsException e) {
+            e.printStackTrace();
+            fail(e.getMessage());
+        }
     }
 
 }
