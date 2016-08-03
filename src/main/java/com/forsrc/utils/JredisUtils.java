@@ -4,6 +4,7 @@ package com.forsrc.utils;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import redis.clients.jedis.ShardedJedis;
+import redis.clients.jedis.ShardedJedisPipeline;
 import redis.clients.jedis.ShardedJedisPool;
 
 import java.text.MessageFormat;
@@ -337,6 +338,28 @@ public class JredisUtils {
         return this;
     }
 
+
+    /**
+     * Handle pipeline jredis utils.
+     *
+     * @param callback the callback
+     * @return the jredis utils
+     * @throws JredisUtilsException the jredis utils exception
+     */
+    public final JredisUtils handlePipeline(final Callback<ShardedJedisPipeline> callback) throws JredisUtilsException {
+        ShardedJedis shardedJedis = getShardedJedis();
+        ShardedJedisPipeline pipelined = shardedJedis.pipelined();
+        try {
+            callback.handle(pipelined);
+        } catch (Exception e) {
+            close();
+            throw new JredisUtilsException(e);
+        } finally {
+            pipelined.sync();
+        }
+        return this;
+    }
+
     /**
      * Handle jredis utils.
      *
@@ -414,7 +437,7 @@ public class JredisUtils {
         if (actual == null) {
             throw new JredisUtilsException("Actual reply is null, expected : OK");
         }
-        if (actual.equalsIgnoreCase("OK")) {
+        if (!actual.equalsIgnoreCase("OK") && !actual.equalsIgnoreCase("QUEUED")) {
             throw new JredisUtilsException(
                     MessageFormat.format("Actual reply is {0}, expected : OK", actual)
             );

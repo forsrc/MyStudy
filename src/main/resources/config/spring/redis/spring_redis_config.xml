@@ -10,12 +10,12 @@
         <property name="maxWaitMillis" value="10000"/>
     </bean>
     <bean id="jedisPool" class="redis.clients.jedis.JedisPool" destroy-method="close">
-        <constructor-arg index="0" value="127.0.0.1"/>
-        <constructor-arg index="1" value="6379"/>
+        <constructor-arg index="0" type="java.lang.String" value="127.0.0.1"/>
+        <constructor-arg index="1" type="int" value="6379"/>
     </bean>
     <bean id="jedisShardInfo-1" class="redis.clients.jedis.JedisShardInfo">
-        <constructor-arg index="0" value="127.0.0.1"/>
-        <constructor-arg index="1" value="6379"/>
+        <constructor-arg index="0" type="java.lang.String"  value="127.0.0.1"/>
+        <constructor-arg index="1" type="int" value="6379"/>
     </bean>
 
     <bean id="shardedJedisPool" class="redis.clients.jedis.ShardedJedisPool" destroy-method="close">

@@ -11,8 +11,8 @@
     <jaxrs:server id="cxfRestful" address="/restful">
         <jaxrs:serviceBeans>
             <ref bean="cxfRestfulImpl"/>
-            <ref bean="userCxfActionImpl"/>
-            <ref bean="bookCxfActionImpl"/>
+            <ref bean="userCxfWebService"/>
+            <ref bean="bookCxfWebService"/>
         </jaxrs:serviceBeans>
         <jaxrs:extensionMappings>
             <entry key="json" value="application/json"/>
@@ -72,12 +72,12 @@
 
 
     <bean id="cxfRestfulImpl" class="com.forsrc.cxf.server.demo.impl.CxfRestfulImpl"/>
-    <bean id="userCxfActionImpl" class="com.forsrc.cxf.server.restful.user.webservice.impl.UserCxfWebServiceImpl"/>
-    <bean id="bookCxfActionImpl" class="com.forsrc.cxf.server.restful.book.webservice.impl.BookCxfWebServiceImpl"/>
+    <bean id="userCxfWebService" class="com.forsrc.cxf.server.restful.user.webservice.impl.UserCxfWebServiceImpl"/>
+    <bean id="bookCxfWebService" class="com.forsrc.cxf.server.restful.book.webservice.impl.BookCxfWebServiceImpl"/>
 
 
-    <jaxws:endpoint id="wsService" address="/ws"
-        implementor="#bookCxfActionImpl">
+    <jaxws:endpoint id="wsService" address="/ws" serviceName="com.forsrc.cxf.server.restful.book.webservice.BookCxfWebService"
+        implementor="#bookCxfWebService">
 
         <jaxws:inInterceptors>
             <bean class="org.apache.cxf.interceptor.LoggingInInterceptor"></bean>
