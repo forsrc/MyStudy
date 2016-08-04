@@ -1,7 +1,7 @@
 "use strict";
 
 //var SERVER = "http://localhost:8077/";
-var SERVER      = "http://192.168.2.107:8077";
+var SERVER      = "http://192.168.1.6:8077";
 var WEB_NAME    = "";
 var SERVER_TEST = SERVER + WEB_NAME + "/MyStudy/www";
 var SERVER_REST = SERVER + WEB_NAME + "/springmvc"
