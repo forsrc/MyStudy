@@ -60,6 +60,7 @@ public abstract class BaseHibernateDaoImpl<E, PK extends Serializable> extends D
 
     }
 
+    @Override
     public int count() throws DaoException {
         DetachedCriteria criteria = DetachedCriteria.forClass(getEntityClass())
                 .setProjection(Projections.rowCount());
@@ -73,6 +74,7 @@ public abstract class BaseHibernateDaoImpl<E, PK extends Serializable> extends D
         return 0;
     }
 
+    @Override
     public List<E> list(int begin, int size) throws DaoException {
 
         return list(getEntityClass(), begin, size, null);
@@ -117,6 +119,7 @@ public abstract class BaseHibernateDaoImpl<E, PK extends Serializable> extends D
         return (List<T>) getHibernateTemplate().findByCriteria(criteria, begin, size);
     }
 
+    @Override
     public SessionFactory getSessionFactory() {
         return sessionFactory;
     }
@@ -183,20 +186,18 @@ public abstract class BaseHibernateDaoImpl<E, PK extends Serializable> extends D
     /**
      * Open session session.
      *
-     * @param allowCreate the allow create
      * @return the session
      */
-    protected final Session openSession(boolean allowCreate) {
+    protected final Session openSession() {
         return getSessionFactory().openSession();
     }
 
     /**
      * Gets current session.
      *
-     * @param allowCreate the allow create
      * @return the current session
      */
-    protected final Session getCurrentSession(boolean allowCreate) {
+    protected final Session getCurrentSession() {
         return getSessionFactory().getCurrentSession();
     }
 
@@ -212,6 +213,7 @@ public abstract class BaseHibernateDaoImpl<E, PK extends Serializable> extends D
         }
     }
 
+    @Override
     public final HibernateTemplate getHibernateTemplate() {
         return this.hibernateTemplate;
     }
@@ -236,6 +238,7 @@ public abstract class BaseHibernateDaoImpl<E, PK extends Serializable> extends D
         return this.entityClass;
     }
 
+    @Override
     public void setEntityClass(Class<E> entityClass) {
         this.entityClass = entityClass;
     }
