@@ -185,6 +185,7 @@
           <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/commons-vfs2-2.0.jar!/" />
           <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/commons-weaver-privilizer-api-1.2.jar!/" />
           <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/compiler.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/core-renderer-R8.jar!/" />
           <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/cryptacular-1.0.jar!/" />
           <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/cssparser-0.9.18.jar!/" />
           <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/cxf-core-3.1.6.jar!/" />
@@ -268,6 +269,7 @@
           <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/ezmorph-1.0.6.jar!/" />
           <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/FastInfoset-1.2.13.jar!/" />
           <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/fontbox-2.0.0-RC3.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/fontbox-2.0.2.jar!/" />
           <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/fop-0.94.jar!/" />
           <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/freemarker-2.3.22.jar!/" />
           <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/geronimo-annotation_1.0_spec-1.1.jar!/" />
@@ -319,9 +321,6 @@
           <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/IKAnalyzer2012_V5-5.2.1.jar!/" />
           <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/imgscalr-lib-4.2.jar!/" />
           <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/istack-commons-runtime-2.4.jar!/" />
-          <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/itext-pdfa-5.5.8.jar!/" />
-          <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/itext-xtra-5.5.8.jar!/" />
-          <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/itextpdf-5.5.8.jar!/" />
           <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/jackson-annotations-2.6.3.jar!/" />
           <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/jackson-core-2.6.3.jar!/" />
           <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/jackson-core-asl-1.9.13.jar!/" />
@@ -331,9 +330,12 @@
           <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/jackson-mapper-asl-1.9.13.jar!/" />
           <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/jakarta-regexp-1.4.jar!/" />
           <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/jalopy-1.5rc3.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/jasperreports-6.3.0.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/jasperreports-javaflow-6.3.0.jar!/" />
           <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/jasypt-1.9.2.jar!/" />
           <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/java-object-diff-0.93.jar!/" />
           <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/java-support-7.1.1.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/java-wkhtmltopdf-wrapper-0.0.3-SNAPSHOT.jar!/" />
           <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/java_websocket-1.3.0.jar!/" />
           <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/javaGeom-0.11.1.jar!/" />
           <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/javamelody-core-1.47.0.jar!/" />
@@ -357,6 +359,9 @@
           <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/jboss-logging-3.3.0.Final.jar!/" />
           <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/jboss-transaction-api_1.1_spec-1.0.1.Final.jar!/" />
           <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/jcl-over-slf4j-1.7.19.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/jcommon-1.0.23.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/jcommon-xml-1.0.23.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/jedis-2.9.0.jar!/" />
           <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/jettison-1.3.7.jar!/" />
           <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/jetty-all-8.1.18.v20150929.jar!/" />
           <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/jetty-continuation-9.2.15.v20160210.jar!/" />
@@ -365,6 +370,10 @@
           <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/jetty-security-9.2.15.v20160210.jar!/" />
           <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/jetty-server-9.2.15.v20160210.jar!/" />
           <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/jetty-util-9.2.15.v20160210.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/jfreechart-1.0.19-experimental.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/jfreechart-1.0.19-swt.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/jfreechart-1.0.19.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/jfreesvg-2.0.jar!/" />
           <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/jgraphx-1.10.4.1.jar!/" />
           <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/jgroups-3.6.6.Final.jar!/" />
           <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/jibx-bind-1.2.jar!/" />
@@ -464,10 +473,17 @@
           <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/org.eclipse.jgit.archive-4.1.1.201511131810-r.jar!/" />
           <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/org.eclipse.jgit.http.server-4.1.1.201511131810-r.jar!/" />
           <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/org.eclipse.jgit.pgm-4.1.1.201511131810-r.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/orsoncharts-1.4-eval-nofx.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/orsonpdf-1.6-eval.jar!/" />
           <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/paranamer-2.3.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/pdfbox-2.0.2.jar!/" />
           <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/pdfbox-app-2.0.0-RC3.jar!/" />
           <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/pdfbox-tools-2.0.0-RC3.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/pdfbox-tools-2.0.2.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/pegdown-1.6.0.jar!/" />
           <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/persistence-api-1.0.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/plantuml-jar-asl-8046.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/plantuml-server-8046.jar!/" />
           <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/poi-3.13-20150929.jar!/" />
           <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/poi-excelant-3.13-20150929.jar!/" />
           <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/poi-ooxml-3.13-20150929.jar!/" />
@@ -475,6 +491,7 @@
           <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/poi-scratchpad-3.13-20150929.jar!/" />
           <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/policy-2.3.1.jar!/" />
           <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/preflight-2.0.0-RC3.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/preflight-2.0.2.jar!/" />
           <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/preflight-app-2.0.0-RC3.jar!/" />
           <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/protobuf-java-2.6.1.jar!/" />
           <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/proxool-0.9.1.jar!/" />
@@ -533,6 +550,7 @@
           <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/stax-ex-1.4.jar!/" />
           <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/stax2-api-3.1.4.jar!/" />
           <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/streambuffer-1.2.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/swtgraphics2d.jar!/" />
           <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/tika-core-1.4.jar!/" />
           <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/tika-parsers-1.4.jar!/" />
           <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/tranql-connector-1.1.jar!/" />
@@ -574,27 +592,15 @@
           <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/xmlschema-core-2.2.1.jar!/" />
           <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/xmlsec-2.0.6.jar!/" />
           <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/xmltooling-1.3.2-1.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/xmlworker-5.5.8.jar!/" />
           <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/xmpbox-2.0.0-RC3.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/xmpbox-2.0.2.jar!/" />
           <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/xstream-1.4.9.jar!/" />
           <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/yuicompressor-2.4.2.jar!/" />
           <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/HTTPClient-0.3-3.jar!/" />
           <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/args4j-2.32.jar!/" />
           <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/org.osgi.core-4.1.0.jar!/" />
-          <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/pegdown-1.6.0.jar!/" />
-          <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/plantuml-jar-asl-8046.jar!/" />
-          <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/plantuml-server-8046.jar!/" />
-          <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/jedis-2.9.0.jar!/" />
-          <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/core-renderer-R8.jar!/" />
-          <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/xmlworker-5.5.8.jar!/" />
           <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/itext-4.2.1.jar!/" />
-          <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/itext-rtf-2.1.7.jar!/" />
-          <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/itext-rups-2.1.7.jar!/" />
-          <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/java-wkhtmltopdf-wrapper-0.0.3-SNAPSHOT.jar!/" />
-          <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/fontbox-2.0.2.jar!/" />
-          <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/pdfbox-2.0.2.jar!/" />
-          <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/pdfbox-tools-2.0.2.jar!/" />
-          <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/preflight-2.0.2.jar!/" />
-          <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/xmpbox-2.0.2.jar!/" />
         </CLASSES>
         <JAVADOC>
           <root url="jar://$MODULE_DIR$/src/main/webapp/WEB-INF/lib/ode-tools.jar!/" />
@@ -614,7 +620,56 @@
         </SOURCES>
       </library>
     </orderEntry>
-    <orderEntry type="library" scope="TEST" name="Maven: junit:junit:3.8.1" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: junit:junit:4.12" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.hamcrest:hamcrest-core:1.3" level="project" />
+    <orderEntry type="library" name="Maven: javax.activation:activation:1.1.1" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.activemq:activeio-core:3.1.4" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.geronimo.specs:geronimo-j2ee-management_1.1_spec:1.0.1" level="project" />
+    <orderEntry type="library" name="Maven: commons-logging:commons-logging:1.1" level="project" />
+    <orderEntry type="library" name="Maven: log4j:log4j:1.2.12" level="project" />
+    <orderEntry type="library" name="Maven: logkit:logkit:1.0.1" level="project" />
+    <orderEntry type="library" name="Maven: avalon-framework:avalon-framework:4.1.3" level="project" />
+    <orderEntry type="library" name="Maven: javax.servlet:servlet-api:2.3" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.activemq:activemq-broker:5.12.1" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.activemq:activemq-client:5.12.1" level="project" />
+    <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.7.10" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.geronimo.specs:geronimo-jms_1.1_spec:1.1.1" level="project" />
+    <orderEntry type="library" name="Maven: org.fusesource.hawtbuf:hawtbuf:1.11" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.activemq:activemq-core:5.4.0" level="project" />
+    <orderEntry type="library" name="Maven: commons-logging:commons-logging-api:1.1" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.activemq:kahadb:5.4.0" level="project" />
+    <orderEntry type="library" name="Maven: org.osgi:org.osgi.core:4.1.0" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework:spring-context:3.0.3.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework:spring-aop:3.0.3.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: aopalliance:aopalliance:1.0" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework:spring-beans:3.0.3.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework:spring-core:3.0.3.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework:spring-expression:3.0.3.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework:spring-asm:3.0.3.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: commons-net:commons-net:2.0" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.activemq:activemq-jms-pool:5.12.1" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.geronimo.specs:geronimo-jta_1.0.1B_spec:1.0.1" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.commons:commons-pool2:2.4.2" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.activemq:activemq-openwire-legacy:5.12.1" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.activemq:activemq-pool:5.12.1" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.activemq.protobuf:activemq-protobuf:1.1" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.activemq:activemq-spring:5.12.1" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.xbean:xbean-spring:3.18" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.activemq:activemq-web:5.12.1" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.activemq:activemq-all:5.12.1" level="project" />
+    <orderEntry type="library" name="Maven: org.eclipse.jetty:jetty-websocket:8.1.16.v20140903" level="project" />
+    <orderEntry type="library" name="Maven: org.eclipse.jetty:jetty-util:8.1.16.v20140903" level="project" />
+    <orderEntry type="library" name="Maven: org.eclipse.jetty:jetty-io:8.1.16.v20140903" level="project" />
+    <orderEntry type="library" name="Maven: org.eclipse.jetty:jetty-http:8.1.16.v20140903" level="project" />
+    <orderEntry type="library" name="Maven: org.eclipse.jetty:jetty-continuation:8.1.16.v20140903" level="project" />
+    <orderEntry type="library" name="Maven: rome:rome:1.0" level="project" />
+    <orderEntry type="library" name="Maven: jdom:jdom:1.0" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework:spring-webmvc:3.2.11.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework:spring-web:3.2.11.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: xpp3:xpp3:1.1.4c" level="project" />
+    <orderEntry type="library" name="Maven: com.thoughtworks.xstream:xstream:1.4.7" level="project" />
+    <orderEntry type="library" name="Maven: xmlpull:xmlpull:1.1.3.1" level="project" />
+    <orderEntry type="library" name="Maven: xpp3:xpp3_min:1.1.4c" level="project" />
   </component>
   <component name="PegdownDocletIdea.ModuleConfiguration">
     <option name="enabled" value="true" />
