@@ -1,0 +1,133 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>MyStudy</groupId>
+  <artifactId>com.forsrc.mystudy</artifactId>
+  <packaging>war</packaging>
+  <version>1.0-SNAPSHOT</version>
+  <name>com.forsrc.mystudy Maven Webapp</name>
+  <url>http://maven.apache.org</url>
+
+  <licenses>
+    <license>
+      <name>Apache License Version 2.0</name>
+      <url>http://www.apache.org/licenses/</url>
+    </license>
+  </licenses>
+
+  <properties>
+    <spring.version>4.2.6.RELEASE</spring.version>
+    <springmvc.version>4.2.6.RELEASE</springmvc.version>
+    <hibernate.version>5.0.6.Final</hibernate.version>
+    <activemq.version>5.12.1</activemq.version>
+  </properties>
+
+  <dependencies>
+
+    <!--<licenses>Eclipse Public License 1.0</licenses>-->
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.12</version>
+      <scope>test</scope>
+    </dependency>
+
+
+    <!--<licenses>COMMON DEVELOPMENT AND DISTRIBUTION LICENSE (CDDL) Version 1.0</license>-->
+    <dependency>
+      <groupId>javax.activation</groupId>
+      <artifactId>activation</artifactId>
+      <version>1.1.1</version>
+    </dependency>
+
+
+    <!--<licenses>Apache License Version 2.0</licenses>-->
+    <dependency>
+      <groupId>org.apache.activemq</groupId>
+      <artifactId>activeio-core</artifactId>
+      <version>3.1.4</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.activemq</groupId>
+      <artifactId>activemq-broker</artifactId>
+      <version>${activemq.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.activemq</groupId>
+      <artifactId>activemq-client</artifactId>
+      <version>${activemq.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.activemq</groupId>
+      <artifactId>activemq-core</artifactId>
+      <version>5.4.0</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.activemq</groupId>
+      <artifactId>activemq-jms-pool</artifactId>
+      <version>${activemq.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.activemq</groupId>
+      <artifactId>activemq-openwire-legacy</artifactId>
+      <version>${activemq.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.activemq</groupId>
+      <artifactId>activemq-pool</artifactId>
+      <version>${activemq.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.activemq.protobuf</groupId>
+      <artifactId>activemq-protobuf</artifactId>
+      <version>1.1</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.activemq</groupId>
+      <artifactId>activemq-spring</artifactId>
+      <version>${activemq.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.activemq</groupId>
+      <artifactId>activemq-web</artifactId>
+      <version>${activemq.version}</version>
+    </dependency>
+
+    <!--
+    <dependency>
+      <groupId></groupId>
+      <artifactId></artifactId>
+      <version></version>
+    </dependency>
+    -->
+    <!--<licenses></licenses>-->
+
+  </dependencies>
+  <build>
+    <finalName>com.forsrc.mystudy</finalName>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <source>1.6</source>
+          <target>1.6</target>
+        </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <version>2.9</version>
+        <configuration>
+          <doclet>ch.raffael.doclets.pegdown.PegdownDoclet</doclet>
+          <docletArtifact>
+            <groupId>ch.raffael.pegdown-doclet</groupId>
+            <artifactId>pegdown-doclet</artifactId>
+            <version>1.1</version>
+          </docletArtifact>
+          <useStandardDocletOptions>true</useStandardDocletOptions>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>
