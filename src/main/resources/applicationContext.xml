@@ -33,7 +33,7 @@
     <import resource="config/spring/ehcache/spring_ehcache.xml"/>
     <import resource="config/spring/redis/spring_redis.xml"/>
     <import resource="config/spring/lucene/spring_lucene.xml"/>
-
+    <import resource="config/spring/activiti/spring_activiti.xml"/>
     <import resource="config/spring/cxf/spring_cxf.xml"/>
 
 </beans>

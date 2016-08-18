@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns="http://www.springframework.org/schema/beans" xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+   http://www.springframework.org/schema/beans/spring-beans-4.2.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <bean id="processEngineConfiguration" class="org.activiti.spring.SpringProcessEngineConfiguration">
+        <property name="dataSource" ref="dataSourceAtomikosNonXADataSourceBean"/>
+        <property name="transactionManager" ref="txManager"/>
+        <property name="databaseSchemaUpdate" value="true"/>
+        <property name="mailServerHost" value="smtp.163.com"/>
+        <property name="mailServerPort" value="25"/>
+        <property name="mailServerUsername" value="forsrc"></property>
+        <property name="mailServerPassword" value="*****"></property>
+        <property name="mailServerDefaultFrom" value="forsrc@163.com"></property>
+        <property name="jpaEntityManagerFactory" ref="entityManagerFactory"/>
+        <property name="jpaHandleTransaction" value="true"/>
+        <property name="jpaCloseEntityManager" value="true"/>
+
+        <property name="jobExecutorActivate" value="false"/>
+
+        <property name="enableDatabaseEventLogging" value="true"/>
+        <property name="customFormTypes">
+            <list>
+                <bean class="org.activiti.explorer.form.UserFormType"/>
+                <bean class="org.activiti.explorer.form.ProcessDefinitionFormType"/>
+                <bean class="org.activiti.explorer.form.MonthFormType"/>
+            </list>
+        </property>
+        <property name="deploymentResources">
+            <list>
+                <value>classpath*:/activiti/*</value>
+            </list>
+        </property>
+        <property name="activityFontName" value="Microsoft YaHei"/>
+        <property name="labelFontName" value="Microsoft YaHei"/>
+    </bean>
+
+    <bean id="processEngine" class="org.activiti.spring.ProcessEngineFactoryBean">
+        <property name="processEngineConfiguration" ref="processEngineConfiguration"/>
+    </bean>
+
+    <bean id="repositoryService" factory-bean="processEngine" factory-method="getRepositoryService"/>
+    <bean id="runtimeService" factory-bean="processEngine" factory-method="getRuntimeService"/>
+    <bean id="taskService" factory-bean="processEngine" factory-method="getTaskService"/>
+    <bean id="historyService" factory-bean="processEngine" factory-method="getHistoryService"/>
+    <bean id="managementService" factory-bean="processEngine" factory-method="getManagementService"/>
+    <bean id="identityService" factory-bean="processEngine" factory-method="getIdentityService"/>
+    <bean id="formService" factory-bean="processEngine" factory-method="getFormService"/>
+
+
+     <bean id="restResponseFactory" class="org.activiti.rest.service.api.RestResponseFactory" autowire="byType"/>
+    <bean id="contentTypeResolver" class="org.activiti.rest.common.application.ContentTypeResolver" abstract="true"
+           autowire="byType"/>
+    <bean id="defaultContentTypeResolver" class="org.activiti.rest.common.application.DefaultContentTypeResolver"
+          parent="contentTypeResolver" autowire="byType"/>
+
+
+    <context:component-scan base-package="
+        org.activiti.rest.editor,
+        org.activiti.rest.diagram,
+        org.activiti.rest.exception,
+        org.activiti.rest.service.api"/>
+    <context:component-scan base-package="
+        org.activiti.explorer"/>
+    <context:component-scan base-package="
+        org.activiti.rest"/>
+
+
+    <bean id="objectMapper" class="com.fasterxml.jackson.databind.ObjectMapper" autowire="byType"/>
+
+</beans>
+
+

@@ -11,13 +11,11 @@
         <property name="connection.username">sa</property>
         <property name="connection.password">sa</property>
 
-
-
         <property name="hibernate.connection.provider_class">org.hibernate.c3p0.internal.C3P0ConnectionProvider</property>
         <property name="isInitDb">true</property>
         <property name="show_sql">true</property>
         <property name="format_sql">true</property>
-        <property name="hibernate.hbm2ddl.auto">update</property>
+        <property name="hibernate.hbm2ddl.auto">create</property>
 
         <property name="hibernate.connection.useUnicode">true</property>
         <property name="hibernate.connection.characterEncoding">UTF-8</property>
@@ -25,6 +23,7 @@
         <mapping resource="com/forsrc/pojo/User.hbm.xml"/>
         <mapping resource="com/forsrc/pojo/BookCategory.hbm.xml"/>
         <mapping resource="com/forsrc/pojo/Book.hbm.xml"/>
+
 
     </session-factory>
 
