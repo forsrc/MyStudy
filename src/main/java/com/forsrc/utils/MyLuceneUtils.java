@@ -1,7 +1,5 @@
 package com.forsrc.utils;
 
-
-import com.forsrc.lucene.MySimpleFSDirectory;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
@@ -10,8 +8,10 @@ import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.LockObtainFailedException;
+import org.apache.lucene.store.SimpleFSDirectory;
 
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -89,7 +89,7 @@ public class MyLuceneUtils {
         IndexWriterConfig indexWriterConfig = new IndexWriterConfig(analyzer);
         IndexWriter indexWriter = null;
         try {
-            indexWriter = myLuceneUtils.getIndexWriter(new MySimpleFSDirectory(indexDir), indexWriterConfig);
+            indexWriter = myLuceneUtils.getIndexWriter(new SimpleFSDirectory(Paths.get(indexDir)), indexWriterConfig);
         } catch (MyLuceneUtilsException e) {
             throw e;
         } catch (IOException e) {
