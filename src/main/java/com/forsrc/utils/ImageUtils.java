@@ -17,18 +17,20 @@
 
 package com.forsrc.utils;
 
-import com.sun.image.codec.jpeg.JPEGCodec;
-import com.sun.image.codec.jpeg.JPEGImageEncoder;
-
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
+
+import javax.imageio.ImageIO;
+import javax.imageio.ImageWriter;
+import javax.imageio.stream.ImageOutputStream;
 
 /**
  * ImageUtils
@@ -107,9 +109,11 @@ public final class ImageUtils {
     public static ByteArrayInputStream getInputStream(BufferedImage bufferedImage) throws IOException {
 
         ByteArrayOutputStream bao = new ByteArrayOutputStream();
-        JPEGImageEncoder encoder = JPEGCodec.createJPEGEncoder(bao);
+        ImageWriter imageWriter = ImageIO.getImageWritersBySuffix("jpg").next();
+        ImageOutputStream out = ImageIO.createImageOutputStream(bao);
         try {
-            encoder.encode(bufferedImage);
+        	imageWriter.setOutput(out);
+        	imageWriter.write(bufferedImage);
             return new ByteArrayInputStream(bao.toByteArray());
         } catch (IOException e) {
             throw e;

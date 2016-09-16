@@ -62,7 +62,7 @@ public class ImageUtilsTest {
 
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void testGetInputStreamNullPointerException(){
         try {
             ImageUtils.getInputStream(null);
