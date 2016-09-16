@@ -16,14 +16,13 @@
  */
 package com.forsrc.utils;
 
-import sun.misc.BASE64Decoder;
-import sun.misc.BASE64Encoder;
-
 import java.io.IOException;
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.security.SecureRandom;
+
+import org.apache.commons.codec.binary.Base64;
 
 /**
  * The type My rsa utils.
@@ -60,7 +59,7 @@ public final class MyRsaUtils {
     public static String decrypt(RsaKey rsaKey, String encrypted)
             throws IOException {
         BigInteger encrypt = new BigInteger(
-                new String(new BASE64Decoder().decodeBuffer(encrypted)));
+                new String(new Base64().decode(encrypted)));
         return bigInteger2String(decrypt(rsaKey, encrypt));
     }
 
@@ -86,9 +85,7 @@ public final class MyRsaUtils {
     public static String encrypt(RsaKey rsaKey, String plaintext) {
         BigInteger plaintextNumber = string2BigInteger(plaintext);
         BigInteger encrypt = encrypt(rsaKey, plaintextNumber);
-        return new BASE64Encoder().encode(encrypt.toString().getBytes())
-                .replace("\r\n", "").replace("\n", "")
-                ;
+        return new String(new Base64().encode(encrypt.toString().getBytes()));
     }
 
 
@@ -110,18 +107,14 @@ public final class MyRsaUtils {
      */
     public static String bigInteger2String(BigInteger bigInteger) throws IOException {
 
-        return new String(new BASE64Decoder().decodeBuffer(toStr(bigInteger)));
+        return new String(new Base64().decode(toStr(bigInteger)));
     }
 
     private static String base64Encode(String plaintext) {
         try {
-            return new BASE64Encoder().encode(plaintext.getBytes(CHAR_SET))
-                    .replace("\r\n", "").replace("\n", "")
-                    ;
+            return new String(new Base64().encode(plaintext.getBytes(CHAR_SET)));
         } catch (UnsupportedEncodingException e) {
-            return new BASE64Encoder().encode(plaintext.getBytes())
-                    .replace("\r\n", "").replace("\n", "")
-                    ;
+            return new String(new Base64().encode(plaintext.getBytes()));
         }
     }
 
@@ -153,7 +146,7 @@ public final class MyRsaUtils {
             plaintext.append(toStr(bigIntegers[i]));
         }
 
-        return new String(new BASE64Decoder().decodeBuffer(plaintext.toString()));
+        return new String(new Base64().decode(plaintext.toString()));
     }
 
     private static String toStr(BigInteger number) throws IOException {
@@ -239,9 +232,7 @@ public final class MyRsaUtils {
         }
         sb.delete(sb.length() - 1, sb.length());
 
-        return new BASE64Encoder().encode(sb.toString().getBytes())
-                .replace("\r\n", "").replace("\n", "")
-                ;
+        return new String(new Base64().encode(sb.toString().getBytes()));
     }
 
     /**
@@ -255,7 +246,7 @@ public final class MyRsaUtils {
     public static String decrypt2(RsaKey rsaKey, String encrypted)
             throws IOException {
 
-        String text = new String(new BASE64Decoder().decodeBuffer(encrypted));
+        String text = new String(new Base64().decode(encrypted));
         String[] texts = text.split("\\$");
         BigInteger[] bigIntegers = new BigInteger[texts.length];
         BigInteger bigInteger = null;

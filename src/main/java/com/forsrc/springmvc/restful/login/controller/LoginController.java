@@ -12,6 +12,8 @@ import com.forsrc.springmvc.restful.login.validator.LoginValidator;
 import com.forsrc.utils.MessageUtils;
 import com.forsrc.utils.MyAesUtils;
 import com.forsrc.utils.MyRsaUtils;
+
+import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
@@ -20,13 +22,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-import sun.misc.BASE64Decoder;
-import sun.misc.BASE64Encoder;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
 import java.io.IOException;
 import java.math.BigInteger;
 import java.util.HashMap;
@@ -94,8 +95,8 @@ public class LoginController {
         Map<String, String> message = new HashMap<String, String>();
         BigInteger rsa4ClientN;
         try {
-            rsa4ClientN = new BigInteger(new String(new BASE64Decoder().decodeBuffer(rsa4Client)));
-        } catch (IOException e) {
+            rsa4ClientN = new BigInteger(new String(new Base64().decode(rsa4Client)));
+        } catch (Exception e) {
             message.put("message", MessageUtils.getText(messageSource, "msg.base64.decode.error"));
             message.put("error", e.getMessage());
             return modelAndView;
@@ -115,7 +116,7 @@ public class LoginController {
         message.put("loginTokenTime", String.valueOf(token.getLoginTokenTime()));
         message.put("ai", MyRsaUtils.encrypt(rsaKey4Client, token.getAesKey().getIv()));
         message.put("ak", MyRsaUtils.encrypt(rsaKey4Client, token.getAesKey().getKey()));
-        String rsaServerN = new BASE64Encoder().encode(token.getRsaKey4Server().getN().toString().getBytes());
+        String rsaServerN = new String(new Base64().encode(token.getRsaKey4Server().getN().toString().getBytes()));
         message.put("rsa4Server", rsaServerN);
 
         HttpSession session = request.getSession();
@@ -237,7 +238,7 @@ public class LoginController {
         message.put("ai", MyRsaUtils.encrypt(myToken.getRsaKey4Client(), myToken.getAesKey().getIv()));
         message.put("ak", MyRsaUtils.encrypt(myToken.getRsaKey4Client(), myToken.getAesKey().getKey()));
 
-        String rsaServerN = new BASE64Encoder().encode(myToken.getRsaKey4Server().getN().toString().getBytes());
+        String rsaServerN = new String(new Base64().encode(myToken.getRsaKey4Server().getN().toString().getBytes()));
         message.put("rsa4Server", rsaServerN);
 
         modelAndView.addObject("status", 200);

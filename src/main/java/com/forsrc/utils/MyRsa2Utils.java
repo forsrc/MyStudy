@@ -16,10 +16,10 @@
  */
 package com.forsrc.utils;
 
-import sun.misc.BASE64Decoder;
-import sun.misc.BASE64Encoder;
-
 import javax.crypto.*;
+
+import org.apache.commons.codec.binary.Base64;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.security.*;
@@ -68,8 +68,8 @@ public final class MyRsa2Utils {
         }
         byte[] input = null;
         try {
-            input = new BASE64Decoder().decodeBuffer(cipherText);
-        } catch (IOException e) {
+            input = new Base64().decode(cipherText);
+        } catch (Exception e) {
             throw new RsaException(e);
         }
         ByteArrayOutputStream baos = new ByteArrayOutputStream(1024);
@@ -159,7 +159,7 @@ public final class MyRsa2Utils {
         } catch (ShortBufferException e) {
             throw new RsaException(e);
         }
-        return new BASE64Encoder().encode(output);
+        return new String(new Base64().encode(output));
     }
 
 
@@ -173,8 +173,8 @@ public final class MyRsa2Utils {
     public static PublicKey getPublicKey(String key) throws RsaException {
         byte[] keyBytes;
         try {
-            keyBytes = (new BASE64Decoder()).decodeBuffer(key);
-        } catch (IOException e) {
+            keyBytes = (new Base64()).decode(key);
+        } catch (Exception e) {
             throw new RsaException(e);
         }
         X509EncodedKeySpec keySpec = new X509EncodedKeySpec(keyBytes);
@@ -204,8 +204,8 @@ public final class MyRsa2Utils {
     public static PrivateKey getPrivateKey(String key) throws RsaException {
         byte[] keyBytes;
         try {
-            keyBytes = (new BASE64Decoder()).decodeBuffer(key);
-        } catch (IOException e) {
+            keyBytes = (new Base64()).decode(key);
+        } catch (Exception e) {
             throw new RsaException(e);
         }
         PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(keyBytes);

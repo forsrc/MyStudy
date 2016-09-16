@@ -17,15 +17,15 @@
 
 package com.forsrc.utils;
 
-import sun.misc.BASE64Decoder;
-import sun.misc.BASE64Encoder;
-
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
+
+import org.apache.commons.codec.binary.Base64;
+
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidAlgorithmParameterException;
@@ -108,8 +108,8 @@ public final class AesUtils {
 
         byte[] encrypted = null;
         try {
-            encrypted = new BASE64Decoder().decodeBuffer(code);
-        } catch (IOException e) {
+            encrypted = new Base64().decode(code);
+        } catch (Exception e) {
             throw new AesException(e);
         }
 
@@ -176,7 +176,7 @@ public final class AesUtils {
             throw new AesException(e);
         }
 
-        return new BASE64Encoder().encode(encrypted);
+        return new String(new Base64().encode(encrypted));
     }
 
     /**

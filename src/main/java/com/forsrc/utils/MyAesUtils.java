@@ -17,9 +17,8 @@
 
 package com.forsrc.utils;
 
+import org.apache.commons.codec.binary.Base64;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
-import sun.misc.BASE64Decoder;
-import sun.misc.BASE64Encoder;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
@@ -68,8 +67,8 @@ public final class MyAesUtils {
     public static String decrypt(AesKey aes, String code) throws AesException {
         byte[] encrypted = null;
         try {
-            encrypted = new BASE64Decoder().decodeBuffer(code);
-        } catch (IOException e) {
+            encrypted = new Base64().decode(code);
+        } catch (Exception e) {
             throw new AesException(e);
         }
 
@@ -113,7 +112,7 @@ public final class MyAesUtils {
         } catch (UnsupportedEncodingException e) {
             throw new AesException(e);
         }
-        return new BASE64Encoder().encode(encrypted);
+        return new String(new Base64().encode(encrypted));
     }
 
     /**

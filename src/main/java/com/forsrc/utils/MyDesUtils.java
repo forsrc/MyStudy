@@ -17,11 +17,11 @@
 
 package com.forsrc.utils;
 
-import sun.misc.BASE64Decoder;
-import sun.misc.BASE64Encoder;
-
 import javax.crypto.*;
 import javax.crypto.spec.DESKeySpec;
+
+import org.apache.commons.codec.binary.Base64;
+
 import java.io.IOException;
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
@@ -69,8 +69,8 @@ public final class MyDesUtils {
         }
         byte[] encrypted = null;
         try {
-            encrypted = new BASE64Decoder().decodeBuffer(code);
-        } catch (IOException e) {
+            encrypted = new Base64().decode(code);
+        } catch (Exception e) {
             throw new DesException(e);
         }
 
@@ -118,7 +118,7 @@ public final class MyDesUtils {
         } catch (UnsupportedEncodingException e) {
             throw new DesException(e);
         }
-        return new BASE64Encoder().encode(encrypted);
+        return new String(new Base64().encode(encrypted));
     }
 
     /**

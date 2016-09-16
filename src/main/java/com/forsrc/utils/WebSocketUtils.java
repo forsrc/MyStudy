@@ -1,13 +1,12 @@
 package com.forsrc.utils;
 
-
-import sun.misc.BASE64Encoder;
-
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
+
+import org.apache.commons.codec.binary.Base64;
 
 
 /**
@@ -122,6 +121,6 @@ public class WebSocketUtils {
         cript.reset();
         cript.update(challenge.getBytes("utf8"));
         byte[] hashedVal = cript.digest();
-        return new BASE64Encoder().encode(hashedVal);
+        return new String(new Base64().encode(hashedVal));
     }
 }

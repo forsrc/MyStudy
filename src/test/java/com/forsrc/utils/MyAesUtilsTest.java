@@ -16,7 +16,7 @@
  */
 package com.forsrc.utils;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.io.IOException;
 
@@ -26,10 +26,8 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import sun.misc.BASE64Decoder;
-
-import com.forsrc.utils.MyAesUtils.AesKey;
 import com.forsrc.utils.MyAesUtils.AesException;
+import com.forsrc.utils.MyAesUtils.AesKey;
 
 public class MyAesUtilsTest {
 
