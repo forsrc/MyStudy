@@ -71,9 +71,8 @@ public class ResourceFilter implements Filter {
             request.getSession().setAttribute("hasError", false);
         }
 
-        String baseUrl = MessageFormat.format("http://{0}:{1}{2}", request.getServerName(),
-                request.getServerPort(), request.getContextPath());
-        request.setAttribute("baseUrl", baseUrl);
+        String baseUrl = WebUtils.getBaseUrl(request);
+        request.setAttribute(WebUtils.KEY_BASE_URL, baseUrl);
         request.setAttribute("basePath", request.getContextPath());
         request.setAttribute("request", request);
         RsaKey rsaKey = (RsaKey) request.getSession().getAttribute(

@@ -12,6 +12,7 @@ import com.forsrc.springmvc.restful.login.validator.LoginValidator;
 import com.forsrc.utils.MessageUtils;
 import com.forsrc.utils.MyAesUtils;
 import com.forsrc.utils.MyRsaUtils;
+import com.forsrc.utils.WebUtils;
 
 import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -245,6 +246,21 @@ public class LoginController {
         modelAndView.addObject("version", VERSION_V_1_0);
         return modelAndView;
 
+    }
+    
+    
+    @RequestMapping(value = {"/getBaseUrl"}, method = {RequestMethod.POST,  RequestMethod.GET})
+    @ResponseBody
+    public ModelAndView getBaseUrl(
+                              HttpServletRequest request,
+                              HttpServletResponse response) {
+    	ModelAndView modelAndView = new ModelAndView();
+    	Map<String, Object> message = new HashMap<String, Object>();
+    	message.put("baseUrl", WebUtils.getBaseUrl(request));
+    	modelAndView.addObject("return", message);
+    	modelAndView.addObject("status", 200);
+        modelAndView.addObject("version", VERSION_V_1_0);
+    	return modelAndView;
     }
 
     /**

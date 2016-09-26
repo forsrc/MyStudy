@@ -2,17 +2,23 @@ package com.forsrc.utils;
 
 
 import com.forsrc.constant.KeyConstants;
+
+
 //import com.opensymphony.xwork2.ActionContext;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import java.text.MessageFormat;
 import java.util.*;
 
 /**
  * The type Web utils.
  */
 public class WebUtils {
+	
+	public static final String KEY_BASE_URL = "baseUrl";
 
     /**
      * The constant contentType.
@@ -124,5 +130,16 @@ public class WebUtils {
         request.getSession().setAttribute(KeyConstants.LANGUAGE.getKey(), language);
         request.getSession().setAttribute(SessionLocaleResolver.LOCALE_SESSION_ATTRIBUTE_NAME, locale);
     }
+   
+	public static final String getBaseUrl(HttpServletRequest request) {
+		String baseUrl = (String) request.getSession().getAttribute(KEY_BASE_URL);
+		if (baseUrl != null) {
+			return baseUrl;
+		}
+		baseUrl = MessageFormat.format("//{0}:{1,number,#}{2}",
+				request.getServerName(), request.getServerPort(), request.getContextPath());
+		request.getSession().setAttribute(KEY_BASE_URL, baseUrl);
+		return baseUrl;
+	}
 
 }
