@@ -17,8 +17,8 @@ import java.util.*;
  * The type Web utils.
  */
 public class WebUtils {
-	
-	public static final String KEY_BASE_URL = "baseUrl";
+
+    public static final String KEY_BASE_URL = "baseUrl";
 
     /**
      * The constant contentType.
@@ -44,15 +44,18 @@ public class WebUtils {
     public static String getIp(HttpServletRequest request) {
 
         String ip = request.getHeader("x-forwarded-for");
-        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-            ip = request.getHeader("Proxy-Client-IP");
+        if (ip != null && ip.length() > 0 && !"unknown".equalsIgnoreCase(ip)) {
+            return ip;
         }
-        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-            ip = request.getHeader("WL-Proxy-Client-IP");
+        ip = request.getHeader("Proxy-Client-IP");
+        if (ip != null && ip.length() > 0 && !"unknown".equalsIgnoreCase(ip)) {
+            return ip;
         }
-        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-            ip = request.getRemoteAddr();
+        ip = request.getHeader("WL-Proxy-Client-IP");
+        if (ip != null && ip.length() > 0 && !"unknown".equalsIgnoreCase(ip)) {
+            return ip;
         }
+        ip = request.getRemoteAddr();
         return ip;
     }
 
@@ -131,15 +134,15 @@ public class WebUtils {
         request.getSession().setAttribute(SessionLocaleResolver.LOCALE_SESSION_ATTRIBUTE_NAME, locale);
     }
    
-	public static final String getBaseUrl(HttpServletRequest request) {
-		String baseUrl = (String) request.getSession().getAttribute(KEY_BASE_URL);
-		if (baseUrl != null) {
-			return baseUrl;
-		}
-		baseUrl = MessageFormat.format("//{0}:{1,number,#}{2}",
-				request.getServerName(), request.getServerPort(), request.getContextPath());
-		request.getSession().setAttribute(KEY_BASE_URL, baseUrl);
-		return baseUrl;
-	}
+    public static final String getBaseUrl(HttpServletRequest request) {
+        String baseUrl = (String) request.getSession().getAttribute(KEY_BASE_URL);
+        if (baseUrl != null) {
+            return baseUrl;
+        }
+        baseUrl = MessageFormat.format("//{0}:{1,number,#}{2}",
+                request.getServerName(), request.getServerPort(), request.getContextPath());
+        request.getSession().setAttribute(KEY_BASE_URL, baseUrl);
+        return baseUrl;
+    }
 
 }

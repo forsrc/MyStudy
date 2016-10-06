@@ -21,8 +21,17 @@ public class SessionUtils {
      * @return the session
      */
     public static HttpSession getSession() {
+        return getHttpServletRequest().getSession();
+    }
+
+    /**
+     * Gets httpServletRequest.
+     *
+     * @return the httpServletRequest
+     */
+    public static HttpServletRequest getHttpServletRequest() {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-        return request.getSession();
+        return request;
     }
 
     /**
@@ -34,6 +43,17 @@ public class SessionUtils {
         HttpSession session = getSession();
         return getUser(session);
     }
+    
+    /**
+     * Gets username.
+     *
+     * @return the username
+     */
+    public static String getUsername() {
+        HttpSession session = getSession();
+        return getUsername(session);
+    }
+
 
     /**
      * Gets user.
@@ -45,6 +65,16 @@ public class SessionUtils {
         Object obj = session.getAttribute(KeyConstants.USER.getKey());
         User user = obj == null ? null : (User) obj;
         return user;
+    }
+    
+    /**
+     * Gets username.
+     *
+     * @param session the session
+     * @return the username
+     */
+    public static String getUsername(HttpSession session) {
+        return (String)session.getAttribute(KeyConstants.USERNAME.getKey());
     }
 
     /**

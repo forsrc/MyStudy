@@ -4,9 +4,11 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
+
 import redis.clients.jedis.*;
 
 import java.io.IOException;
+import java.text.MessageFormat;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
@@ -29,8 +31,11 @@ public class JredisUtilsTest {
 
 
     public static ShardedJedisPool getShardedJedisPool() {
+        //ApplicationContext context =
+        //        new FileSystemXmlApplicationContext("out/production/MyStudy/config/spring/redis/spring_redis_config.xml");
+
         ApplicationContext context =
-                new FileSystemXmlApplicationContext("out/production/MyStudy/config/spring/redis/spring_redis_config.xml");
+                new FileSystemXmlApplicationContext("src/main/resources/config/spring/redis/spring_redis_config.xml");
         return (ShardedJedisPool) context.getBean("shardedJedisPool");
     }
 
@@ -200,5 +205,99 @@ public class JredisUtilsTest {
             fail(e.getMessage());
         }
     }
+
+    private static void log(String format, Object... values) {
+        System.out.println(
+                MessageFormat.format(format, values)
+                );
+    }
+
+    private static void log(String message) {
+        System.out.println(message);
+    }
+
+    @Test
+    /**
+     * 
+    * @Title: APPEND key value
+    * @Description:  If key already exists and is a string, this command appends the value at the end of the string. If key does not exist it is created and set as an empty string, so APPEND will be similar to SET in this special case.
+    * @param @throws IOException     
+    * @return void     
+    * @throws
+     */
+    public void APPEND() {
+        try {
+            JredisUtils.getInstance(shardedJedisPool)
+                    .handleJedis("Jedis-1", new JredisUtils.Callback<Jedis>() {
+                        @Override
+                        public void handle(Jedis jedis) {
+                            String key = "test/key-append";
+                            jedis.del(key);
+                            log("{0} {1} --> {2}", "EXISTS", key, jedis.exists(key));
+                            jedis.append(key, "Hello");
+                            log("{0} {1} {2}", "APPEND", key, "Hello");
+                            jedis.append(key, " ");
+                            log("{0} {1} {2}", "APPEND", key, " ");
+                            jedis.append(key, "world");
+                            log("{0} {1} {2}", "APPEND", key, "world");
+                            String value = jedis.get(key);
+                            log("{0} {1} --> {2}", "GET", key, value);
+                            assertEquals("Hello world", value);
+                        }
+                    })
+                    .close();
+        } catch (JredisUtils.JredisUtilsException e) {
+            e.printStackTrace();
+            fail(e.getMessage());
+        }
+
+        log("-------------------");
+    }
+    
+    @Test
+    /**
+     * 
+    * @Title: BITCOUNT key [start end]
+    * @Description:  Count the number of set bits (population counting) in a string.
+By default all the bytes contained in the string are examined. It is possible to specify the counting operation only in an interval passing the additional arguments start and end.
+    * @param @throws IOException     
+    * @return void     
+    * @throws
+     */
+    public void BITCOUNT() {
+        try {
+            JredisUtils.getInstance(shardedJedisPool)
+                    .handleJedis("Jedis-1", new JredisUtils.Callback<Jedis>() {
+                        @Override
+                        public void handle(Jedis jedis) {
+                            String key = "test/key-bitcount";
+                            String value = "foobar";
+                            jedis.set(key, value);
+                            log("{0} {1} {2}", "SET", key, value);
+                            Long l = jedis.bitcount(key);
+                            log("{0} {1} --> {2}", "BITCOUNT", key, l);
+                            assertEquals(26L, l.longValue());
+                            l = jedis.bitcount(key, 0 ,0);
+                            log("{0} {1} {2} --> {3}", "BITCOUNT", key, "0 0", l);
+                            assertEquals(4L, l.longValue());
+                            l = jedis.bitcount(key, 1 ,1);
+                            log("{0} {1} {2} --> {3}", "BITCOUNT", key, "1 1", l);
+                            assertEquals(6L, l.longValue());
+                            //assertEquals("Hello world", value);
+                        }
+                    })
+                    .close();
+        } catch (JredisUtils.JredisUtilsException e) {
+            e.printStackTrace();
+            fail(e.getMessage());
+        }
+        log("-------------------");
+    }
+
+    @Test
+    public void test1() {
+
+    }
+
 
 }

@@ -17,9 +17,7 @@ public class MyThread {
      * Instantiates a new My thread.
      */
     public MyThread() {
-        ThreadPoolExecutor threadPool = new ThreadPoolExecutor(2, 3, 50,
-                TimeUnit.MILLISECONDS, new ArrayBlockingQueue<Runnable>(3),
-                new ThreadPoolExecutor.CallerRunsPolicy());
+        this(2, 3, 100, TimeUnit.MILLISECONDS, 3);
     }
 
     /**
@@ -36,7 +34,7 @@ public class MyThread {
                     long keepAliveTime,
                     TimeUnit unit,
                     int capacity) {
-        ThreadPoolExecutor threadPool = new ThreadPoolExecutor(corePoolSize, maximumPoolSize, keepAliveTime,
+        this.threadPoolExecutor = new ThreadPoolExecutor(corePoolSize, maximumPoolSize, keepAliveTime,
                 unit, new ArrayBlockingQueue<Runnable>(capacity),
                 new ThreadPoolExecutor.CallerRunsPolicy());
     }
