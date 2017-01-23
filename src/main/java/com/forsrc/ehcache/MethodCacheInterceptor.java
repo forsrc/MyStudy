@@ -147,7 +147,7 @@ public class MethodCacheInterceptor implements MethodInterceptor, AfterReturning
         if (username == null) {
            return key;
         }
-        return username + "-" + key;
+        return key + "/" + username;
     }
     
     private String getCacheKeyWithoutUsername(String className, String methodName, Object[] arguments) {
@@ -167,7 +167,7 @@ public class MethodCacheInterceptor implements MethodInterceptor, AfterReturning
         String key = className.substring(0, className.lastIndexOf("."));
         String username = SessionUtils.get(KeyConstants.USERNAME.getKey());
         if (username != null) {
-            return username + "-" + key;
+            return key + "/" + username;
         }
         return className;
 
@@ -191,7 +191,7 @@ public class MethodCacheInterceptor implements MethodInterceptor, AfterReturning
         String cacheKey = null;
         boolean delete = false;
         while (it.hasNext()) {
-        	cacheKey = username == null ? it.next() : username + "-" + it.next();
+        	cacheKey = username == null ? it.next() : it.next() + "/" + username;
         	delete = this.cache.remove(cacheKey);
             LOGGER.info(MessageFormat.format("[Ehcache] remove cache: [{0}] {1}", delete, cacheKey));
         }
